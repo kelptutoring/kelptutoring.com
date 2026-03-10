@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link rel="stylesheet" href="..\..\styles\style.css" />
+</head>
+<body>
+  <main class="auth-page">
+    <section class="auth-card">
+      <div class="auth-header">
+        <h1>Bem-vindo</h1>
+        <p>Entre na sua conta ou crie um novo cadastro.</p>
+      </div>
+
+      <form class="auth-form" onsubmit="event.preventDefault(); login();">
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="seuemail@exemplo.com" required />
+        </div>
+
+        <div class="input-group">
+          <label for="password">Senha</label>
+          <input id="password" type="password" placeholder="Digite sua senha" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Entrar</button>
+        <button type="button" class="btn btn-secondary" onclick="signUp()">Criar conta</button>
+      </form>
+
+      <div class="divider">
+        <span>ou</span>
+      </div>
+
+      <button class="btn-google" onclick="loginGoogle()">
+        Entrar com Google
+      </button>
+
+      <p id="message" class="message"></p>
+    </section>
+  </main>
+
+  <script type="module" src="js/auth.js"></script>
+</body>
+</html>
