@@ -1,4 +1,3 @@
-﻿import { supabase } from './supabaseClient.js'
 console.log("OI")
 async function handleSignUp({ fullName, email, password, birthDate }) {
   if (!fullName || !email || !password) {
@@ -70,3 +69,4 @@ form?.addEventListener('submit', async (event) => {
   }
 
 })
+
