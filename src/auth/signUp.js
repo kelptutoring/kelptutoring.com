@@ -1,5 +1,5 @@
-console.log("OI")
 async function handleSignUp({ fullName, email, password, birthDate }) {
+  console.log("OI")
   if (!fullName || !email || !password) {
     return { ok: false, message: 'Fill in the required fields.' }
   }
@@ -69,4 +69,5 @@ form?.addEventListener('submit', async (event) => {
   }
 
 })
+
 
