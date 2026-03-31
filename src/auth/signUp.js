@@ -42,7 +42,7 @@ async function handleSignUp({ fullName, email, password, birthDate }) {
     options: {
       data: {
         full_name: fullName,
-        birth_date: birthDate || nul  l,
+        birth_date: birthDate || null,
         role: 'student'
       }
     }
