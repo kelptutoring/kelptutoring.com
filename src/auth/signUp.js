@@ -1,5 +1,33 @@
+import { supabase } from '../lib/supabase/supabaseClient.js'
+
+const form = document.getElementById('signup-form')
+const messageBox = document.getElementById('message')
+
+form?.addEventListener('submit', async (event) => {
+  event.preventDefault()
+
+  const fullName = document.getElementById('fullName').value.trim()
+  const birthDate = document.getElementById('birthDate').value
+  const email = document.getElementById('email').value.trim()
+  const password = document.getElementById('password').value
+
+  const result = await handleSignUp({
+    fullName,
+    email,
+    password,
+    birthDate
+  })
+
+  if (messageBox) {
+    messageBox.textContent = result.message
+  }
+
+  if (result.ok) {
+    window.location.href = '../login/login.html'
+  }
+})
+
 async function handleSignUp({ fullName, email, password, birthDate }) {
-  console.log("OI")
   if (!fullName || !email || !password) {
     return { ok: false, message: 'Fill in the required fields.' }
   }
@@ -41,33 +69,3 @@ async function handleSignUp({ fullName, email, password, birthDate }) {
 
   return { ok: true, message: 'Account created successfully.' }
 }
-
-const form = document.getElementById('signup-form')
-const messageBox = document.getElementById('message')
-
-form?.addEventListener('submit', async (event) => {
-  event.preventDefault()
-
-  const fullName = document.getElementById('fullName').value.trim()
-  const birthDate = document.getElementById('birthDate').value
-  const email = document.getElementById('email').value.trim()
-  const password = document.getElementById('password').value
-
-  const result = await handleSignUp({
-    fullName,
-    email,
-    password,
-    birthDate
-  })
-
-  if (messageBox) {
-    messageBox.textContent = result.message
-  }
-
-  if (result.ok) {
-    window.location.href = '../login/login.html'
-  }
-
-})
-
-

@@ -1,48 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login - Kelp Tutoring</title>
-  <link rel="stylesheet" href="../../styles/style.css" />
-  <script type="module" src="../../auth/login.js"></script>
+  <link rel="stylesheet" href="..\..\styles\style.css" />
 </head>
+
 <body>
   <main class="auth-page">
     <section class="auth-card">
       <div class="auth-header">
-        <h1>Welcome back</h1>
-        <p>Sign in to continue to your Kelp workspace.</p>
+        <h1>Bem-vindo</h1>
+        <p>Entre na sua conta ou crie um novo cadastro.</p>
       </div>
 
-      <form id="login-form" class="auth-form">
+      <form class="auth-form" onsubmit="event.preventDefault(); login();">
         <div class="input-group">
           <label for="email">Email</label>
-          <input id="email" type="email" placeholder="you@example.com" required />
+          <input id="email" type="email" placeholder="seuemail@exemplo.com" required />
         </div>
 
         <div class="input-group">
-          <label for="password">Password</label>
-          <input id="password" type="password" placeholder="Enter your password" required />
+          <label for="password">Senha</label>
+          <input id="password" type="password" placeholder="Digite sua senha" required />
         </div>
 
-        <button type="submit" class="btn btn-primary">Login</button>
-        <a href="signUp.html" class="btn-secondary header-btn auth-inline-link">Create account</a>
+        <button type="submit" class="btn btn-primary">Entrar</button>
+	<a href="signUp.html" class="btn-secondary header-btn">Sign Up</a>
       </form>
 
       <div class="divider">
-        <span>or</span>
+        <span>ou</span>
       </div>
 
-      <button id="google-login" class="btn-google" type="button">Continue with Google</button>
-
-      <div class="auth-demo-links">
-        <a href="../../../student-demo.html">Open student demo</a>
-        <a href="../../../tutor-demo.html">Open tutor demo</a>
-      </div>
+      <button class="btn-google" onclick="loginGoogle()">
+        Entrar com Google
+      </button>
 
       <p id="message" class="message"></p>
     </section>
   </main>
+
+
 </body>
 </html>
