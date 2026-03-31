@@ -29,7 +29,7 @@ form?.addEventListener('submit', async (event) => {
 
 async function handleSignUp({ fullName, email, password, birthDate }) {
   if (!fullName || !email || !password) {
-    return { ok: false, message: ''Fill in the required fields.' }
+    return { ok: false, message: 'Fill in the required fields.' }
   }
 
   if (password.length < 6) {
