@@ -29,7 +29,7 @@ form?.addEventListener('submit', async (event) => {
 
 async function handleSignUp({ fullName, email, password, birthDate }) {
   if (!fullName || !email || !password) {
-    return { ok: false, message: 'REALLY BRO?' }
+    return { ok: false, message: ''Fill in the required fields.' }
   }
 
   if (password.length < 6) {
@@ -38,7 +38,14 @@ async function handleSignUp({ fullName, email, password, birthDate }) {
 
   const { data, error } = await supabase.auth.signUp({
     email,
-    password
+    password,
+    options: {
+      data: {
+        full_name: fullName,
+        birth_date: birthDate || nul  l,
+        role: 'student'
+      }
+    }
   })
 
   if (error) {
