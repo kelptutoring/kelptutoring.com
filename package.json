@@ -1,1 +1,10 @@
-ECHO est  ativado.
+{
+  "name": "kelp-site",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Static Kelp Tutoring site with landing, auth, and dashboard demos.",
+  "scripts": {
+    "start": "npx serve .",
+    "preview": "npx serve ."
+  }
+}

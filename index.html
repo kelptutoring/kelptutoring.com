@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kelp</title>
-  <link rel="stylesheet" href="src\styles\style.css" />
+  <title>Kelp Tutoring</title>
+  <link rel="stylesheet" href="src/styles/style.css" />
 </head>
 <body>
-
   <header class="site-header">
     <div class="container header-top">
       <div class="logo-area">
-        <img src="public\assets\logos\logo.png" alt="Kelp logo" class="logo" />
+        <img src="public/assets/logos/logo.png" alt="Kelp logo" class="logo" />
         <span class="logo-text">Kelp</span>
       </div>
 
@@ -20,53 +19,94 @@
       </div>
 
       <div class="header-actions">
-        <a href="src\app\login\login.html" class="btn-outline header-btn">Login</a>
-        <a href="src\app\login\login.html" class="btn-primary header-btn">Sign Up</a>
+        <a href="src/app/login/login.html" class="btn-outline header-btn">Login</a>
+        <a href="src/app/login/signUp.html" class="btn-primary header-btn">Sign Up</a>
       </div>
     </div>
 
     <nav class="services-bar">
       <div class="container services-nav">
-        <a href="#">Service 1</a>
-        <a href="#">Service 2</a>
-        <a href="#">Service 3</a>
-        <a href="#">Service 4</a>
-        <a href="#">Service 5</a>
+        <a href="#student-demo">Student preview</a>
+        <a href="#tutor-demo">Tutor preview</a>
+        <a href="#features">Calendar workflows</a>
+        <a href="#features">Assignment studio</a>
+        <a href="#features">Profiles</a>
       </div>
     </nav>
   </header>
 
-  <main>
+  <main class="landing-main">
     <section class="hero-section">
       <div class="container hero-content">
         <div class="hero-text">
-          <h1>Education with clarity, trust and connection.</h1>
+          <span class="eyebrow">Integrated tutoring platform</span>
+          <h1>Public previews on the landing page. Real workspaces after login.</h1>
           <p>
-            Kelp connects families, teachers, schools and learners through a
-            modern platform built to make educational support more accessible,
-            organized and effective.
+            Kelp now separates visitor-facing samples from the private student and tutor dashboards used for classes, assignments, calendars, profiles, and teaching operations.
           </p>
 
           <div class="hero-buttons">
-            <a href="src\app\login\login.html" class="btn-primary hero-btn">Get Started</a>
-            <a href="#" class="btn-secondary hero-btn">Learn More</a>
+            <a href="src/app/login/signUp.html" class="btn-primary hero-btn">Create account</a>
+            <a href="student-demo.html" class="btn-secondary hero-btn">Student preview</a>
+            <a href="tutor-demo.html" class="btn-outline hero-btn">Tutor preview</a>
           </div>
         </div>
 
-        <div class="hero-card">
-          <h2>Why Kelp?</h2>
+        <div class="hero-card hero-card-large">
+          <h2>What this release adds</h2>
           <p>
-            We help different education profiles find the right path, tools and
-            support in one place.
+            The private student and tutor areas now focus on cleaner layouts and deeper task flows.
           </p>
 
           <ul>
-            <li>Clear educational pathways</li>
-            <li>Reliable and organized platform</li>
-            <li>Support for multiple user profiles</li>
-            <li>Designed for growth and accessibility</li>
+            <li>Monthly calendars with classes, meetings, and due dates</li>
+            <li>Student and tutor profile pages with edit controls</li>
+            <li>Important links for students, managed by tutor/admin</li>
+            <li>Assignment studio with LaTeX, graphs, figures, and timers</li>
           </ul>
         </div>
+      </div>
+    </section>
+
+    <section id="features" class="feature-section">
+      <div class="container section-heading">
+        <span class="eyebrow">Separation of public and private UX</span>
+        <h2>Sample dashboards remain public. Private dashboards stay behind login.</h2>
+        <p>
+          Visitors can preview the design direction, while signed-in users enter role-specific workspaces with assignment actions, profile visibility rules, and modal workflows.
+        </p>
+      </div>
+
+      <div class="container feature-grid">
+        <article id="student-demo" class="feature-card">
+          <div class="feature-badge">Student preview</div>
+          <h3>Public sample for the landing page</h3>
+          <p>
+            Keeps the visitor-facing overview of the product while the private student workspace handles real calendars, links, profiles, and assignment access.
+          </p>
+          <ul>
+            <li>Public preview stays simple</li>
+            <li>Private dashboard is login-only</li>
+            <li>Monthly calendar and due dates in the private view</li>
+            <li>Tutor profile and important links in the private view</li>
+          </ul>
+          <a href="student-demo.html" class="btn-secondary feature-link">Open student preview</a>
+        </article>
+
+        <article id="tutor-demo" class="feature-card">
+          <div class="feature-badge feature-badge-cyan">Tutor preview</div>
+          <h3>Public sample for the landing page</h3>
+          <p>
+            Tutors now use a separate private workspace after login, with calendar controls, student cards, nested modals, and direct access to the assignment studio.
+          </p>
+          <ul>
+            <li>Cleaner final tutor dashboard</li>
+            <li>Student cards instead of disposable KPI blocks</li>
+            <li>Nested modal flow for classes and assignments</li>
+            <li>Reusable form templates and student-side preview</li>
+          </ul>
+          <a href="tutor-demo.html" class="btn-secondary feature-link">Open tutor preview</a>
+        </article>
       </div>
     </section>
   </main>
@@ -74,31 +114,28 @@
   <footer class="site-footer">
     <div class="container footer-grid">
       <div class="footer-column">
-        <h3>What we offer</h3>
-        <a href="#">For families</a>
-        <a href="#">For independent teachers</a>
-        <a href="#">For schools & districts</a>
-        <a href="#">For independent learners</a>
-        <a href="#">For high schools</a>
-        <a href="#">For college</a>
+        <h3>Product</h3>
+        <a href="student-demo.html">Student preview</a>
+        <a href="tutor-demo.html">Tutor preview</a>
+        <a href="student-dashboard.html">Private student dashboard</a>
+        <a href="tutor-dashboard.html">Private tutor dashboard</a>
       </div>
 
       <div class="footer-column">
         <h3>Resources</h3>
-        <a href="#">Help center</a>
-        <a href="#">User guides</a>
-        <a href="#">Tell us what you think</a>
-        <a href="#">Testimonials</a>
-        <a href="#">Help</a>
-        <a href="#">Contact us</a>
+        <a href="src/app/login/login.html">Login</a>
+        <a href="src/app/login/signUp.html">Create account</a>
+        <a href="assignment-studio.html">Assignment studio</a>
+        <a href="assignment-view.html">Assignment preview</a>
+        <a href="docs/product/system-overview.md">System overview</a>
       </div>
 
       <div class="footer-column">
-        <h3>About</h3>
-        <a href="#">Company</a>
-        <a href="#">Careers</a>
-        <a href="#">Terms of service</a>
+        <h3>Profiles</h3>
+        <a href="student-profile.html">Student profile</a>
+        <a href="tutor-profile.html">Tutor profile</a>
         <a href="#">Privacy policy</a>
+        <a href="#">Terms of service</a>
       </div>
     </div>
 
@@ -108,10 +145,5 @@
       <a href="#" aria-label="LinkedIn">LinkedIn</a>
     </div>
   </footer>
-
 </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> d26d47d (Sign up & Login pages)

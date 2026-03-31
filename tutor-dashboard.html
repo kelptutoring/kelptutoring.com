@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutor Dashboard - Kelp</title>
+  <link rel="stylesheet" href="src/styles/style.css" />
+  <script type="module" src="src/app/dashboard/tutorDashboard.js"></script>
+</head>
+<body class="workspace-body">
+  <div class="workspace-shell">
+    <aside class="workspace-sidebar">
+      <div class="workspace-brand">
+        <img src="public/assets/logos/logo.png" alt="Kelp logo" class="workspace-logo" />
+        <div>
+          <div class="workspace-brand-title">Kelp</div>
+          <div class="workspace-brand-subtitle">Tutor workspace</div>
+        </div>
+      </div>
+
+      <nav class="workspace-nav">
+        <a href="#tutor-calendar" class="workspace-nav-link active">Calendar</a>
+        <a href="#student-roster" class="workspace-nav-link">Students</a>
+        <a href="assignment-studio.html" class="workspace-nav-link">Assignment studio</a>
+        <a href="tutor-profile.html" class="workspace-nav-link">My profile</a>
+        <button type="button" class="workspace-nav-link workspace-logout" id="logout-tutor">Sign out</button>
+      </nav>
+
+      <div class="sidebar-note sidebar-note-cyan">
+        This is the private tutor dashboard. Public previews stay on the landing page, but this workspace is only for signed-in tutors or admin.
+      </div>
+    </aside>
+
+    <main class="workspace-main">
+      <section class="page-intro">
+        <div>
+          <p class="page-kicker">Private dashboard</p>
+          <h1 id="tutor-heading">Tutor workspace</h1>
+          <p class="page-copy">Cancel or reschedule classes, assign work, retrieve saved templates, and review students from a single flow.</p>
+        </div>
+        <a class="text-link" href="index.html">Back to landing page</a>
+      </section>
+
+      <section class="workspace-grid tutor-layout">
+        <section id="tutor-calendar" class="workspace-card calendar-card">
+          <div class="section-header">
+            <div>
+              <h2>Month calendar</h2>
+              <p>Classes, company meetings, grading touchpoints, and rescheduling actions.</p>
+            </div>
+            <div class="calendar-toolbar"><button id="tutor-calendar-prev" class="calendar-nav-btn" type="button">←</button><div id="tutor-calendar-label" class="calendar-label"></div><button id="tutor-calendar-next" class="calendar-nav-btn" type="button">→</button></div>
+          </div>
+          <p id="tutor-calendar-summary" class="calendar-summary"></p><div class="calendar-legend"><span class="legend-pill class">Class</span><span class="legend-pill meeting">Meeting</span></div><div id="tutor-calendar-grid" class="month-grid"></div>
+        </section>
+
+        <aside class="workspace-column">
+          <section class="workspace-card profile-summary-card">
+            <div class="section-header compact-header">
+              <div>
+                <h2>My profile</h2>
+                <p>Editable by you or admin.</p>
+              </div>
+              <a href="tutor-profile.html" class="text-link">Open</a>
+            </div>
+            <div id="tutor-profile-summary-card" class="profile-summary"></div>
+          </section>
+
+          <section class="workspace-card">
+            <div class="section-header compact-header">
+              <div>
+                <h2>Workflow shortcuts</h2>
+                <p>Open the studio or reuse saved forms.</p>
+              </div>
+            </div>
+            <div class="shortcut-list">
+              <a href="assignment-studio.html" class="shortcut-btn">Create assignment from scratch</a>
+              <a href="assignment-studio.html#template-library" class="shortcut-btn">Retrieve saved assignment</a>
+              <a href="assignment-view.html" class="shortcut-btn">Preview student-side form</a>
+            </div>
+          </section>
+        </aside>
+      </section>
+
+      <section id="student-roster" class="workspace-card">
+        <div class="section-header">
+          <div>
+            <h2>Students</h2>
+            <p>Cards open a modal with the profile link, classes, due dates, and assignment actions.</p>
+          </div>
+        </div>
+        <div id="student-card-grid" class="student-card-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-shell hidden" id="calendar-event-modal-shell">
+    <div class="modal-card">
+      <button class="modal-close" data-close="calendar-event-modal-shell">×</button>
+      <div id="calendar-event-modal-content"></div>
+    </div>
+  </div>
+
+  <div class="modal-shell hidden layered-modal" id="student-modal-shell">
+    <div class="modal-card large-modal">
+      <button class="modal-close" data-close="student-modal-shell">×</button>
+      <div id="student-modal-content"></div>
+    </div>
+  </div>
+
+  <div class="modal-shell hidden layered-modal second-layer" id="class-modal-shell">
+    <div class="modal-card large-modal">
+      <button class="modal-close" data-close="class-modal-shell">×</button>
+      <div id="class-modal-content"></div>
+    </div>
+  </div>
+
+  <div class="modal-shell hidden layered-modal third-layer" id="workflow-modal-shell">
+    <div class="modal-card">
+      <button class="modal-close" data-close="workflow-modal-shell">×</button>
+      <div id="workflow-modal-content"></div>
+    </div>
+  </div>
+</body>
+</html>

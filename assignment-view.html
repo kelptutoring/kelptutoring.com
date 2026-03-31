@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assignment View - Kelp</title>
+  <link rel="stylesheet" href="src/styles/style.css" />
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script type="module" src="src/app/forms/assignmentView.js"></script>
+</head>
+<body class="workspace-body">
+  <main class="assignment-view-shell">
+    <section class="workspace-card assignment-view-card">
+      <div class="section-header">
+        <div>
+          <p class="page-kicker">Assignment</p>
+          <h1 id="assignment-view-title">Open assignment</h1>
+          <p id="assignment-view-subtitle" class="page-copy">Form or plain webpage, depending on the assignment type.</p>
+        </div>
+        <div class="timer-chip" id="assignment-countdown">No timer</div>
+      </div>
+      <div class="assignment-view-actions">
+        <a href="student-dashboard.html" class="btn-outline">Back to student dashboard</a>
+        <a href="tutor-dashboard.html" class="btn-secondary">Tutor workspace</a>
+      </div>
+      <div id="assignment-render-root" class="assignment-render-root"></div>
+      <div class="assignment-submit-row">
+        <button class="btn-primary" id="mock-submit" type="button">Submit assignment</button>
+        <p id="submit-message" class="mini-note"></p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

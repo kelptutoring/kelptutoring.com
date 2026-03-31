@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard - Kelp</title>
+  <link rel="stylesheet" href="src/styles/style.css" />
+  <script type="module" src="src/app/dashboard/studentDashboard.js"></script>
+</head>
+<body class="workspace-body">
+  <div class="workspace-shell">
+    <aside class="workspace-sidebar">
+      <div class="workspace-brand">
+        <img src="public/assets/logos/logo.png" alt="Kelp logo" class="workspace-logo" />
+        <div>
+          <div class="workspace-brand-title">Kelp</div>
+          <div class="workspace-brand-subtitle">Student workspace</div>
+        </div>
+      </div>
+
+      <nav class="workspace-nav">
+        <a href="#student-calendar" class="workspace-nav-link active">Calendar</a>
+        <a href="#assignments" class="workspace-nav-link">Assignments</a>
+        <a href="student-profile.html" class="workspace-nav-link">My profile</a>
+        <a href="tutor-profile.html" class="workspace-nav-link">Tutor profile</a>
+        <a href="assignment-view.html" class="workspace-nav-link">Current assignment</a>
+        <button type="button" class="workspace-nav-link workspace-logout" id="logout-student">Sign out</button>
+      </nav>
+
+      <div class="sidebar-note">
+        The private student dashboard is available only after login. The landing page keeps separate public previews.
+      </div>
+    </aside>
+
+    <main class="workspace-main">
+      <section class="page-intro">
+        <div>
+          <p class="page-kicker">Private dashboard</p>
+          <h1 id="student-heading">Student workspace</h1>
+          <p class="page-copy">Classes, due dates, profiles, and important links in one place.</p>
+        </div>
+        <a class="text-link" href="index.html">Back to landing page</a>
+      </section>
+
+      <section class="workspace-card top-links-card">
+        <div class="section-header compact-header">
+          <div>
+            <h2>Important links</h2>
+            <p>Editable by tutor or admin.</p>
+          </div>
+        </div>
+        <div id="important-links" class="link-chip-list"></div>
+      </section>
+
+      <section class="workspace-grid student-layout">
+        <section id="student-calendar" class="workspace-card calendar-card">
+          <div class="section-header">
+            <div>
+              <h2>Month calendar</h2>
+              <p>Classes and due dates. Click any item to mark delivered, reschedule, cancel, or open the assignment.</p>
+            </div>
+            <div class="calendar-toolbar"><button id="student-calendar-prev" class="calendar-nav-btn" type="button">←</button><div id="student-calendar-label" class="calendar-label"></div><button id="student-calendar-next" class="calendar-nav-btn" type="button">→</button></div>
+          </div>
+          <p id="student-calendar-summary" class="calendar-summary"></p><div class="calendar-legend"><span class="legend-pill class">Class</span><span class="legend-pill assignment">Due date</span></div><div id="student-calendar-grid" class="month-grid"></div>
+        </section>
+
+        <aside class="workspace-column">
+          <section id="assignments" class="workspace-card">
+            <div class="section-header compact-header">
+              <div>
+                <h2>Upcoming work</h2>
+                <p>Due-date links open assignments.</p>
+              </div>
+            </div>
+            <div id="student-assignment-list" class="stack-list"></div>
+          </section>
+
+          <section class="workspace-card profile-summary-card">
+            <div class="section-header compact-header">
+              <div>
+                <h2>My profile</h2>
+                <p>Visible only to you and your tutor.</p>
+              </div>
+              <a href="student-profile.html" class="text-link">Open</a>
+            </div>
+            <div id="student-profile-summary" class="profile-summary"></div>
+          </section>
+
+          <section class="workspace-card profile-summary-card">
+            <div class="section-header compact-header">
+              <div>
+                <h2>Tutor profile</h2>
+                <p>Your linked tutor only.</p>
+              </div>
+              <a href="tutor-profile.html" class="text-link">Open</a>
+            </div>
+            <div id="tutor-profile-summary" class="profile-summary"></div>
+          </section>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-shell hidden" id="student-event-modal-shell">
+    <div class="modal-card">
+      <button class="modal-close" data-close="student-event-modal-shell">×</button>
+      <div id="student-event-modal-content"></div>
+    </div>
+  </div>
+</body>
+</html>

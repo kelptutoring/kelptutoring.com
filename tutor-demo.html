@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutor Dashboard - Kelp</title>
+  <link rel="stylesheet" href="src/styles/style.css" />
+</head>
+<body class="dashboard-body">
+  <div class="dashboard-shell">
+    <aside class="dashboard-sidebar">
+      <div class="dashboard-brand">
+        <img src="public/assets/logos/logo.png" alt="Kelp logo" class="dashboard-logo" />
+        <div>
+          <div class="dashboard-brand-title">Kelp</div>
+          <div class="dashboard-brand-subtitle">Teaching workflow</div>
+        </div>
+      </div>
+
+      <div class="dashboard-search">Search students, plans, notes, or sessions...</div>
+
+      <nav class="dashboard-nav">
+        <a href="tutor-dashboard.html" class="dashboard-nav-link active">Overview</a>
+        <a href="#schedule" class="dashboard-nav-link">Today</a>
+        <a href="#health" class="dashboard-nav-link">Student health</a>
+        <a href="#planning" class="dashboard-nav-link">Planning queue</a>
+        <a href="student-dashboard.html" class="dashboard-nav-link">Student view</a>
+        <a href="index.html" class="dashboard-nav-link">Home</a>
+      </nav>
+
+      <div class="view-switch-card cyan-card">
+        <p class="view-switch-label">Role demo</p>
+        <div class="view-switch-buttons">
+          <a href="student-dashboard.html" class="view-switch-btn">Student</a>
+          <a href="tutor-dashboard.html" class="view-switch-btn active cyan-active">Tutor</a>
+        </div>
+        <p class="view-switch-note">Tutor mode emphasizes planning, execution, and intervention.</p>
+      </div>
+    </aside>
+
+    <main class="dashboard-main">
+      <header class="dashboard-topbar">
+        <div>
+          <p class="dashboard-kicker">Dashboard prototype</p>
+          <h1>Tutor dashboard</h1>
+          <p class="dashboard-subtitle">A teaching operations view designed to replace scattered notes, forms, and spreadsheets.</p>
+        </div>
+        <div class="dashboard-topbar-actions">
+          <a href="src/app/login/login.html" class="btn-outline header-btn">Login</a>
+          <a href="student-dashboard.html" class="btn-secondary header-btn">Switch to student</a>
+        </div>
+      </header>
+
+      <section class="dashboard-hero-card tutor-hero-card">
+        <div>
+          <span class="dashboard-chip chip-cyan">Tutor operations</span>
+          <h2>Your teaching day is organized.</h2>
+          <p>Review session prep, student momentum, and action items from one place instead of switching across forms, notes, and spreadsheets.</p>
+        </div>
+        <div class="dashboard-hero-actions">
+          <a href="#planning" class="btn-primary hero-btn">Open queue</a>
+          <a href="#health" class="btn-secondary hero-btn">Review students</a>
+        </div>
+      </section>
+
+      <section class="stats-grid">
+        <article class="stat-card">
+          <p>Sessions today</p>
+          <h3>7</h3>
+          <span>2 starting soon</span>
+        </article>
+        <article class="stat-card">
+          <p>Students at risk</p>
+          <h3>4</h3>
+          <span>Low engagement or missed work</span>
+        </article>
+        <article class="stat-card">
+          <p>Prep queue</p>
+          <h3>6</h3>
+          <span>Forms to review before class</span>
+        </article>
+        <article class="stat-card">
+          <p>Weekly completion</p>
+          <h3>81%</h3>
+          <span>Across active caseload</span>
+        </article>
+      </section>
+
+      <section class="dashboard-content-grid">
+        <div class="dashboard-primary-column">
+          <section id="schedule" class="panel-card">
+            <div class="panel-header">
+              <div>
+                <h2>Today’s sessions</h2>
+                <p>Live schedule with prep context</p>
+              </div>
+            </div>
+            <div class="schedule-list">
+              <article class="schedule-item schedule-item-wide">
+                <div class="schedule-time-box">09:00</div>
+                <div>
+                  <strong>Noah P.</strong>
+                  <p>Chemistry review</p>
+                </div>
+                <span class="schedule-meta">Worksheet attached</span>
+              </article>
+              <article class="schedule-item schedule-item-wide">
+                <div class="schedule-time-box">11:30</div>
+                <div>
+                  <strong>Sofia R.</strong>
+                  <p>Essay planning</p>
+                </div>
+                <span class="schedule-meta">Needs rubric</span>
+              </article>
+              <article class="schedule-item schedule-item-wide">
+                <div class="schedule-time-box">14:00</div>
+                <div>
+                  <strong>Lucas M.</strong>
+                  <p>Algebra intervention</p>
+                </div>
+                <span class="schedule-meta">Low confidence alert</span>
+              </article>
+              <article class="schedule-item schedule-item-wide">
+                <div class="schedule-time-box">17:30</div>
+                <div>
+                  <strong>Emma C.</strong>
+                  <p>SAT verbal</p>
+                </div>
+                <span class="schedule-meta">Submitted pre-class form</span>
+              </article>
+            </div>
+          </section>
+
+          <section id="health" class="panel-card">
+            <div class="panel-header">
+              <div>
+                <h2>Student health</h2>
+                <p>Progress, completion, and intervention signals</p>
+              </div>
+            </div>
+            <div class="health-table">
+              <div class="health-row health-header">
+                <span>Student</span>
+                <span>Focus</span>
+                <span>Completion</span>
+                <span>Status</span>
+              </div>
+              <div class="health-row">
+                <span>Emma C.</span>
+                <span>SAT Verbal</span>
+                <span>92%</span>
+                <span class="status-pill success">On track</span>
+              </div>
+              <div class="health-row">
+                <span>Lucas M.</span>
+                <span>Algebra</span>
+                <span>48%</span>
+                <span class="status-pill danger">Needs support</span>
+              </div>
+              <div class="health-row">
+                <span>Sofia R.</span>
+                <span>Writing</span>
+                <span>77%</span>
+                <span class="status-pill warning">Watch pacing</span>
+              </div>
+              <div class="health-row">
+                <span>Noah P.</span>
+                <span>Chemistry</span>
+                <span>66%</span>
+                <span class="status-pill info">Review concepts</span>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <aside class="dashboard-secondary-column">
+          <section id="planning" class="panel-card compact-panel">
+            <div class="panel-header">
+              <div>
+                <h2>Planning queue</h2>
+              </div>
+            </div>
+            <div class="task-list">
+              <div class="task-item">Review 3 student intake forms before 14:00.</div>
+              <div class="task-item">Publish Emma's next-week study roadmap.</div>
+              <div class="task-item">Write feedback notes for Lucas and Noah.</div>
+              <div class="task-item">Reassign missed practice for Sofia.</div>
+            </div>
+          </section>
+
+          <section class="panel-card compact-panel">
+            <div class="panel-header">
+              <div>
+                <h2>Alerts</h2>
+              </div>
+            </div>
+            <div class="alerts-list">
+              <div class="callout-danger">Lucas missed two practice blocks in the last five days.</div>
+              <div class="callout-cyan">Sofia submitted her pre-class form without an essay draft.</div>
+              <div class="callout-cyan">Emma is ready for a more difficult verbal set next week.</div>
+            </div>
+          </section>
+
+          <section class="panel-card compact-panel">
+            <div class="panel-header">
+              <div>
+                <h2>Quick actions</h2>
+              </div>
+            </div>
+            <div class="quick-actions">
+              <a href="#" class="quick-action">Create session notes</a>
+              <a href="#" class="quick-action">Assign practice block</a>
+              <a href="#" class="quick-action">Send encouragement message</a>
+              <a href="#" class="quick-action">Open student profile</a>
+            </div>
+          </section>
+        </aside>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
