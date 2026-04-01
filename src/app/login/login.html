@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login - Kelp Tutoring</title>
-  <link rel="stylesheet" href="..\..\styles\style.css" />
+  <link rel="stylesheet" href="../../styles/style.css" />
 </head>
 
 <body>
@@ -16,7 +15,7 @@
         <p>Entre na sua conta ou crie um novo cadastro.</p>
       </div>
 
-      <form class="auth-form" onsubmit="event.preventDefault(); login();">
+      <form id="login-form" class="auth-form">
         <div class="input-group">
           <label for="email">Email</label>
           <input id="email" type="email" placeholder="seuemail@exemplo.com" required />
@@ -28,14 +27,14 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Entrar</button>
-	<a href="signUp.html" class="btn-secondary header-btn">Sign Up</a>
+        <a href="../signUp/signUp.html" class="btn-secondary header-btn">Sign Up</a>
       </form>
 
       <div class="divider">
         <span>ou</span>
       </div>
 
-      <button class="btn-google" onclick="loginGoogle()">
+      <button class="btn-google" type="button">
         Entrar com Google
       </button>
 
@@ -43,6 +42,6 @@
     </section>
   </main>
 
-
+  <script type="module" src="./login.js"></script>
 </body>
 </html>
