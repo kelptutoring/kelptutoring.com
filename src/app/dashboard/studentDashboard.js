@@ -25,9 +25,7 @@ async function init() {
 
   document.getElementById('logout-student')?.addEventListener('click', signOutAndRedirect)
   document.querySelectorAll('[data-close]').forEach((button) => {
-    button.addEventListener('click', () => {
-      document.getElementById(button.dataset.close)?.classList.add('hidden')
-    })
+    button.addEventListener('click', () => document.getElementById(button.dataset.close)?.classList.add('hidden'))
   })
 }
 
