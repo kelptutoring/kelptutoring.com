@@ -200,7 +200,7 @@ const seedTemplates = [
       {
         id: 'q1',
         type: 'multiple-choice',
-        prompt: 'Choose the option that best supports the author's main inference in paragraph 2.',
+        prompt: "Choose the option that best supports the author's main inference in paragraph 2.",
         options: ['Option A', 'Option B', 'Option C', 'Option D'],
         answer: 'Option B',
         graphExpression: '',
