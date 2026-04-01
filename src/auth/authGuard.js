@@ -4,7 +4,7 @@ export async function requireAuth(allowedRoles = []) {
   const { data: authData, error: authError } = await supabase.auth.getUser()
 
   if (authError || !authData?.user) {
-    window.location.replace('../app/login/login.html')
+    window.location.replace('/src/app/login/login.html')
     return null
   }
 
@@ -17,12 +17,12 @@ export async function requireAuth(allowedRoles = []) {
     .single()
 
   if (profileError || !profile) {
-    window.location.replace('../app/login/login.html')
+    window.location.replace('/src/app/login/login.html')
     return null
   }
 
   if (allowedRoles.length && !allowedRoles.includes(profile.role)) {
-    window.location.replace('../app/login/login.html')
+    window.location.replace('/src/app/login/login.html')
     return null
   }
 
@@ -31,5 +31,5 @@ export async function requireAuth(allowedRoles = []) {
 
 export async function signOutAndRedirect() {
   await supabase.auth.signOut()
-  window.location.replace('../app/login/login.html')
+  window.location.replace('/src/app/login/login.html')
 }
