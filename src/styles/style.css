@@ -38,7 +38,7 @@ body {
 }
 
 /* Estrutura principal */
-auth.page {
+main {
   min-height: 100vh;
   display: flex;
   align-items: center;
