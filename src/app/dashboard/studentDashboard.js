@@ -11,27 +11,24 @@ let currentProfile = null
 let currentEvents = []
 let currentLinks = []
 
-init()
-
 async function init() {
   const current = await requireAuth(['student', 'admin'])
   if (!current) return
 
-  currentProfile = current.profile
-
-  const dashboardData = await getStudentDashboardData(current.user.id)
-  currentEvents = dashboardData.events
-  currentLinks = dashboardData.links
-
   document.getElementById('student-heading').textContent =
-    `${currentProfile.full_name.split(' ')[0]}'s workspace`
+    `${current.profile.full_name.split(' ')[0]}'s workspace`
 
-  renderImportantLinks(currentLinks)
-  renderCalendar(currentEvents)
-  renderSidePanels(currentProfile, currentEvents)
+  renderImportantLinks()
+  renderCalendar()
+  renderSidePanels(current.profile)
   bindCalendarNavigation()
 
   document.getElementById('logout-student')?.addEventListener('click', signOutAndRedirect)
+  document.querySelectorAll('[data-close]').forEach((button) => {
+    button.addEventListener('click', () => {
+      document.getElementById(button.dataset.close)?.classList.add('hidden')
+    })
+  })
 }
 
 function renderImportantLinks(links) {
@@ -43,26 +40,33 @@ function renderImportantLinks(links) {
     : '<div class="empty-panel-state">No links yet.</div>'
 }
 
-function renderSidePanels(profile, events) {
+function renderSidePanels(profile) {
   document.getElementById('student-profile-summary').innerHTML = `
     <h3>${profile.full_name}</h3>
     <p>${profile.email}</p>
-    <p>Role: ${profile.role}</p>
+    <p>Birth date: ${profile.birth_date ?? 'Not provided'}</p>
+  `
+
+  document.getElementById('tutor-profile-summary').innerHTML = `
+    <h3>Tutor profile</h3>
+    <p>Not connected yet.</p>
   `
 
   const assignmentsRoot = document.getElementById('student-assignment-list')
-  const assignments = events.filter((event) => event.type === 'assignment')
+  const events = getStudentEvents()
+    .filter((event) => event.type === 'assignment')
+    .sort((a, b) => new Date(a.date) - new Date(b.date))
 
-  assignmentsRoot.innerHTML = assignments.length
-    ? assignments.map((event) => `
-        <article class="stack-item">
-          <div>
-            <strong>${event.title}</strong>
-            <p>${formatDate(event.date)}</p>
-          </div>
-          <a class="text-link" href="assignment-view.html?template=${event.assignment_id}">Open</a>
-        </article>
-      `).join('')
+  assignmentsRoot.innerHTML = events.length
+    ? events.map((event) => `
+      <article class="stack-item">
+        <div>
+          <strong>${event.title}</strong>
+          <p>${formatDate(event.date)}</p>
+        </div>
+        <a class="text-link" href="assignment-view.html?template=${event.assignmentId}">Open</a>
+      </article>
+    `).join('')
     : '<div class="empty-panel-state">No upcoming assignments have been added yet.</div>'
 }
 
