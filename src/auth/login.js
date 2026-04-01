@@ -16,7 +16,7 @@ form?.addEventListener('submit', async (event) => {
   }
 
   if (result.ok) {
-    window.location.href = '../app/student-dashboard.html'
+    window.location.href = '../app/login/student-dashboard.html'
   }
 })
 
