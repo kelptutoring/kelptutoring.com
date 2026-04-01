@@ -1,14 +1,14 @@
 import { supabase } from '../lib/supabase/supabaseClient.js'
 
 export async function requireAuth(allowedRoles = []) {
-  const { data, error } = await supabase.auth.getUser()
+  const { data: authData, error: authError } = await supabase.auth.getUser()
 
-  if (error || !data?.user) {
+  if (authError || !authData?.user) {
     window.location.replace('../app/login/login.html')
     return null
   }
 
-  const user = data.user
+  const user = authData.user
 
   const { data: profile, error: profileError } = await supabase
     .from('profiles')
