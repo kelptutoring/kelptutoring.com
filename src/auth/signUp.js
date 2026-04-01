@@ -58,21 +58,5 @@ async function handleSignUp({ fullName, email, password, birthDate }) {
     return { ok: false, message: 'User could not be created.' }
   }
 
-  const { error: profileError } = await supabase
-    .from('profiles')
-    .insert([
-      {
-        id: user.id,
-        email,
-        full_name: fullName,
-        birth_date: birthDate || null,
-        role: 'student'
-      }
-    ])
-
-  if (profileError) {
-    return { ok: false, message: profileError.message }
-  }
-
   return { ok: true, message: 'Account created successfully.' }
 }
