@@ -1,10 +1,26 @@
 import { supabase } from '../lib/supabase/supabaseClient.js'
 
+const LOGIN_PATH = '/src/app/signUp/login.html'
+
+const ROLE_HOME = {
+  student: '/src/app/dashboard/student-dashboard.html',
+  teacher: '/src/app/dashboard/tutor-dashboard.html',
+  admin: '/src/app/dashboard/admin-dashboard.html'
+}
+
+export function getHomePathByRole(role) {
+  return ROLE_HOME[role] || LOGIN_PATH
+}
+
+export function redirectByRole(role) {
+  window.location.replace(getHomePathByRole(role))
+}
+
 export async function requireAuth(allowedRoles = []) {
   const { data: authData, error: authError } = await supabase.auth.getUser()
 
   if (authError || !authData?.user) {
-    window.location.replace('/src/app/signUp/login.html')
+    window.location.replace(LOGIN_PATH)
     return null
   }
 
@@ -17,19 +33,27 @@ export async function requireAuth(allowedRoles = []) {
     .single()
 
   if (profileError || !profile) {
-    window.location.replace('/src/app/signUp/login.html')
+    window.location.replace(LOGIN_PATH)
     return null
   }
 
   if (allowedRoles.length && !allowedRoles.includes(profile.role)) {
-    window.location.replace('/src/app/signUp/login.html')
+    redirectByRole(profile.role)
     return null
   }
 
   return { user, profile }
 }
 
+export async function redirectLoggedUser() {
+  const current = await requireAuth()
+
+  if (!current) return
+
+  redirectByRole(current.profile.role)
+}
+
 export async function signOutAndRedirect() {
   await supabase.auth.signOut()
-  window.location.replace('/src/app/signUp/login.html')
+  window.location.replace(LOGIN_PATH)
 }
