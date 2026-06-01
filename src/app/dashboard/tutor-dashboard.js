@@ -1,4 +1,6 @@
-import { requireAuth, signOutAndRedirect } from '../../auth/guard.js';
+import { requireAuth, signOutAndRedirect } from '../../auth/auth-guard.js'
+import { requireAuth, signOutAndRedirect } from '../../auth/auth-guard.js'
+
 import {
   seedLocalData,
   getProfiles,
