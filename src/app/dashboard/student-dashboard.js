@@ -10,11 +10,11 @@ let calendarMonth = new Date().getMonth()
 let currentProfile = null
 let currentEvents = []
 let currentLinks = []
-alert("hahaha");
+alert("fora");
 async function init() {
   const current = await requireAuth(['student', 'admin'])
   if (!current) return
-  console.log('Current auth data:', current);
+  alert('Current auth data:', current);
   document.getElementById('student-heading').textContent =
     `${current.profile.full_name.split(' ')[0]}'s workspace`
 
