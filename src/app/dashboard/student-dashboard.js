@@ -1,6 +1,6 @@
-import { requireAuth, signOutAndRedirect } from '../../auth/auth-guard.js'
+// import { requireAuth, signOutAndRedirect } from '../../auth/auth-guard.js'
 // import { getStudentDashboardData } from '../../data/dashboardData.js'
-import { formatDate } from '../../data/demo-data.js' // you can keep utility-only helpers for now
+// import { formatDate } from '../../data/demo-data.js' // you can keep utility-only helpers for now
 
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -14,7 +14,7 @@ alert("fui chamado");
 async function init() {
   const current = await requireAuth(['student', 'admin'])
   if (!current) return
-  alert(current);
+  console.log('Current auth data:', current);
   document.getElementById('student-heading').textContent =
     `${current.profile.full_name.split(' ')[0]}'s workspace`
 
@@ -113,3 +113,7 @@ function renderCalendar(events) {
 
   root.innerHTML = html
 }
+
+init().catch((error) => {
+  console.error('Student dashboard failed:', error)
+})
