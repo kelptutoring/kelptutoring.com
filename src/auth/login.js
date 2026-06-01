@@ -1,4 +1,5 @@
 import { supabase } from '../lib/supabase/supabaseClient.js'
+import { redirectLoggedUser } from '../auth/auth-guard.js'
 
 const form = document.getElementById('login-form')
 const messageBox = document.getElementById('message')
@@ -42,4 +43,6 @@ async function handleLogin({ email, password }) {
   }
 
   return { ok: true, message: 'Login successful.', user }
+
+  await redirectLoggedUser()
 }
