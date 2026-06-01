@@ -10,7 +10,7 @@ let calendarMonth = new Date().getMonth()
 let currentProfile = null
 let currentEvents = []
 let currentLinks = []
-
+alert("fui chamado");
 async function init() {
   const current = await requireAuth(['student', 'admin'])
   if (!current) return
