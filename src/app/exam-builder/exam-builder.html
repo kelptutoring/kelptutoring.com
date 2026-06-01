@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kelp Exam Builder</title>
+
+  <link rel="stylesheet" href="../../styles/style.css" />
+  <link rel="stylesheet" href="./exam-builder.css" />
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']],
+        processEscapes: true
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+
+<body class="tracks-body gradient-background exam-builder-body">
+  <header class="tracks-header screen-only">
+    <div class="container tracks-header-content">
+      <a href="#" class="tracks-logo-link exam-brand" aria-label="Kelp home">
+        <span class="exam-brand-mark">K</span>
+        <span class="exam-brand-text">Kelp Tutoring</span>
+      </a>
+
+      <nav class="tracks-nav" aria-label="Exam builder navigation">
+        <a href="#editor">Builder</a>
+        <a href="#preview">Preview</a>
+        <a href="./exam-taker.html" target="_blank" rel="noopener">Student view</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container tracks-main exam-builder-main" aria-labelledby="page-title">
+    <section class="tracks-panel exam-builder-panel" id="editor">
+      <div class="tracks-intro exam-builder-intro screen-only">
+        <p class="tracks-kicker">Tutor tools</p>
+        <h1 id="page-title">Exam Builder</h1>
+        <p>Create questions, write LaTeX, add function plots or coordinate points, set multiple-choice answers, then preview, print, export, or open the online student view.</p>
+      </div>
+
+      <div class="exam-layout">
+        <section class="exam-editor" aria-label="Exam editor">
+          <form class="exam-meta-card" id="examMetaForm">
+            <div class="exam-field-grid">
+              <div class="input-group">
+                <label for="examTitle">Exam title</label>
+                <input id="examTitle" type="text" placeholder="Example: Algebra 1 - Unit 2 Checkpoint" />
+              </div>
+
+              <div class="input-group">
+                <label for="examSubject">Subject / track</label>
+                <input id="examSubject" type="text" placeholder="Example: Algebra 1" />
+              </div>
+            </div>
+
+            <div class="exam-field-grid exam-meta-secondary-grid">
+              <div class="input-group">
+                <label for="examDuration">Online timer in minutes</label>
+                <input id="examDuration" type="number" min="0" step="1" placeholder="Example: 45" />
+              </div>
+
+              <div class="exam-color-controls screen-only" aria-label="Title color controls">
+                <div class="input-group">
+                  <label for="titleColor">Title color</label>
+                  <input id="titleColor" type="color" value="#212121" />
+                </div>
+                <div class="input-group">
+                  <label for="stripeColor">Stripe color</label>
+                  <input id="stripeColor" type="color" value="#9bf17e" />
+                </div>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="examInstructions">Instructions</label>
+              <textarea id="examInstructions" rows="4" placeholder="Example: Show your work. You may use $\\sin^2(x)+\\cos^2(x)=1$ when needed."></textarea>
+            </div>
+
+            <div class="exam-latex-preview-card">
+              <span class="exam-preview-label">Instructions preview</span>
+              <div id="instructionsPreview" class="exam-latex-preview">Type instructions above to preview LaTeX.</div>
+            </div>
+          </form>
+
+          <div id="questionList" class="exam-question-list" aria-live="polite"></div>
+
+          <div class="exam-toolbar screen-only">
+            <button type="button" class="btn-primary" id="addQuestionBtn">Add question</button>
+            <button type="button" class="btn-secondary" id="openStudentViewBtn">Open student view</button>
+            <button type="button" class="btn-secondary" id="saveDraftBtn">Save draft</button>
+            <button type="button" class="btn-outline" id="loadDraftBtn">Load draft</button>
+            <button type="button" class="btn-terciary" id="saveLibraryBtn">Save to local library</button>
+          </div>
+        </section>
+
+        <aside class="exam-preview-column" id="preview" aria-label="Exam preview">
+          <div class="exam-preview-sticky">
+            <div class="section-header compact-header screen-only">
+              <div>
+                <h2>Live preview</h2>
+                <p>The title style, LaTeX, options, and graphs render here.</p>
+              </div>
+              <button type="button" class="btn-outline exam-small-btn" id="togglePreviewColumnBtn" aria-expanded="true">Minimize</button>
+            </div>
+
+            <div id="examPreview" class="exam-paper-preview"></div>
+
+            <div class="exam-actions screen-only">
+              <button type="button" class="btn-primary" id="printExamBtn">Print / save as PDF</button>
+              <button type="button" class="btn-secondary" id="exportJsonBtn">Export JSON</button>
+              <label class="btn-outline exam-import-label" for="importJsonInput">Import JSON</label>
+              <input id="importJsonInput" class="hidden" type="file" accept="application/json,.json" />
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <template id="questionTemplate">
+    <article class="exam-question-card" data-question-card>
+      <header class="exam-question-header">
+        <div>
+          <p class="tracks-kicker">Question <span data-question-number></span></p>
+          <h2 data-question-heading></h2>
+        </div>
+
+        <div class="exam-question-header-actions">
+          <button type="button" class="btn-outline exam-small-btn" data-action="toggle-question">Minimize</button>
+          <button type="button" class="btn-outline exam-small-btn" data-action="remove-question">Remove</button>
+        </div>
+      </header>
+
+      <div class="exam-question-body" data-question-body>
+        <!-- BASIC FEATURES -->
+        <section class="exam-fold-section is-collapsed" data-fold-section="basic">
+          <header class="exam-fold-header">
+            <div>
+              <h3>Basic features</h3>
+              <p>Question text, type, points, options, and answer key.</p>
+            </div>
+
+            <button
+              type="button"
+              class="btn-outline exam-fold-toggle"
+              data-action="toggle-basic"
+              aria-expanded="false"
+            >
+              Maximize
+            </button>
+          </header>
+
+          <div class="exam-fold-body" data-fold-body="basic">
+            <div class="exam-fold-content">
+              <div class="input-group">
+                <label>Question text</label>
+                <textarea rows="4" data-field="prompt" placeholder="Example: Solve $\\sin(x)=\\frac{1}{2}$ for $0\\le x<2\\pi$."></textarea>
+              </div>
+
+              <div class="exam-latex-preview-card">
+                <span class="exam-preview-label">Question preview</span>
+                <div class="exam-latex-preview" data-question-preview></div>
+              </div>
+
+              <div class="exam-field-grid exam-question-settings">
+                <div class="input-group">
+                  <label>Question type</label>
+                  <select data-field="type">
+                    <option value="short-answer">Short answer</option>
+                    <option value="multiple-choice">Multiple choice</option>
+                    <option value="multiple-answer">Multiple answers</option>
+                    <option value="true-false">True / false</option>
+                    <option value="numeric">Numeric answer</option>
+                    <option value="essay">Essay / explanation</option>
+                  </select>
+                </div>
+
+                <div class="input-group">
+                  <label>Points</label>
+                  <input type="number" min="0" step="0.5" data-field="points" />
+                </div>
+              </div>
+
+              <div class="exam-options-box" data-options-box>
+                <div class="exam-options-header">
+                  <div>
+                    <h3>Answer options</h3>
+                    <p>Students will select the answer directly on the online exam. Choose the correct answer here.</p>
+                  </div>
+
+                  <button type="button" class="btn-secondary exam-small-btn" data-action="add-option">Add option</button>
+                </div>
+
+                <div class="exam-option-list" data-option-list></div>
+              </div>
+
+              <div class="input-group">
+                <label>Answer key / teacher notes</label>
+                <textarea rows="3" data-field="answer" placeholder="For multiple choice, use this as an explanation. For numeric/short-answer, use it as the expected answer."></textarea>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- IMAGE -->
+        <section class="exam-fold-section is-collapsed" data-fold-section="image">
+          <header class="exam-fold-header">
+            <div>
+              <h3>Image</h3>
+              <p>Add an uploaded image and optional LaTeX notes.</p>
+            </div>
+
+            <button
+              type="button"
+              class="btn-outline exam-fold-toggle"
+              data-action="toggle-image"
+              aria-expanded="false"
+            >
+              Maximize
+            </button>
+          </header>
+
+          <div class="exam-fold-body" data-fold-body="image">
+            <div class="exam-fold-content">
+              <section class="exam-media-builder" aria-label="Image builder">
+                <div class="exam-options-header">
+                  <div>
+                    <h3>Image</h3>
+                    <p>Upload a supporting image when the question needs a diagram, figure, or external visual.</p>
+                  </div>
+
+                  <button type="button" class="btn-outline exam-small-btn" data-action="remove-image">Remove image</button>
+                </div>
+
+                <div class="exam-field-grid">
+                  <div class="input-group">
+                    <label>Message before image</label>
+                    <textarea rows="2" data-field="imageBeforeText" placeholder="Optional LaTeX/text before the image."></textarea>
+                  </div>
+
+                  <div class="input-group">
+                    <label>Message after image</label>
+                    <textarea rows="2" data-field="imageAfterText" placeholder="Optional LaTeX/text after the image."></textarea>
+                  </div>
+                </div>
+
+                <div class="exam-field-grid exam-image-controls">
+                  <div class="input-group">
+                    <span class="exam-field-label">Upload image</span>
+
+                    <label class="exam-upload-button">
+                      <input type="file" accept="image/*" data-image-upload />
+                      <span data-upload-button-text>Upload image</span>
+                    </label>
+                  </div>
+
+                  <div class="input-group">
+                    <label>Image description / alt text</label>
+                    <input type="text" data-field="imageAlt" placeholder="Example: Unit circle diagram" />
+                  </div>
+                </div>
+
+                <figure class="exam-image-preview" data-image-preview></figure>
+              </section>
+            </div>
+          </div>
+        </section>
+
+        <!-- GRAPH -->
+        <section class="exam-graph-builder exam-fold-section is-collapsed" data-fold-section="graph" aria-label="Diagram builder">
+          <header class="exam-fold-header">
+            <div>
+              <h3>Diagram</h3>
+              <p>Build coordinate graphs or plane-geometry diagrams with points, segments, polygons, circles, angles, labels, and functions.</p>
+            </div>
+
+            <button
+              type="button"
+              class="btn-outline exam-fold-toggle"
+              data-action="toggle-graph"
+              aria-expanded="false"
+            >
+              Maximize
+            </button>
+          </header>
+
+          <div class="exam-graph-body exam-fold-body" data-fold-body="graph" data-graph-body>
+            <div class="exam-fold-content">
+              <div class="exam-field-grid exam-graph-text-grid">
+                <div class="input-group">
+                  <label>Message before graph</label>
+                  <textarea
+                    rows="2"
+                    data-field="graphBeforeText"
+                    placeholder="Optional LaTeX/text before the graph."
+                  ></textarea>
+                </div>
+
+                <div class="input-group">
+                  <label>Message after graph</label>
+                  <textarea
+                    rows="2"
+                    data-field="graphAfterText"
+                    placeholder="Optional LaTeX/text after the graph."
+                  ></textarea>
+                </div>
+              </div>
+
+              <input type="hidden" data-graph-field="graphType" value="points" />
+              <input type="hidden" data-graph-field="expression" value="" />
+              <input type="hidden" data-graph-field="functionStroke" value="#145c63" />
+              <input type="hidden" data-graph-field="functionLineWidth" value="2.5" />
+              <input type="hidden" data-graph-field="functionDash" value="solid" />
+              <input type="hidden" data-graph-field="functionLabel" value="" />
+              <input type="hidden" data-graph-field="xMin" value="-10" />
+              <input type="hidden" data-graph-field="xMax" value="10" />
+              <input type="hidden" data-graph-field="yMin" value="-10" />
+              <input type="hidden" data-graph-field="yMax" value="10" />
+              <input type="hidden" data-graph-field="polygonSides" value="6" />
+              <input type="hidden" data-graph-field="polygonRadius" value="4" />
+              <input type="hidden" data-graph-field="polygonRotation" value="90" />
+              <input type="checkbox" class="diagram-hidden-field" data-graph-field="showApothem" aria-hidden="true" tabindex="-1" />
+
+              <div class="input-group diagram-title-field">
+                <label>Diagram label</label>
+                <input
+                  type="text"
+                  data-graph-field="title"
+                  placeholder="Example: Parent quadratic, triangle ABC, circle O"
+                />
+              </div>
+
+              <div class="diagram-editor-shell">
+                <aside class="diagram-toolbox" aria-label="Diagram tools">
+                  <section class="diagram-tool-section is-collapsed" data-tool-section="insert">
+                    <button type="button" class="diagram-section-toggle" data-action="toggle-tool-section" aria-expanded="false">
+                      <span>Insert</span>
+                      <span aria-hidden="true">▸</span>
+                    </button>
+                    <div class="diagram-tool-section-body">
+                      <button type="button" class="diagram-tool-button is-active" data-diagram-tool="point" aria-pressed="true">Point</button>
+                      <button type="button" class="diagram-tool-button" data-diagram-tool="segment" aria-pressed="false">Segment</button>
+                      <button type="button" class="diagram-tool-button" data-diagram-tool="polygon" aria-pressed="false">Regular polygon</button>
+                      <button type="button" class="diagram-tool-button" data-diagram-tool="irregular-polygon" aria-pressed="false">Irregular polygon</button>
+                      <button type="button" class="diagram-tool-button" data-diagram-tool="circle" aria-pressed="false">Circle</button>
+                      <button type="button" class="diagram-tool-button" data-diagram-tool="ellipse" aria-pressed="false">Ellipse</button>
+                      <button type="button" class="diagram-tool-button" data-diagram-tool="trapezoid" aria-pressed="false">Trapezoid</button>
+                      <button type="button" class="diagram-tool-button" data-diagram-tool="parallelogram" aria-pressed="false">Parallelogram</button>
+                      <button type="button" class="diagram-tool-button" data-diagram-tool="angle" aria-pressed="false">Angle</button>
+                      <button type="button" class="diagram-tool-button" data-diagram-tool="function" aria-pressed="false">Function</button>
+                      <button type="button" class="diagram-tool-button" data-diagram-tool="latex-text" aria-pressed="false">LaTeX text</button>
+                    </div>
+                  </section>
+
+                  <section class="diagram-tool-section is-collapsed" data-tool-section="edit">
+                    <button type="button" class="diagram-section-toggle" data-action="toggle-tool-section" aria-expanded="false">
+                      <span>Edit</span>
+                      <span aria-hidden="true">▸</span>
+                    </button>
+                    <div class="diagram-tool-section-body">
+                      <button type="button" class="diagram-tool-button" data-diagram-tool="select" aria-pressed="false">Selection</button>
+                      <button type="button" class="diagram-tool-button" data-diagram-tool="move-point" aria-pressed="false">Move</button>
+                      <button type="button" class="diagram-tool-button" data-diagram-tool="erase" aria-pressed="false">Eraser</button>
+                      <button type="button" class="diagram-tool-button danger" data-action="clear-diagram">Clear canvas</button>
+                    </div>
+                  </section>
+
+                  <section class="diagram-tool-section is-collapsed" data-tool-section="modify">
+                    <button type="button" class="diagram-section-toggle" data-action="toggle-tool-section" aria-expanded="false">
+                      <span>Modify</span>
+                      <span aria-hidden="true">▸</span>
+                    </button>
+                    <div class="diagram-tool-section-body">
+                      <label class="diagram-tool-check">
+                        <input type="checkbox" data-graph-field="snapToGrid" />
+                        <span>Stick</span>
+                      </label>
+
+                      <label class="diagram-tool-check">
+                        <input type="checkbox" data-graph-field="autoFit" checked />
+                        <span>Auto-fit</span>
+                      </label>
+
+                      <div class="input-group compact-input">
+                        <label>Display</label>
+                        <select data-graph-field="displayMode">
+                          <option value="coordinate">Coordinate plane</option>
+                          <option value="geometry">Geometry figure only</option>
+                        </select>
+                      </div>
+
+                      <button type="button" class="diagram-tool-button" data-action="open-margin-dialog">Margin</button>
+                    </div>
+                  </section>
+                </aside>
+
+                <div class="diagram-canvas-area">
+                  <div class="diagram-canvas-topbar" aria-label="Diagram quick actions">
+                    <button type="button" class="diagram-icon-button" data-action="diagram-undo" title="Undo">↶</button>
+                    <button type="button" class="diagram-icon-button" data-action="diagram-redo" title="Redo">↷</button>
+                    <button type="button" class="diagram-icon-button" data-diagram-tool="erase" title="Erase object">⌫</button>
+                    <button type="button" class="diagram-icon-button" data-action="center-view" title="Center view">⊙</button>
+                  </div>
+
+                  <canvas
+                    class="exam-graph-canvas"
+                    data-editor-graph
+                    aria-label="Diagram preview. Choose a tool and interact with the drawing area."
+                  ></canvas>
+
+                  <div class="diagram-status-under-canvas">
+                    <p class="diagram-tool-hint" data-diagram-tool-hint>
+                      Click the diagram to insert a point. Turn on Stick to preview snapped placement.
+                    </p>
+
+                    <p class="exam-graph-message" data-graph-message></p>
+                  </div>
+
+                  <section class="diagram-object-panel" aria-label="Diagram objects">
+                    <div class="diagram-object-panel-header">
+                      <h4>Objects</h4>
+                      <p>Show, hide, select, or double-click objects to edit properties.</p>
+                    </div>
+                    <div class="diagram-object-list" data-diagram-object-list>
+                      <p class="diagram-empty-note">No objects yet.</p>
+                    </div>
+                  </section>
+                </div>
+              </div>
+
+              <div class="input-group exam-graph-points-panel" data-graph-point-fields>
+                <label>Standalone points</label>
+                <textarea
+                  rows="3"
+                  data-graph-field="pointsText"
+                  placeholder="Example: A(1, 2), B(3, 4), C(-2, 1)"
+                ></textarea>
+              </div>
+
+              <div class="exam-fold-actions exam-graph-actions">
+                <button
+                  type="button"
+                  class="btn-secondary exam-small-btn"
+                  data-action="generate-graph"
+                >
+                  Attach diagram
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </article>
+  </template>
+
+  <script src="./exam-builder.js" defer></script>
+</body>
+</html>

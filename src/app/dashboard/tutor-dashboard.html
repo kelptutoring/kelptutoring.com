@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Tutor Workspace</title>
+
+  <link rel="stylesheet" href="../../styles/style.css" />
+  <script type="module" src="../dashboard/tutorDashboard.js"></script>
+</head>
+
+<body class="workspace-body gradient-body-1">
+  <div class="workspace-shell">
+    <aside class="workspace-sidebar">
+      <div class="workspace-brand">
+        <img
+          src="../../../public/assets/logos/Kelp-logo-gpt.png"
+          alt="Kelp logo"
+          class="workspace-logo"
+        />
+      </div>
+
+      <nav class="workspace-nav" aria-label="Tutor workspace navigation">
+        <a href="../schedules/schedules.html" class="workspace-nav-link">
+          Tracks
+        </a>
+
+        <!-- <a href="../profile/tutor-profile.html" class="workspace-nav-link">
+          Profile
+        </a>
+
+        <a href="../payments/tutor-payments.html" class="workspace-nav-link">
+          Payments
+        </a>
+
+        <a href="../students/tutor-students.html" class="workspace-nav-link">
+          Students
+        </a>
+
+        <a href="../assignments/assignment-studio.html" class="workspace-nav-link">
+          Assignments
+        </a> -->
+
+        <button type="button" class="workspace-nav-link workspace-logout" id="logout-tutor">
+          Sign out
+        </button>
+      </nav>
+    </aside>
+
+    <main class="workspace-main">
+      <section class="workspace-card top-links-card">
+        <div class="section-header compact-header">
+          <div>
+            <h2>Important links</h2>
+            <p>Shortcuts for the tutor workspace.</p>
+          </div>
+        </div>
+
+        <div id="important-links" class="link-chip-list">
+          <a href="../schedule-generator/schedule-generator.html" class="link-chip">
+            Generate schedule
+          </a>
+
+          <!-- <a href="../assignments/assignment-studio.html" class="link-chip">
+            Create assignment
+          </a>
+
+          <a href="../students/tutor-students.html" class="link-chip">
+            Manage students
+          </a>
+
+          <a href="../profile/tutor-profile.html" class="link-chip">
+            Edit profile
+          </a> -->
+        </div>
+      </section>
+
+      <section id="tutor-calendar" class="workspace-card calendar-card">
+        <div class="section-header">
+          <div>
+            <h2>Month calendar</h2>
+            <p>
+              Classes, meetings, due dates, and tutoring workflow reminders.
+            </p>
+          </div>
+
+          <div class="calendar-toolbar">
+            <button id="tutor-calendar-prev" class="calendar-nav-btn" type="button">
+              ←
+            </button>
+
+            <div id="tutor-calendar-label" class="calendar-label"></div>
+
+            <button id="tutor-calendar-next" class="calendar-nav-btn" type="button">
+              →
+            </button>
+          </div>
+        </div>
+
+        <p id="tutor-calendar-summary" class="calendar-summary"></p>
+
+        <div class="calendar-legend">
+          <span class="legend-pill class">Class</span>
+          <span class="legend-pill meeting">Meeting</span>
+          <span class="legend-pill assignment">Due date</span>
+        </div>
+
+        <div id="tutor-calendar-grid" class="month-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="hidden" id="calendar-event-modal-shell">
+    <section class="workspace-card">
+      <div class="section-header compact-header">
+        <div>
+          <h2>Calendar event</h2>
+        </div>
+
+        <button class="btn-secondary" type="button" data-close="calendar-event-modal-shell">
+          Close
+        </button>
+      </div>
+
+      <div id="calendar-event-modal-content"></div>
+    </section>
+  </div>
+</body>
+</html>

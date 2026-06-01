@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutor Profile - Kelp</title>
+  <link rel="stylesheet" href="src/styles/style.css" />
+  <script type="module" src="src/app/profile/profile.js"></script>
+</head>
+<body class="workspace-body profile-page-body" data-profile-role="tutor">
+  <main class="profile-shell">
+    <section class="workspace-card profile-card-page">
+      <div class="section-header">
+        <div>
+          <p class="page-kicker">Profile</p>
+          <h1>Tutor profile</h1>
+          <p class="page-copy">Visible only to the tutor, linked students, and admin.</p>
+        </div>
+        <div class="profile-header-links">
+          <a href="tutor-dashboard.html" class="btn-outline">Back to dashboard</a>
+          <button class="btn-secondary" id="profile-edit-toggle" type="button">Edit profile</button>
+        </div>
+      </div>
+      <form id="profile-form" class="profile-form-grid"></form>
+      <p id="profile-message" class="mini-note"></p>
+    </section>
+  </main>
+</body>
+</html>

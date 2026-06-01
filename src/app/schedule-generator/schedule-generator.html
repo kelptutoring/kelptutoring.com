@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Schedule Generator</title>
+
+  <link rel="stylesheet" href="../../styles/style.css" />
+</head>
+
+<body class="tracks-body gradient-background">
+  <header class="tracks-header">
+    <div class="container tracks-header-content">
+      <a href="../dashboard/student-dashboard.html" class="tracks-logo-link" aria-label="Back to dashboard">
+        <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="Kelp logo" class="tracks-logo" />
+      </a>
+
+      <nav class="tracks-nav" aria-label="Schedule generator navigation">
+        <a href="../schedules/schedules.html">Back</a>
+        <a href="../dashboard/student-dashboard.html">Home</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container tracks-main">
+    <section class="tracks-panel" aria-labelledby="schedule-generator-title">
+      <div class="tracks-intro">
+        <p class="tracks-kicker">Schedule generator</p>
+        <h1 id="schedule-generator-title">Build a custom schedule</h1>
+        <p>Choose a track, select the modules, and set a starting date.</p>
+      </div>
+
+      <section class="generator-step" id="levelStep">
+        <h2>1. Choose a level</h2>
+        <div class="button-grid" id="levelButtons"></div>
+      </section>
+
+      <section class="generator-step hidden" id="subjectStep">
+        <h2>2. Choose a subject</h2>
+        <div class="button-grid" id="subjectButtons"></div>
+      </section>
+
+      <section class="generator-step hidden" id="trackStep">
+        <h2>3. Choose a track</h2>
+        <div class="button-grid" id="trackButtons"></div>
+      </section>
+
+      <section class="generator-step hidden" id="moduleStep">
+        <h2>4. Choose modules</h2>
+        <p>Select every module you want to include.</p>
+
+        <div class="modules-grid selectable-modules-grid" id="moduleButtons"></div>
+      </section>
+
+      <section class="generator-step hidden" id="weekPreviewStep">
+  <h2>5. Review selected weeks</h2>
+  <p>These are the weekly lessons that will be included in the schedule.</p>
+
+  <div class="week-preview-list" id="weekPreviewList"></div>
+
+  <div class="generator-actions">
+    <button type="button" class="btn-primary" id="continueToDateBtn">
+      Continue to starting date
+    </button>
+  </div>
+</section>
+
+      <section class="generator-step hidden" id="dateStep">
+        <h2>6. Choose a starting date</h2>
+
+        <div class="input-group">
+          <label for="startDate">Starting date</label>
+          <input type="date" id="startDate" />
+        </div>
+
+        <div class="generator-actions">
+          <button type="button" class="btn-primary" id="generateScheduleBtn">
+            Generate schedule
+          </button>
+        </div>
+      </section>
+      <div class="generator-actions generator-navigation">
+      <button type="button" class="btn-secondary hidden" id="backStepBtn">
+        Back
+      </button>
+    </div>
+
+      <p class="message" id="generatorMessage" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script type="module" src="./schedule-generator.js"></script>
+</body>
+</html>

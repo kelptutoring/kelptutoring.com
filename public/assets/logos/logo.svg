@@ -1,0 +1,2628 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="297mm"
+   height="210mm"
+   viewBox="0 0 297 210"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   sodipodi:docname="logo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#cccccc"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="1"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="1.3934011"
+     inkscape:cx="241.49543"
+     inkscape:cy="155.37521"
+     inkscape:window-width="1366"
+     inkscape:window-height="745"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <filter
+       x="-1.0299164"
+       width="3.0598329"
+       y="-1.0299164"
+       height="3.0598329"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter422">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="12.558689"
+         id="feGaussianBlur419" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence419" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap419" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur420" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite420"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite421" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite422"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.64226941"
+       width="2.2845388"
+       y="-0.64226941"
+       height="2.2845388"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter416">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="5.9106221"
+         id="feGaussianBlur413" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence413" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap413" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur414" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite414"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite415" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite416"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-1.0299164"
+       width="3.0598329"
+       y="-1.0299164"
+       height="3.0598329"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter3547">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="12.558689"
+         id="feGaussianBlur3544" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence3544" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap3544" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur3545" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite3545"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite3546" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite3547"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-1.0299164"
+       width="3.0598329"
+       y="-1.0299164"
+       height="3.0598329"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter3550">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="12.558689"
+         id="feGaussianBlur3547" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence3547" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap3547" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur3548" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite3548"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite3549" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite3550"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-1.1098152"
+       width="3.2196303"
+       y="-1.1098152"
+       height="3.2196303"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter497">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="13.928936"
+         id="feGaussianBlur494" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence494" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap494" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur495" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite495"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite496" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite497"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-1.0299164"
+       width="3.0598329"
+       y="-1.0299164"
+       height="3.0598329"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter515">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="12.558689"
+         id="feGaussianBlur512" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence512" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap512" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur513" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite513"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite514" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite515"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-1.0299164"
+       width="3.0598329"
+       y="-1.0299164"
+       height="3.0598329"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter3556">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="12.558689"
+         id="feGaussianBlur3553" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence3553" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap3553" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur3554" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite3554"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite3555" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite3556"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-1.0299164"
+       width="3.0598329"
+       y="-1.0299164"
+       height="3.0598329"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter452">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="12.558689"
+         id="feGaussianBlur449" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence449" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap449" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur450" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite450"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite451" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite452"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.64226941"
+       width="2.2845388"
+       y="-0.64226941"
+       height="2.2845388"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter428">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="5.9106221"
+         id="feGaussianBlur425" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence425" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap425" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur426" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite426"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite427" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite428"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.55263994"
+       width="2.1052799"
+       y="-0.55263994"
+       height="2.1052799"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter437">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="4.3734953"
+         id="feGaussianBlur434" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence434" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap434" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur435" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite435"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite436" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite437"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-1.0413075"
+       width="3.082615"
+       y="-1.0413075"
+       height="3.082615"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter3535">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="12.754044"
+         id="feGaussianBlur3532" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence3532" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap3532" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur3533" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite3533"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite3534" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite3535"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-1.0299164"
+       width="3.0598329"
+       y="-1.0299164"
+       height="3.0598329"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter449">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="12.558689"
+         id="feGaussianBlur446" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence446" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap446" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur447" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite447"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite448" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite449"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.61991056"
+       width="2.2398211"
+       y="-0.61991056"
+       height="2.2398211"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter1306">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="5.5271727"
+         id="feGaussianBlur1303" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence1303" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap1303" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur1304" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite1304"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite1305" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite1306"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.64226941"
+       width="2.2845388"
+       y="-0.64226941"
+       height="2.2845388"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter3541">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="5.9106221"
+         id="feGaussianBlur3538" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence3538" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap3538" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur3539" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite3539"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite3540" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite3541"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-1.0299164"
+       width="3.0598329"
+       y="-1.0299164"
+       height="3.0598329"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter3544">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="12.558689"
+         id="feGaussianBlur3541" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence3541" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap3541" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur3542" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite3542"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite3543" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite3544"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.61991056"
+       width="2.2398211"
+       y="-0.61991056"
+       height="2.2398211"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter401">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="5.5271727"
+         id="feGaussianBlur398" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence398" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap398" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur399" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite399"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite400" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite401"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.87141164"
+       width="2.7428233"
+       y="-0.87141164"
+       height="2.7428233"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter404">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="9.8403644"
+         id="feGaussianBlur401" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence401" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap401" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur402" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite402"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite403" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite404"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.64226941"
+       width="2.2845388"
+       y="-0.64226941"
+       height="2.2845388"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter407">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="5.9106221"
+         id="feGaussianBlur404" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence404" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap404" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur405" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite405"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite406" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite407"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.64226941"
+       width="2.2845388"
+       y="-0.64226941"
+       height="2.2845388"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter410">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="5.9106221"
+         id="feGaussianBlur407" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence407" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap407" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur408" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite408"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite409" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite410"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.61991056"
+       width="2.2398211"
+       y="-0.61991056"
+       height="2.2398211"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter431">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="5.5271727"
+         id="feGaussianBlur428" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence428" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap428" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur429" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite429"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite430" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite431"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-1.0299164"
+       width="3.0598329"
+       y="-1.0299164"
+       height="3.0598329"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter434">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="12.558689"
+         id="feGaussianBlur431" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence431" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap431" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur432" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite432"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite433" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite434"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.64226941"
+       width="2.2845388"
+       y="-0.64226941"
+       height="2.2845388"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter440">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="5.9106221"
+         id="feGaussianBlur437" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence437" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap437" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur438" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite438"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite439" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite440"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.64226941"
+       width="2.2845388"
+       y="-0.64226941"
+       height="2.2845388"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter443">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="5.9106221"
+         id="feGaussianBlur440" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence440" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap440" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur441" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite441"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite442" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite443"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.61991056"
+       width="2.2398211"
+       y="-0.61991056"
+       height="2.2398211"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter446">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="5.5271727"
+         id="feGaussianBlur443" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence443" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap443" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur444" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite444"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite445" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite446"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.64226941"
+       width="2.2845388"
+       y="-0.64226941"
+       height="2.2845388"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter455">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="5.9106221"
+         id="feGaussianBlur452" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence452" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap452" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur453" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite453"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite454" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite455"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.82014984"
+       width="2.6402997"
+       y="-0.82014984"
+       height="2.6402997"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter458">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="8.9612355"
+         id="feGaussianBlur455" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence455" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap455" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur456" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite456"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite457" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite458"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.64226941"
+       width="2.2845388"
+       y="-0.64226941"
+       height="2.2845388"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter461">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="5.9106221"
+         id="feGaussianBlur458" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence458" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap458" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur459" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite459"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite460" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite461"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.64226941"
+       width="2.2845388"
+       y="-0.64226941"
+       height="2.2845388"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter470">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="5.9106221"
+         id="feGaussianBlur467" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence467" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap467" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur468" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite468"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite469" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite470"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.82014984"
+       width="2.6402997"
+       y="-0.82014984"
+       height="2.6402997"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter473">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="8.9612355"
+         id="feGaussianBlur470" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence470" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap470" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur471" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite471"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite472" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite473"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.64226941"
+       width="2.2845388"
+       y="-0.64226941"
+       height="2.2845388"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter476">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="5.9106221"
+         id="feGaussianBlur473" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence473" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap473" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur474" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite474"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite475" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite476"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.64226941"
+       width="2.2845388"
+       y="-0.64226941"
+       height="2.2845388"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter479">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="5.9106221"
+         id="feGaussianBlur476" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence476" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap476" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur477" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite477"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite478" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite479"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.82014984"
+       width="2.6402997"
+       y="-0.82014984"
+       height="2.6402997"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter482">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="8.9612355"
+         id="feGaussianBlur479" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence479" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap479" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur480" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite480"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite481" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite482"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.64226941"
+       width="2.2845388"
+       y="-0.64226941"
+       height="2.2845388"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter488">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="5.9106221"
+         id="feGaussianBlur485" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence485" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap485" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur486" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite486"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite487" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite488"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.64226941"
+       width="2.2845388"
+       y="-0.64226941"
+       height="2.2845388"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter491">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="5.9106221"
+         id="feGaussianBlur488" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence488" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap488" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur489" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite489"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite490" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite491"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.64226941"
+       width="2.2845388"
+       y="-0.64226941"
+       height="2.2845388"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter500">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="5.9106221"
+         id="feGaussianBlur497" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence497" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap497" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur498" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite498"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite499" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite500"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.61991056"
+       width="2.2398211"
+       y="-0.61991056"
+       height="2.2398211"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter503">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="5.5271727"
+         id="feGaussianBlur500" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence500" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap500" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur501" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite501"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite502" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite503"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.64226941"
+       width="2.2845388"
+       y="-0.64226941"
+       height="2.2845388"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter3553">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="5.9106221"
+         id="feGaussianBlur3550" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence3550" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap3550" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur3551" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite3551"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite3552" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite3553"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.82014984"
+       width="2.6402997"
+       y="-0.82014984"
+       height="2.6402997"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter512">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="8.9612355"
+         id="feGaussianBlur509" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence509" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap509" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur510" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite510"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite511" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite512"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.64226941"
+       width="2.2845388"
+       y="-0.64226941"
+       height="2.2845388"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter521">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="5.9106221"
+         id="feGaussianBlur518" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence518" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap518" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur519" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite519"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite520" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite521"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-1.0299164"
+       width="3.0598329"
+       y="-1.0299164"
+       height="3.0598329"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter524">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="12.558689"
+         id="feGaussianBlur521" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence521" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap521" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur522" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite522"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite523" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite524"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-0.70081"
+       width="2.40162"
+       y="-0.70081"
+       height="2.40162"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter518">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="6.9145813"
+         id="feGaussianBlur515" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence515" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap515" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur516" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite516"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite517" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite518"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-1.0299164"
+       width="3.0598329"
+       y="-1.0299164"
+       height="3.0598329"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter506">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="12.558689"
+         id="feGaussianBlur503" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence503" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap503" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur504" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite504"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite505" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite506"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+    <filter
+       x="-1.0299164"
+       width="3.0598328"
+       y="-1.0299164"
+       height="3.0598328"
+       inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges"
+       inkscape:menu="Textures"
+       inkscape:label="Felt"
+       style="color-interpolation-filters:sRGB"
+       id="filter4">
+      <feGaussianBlur
+         result="result1"
+         in="SourceGraphic"
+         stdDeviation="12.558689"
+         id="feGaussianBlur1" />
+      <feTurbulence
+         result="result0"
+         numOctaves="5"
+         baseFrequency="0.05"
+         type="fractalNoise"
+         id="feTurbulence1" />
+      <feDisplacementMap
+         result="result2"
+         scale="20"
+         yChannelSelector="G"
+         xChannelSelector="R"
+         in="result1"
+         in2="result0"
+         id="feDisplacementMap1" />
+      <feGaussianBlur
+         result="result4"
+         in="result2"
+         stdDeviation="5"
+         id="feGaussianBlur2" />
+      <feComposite
+         result="result6"
+         k1="1"
+         k3="1"
+         k2="0.5"
+         in="result0"
+         in2="result4"
+         operator="arithmetic"
+         id="feComposite2"
+         k4="0" />
+      <feComposite
+         in="result6"
+         in2="result0"
+         operator="in"
+         result="result91"
+         id="feComposite3" />
+      <feComposite
+         operator="arithmetic"
+         k1="1.5"
+         in="result2"
+         in2="result91"
+         id="feComposite4"
+         k2="0"
+         k3="0"
+         k4="0" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#29c0cc;fill-opacity:1;stroke:#4f8b59;stroke-width:0.195704;stroke-linejoin:round;stroke-opacity:0"
+       d="m 20.525375,77.322872 c -1.34839,-1.459851 -1.9474,-2.606441 -1.79163,-3.429441 0.10174,-0.53754 0.3177,-0.923951 0.94516,-1.691182 0.30238,-0.369719 0.52523,-0.746508 0.52523,-0.888016 0,-0.153629 -0.1924,-0.445448 -0.5131,-0.778243 -0.41656,-0.432257 -0.5456,-0.657922 -0.68578,-1.199269 -0.095,-0.366753 -0.22376,-0.809804 -0.28619,-0.984554 -0.098,-0.27436 -0.0753,-0.386379 0.16608,-0.820704 0.15377,-0.276639 0.67494,-0.931904 1.15817,-1.456145 0.97874,-1.061803 1.26739,-1.62194 1.17693,-2.283809 -0.0745,-0.544757 -0.36914,-0.940485 -1.23867,-1.663441 -0.39143,-0.325432 -0.83982,-0.80626 -0.99643,-1.068497 -0.25399,-0.425302 -0.28966,-0.60301 -0.33033,-1.645545 -0.0251,-0.642807 0.011,-2.039983 0.0802,-3.104834 0.14095,-2.168839 0.061,-3.253427 -0.35968,-4.881278 -0.50218,-1.943137 -1.28584,-2.978903 -3.02389,-3.996707 -1.212167,-0.709855 -1.732987,-0.86907 -2.842847,-0.86907 h -0.86707 l -0.10887,-0.384702 c -0.16697,-0.589989 -0.1315,-1.34746 0.10241,-2.186938 0.11685,-0.419362 0.251826,-1.279539 0.50214,-1.839649 0.433238,-0.969425 0.610499,-1.156502 1.05553,-2.094198 0.870538,-1.834255 2.500197,-3.578436 2.799527,-4.283012 0.23624,-0.556083 0.27728,-0.805835 0.28385,-1.727257 0.007,-0.977736 -0.018,-1.124529 -0.27076,-1.590117 -0.15314,-0.282118 -0.65685,-0.951506 -1.11936,-1.487529 -0.46251,-0.536023 -0.965567,-1.215836 -1.117917,-1.510693 -0.24425,-0.472729 -0.27259,-0.631538 -0.23965,-1.343357 0.0332,-0.717814 0.0916,-0.914154 0.52704,-1.772129 0.269327,-0.530683 0.960937,-1.625644 1.536917,-2.433247 1.11567,-1.564332 1.40844,-2.17192 1.58517,-3.289684 0.0892,-0.564115 0.0793,-0.834791 -0.0507,-1.3848 -0.19065,-0.806692 -0.35846,-1.152012 -1.34177,-2.761022 -0.87274,-1.42807 -0.98805,-1.951946 -0.61286,-2.784288 0.67282,-1.492585 2.08334,-2.320224 3.7026,-2.172542 0.86203,0.07862 1.03402,0.158023 1.31759,0.608275 0.49675,0.788738 0.57596,1.441068 0.58149,4.788906 0.005,3.066524 0.0101,3.139666 0.25289,3.66667 0.41561,0.902193 1.45342,1.636601 3.51578,2.487946 2.11942,0.8749 2.44891,1.048376 2.90996,1.532063 0.63394,0.665072 0.84223,1.251461 0.77664,2.186433 -0.0681,0.970717 -0.32736,1.695872 -1.38499,3.873705 -0.47952,0.98741 -0.94933,2.058789 -1.04403,2.380839 -0.26362,0.896609 -0.10773,1.2833 1.04607,2.594687 0.68251,0.775722 1.23769,1.625496 1.52038,2.32714 0.26842,0.666192 0.37114,1.831576 0.21208,2.406035 l -0.11754,0.424472 -0.71632,0.03971 c -0.89403,0.04957 -1.38319,0.372196 -1.74687,1.152127 -0.5444,1.16749 -0.60377,1.637355 -0.61064,4.832621 -0.004,1.63628 0.0167,3.967601 0.0449,5.180708 l 0.0513,2.20564 -0.3447,0.839602 c -0.20958,0.510474 -0.63769,1.234344 -1.09211,1.846591 -1.66874,2.248313 -2.58803,3.962657 -2.58803,4.826264 0,0.702943 0.1631,1.072209 0.93273,2.111707 1.13703,1.535743 1.2978,2.154643 0.95103,3.661008 -0.1234,0.536028 -0.34257,1.482404 -0.48705,2.10306 -0.19112,0.820984 -0.27541,1.529665 -0.30935,2.600877 -0.0457,1.443002 -0.0531,1.481562 -0.36838,1.931252 -0.46677,0.66577 -1.02557,1.90318 -1.09997,2.4358 -0.0354,0.25335 -0.009,0.676041 0.0585,0.939301 0.0676,0.26327 0.10778,0.49343 0.0894,0.51148 -0.0184,0.018 -0.33345,-0.29202 -0.70015,-0.68903 z"
+       id="path40"
+       sodipodi:nodetypes="ssssssssssssssssscsssssssssssssssssssssssssssscsssscsssssssssssss" />
+  </g>
+</svg>

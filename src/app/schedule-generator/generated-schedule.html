@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Generated Schedule</title>
+
+  <link rel="stylesheet" href="../../styles/style.css" />
+</head>
+
+<body class="tracks-body gradient-background">
+  <header class="tracks-header">
+    <div class="container tracks-header-content">
+      <a href="../dashboard/student-dashboard.html" class="tracks-logo-link" aria-label="Back to dashboard">
+        <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="Kelp logo" class="tracks-logo" />
+      </a>
+
+      <nav class="tracks-nav" aria-label="Generated schedule navigation">
+        <a href="./schedule-generator.html">Back</a>
+        <a href="../dashboard/student-dashboard.html">Home</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container tracks-main">
+    <section class="tracks-panel generated-schedule-panel" aria-labelledby="generated-schedule-title">
+      <div class="tracks-intro screen-only">
+        <p class="tracks-kicker">Generated schedule</p>
+        <h1 id="generated-schedule-title">Custom Schedule</h1>
+        <p id="scheduleSummary">Review the generated weekly plan below.</p>
+      </div>
+
+    <div class="schedule-actions screen-only">
+      <button type="button" class="btn-secondary" id="editScheduleBtn">
+        Edit schedule
+      </button>
+
+      <button type="button" class="btn-primary" id="printScheduleBtn">
+        Generate PDF
+      </button>
+    </div>
+
+    <div class="schedule-color-controls screen-only">
+      <div class="input-group">
+        <label for="headerColorInput">Header color</label>
+        <input type="color" id="headerColorInput" value="#5FAE63" />
+      </div>
+
+      <div class="input-group">
+        <label for="stripeColorInput">Stripe color</label>
+        <input type="color" id="stripeColorInput" value="#5FAE63" />
+      </div>
+    </div>
+
+    <section class="schedule-print-area" id="schedulePrintArea">
+      <div class="schedule-watermark" aria-hidden="true">
+        <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="" />
+      </div>
+
+      <h1 class="schedule-document-title" id="scheduleDocumentTitle">
+        Generated Schedule
+      </h1>
+
+      <div class="schedule-matrix-list" id="scheduleMatrixList"></div>
+    </section>
+
+      <p class="message screen-only" id="generatedScheduleMessage" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script type="module" src="./generated-schedule.js"></script>
+</body>
+</html>
