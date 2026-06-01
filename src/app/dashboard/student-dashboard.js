@@ -11,8 +11,6 @@ let currentProfile = null
 let currentEvents = []
 let currentLinks = []
 
-import { requireAuth, signOutAndRedirect } from '../../auth/auth-guard.js'
-
 const current = await requireAuth(['student', 'admin'])
 
 if (!current) {
@@ -31,9 +29,9 @@ async function init() {
   document.getElementById('student-heading').textContent =
     `${current.profile.full_name.split(' ')[0]}'s workspace`
 
-  renderImportantLinks()
-  renderCalendar()
-  renderSidePanels(current.profile)
+  renderImportantLinks(currentLinks)
+  renderCalendar(currentEvents)
+  // renderSidePanels(current.profile)
   bindCalendarNavigation()
 
   document.getElementById('logout-student')?.addEventListener('click', signOutAndRedirect)
