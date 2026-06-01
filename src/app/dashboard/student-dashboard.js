@@ -1,6 +1,6 @@
 import { requireAuth, signOutAndRedirect } from '../../auth/auth-guard.js'
 // import { getStudentDashboardData } from '../../data/dashboardData.js'
-import { formatDate } from '../../data/demoData.js' // you can keep utility-only helpers for now
+import { formatDate } from '../../data/demo-data.js' // you can keep utility-only helpers for now
 
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
