@@ -10,6 +10,19 @@ let calendarMonth = new Date().getMonth()
 let currentProfile = null
 let currentEvents = []
 let currentLinks = []
+
+import { requireAuth, signOutAndRedirect } from '../../auth/auth-guard.js'
+
+const current = await requireAuth(['student', 'admin'])
+
+if (!current) {
+  throw new Error('Access denied')
+}
+
+const { user, profile } = current
+
+document.getElementById('student-heading').textContent =
+  `${profile.full_name.split(' ')[0]}'s workspace`
 alert("fora");
 async function init() {
   const current = await requireAuth(['student', 'admin'])
