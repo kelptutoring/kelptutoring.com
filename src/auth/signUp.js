@@ -23,7 +23,7 @@ form?.addEventListener('submit', async (event) => {
   }
 
   if (result.ok) {
-    window.location.href = '../login/login.html'
+    window.location.href = '../signUp/login.html'
   }
 })
 
