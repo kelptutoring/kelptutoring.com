@@ -1,4 +1,4 @@
-import { requireAuth, signOutAndRedirect } from '../../auth/auth-guard.js'
+// import { requireAuth, signOutAndRedirect } from '../../auth/auth-guard.js'
 // import { getStudentDashboardData } from '../../data/dashboardData.js'
 // import { formatDate } from '../../data/demo-data.js' // you can keep utility-only helpers for now
 
