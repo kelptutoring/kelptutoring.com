@@ -58,4 +58,4 @@ export async function signOutAndRedirect() {
   window.location.replace(LOGIN_PATH)
 }
 
-alert(profile.role);
+alert(supabase.from("profiles").select("role"));
