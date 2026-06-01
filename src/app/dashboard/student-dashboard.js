@@ -14,7 +14,7 @@ let currentLinks = []
 async function init() {
   const current = await requireAuth(['student', 'admin'])
   if (!current) return
-
+  alert(current);
   document.getElementById('student-heading').textContent =
     `${current.profile.full_name.split(' ')[0]}'s workspace`
 
