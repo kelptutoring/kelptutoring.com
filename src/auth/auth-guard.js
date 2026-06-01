@@ -57,5 +57,3 @@ export async function signOutAndRedirect() {
   await supabase.auth.signOut()
   window.location.replace(LOGIN_PATH)
 }
-
-alert(supabase.from("profiles").select("role"));
