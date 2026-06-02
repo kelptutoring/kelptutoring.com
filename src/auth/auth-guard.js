@@ -19,9 +19,10 @@ export function redirectByRole(role) {
 
 export async function requireAuth(allowedRoles = []) {
   const { data: authData, error: authError } = await supabase.auth.getUser()
-  alert("auth inicial");
+  alert("auth 1");
   if (authError || !authData?.user) {
     window.location.replace(LOGIN_PATH)
+    alert("auth 2");
     return null
   }
 
@@ -35,11 +36,13 @@ export async function requireAuth(allowedRoles = []) {
 
   if (profileError || !profile) {
     window.location.replace(LOGIN_PATH)
+    alert("auth 3");
     return null
   }
 
   if (allowedRoles.length && !allowedRoles.includes(profile.role)) {
     redirectByRole(profile.role)
+    alert("auth 4");
     return null
   }
 
