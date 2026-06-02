@@ -23,6 +23,7 @@ export async function requireAuth(allowedRoles = []) {
   if (authError || !authData?.user) {
     window.location.replace(LOGIN_PATH)
     alert("auth 2");
+    alert(authError, authData.user);
     return null
   }
 
