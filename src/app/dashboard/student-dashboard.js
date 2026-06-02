@@ -11,7 +11,7 @@ let currentProfile = null;
 let currentEvents = [];
 let currentLinks = [];
 
-// const current = await requireAuth(['student', 'admin']);
+const current = await requireAuth(['student', 'admin']);
 
 if (!current) {
   throw new Error('Access denied')
