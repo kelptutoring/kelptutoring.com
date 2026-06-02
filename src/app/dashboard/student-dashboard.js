@@ -2,22 +2,22 @@ import { requireAuth, signOutAndRedirect } from '../../auth/auth-guard.js'
 // import { getStudentDashboardData } from '../../data/dashboardData.js'
 // import { formatDate } from '../../data/demo-data.js' // you can keep utility-only helpers for now
 
-const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-let calendarYear = new Date().getFullYear()
-let calendarMonth = new Date().getMonth()
-let currentProfile = null
-let currentEvents = []
-let currentLinks = []
+let calendarYear = new Date().getFullYear();
+let calendarMonth = new Date().getMonth();
+let currentProfile = null;
+let currentEvents = [];
+let currentLinks = [];
 
-const current = await requireAuth(['student', 'admin'])
+// const current = await requireAuth(['student', 'admin']);
 
 if (!current) {
   throw new Error('Access denied')
 }
 
-const { user, profile } = current
+const { user, profile } = current;
 
 document.getElementById('student-heading').textContent =
   `${profile.full_name.split(' ')[0]}'s workspace`
