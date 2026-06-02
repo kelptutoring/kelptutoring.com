@@ -13,12 +13,13 @@ export function getHomePathByRole(role) {
 }
 
 export function redirectByRole(role) {
+  alert("role");
   window.location.replace(getHomePathByRole(role))
 }
 
 export async function requireAuth(allowedRoles = []) {
   const { data: authData, error: authError } = await supabase.auth.getUser()
-
+  alert("auth inicial");
   if (authError || !authData?.user) {
     window.location.replace(LOGIN_PATH)
     return null
@@ -47,6 +48,7 @@ export async function requireAuth(allowedRoles = []) {
 
 export async function redirectLoggedUser() {
   const current = await requireAuth()
+  alert("tá logado");
 
   if (!current) return
 
