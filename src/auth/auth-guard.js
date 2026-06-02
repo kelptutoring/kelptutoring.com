@@ -38,7 +38,7 @@ export async function requireAuth(allowedRoles = []) {
   if (profileError || !profile) {
     window.location.replace(LOGIN_PATH)
     alert("auth 3");
-    alert(profileError, profile);
+    alert(profileError, "aloha", profile);
     return null
   }
 
