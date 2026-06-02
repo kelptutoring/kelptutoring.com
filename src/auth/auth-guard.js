@@ -13,13 +13,11 @@ export function getHomePathByRole(role) {
 }
 
 export function redirectByRole(role) {
-  alert("role");
   window.location.replace(getHomePathByRole(role))
 }
 
 export async function requireAuth(allowedRoles = []) {
   const { data: authData, error: authError } = await supabase.auth.getUser()
-  alert("auth 1");
   if (authError || !authData?.user) {
     window.location.replace(LOGIN_PATH)
     alert("auth 2");
@@ -37,8 +35,10 @@ export async function requireAuth(allowedRoles = []) {
 
   if (profileError || !profile) {
     window.location.replace(LOGIN_PATH)
-    alert("auth 3");
-    alert(profileError, "aloha", profile);
+    console.log("USER:", user)
+    console.log("PROFILE:", profile)
+    console.log("PROFILE ERROR:", profileError)
+    alert(JSON.stringify(profileError, null, 2))
     return null
   }
 
