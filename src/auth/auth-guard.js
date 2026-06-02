@@ -18,10 +18,14 @@ export function redirectByRole(role) {
 
 export async function requireAuth(allowedRoles = []) {
   const { data: authData, error: authError } = await supabase.auth.getUser()
+
+  console.log("AUTH DATA:", authData)
+  console.log("AUTH ERROR:", authError)
+
   if (authError || !authData?.user) {
+    console.error("Usuário não autenticado:", authError)
+
     window.location.replace(LOGIN_PATH)
-    alert("auth 2");
-    alert(authError, authData.user);
     return null
   }
 
@@ -31,20 +35,24 @@ export async function requireAuth(allowedRoles = []) {
     .from('profiles')
     .select('id, full_name, email, role, birth_date')
     .eq('id', user.id)
-    .single()
+    .maybeSingle()
 
-  if (profileError || !profile) {
-    window.location.replace(LOGIN_PATH)
-    console.log("USER:", user)
-    console.log("PROFILE:", profile)
-    console.log("PROFILE ERROR:", profileError)
+  console.log("USER ID:", user.id)
+  console.log("PROFILE:", profile)
+  console.log("PROFILE ERROR:", profileError)
+
+  if (profileError) {
     alert(JSON.stringify(profileError, null, 2))
+    return null
+  }
+
+  if (!profile) {
+    alert(`Usuário autenticado, mas sem profile na tabela profiles. User id: ${user.id}`)
     return null
   }
 
   if (allowedRoles.length && !allowedRoles.includes(profile.role)) {
     redirectByRole(profile.role)
-    alert("auth 4");
     return null
   }
 
