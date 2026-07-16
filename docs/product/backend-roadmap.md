@@ -9,6 +9,8 @@ This note tracks the Supabase wiring path for Kelp Tutoring. The project should 
 - Profile rows are created by Supabase trigger after sign-up.
 - Frontend auth lives in `src/auth/auth-guard.js`.
 - The dashboard pages now read the authenticated profile before rendering role-specific workspace content.
+- Local Supabase runs from `supabase/config.toml` and `supabase/migrations/` for fast auth/profile testing before remote deployment.
+- The frontend Supabase client uses local Supabase automatically when served from `127.0.0.1` or `localhost`.
 
 ## Role Model
 

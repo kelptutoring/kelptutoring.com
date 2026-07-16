@@ -13,8 +13,16 @@
     "test:schedule-domain": "node tools/schedule-domain-self-test.mjs",
     "test:schedule-outline": "node tools/schedule-outline-self-test.mjs",
     "test:smoke": "node tools/classroom-whiteboard-smoke.mjs",
+    "serve:app": "node tools/serve-app.mjs",
     "serve:whiteboard": "node tools/serve-whiteboard.mjs --open",
     "serve:classroom": "node tools/serve-classroom.mjs --open",
-    "watch:schedules": "node tools/watch-schedules.mjs"
+    "watch:schedules": "node tools/watch-schedules.mjs",
+    "supabase:start": "node tools/supabase-local.mjs start",
+    "supabase:stop": "node tools/supabase-local.mjs stop",
+    "supabase:reset": "node tools/supabase-local.mjs db reset",
+    "supabase:status": "node tools/supabase-local.mjs status"
+  },
+  "devDependencies": {
+    "supabase": "^2.109.1"
   }
 }

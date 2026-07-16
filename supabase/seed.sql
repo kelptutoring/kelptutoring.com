@@ -1,0 +1,2 @@
+-- Seed data is intentionally empty for now.
+-- Create local test users through the sign-up flow so Auth, triggers, and RLS are tested together.

@@ -46,6 +46,14 @@ The project has no bundling step, but HTTP is strongly recommended because it us
 From the repository root:
 
 ```bash
+npm run serve:app
+```
+
+This serves the full site at `http://127.0.0.1:3000/src/app/signUp/login.html`, matching the local Supabase Auth redirect configuration.
+
+For focused tool work:
+
+```bash
 npm run serve:classroom
 ```
 
@@ -66,6 +74,38 @@ Network access is currently needed for some third-party browser dependencies:
 
 For an offline or production build, pin and serve these assets locally and update the current CSP/cache strategy accordingly.
 
+## Local Supabase backend
+
+The project includes a local Supabase setup for fast auth/profile testing without waiting for deployed GitHub changes.
+
+Prerequisites:
+
+- Docker Desktop running.
+- Project dependencies installed with `npm install`.
+
+Start the local backend:
+
+```bash
+npm run supabase:start
+```
+
+Then start the local app server:
+
+```bash
+npm run serve:app
+```
+
+Useful local URLs:
+
+- App login: `http://127.0.0.1:3000/src/app/signUp/login.html`
+- Supabase API: `http://127.0.0.1:54321`
+- Supabase Studio: `http://127.0.0.1:54323`
+- Local email inbox: `http://127.0.0.1:54324`
+
+When the browser host is `127.0.0.1` or `localhost`, `src/lib/supabase/supabaseClient.js` automatically uses the local Supabase URL and publishable key. Other hosts keep using the hosted Supabase project.
+
+The `supabase:*` npm scripts run through `tools/supabase-local.mjs`, which adds Docker Desktop's CLI folder to `PATH` on Windows before calling the Supabase CLI. Local schema changes live in `supabase/migrations/`. The first migration creates `public.profiles`, its sign-up trigger, and RLS policies for profile reads/updates. Analytics is disabled in the local config because the Supabase Analytics container is unreliable on this Windows Docker setup and is not needed for app auth/profile testing.
+
 ## Commands
 
 ```bash
@@ -83,6 +123,12 @@ npm run test:smoke
 
 npm run serve:classroom
 npm run serve:whiteboard
+npm run serve:app
+
+npm run supabase:start
+npm run supabase:status
+npm run supabase:reset
+npm run supabase:stop
 ```
 
 Command roles:
@@ -95,6 +141,8 @@ Command roles:
 - `test:exam-builder`: checks exam question reordering and related static contracts.
 - `test:schedule-*`: checks cadence, outline mutations, catalogue/link integrity, and builder wiring.
 - `test:smoke`: checks classroom/whiteboard integration and browser-facing contracts.
+- `serve:app`: serves the full static site on port `3000` for local Supabase Auth redirects.
+- `supabase:*`: manages the local Docker-backed Supabase stack for auth/profile/backend testing.
 
 ## Course-planning source of truth
 
