@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">Order of operations flow</title>
+  <desc id="desc">A calm flow diagram showing parentheses, exponents, multiplication and division, addition and subtraction.</desc>
+  <rect width="1200" height="520" rx="28" fill="#fbfefd"/>
+  <rect x="32" y="32" width="1136" height="456" rx="24" fill="#ffffff" stroke="#dfe8e4" stroke-width="3"/>
+  <text x="600" y="92" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700" fill="#243233">Order of Operations</text>
+  <text x="600" y="132" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="20" fill="#5f6f6b">Work from grouping symbols outward, then move left to right inside each operation pair.</text>
+  <g font-family="Inter, Arial, sans-serif" font-weight="700" font-size="24" text-anchor="middle">
+    <rect x="92" y="218" width="210" height="118" rx="18" fill="#e8f7f9" stroke="#00acc1" stroke-width="3"/>
+    <text x="197" y="268" fill="#145c63">1. Parentheses</text>
+    <text x="197" y="302" font-size="18" font-weight="500" fill="#52615e">group first</text>
+    <path d="M322 277 H406" stroke="#8fb4ad" stroke-width="5" stroke-linecap="round"/>
+    <path d="M392 260 L412 277 L392 294" fill="none" stroke="#8fb4ad" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="428" y="218" width="210" height="118" rx="18" fill="#f0f8ee" stroke="#5fae63" stroke-width="3"/>
+    <text x="533" y="268" fill="#2f6d37">2. Exponents</text>
+    <text x="533" y="302" font-size="18" font-weight="500" fill="#52615e">powers next</text>
+    <path d="M658 277 H742" stroke="#8fb4ad" stroke-width="5" stroke-linecap="round"/>
+    <path d="M728 260 L748 277 L728 294" fill="none" stroke="#8fb4ad" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="764" y="200" width="344" height="154" rx="18" fill="#fffaf0" stroke="#e1b45a" stroke-width="3"/>
+    <text x="936" y="253" fill="#74520f">3. Multiply / Divide</text>
+    <text x="936" y="287" font-size="18" font-weight="500" fill="#52615e">left to right</text>
+    <text x="936" y="321" fill="#74520f">4. Add / Subtract</text>
+  </g>
+  <text x="600" y="418" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" fill="#243233">Tip: do not do all multiplication before division unless it appears first from left to right.</text>
+</svg>

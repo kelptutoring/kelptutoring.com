@@ -1,0 +1,93 @@
+Planning and scheduling change log
+
+2026-07-02
+- Added tools/generate-tracks-data.mjs so src/data/tracks-data.js can be generated from src/app/schedules/**/*.md.
+- Added npm run generate:tracks and updated npm run generate:schedules to refresh both schedule HTML and generator data.
+- Regenerated src/data/tracks-data.js from the markdown planning tree.
+- Replaced the placeholder README.md with a plain schedule-planning guide covering the directory tree, features, commands, and editing flow.
+
+2026-07-02
+- Updated schedule-generator.html and generated-schedule.html to use tutor-dashboard.html for Home/logo navigation.
+- Removed the fixed top Back link from the first generator screen; the in-flow Back button still appears after the first step.
+- Changed generated tracks-data.js to load as a plain browser script so choose-level options render when schedule-generator.html is opened directly from the folder.
+
+2026-07-02
+- Normalized schedule difficulty into planned low/medium/high estimates and rendered compact 🟢/🟡/🔴 symbols with a printed legend.
+- Added shortened month/date formatting for generated schedule dates.
+- Moved the generator Back control back into the top navigation while keeping it hidden on the first step.
+- Added a subtle surface fade/slide transition across the main website panels.
+- Documented difficulty estimates and database-readiness notes in README.md.
+
+2026-07-02
+- Matched the top Back button dimensions to the Home link in the schedule generator navigation.
+- Made the surface entrance transition more visible while preserving reduced-motion support.
+- Improved the difficulty legend by bolding low/medium/high labels and increasing the screen font size to 13px.
+- Added scheduleId, scheduleItemId, sourceWeekId, assignmentId, tutorId, and studentId fields to generated schedule rows for future database assignment workflows.
+- Updated README.md with database-readiness and style-location notes.
+
+2026-07-02
+- Increased the shared page/panel entrance animation timing to 0.8s.
+- Clarified in README.md that planned week difficulty is edited in each week markdown file through the - Difficulty level: line.
+- Removed planned difficulty from generated mid-term exam and review weeks.
+- Replaced the Perception checkbox with a five-option student perceived-difficulty control: very easy, easy, a bit hard, hard, and very hard.
+
+2026-07-02
+- Changed the generated schedule Perception column from five visible choices into a collapsed menu that expands only when clicked.
+- Updated print/PDF styling so Perception cells show only the selected value, or remain blank when no perception has been selected.
+- Increased shared page/panel entrance animation timing to 1.2s.
+- Broadened schedule date columns and kept date text on one line to prevent values such as Jul. 22nd from overflowing.
+- Adjusted Tracks navigation button sizing so Dashboard hover states fit the label.
+- Added a pre-database role-aware dashboard routing helper for generated Tracks pages, plus dashboard page stamps for the last opened dashboard.
+- Tightened the routing helper to recognize exact dashboard filenames or stored roles, avoiding false matches from the tutoring domain/project name.
+- Regenerated static schedule HTML pages from the markdown tree.
+
+2026-07-02
+- Changed the Perception menu so it expands inside the schedule row instead of overlaying and overflowing the table container.
+- Added smooth open/close transitions for the Perception choices while preserving the printed/PDF plain-value behavior.
+- Added Select as a Perception option so students can clear a previously chosen perceived difficulty.
+- Added tools/watch-schedules.mjs and npm run watch:schedules so schedule markdown changes can refresh static schedule pages and src/data/tracks-data.js automatically while editing.
+- Updated README.md with the watcher command, automatic-refresh notes, and the Perception clearing behavior.
+
+2026-07-02
+- Added a Last saved status to generated schedules using kelpGeneratedScheduleSavedAt.
+- Changed generated schedules to open in locked reading mode by default.
+- Added Edit, Save, and Discard controls for student progress fields so changes are committed only when Save is clicked.
+- Disabled Studied, Practiced, and Perception controls outside editing mode and added locked/editing visual states.
+- Added an unsaved-changes navigation warning while editing.
+- Updated schedule generation so newly generated schedules receive an initial saved timestamp.
+- Updated README.md with the schedule progress editing flow and Last saved behavior.
+
+2026-07-02
+- Reworked the Perception choices into a single floating menu attached to the page instead of expanding table rows.
+- Added fade/slide transitions, viewport clamping, upward flipping near the bottom of the browser, and outside-click/Escape/scroll dismissal for the floating Perception menu.
+- Kept Select clearing and print/PDF plain-value behavior intact.
+- Updated README.md to describe the floating Perception menu behavior.
+
+2026-07-02
+- Added read-only highlights for marked Studied, Practiced, and Perception cells so saved progress is visible outside editing mode.
+- Kept checked boxes and selected Perception values visually stronger while controls remain disabled in locked mode.
+- Preserved the screen-only class on generated schedule messages so temporary notes such as Schedule saved do not print in PDFs.
+- Updated README.md with the locked-mode highlighting and PDF message behavior.
+
+2026-07-03
+- Removed the larger blue cell-level highlights from generated schedule progress cells to keep the table more minimalist.
+- Kept marked Studied and Practiced progress visible through the checkbox blue checked fill instead of a cell wrapper highlight.
+- Removed the special selected-value highlight from the Perception column so its text stays visually quiet in locked mode.
+- Updated README.md to describe the quieter locked-mode progress treatment.
+
+2026-07-03
+- Replaced the faded native checked-box rendering with a custom filled green checkbox for Studied and Practiced progress.
+- Removed locked-mode checkbox opacity from checked boxes so completed progress stays easy to see without larger cell highlights.
+- Tightened checkbox dimensions, margin, and cell line-height to improve vertical alignment in the Studied and Practiced columns.
+- Updated the print/PDF checkbox sizing to match the custom checkbox rendering.
+- Updated README.md to describe the filled green checkbox treatment.
+
+2026-07-03
+- Recentered the custom Studied/Practiced checkbox tick using absolute positioning for better vertical and horizontal alignment.
+- Changed checked checkbox fill and border color to use the generated schedule header color variable instead of a fixed green.
+- Updated README.md to describe the header-matched filled checkbox treatment.
+
+2026-07-03
+- Added schedule file-management instructions to README.md, including source-of-truth rules, generated outputs, parent-child linking, and regeneration flow.
+- Rewrote docs/schedule-markdown.md as the detailed markdown syntax guide for card/list pages, week pages, front matter, difficulty values, images, and safe editing.
+- Updated docs/week-page-template.md so new week pages use low/medium/high difficulty wording and the current schedule image path pattern.

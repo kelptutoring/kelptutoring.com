@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Kelp Classroom</title>
+
+  <link rel="stylesheet" href="../../styles/style.css" />
+  <link rel="stylesheet" href="./classroom.css?v=20260714-dashboard-return-1" />
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
+  <script type="module" src="./classroom.js?v=20260714-dashboard-return-1"></script>
+</head>
+
+<body class="classroom-body">
+  <main class="classroom-shell">
+    <span id="room-label" class="sr-only">Student room</span>
+
+    <section id="prejoin-screen" class="prejoin-screen" aria-labelledby="prejoin-title">
+      <div class="prejoin-media-panel">
+        <div class="camera-preview-shell">
+          <video id="prejoin-video" class="camera-preview" autoplay muted playsinline></video>
+          <div id="camera-placeholder" class="camera-placeholder">
+            <i data-lucide="video" aria-hidden="true"></i>
+          </div>
+        </div>
+
+        <div class="prejoin-device-settings" aria-label="Call devices">
+          <label class="prejoin-camera-device">
+            Camera
+            <select id="prejoin-video-input-select"></select>
+          </label>
+
+          <label>
+            Microphone
+            <select id="prejoin-audio-input-select"></select>
+          </label>
+
+          <label>
+            Speakers
+            <select id="prejoin-audio-output-select"></select>
+          </label>
+        </div>
+
+        <div class="device-controls" aria-label="Device controls">
+          <button id="test-camera" class="secondary-action" type="button">
+            <i data-lucide="video" aria-hidden="true"></i>
+            Test camera
+          </button>
+          <button id="test-sound" class="secondary-action" type="button">
+            <i data-lucide="volume-2" aria-hidden="true"></i>
+            Test sound
+          </button>
+          <button id="refresh-prejoin-devices" class="secondary-action" type="button">
+            <i data-lucide="refresh-cw" aria-hidden="true"></i>
+            Refresh
+          </button>
+        </div>
+      </div>
+
+      <form id="prejoin-form" class="prejoin-form">
+        <div class="form-heading">
+          <p class="eyebrow">Room setup</p>
+          <h2 id="prejoin-title">Join the lesson</h2>
+        </div>
+
+        <section class="lesson-confirmation" aria-labelledby="lesson-details-label">
+          <div class="lesson-confirmation-heading">
+            <i data-lucide="badge-check" aria-hidden="true"></i>
+            <p id="lesson-details-label" class="eyebrow">Lesson details</p>
+          </div>
+
+          <dl class="lesson-detail-list">
+            <div>
+              <dt>Tutor</dt>
+              <dd id="prejoin-tutor-name">Tutor</dd>
+            </div>
+            <div>
+              <dt>Subject</dt>
+              <dd id="prejoin-lesson-subject">English</dd>
+            </div>
+            <div>
+              <dt>Duration</dt>
+              <dd id="prejoin-lesson-duration">1 hour</dd>
+            </div>
+            <div>
+              <dt>Attendees</dt>
+              <dd id="prejoin-attendees">No one has joined yet</dd>
+            </div>
+            <div>
+              <dt>Cycle</dt>
+              <dd id="prejoin-cycle-month">July</dd>
+            </div>
+            <div>
+              <dt>Lesson</dt>
+              <dd id="prejoin-lesson-progress">3 / 12</dd>
+            </div>
+          </dl>
+        </section>
+
+        <div class="prejoin-actions">
+          <div class="prejoin-navigation-actions">
+            <a id="back-to-dashboard" class="secondary-action" href="../dashboard/tutor-dashboard.html">
+              <i data-lucide="arrow-left" aria-hidden="true"></i>
+              Back to dashboard
+            </a>
+            <button id="join-room" class="primary-action" type="submit">
+              <i data-lucide="log-in" aria-hidden="true"></i>
+              Join room
+            </button>
+          </div>
+          <p id="prejoin-feedback" class="inline-feedback" role="status"></p>
+        </div>
+      </form>
+    </section>
+
+    <section id="room-screen" class="room-screen is-hidden" aria-label="Classroom">
+      <div id="classroom-feedback" class="classroom-feedback is-hidden" role="status" aria-live="polite" data-tone="info">
+        <i id="classroom-feedback-icon" data-lucide="info" aria-hidden="true"></i>
+        <span id="classroom-feedback-text"></span>
+        <button id="dismiss-classroom-feedback" class="classroom-feedback-dismiss" type="button" aria-label="Dismiss notification" title="Dismiss notification">
+          <i data-lucide="x" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <section class="meeting-stage" aria-label="Meeting room">
+        <div class="meeting-panel">
+          <h2 id="meeting-title" class="sr-only">Student room</h2>
+
+          <section id="whiteboard-stage" class="whiteboard-stage is-hidden" aria-label="Shared whiteboard">
+            <header class="whiteboard-stage-header">
+              <div class="whiteboard-stage-title">
+                <i data-lucide="pencil-ruler" aria-hidden="true"></i>
+                <div>
+                  <strong>Whiteboard</strong>
+                  <span>Shared classroom board</span>
+                </div>
+              </div>
+
+              <div class="whiteboard-stage-actions">
+                <button id="detach-attached-whiteboard" class="icon-action" type="button" aria-label="Detach whiteboard" title="Detach whiteboard">
+                  <i data-lucide="external-link" aria-hidden="true"></i>
+                </button>
+                <button id="end-shared-whiteboard" class="icon-action" type="button" aria-label="End shared whiteboard" title="End shared whiteboard">
+                  <i data-lucide="screen-share-off" aria-hidden="true"></i>
+                </button>
+                <button id="close-attached-whiteboard" class="icon-action" type="button" aria-label="Hide whiteboard" title="Hide whiteboard">
+                  <i data-lucide="x" aria-hidden="true"></i>
+                </button>
+              </div>
+            </header>
+
+            <iframe id="whiteboard-frame" title="Kelp whiteboard" allow="fullscreen" allowfullscreen></iframe>
+          </section>
+
+          <section id="video-panel" class="video-panel" aria-label="Classroom video">
+            <header id="video-panel-header" class="video-panel-header">
+              <div class="video-panel-title">
+                <i data-lucide="users-round" aria-hidden="true"></i>
+                <strong id="video-panel-mode-label">Equal videos</strong>
+              </div>
+
+              <div class="video-panel-actions">
+                <button id="minimize-video-panel" class="video-panel-action" type="button" aria-label="Minimize video panel" title="Minimize video panel">
+                  <i data-lucide="minus" aria-hidden="true"></i>
+                </button>
+                <button id="hide-video-panel" class="video-panel-action" type="button" aria-label="Hide video panel" title="Hide video panel">
+                  <i data-lucide="eye-off" aria-hidden="true"></i>
+                </button>
+              </div>
+            </header>
+
+            <div id="meeting-frame" class="meeting-frame">
+              <div id="meeting-placeholder" class="meeting-placeholder">
+                <i data-lucide="users-round" aria-hidden="true"></i>
+                <h3>Ready when you are</h3>
+                <p id="meeting-provider-note">Start the call to load the video room for this lesson.</p>
+              </div>
+            </div>
+
+            <div id="video-panel-resize-handle" class="video-panel-resize-handle" role="separator" aria-label="Resize video panel" title="Resize video panel">
+              <i data-lucide="grip" aria-hidden="true"></i>
+            </div>
+          </section>
+
+          <button id="show-video-panel" class="show-video-panel is-hidden" type="button" aria-label="Show video panel" title="Show video panel">
+            <i data-lucide="video" aria-hidden="true"></i>
+          </button>
+
+          <article id="waiting-insight" class="waiting-insight is-hidden" aria-live="polite">
+            <div>
+              <p class="eyebrow">Student check-in</p>
+              <h3 id="waiting-mood">Waiting for survey</h3>
+            </div>
+            <p id="waiting-goal">The student's pre-class survey will appear here as soon as it is submitted.</p>
+            <span id="waiting-energy">Energy: pending</span>
+            <div class="waiting-actions">
+              <button id="approve-student-entry" class="primary-action waiting-approve-button" type="button">
+                <i data-lucide="check" aria-hidden="true"></i>
+                Approve student
+              </button>
+            </div>
+          </article>
+        </div>
+
+        <aside id="floating-timer" class="floating-timer is-hidden" aria-live="polite">
+          <div id="floating-timer-header" class="floating-timer-header">
+            <span>Countdown</span>
+            <strong id="floating-countdown-time">05:00</strong>
+          </div>
+          <p id="floating-countdown-state">Time left</p>
+        </aside>
+
+        <nav id="classroom-tooldock" class="classroom-tooldock" aria-label="Classroom tools">
+          <button id="pin-focus-dock" class="dock-pin-button is-hidden" type="button" aria-label="Keep classroom controls open" title="Keep classroom controls open" aria-pressed="false">
+            <i data-lucide="pin" aria-hidden="true"></i>
+          </button>
+          <button id="toggle-geometry-dock" class="dock-button classroom-dock-geometry-toggle is-hidden" type="button" aria-label="Show classroom controls" title="Show classroom controls" aria-expanded="false">
+            <i data-lucide="chevron-up" aria-hidden="true"></i>
+          </button>
+          <button id="audio-tool-button" class="dock-button call-button" type="button" data-tool-panel="audio" aria-label="Open microphone controls" title="Microphone controls">
+            <i id="audio-tool-icon" data-lucide="mic" aria-hidden="true"></i>
+            <span id="audio-tool-label">Mic</span>
+          </button>
+          <button id="video-tool-button" class="dock-button call-button" type="button" data-tool-panel="video" aria-label="Open camera controls" title="Camera controls">
+            <i id="video-tool-icon" data-lucide="video" aria-hidden="true"></i>
+            <span id="video-tool-label">Camera</span>
+          </button>
+          <button id="toggle-fullscreen" class="dock-button call-button" type="button" aria-label="Fullscreen" title="Fullscreen (Alt+1)">
+            <i data-lucide="maximize" aria-hidden="true"></i>
+            <span>Full</span>
+          </button>
+          <button id="toggle-whiteboard-focus" class="dock-button call-button is-hidden" type="button" aria-label="Focus whiteboard" title="Focus whiteboard (Alt+2)" aria-pressed="false">
+            <i data-lucide="maximize-2" aria-hidden="true"></i>
+            <span>Focus</span>
+          </button>
+          <button id="return-whiteboard-content" class="dock-button call-button is-hidden" type="button" aria-label="Return to whiteboard content" title="Return to whiteboard content (Alt+3)">
+            <i data-lucide="locate-fixed" aria-hidden="true"></i>
+            <span>Content</span>
+          </button>
+          <button id="auto-fit-whiteboard" class="dock-button call-button is-hidden" type="button" aria-label="Fit whiteboard content to view" title="Fit whiteboard content to view (Alt+4)">
+            <i data-lucide="scan" aria-hidden="true"></i>
+            <span>Auto-fit</span>
+          </button>
+          <button class="dock-button call-button" type="button" data-tool-panel="layout" aria-label="Layout" title="Layout">
+            <i data-lucide="layout-panel-top" aria-hidden="true"></i>
+            <span>Layout</span>
+          </button>
+
+          <span class="dock-divider" aria-hidden="true"></span>
+
+          <button class="dock-button" type="button" data-tool-panel="people" aria-label="People" title="People">
+            <i data-lucide="users-round" aria-hidden="true"></i>
+            <span>People</span>
+          </button>
+          <button class="dock-button" type="button" data-tool-panel="chat" aria-label="Chat" title="Chat (Alt+5)">
+            <i data-lucide="messages-square" aria-hidden="true"></i>
+            <span>Chat</span>
+          </button>
+          <button class="dock-button" type="button" data-tool-panel="time" aria-label="Time" title="Time (Alt+6)">
+            <i data-lucide="timer" aria-hidden="true"></i>
+            <span>Time</span>
+          </button>
+          <button id="open-whiteboard-tools" class="dock-button" type="button" data-tool-panel="whiteboard" aria-label="Whiteboard" title="Whiteboard">
+            <i data-lucide="pencil-ruler" aria-hidden="true"></i>
+            <span>Board</span>
+          </button>
+
+          <span class="dock-divider" aria-hidden="true"></span>
+
+          <button id="return-to-classroom" class="dock-button call-button is-hidden" type="button" aria-label="Close whiteboard and return to classroom" title="Close whiteboard and return to classroom">
+            <i data-lucide="arrow-left" aria-hidden="true"></i>
+            <span>Classroom</span>
+          </button>
+          <button id="leave-room" class="dock-button end-call-button" type="button" aria-label="End call" title="End call">
+            <i data-lucide="phone-off" aria-hidden="true"></i>
+            <span>End</span>
+          </button>
+        </nav>
+
+        <div id="focus-dock-edge" class="focus-dock-edge is-hidden" role="button" tabindex="-1" aria-label="Reveal classroom controls" aria-hidden="true"></div>
+
+        <aside id="focus-panel" class="focus-panel is-hidden" aria-label="Focus participant">
+          <div id="focus-panel-header" class="focus-panel-header">
+            <p class="eyebrow">Focus</p>
+            <button id="close-focus-panel" class="icon-action" type="button" aria-label="Close focus panel" title="Close focus panel">
+              <i data-lucide="x" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div id="focus-participant-list" class="focus-participant-list"></div>
+        </aside>
+
+        <aside id="quick-menu" class="quick-menu is-hidden" aria-label="Quick menu">
+          <div class="quick-panel active" data-quick-panel="people">
+            <div class="quick-panel-header">
+              <p class="eyebrow">People</p>
+            </div>
+            <div id="participant-list" class="participant-list"></div>
+            <button id="copy-room-link" class="secondary-action quick-menu-action" type="button">
+              <i data-lucide="link" aria-hidden="true"></i>
+              Copy room link
+            </button>
+          </div>
+
+          <div class="quick-panel" data-quick-panel="audio">
+            <div class="device-panel">
+              <label>
+                Microphone
+                <select id="audio-input-select"></select>
+              </label>
+
+              <label>
+                Speakers
+                <select id="audio-output-select"></select>
+              </label>
+
+              <label class="toggle-row">
+                <input id="noise-suppression-toggle" type="checkbox" />
+                Noise suppression
+              </label>
+
+              <div class="drawer-action-grid">
+                <button id="toggle-audio" class="secondary-action" type="button">
+                  <i id="toggle-audio-icon" data-lucide="mic-off" aria-hidden="true"></i>
+                  <span id="toggle-audio-label">Mute microphone</span>
+                </button>
+                <button id="refresh-audio-devices" class="secondary-action" type="button">
+                  <i data-lucide="refresh-cw" aria-hidden="true"></i>
+                  Refresh
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="quick-panel" data-quick-panel="video">
+            <div class="device-panel">
+              <label>
+                Camera
+                <select id="video-input-select"></select>
+              </label>
+
+              <label>
+                Background
+                <select id="video-background-select">
+                  <option value="none">None</option>
+                  <option value="blur">Blur</option>
+                  <option value="soft-room">Soft classroom</option>
+                  <option value="neutral">Neutral backdrop</option>
+                </select>
+              </label>
+
+              <label class="toggle-row">
+                <input id="mirror-video-toggle" type="checkbox" />
+                Mirror my video
+              </label>
+
+              <div class="drawer-action-grid">
+                <button id="toggle-video" class="secondary-action" type="button">
+                  <i id="toggle-video-icon" data-lucide="video-off" aria-hidden="true"></i>
+                  <span id="toggle-video-label">Turn camera off</span>
+                </button>
+                <button id="refresh-video-devices" class="secondary-action" type="button">
+                  <i data-lucide="refresh-cw" aria-hidden="true"></i>
+                  Refresh
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="quick-panel" data-quick-panel="layout">
+            <div class="layout-option-list" role="group" aria-label="Meeting layout">
+              <button class="layout-option active" type="button" data-layout-mode="equal">
+                <i data-lucide="grid-2x2" aria-hidden="true"></i>
+                <span>
+                  <strong>Equal sections</strong>
+                  <small>Give each participant the same space.</small>
+                </span>
+              </button>
+
+              <button class="layout-option" type="button" data-layout-mode="focus">
+                <i data-lucide="panel-right-open" aria-hidden="true"></i>
+                <span>
+                  <strong>Focus one user</strong>
+                  <small>Keep one participant visually prioritized.</small>
+                </span>
+              </button>
+
+              <button class="layout-option" type="button" data-layout-mode="speaker">
+                <i data-lucide="presentation" aria-hidden="true"></i>
+                <span>
+                  <strong>Speaker first</strong>
+                  <small>Reserve the main area for whoever is leading.</small>
+                </span>
+              </button>
+
+            </div>
+          </div>
+
+          <div class="quick-panel" data-quick-panel="chat">
+            <div class="quick-panel-header">
+              <p class="eyebrow">Chat</p>
+              <button id="detach-chat" class="icon-action" type="button" aria-label="Detach chat" title="Detach chat">
+                <i data-lucide="panel-right-open" aria-hidden="true"></i>
+              </button>
+            </div>
+
+            <div id="chat-log" class="chat-log" aria-live="polite"></div>
+
+            <form id="chat-form" class="chat-form">
+              <input id="chat-input" autocomplete="off" placeholder="Message" />
+              <button class="icon-action send-action" type="submit" aria-label="Send message" title="Send message">
+                <i data-lucide="send" aria-hidden="true"></i>
+              </button>
+            </form>
+          </div>
+
+        </aside>
+
+        <aside id="detached-chat" class="detached-chat is-hidden" aria-label="Detached chat">
+          <div id="detached-chat-header" class="detached-chat-header">
+            <div>
+              <p class="eyebrow">Chat</p>
+              <h2>Room messages</h2>
+            </div>
+            <div class="detached-chat-actions">
+              <button id="dock-chat-right" class="icon-action" type="button" aria-label="Dock chat right" title="Dock chat right">
+                <i data-lucide="panel-right-open" aria-hidden="true"></i>
+              </button>
+              <button id="close-detached-chat" class="icon-action" type="button" aria-label="Close detached chat" title="Close detached chat">
+                <i data-lucide="x" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+
+          <div id="detached-chat-log" class="chat-log detached-chat-log" aria-live="polite"></div>
+
+          <form id="detached-chat-form" class="chat-form">
+            <input id="detached-chat-input" autocomplete="off" placeholder="Message" />
+            <button class="icon-action send-action" type="submit" aria-label="Send message" title="Send message">
+              <i data-lucide="send" aria-hidden="true"></i>
+            </button>
+          </form>
+        </aside>
+      </section>
+
+      <aside id="tool-drawer" class="tool-drawer is-hidden" role="dialog" aria-modal="false" aria-label="Classroom tool menu">
+        <div id="tool-drawer-header" class="tool-drawer-header">
+          <div>
+            <p id="tool-drawer-eyebrow" class="eyebrow">Tool</p>
+            <h2 id="tool-drawer-title">People</h2>
+          </div>
+
+          <button id="close-tool-drawer" class="icon-action" type="button" aria-label="Close menu" title="Close menu">
+            <i data-lucide="x" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <div class="drawer-panel" data-drawer-panel="time">
+          <div class="timer-panel" aria-label="Lesson timers">
+            <div class="panel-header tight-header">
+              <div>
+                <p class="eyebrow">Time</p>
+                <h2>Lesson clock</h2>
+              </div>
+            </div>
+
+            <div class="timer-readouts">
+              <div>
+                <span>Elapsed</span>
+                <strong id="elapsed-time">00:00</strong>
+              </div>
+              <div>
+                <span>Countdown</span>
+                <strong id="countdown-time">05:00</strong>
+              </div>
+            </div>
+
+            <div class="timer-controls">
+              <label>
+                Minutes
+                <input id="countdown-minutes" type="number" min="1" max="180" value="5" />
+              </label>
+              <button id="start-countdown" class="secondary-action" type="button">Start</button>
+              <button id="pause-countdown" class="secondary-action" type="button">Pause</button>
+              <button id="reset-countdown" class="secondary-action" type="button">Reset</button>
+              <button id="close-countdown" class="secondary-action" type="button">Hide box</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="drawer-panel" data-drawer-panel="whiteboard">
+          <div class="drawer-action-grid">
+            <button id="open-whiteboard-detached" class="tool-tile" type="button">
+              <i data-lucide="external-link" aria-hidden="true"></i>
+              <span>Open in separate window</span>
+            </button>
+
+            <button id="open-whiteboard-attached" class="tool-tile" type="button">
+              <i data-lucide="panel-right-open" aria-hidden="true"></i>
+              <span>Open inside this room</span>
+            </button>
+          </div>
+        </div>
+
+      </aside>
+    </section>
+
+    <div id="prelesson-modal-shell" class="modal-shell is-hidden" role="dialog" aria-modal="true" aria-labelledby="prelesson-modal-title">
+      <form id="prelesson-form" class="modal-card">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Pre-lesson</p>
+            <h2 id="prelesson-modal-title">Student check-in</h2>
+          </div>
+        </div>
+
+        <div class="mood-row" role="group" aria-label="Mood">
+          <button type="button" class="mood-button active" data-mood="Ready">Ready</button>
+          <button type="button" class="mood-button" data-mood="Unsure">Unsure</button>
+          <button type="button" class="mood-button" data-mood="Tired">Tired</button>
+        </div>
+
+        <label>
+          Energy
+          <input id="student-energy" type="range" min="1" max="5" value="4" />
+        </label>
+
+        <label>
+          Goal for today
+          <textarea id="student-goal" rows="3" placeholder="What should we focus on?"></textarea>
+        </label>
+
+        <div class="modal-actions">
+          <button class="primary-action" type="submit">
+            <i data-lucide="log-in" aria-hidden="true"></i>
+            Enter classroom
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div id="student-waiting-modal-shell" class="modal-shell is-hidden" role="dialog" aria-modal="true" aria-labelledby="student-waiting-title">
+      <section class="modal-card waiting-approval-card">
+        <div class="waiting-spinner" aria-hidden="true">
+          <i data-lucide="loader-circle"></i>
+        </div>
+
+        <div>
+          <p class="eyebrow">Waiting room</p>
+          <h2 id="student-waiting-title">Waiting for approval</h2>
+        </div>
+
+        <p>Your tutor has your pre-class form and will let you into the classroom soon.</p>
+        <p class="inline-feedback">Keep this page open.</p>
+      </section>
+    </div>
+
+    <div id="postlesson-modal-shell" class="modal-shell is-hidden" role="dialog" aria-modal="true" aria-labelledby="postlesson-modal-title">
+      <form id="postlesson-form" class="modal-card wide-modal-card">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Post-lesson</p>
+            <h2 id="postlesson-modal-title">Review records</h2>
+            <p id="review-step-label" class="review-step-label">Step 1 of 2 - Lesson record</p>
+          </div>
+
+          <button id="close-postlesson-review" class="icon-action" type="button" aria-label="Close review" title="Close review">
+            <i data-lucide="x" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <section id="required-review-step" class="review-step">
+          <p class="survey-note">These lesson details are required before the class can be closed.</p>
+
+          <div class="form-grid two-columns">
+            <label>
+              Subject
+              <select id="lesson-subject" required>
+                <option value="">Select subject</option>
+                <option value="math">Math</option>
+                <option value="english">English</option>
+                <option value="science">Science</option>
+                <option value="humanities">Humanities</option>
+                <option value="test-prep">Test prep</option>
+              </select>
+            </label>
+
+            <label>
+              Branch / topic
+              <select id="lesson-branch" required>
+                <option value="">Select branch</option>
+              </select>
+            </label>
+
+            <label>
+              Lesson format
+              <select id="lesson-format" required>
+                <option value="">Select format</option>
+                <option value="expository">Expository</option>
+                <option value="problem-solving">Problem-solving</option>
+                <option value="case-study">Case study</option>
+                <option value="guided-practice">Guided practice</option>
+              </select>
+            </label>
+
+            <label>
+              Student participation
+              <select id="student-participation" required>
+                <option value="">Select participation</option>
+                <option value="active">Active</option>
+                <option value="passive">Passive</option>
+              </select>
+            </label>
+
+            <label>
+              Participation evidence
+              <select id="participation-evidence" required>
+                <option value="">Select evidence</option>
+              </select>
+            </label>
+
+            <label>
+              Engagement score
+              <select id="engagement-score" required>
+                <option value="">Select score</option>
+                <option value="5">5 - Excellent</option>
+                <option value="4">4 - Good</option>
+                <option value="3">3 - Moderate</option>
+                <option value="2">2 - Low</option>
+                <option value="1">1 - Very low</option>
+              </select>
+            </label>
+          </div>
+
+          <label class="toggle-row conduct-report-toggle">
+            <input id="report-student-conduct" type="checkbox">
+            <span>
+              Report student conduct issue
+              <small>This creates a separate report and is not part of the lesson review.</small>
+            </span>
+          </label>
+
+          <label id="student-conduct-details-row" class="is-hidden">
+            What happened?
+            <textarea id="student-conduct-details" rows="4" placeholder="Describe the incident factually."></textarea>
+          </label>
+        </section>
+
+        <section id="optional-review-step" class="review-step is-hidden">
+          <p class="survey-note">These messages are optional and can be completed now or later.</p>
+
+          <label>
+            Dashboard feedback message
+            <textarea id="assignment-feedback" rows="4"></textarea>
+          </label>
+
+          <label>
+            Tutor message
+            <textarea id="tutor-message" rows="4"></textarea>
+          </label>
+
+          <label>
+            Student profile record
+            <textarea id="profile-record" rows="4"></textarea>
+          </label>
+        </section>
+
+        <div class="modal-actions split-actions">
+          <button id="leave-without-review" class="secondary-action" type="button">
+            Close
+          </button>
+
+          <div class="review-navigation">
+            <button id="review-back" class="secondary-action is-hidden" type="button">
+              <i data-lucide="arrow-left" aria-hidden="true"></i>
+              Back
+            </button>
+
+            <button id="review-next" class="primary-action" type="button">
+              Continue
+              <i data-lucide="arrow-right" aria-hidden="true"></i>
+            </button>
+
+            <button id="save-review" class="primary-action is-hidden" type="submit">
+            <i data-lucide="save" aria-hidden="true"></i>
+            Save review
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div id="technical-exit-survey-modal-shell" class="modal-shell is-hidden" role="dialog" aria-modal="true" aria-labelledby="technical-exit-survey-title">
+      <form id="technical-exit-survey-form" class="modal-card wide-modal-card">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Call ended early</p>
+            <h2 id="technical-exit-survey-title">Did something go wrong?</h2>
+          </div>
+        </div>
+
+        <p class="survey-note">This optional report helps us identify classroom problems. Your lesson review comes next.</p>
+
+        <div class="form-grid two-columns">
+          <label>
+            Audio quality
+            <select id="technical-audio-quality">
+              <option value="">No answer</option>
+              <option value="5">5 - Excellent</option>
+              <option value="4">4 - Good</option>
+              <option value="3">3 - Fair</option>
+              <option value="2">2 - Poor</option>
+              <option value="1">1 - Unusable</option>
+            </select>
+          </label>
+
+          <label>
+            Video quality
+            <select id="technical-video-quality">
+              <option value="">No answer</option>
+              <option value="5">5 - Excellent</option>
+              <option value="4">4 - Good</option>
+              <option value="3">3 - Fair</option>
+              <option value="2">2 - Poor</option>
+              <option value="1">1 - Unusable</option>
+            </select>
+          </label>
+
+          <label>
+            Ease of use
+            <select id="technical-classroom-usability">
+              <option value="">No answer</option>
+              <option value="5">5 - Very easy</option>
+              <option value="4">4 - Easy</option>
+              <option value="3">3 - Manageable</option>
+              <option value="2">2 - Hard</option>
+              <option value="1">1 - Very hard</option>
+            </select>
+          </label>
+
+          <label>
+            Classroom presentation
+            <select id="technical-classroom-presentation">
+              <option value="">No answer</option>
+              <option value="5">5 - Clear and polished</option>
+              <option value="4">4 - Clear</option>
+              <option value="3">3 - Acceptable</option>
+              <option value="2">2 - Confusing</option>
+              <option value="1">1 - Very confusing</option>
+            </select>
+          </label>
+        </div>
+
+        <label>
+          What went wrong?
+          <textarea id="technical-exit-notes" rows="4" placeholder="Describe any connection, audio, video, or classroom issue."></textarea>
+        </label>
+
+        <div class="modal-actions split-actions">
+          <button id="skip-technical-exit-survey" class="secondary-action" type="button">Skip</button>
+          <button class="primary-action" type="submit">
+            <i data-lucide="send" aria-hidden="true"></i>
+            Send and continue
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div id="student-postlesson-survey-modal-shell" class="modal-shell is-hidden" role="dialog" aria-modal="true" aria-labelledby="student-postlesson-survey-title">
+      <form id="student-postlesson-survey-form" class="modal-card wide-modal-card">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">After class</p>
+            <h2 id="student-postlesson-survey-title">How was your lesson?</h2>
+          </div>
+        </div>
+
+        <p class="survey-note">This is optional. Your lesson feedback and any conduct report are stored separately.</p>
+
+        <label>
+          Your impression of the class
+          <select id="student-class-impression">
+            <option value="">No answer</option>
+            <option value="excellent">Excellent</option>
+            <option value="good">Good</option>
+            <option value="okay">Okay</option>
+            <option value="difficult">Difficult</option>
+            <option value="poor">Poor</option>
+          </select>
+        </label>
+
+        <label>
+          Feedback or suggestions
+          <textarea id="student-general-feedback" rows="4" placeholder="What would you like us to know about the lesson?"></textarea>
+        </label>
+
+        <label class="toggle-row conduct-report-toggle">
+          <input id="report-tutor-conduct" type="checkbox">
+          <span>
+            Report tutor conduct issue
+            <small>This creates a separate confidential report.</small>
+          </span>
+        </label>
+
+        <label id="tutor-conduct-details-row" class="is-hidden">
+          What happened?
+          <textarea id="tutor-conduct-details" rows="4" placeholder="Describe the incident in your own words."></textarea>
+        </label>
+
+        <div class="modal-actions split-actions">
+          <button id="skip-student-postlesson-survey" class="secondary-action" type="button">
+            Skip
+          </button>
+
+          <button id="save-student-postlesson-survey" class="primary-action" type="submit">
+            <i data-lucide="send" aria-hidden="true"></i>
+            Send survey
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+</body>
+</html>

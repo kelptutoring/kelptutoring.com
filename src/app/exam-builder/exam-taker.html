@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kelp Online Exam</title>
+
+  <link rel="stylesheet" href="../../styles/style.css" />
+  <link rel="stylesheet" href="./exam-builder.css?v=20260706-20" />
+  <link rel="stylesheet" href="./kelp-diagram-editor.css?v=20260705-7" />
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']],
+        processEscapes: true
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjs@12.4.1/lib/browser/math.min.js" defer></script>
+  <script src="./kelp-diagram-editor.js?v=20260710-10" defer></script>
+  <script src="./kelp-numeric-answer.js?v=20260710-3" defer></script>
+</head>
+
+<body class="tracks-body gradient-background exam-builder-body">
+  <header class="tracks-header screen-only">
+    <div class="container tracks-header-content">
+      <a href="./exam-builder.html?resume=1" class="tracks-logo-link" aria-label="Back to builder">
+        <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="Kelp logo" class="tracks-logo" />
+      </a>
+      <nav class="tracks-nav" aria-label="Online exam navigation">
+        <a href="./exam-builder.html?resume=1">Builder</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container tracks-main exam-builder-main" aria-labelledby="student-title">
+    <section class="tracks-panel exam-student-shell">
+      <div id="examRoot" class="exam-student-card"></div>
+    </section>
+  </main>
+
+  <script src="./exam-taker.js?v=20260710-3" defer></script>
+</body>
+</html>

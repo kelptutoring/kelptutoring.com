@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Schedule Generator</title>
+  <link rel="stylesheet" href="../../styles/style.css" />
+</head>
+
+<body class="tracks-body gradient-background">
+  <header class="tracks-header">
+    <div class="container tracks-header-content">
+      <a href="../dashboard/tutor-dashboard.html" class="tracks-logo-link" aria-label="Back to tutor dashboard">
+        <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="Kelp logo" class="tracks-logo" />
+      </a>
+
+      <nav class="tracks-nav" aria-label="Schedule generator navigation">
+        <button type="button" class="tracks-nav-button hidden" id="backStepBtn">Back</button>
+        <a href="../dashboard/tutor-dashboard.html">Home</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container tracks-main">
+    <section class="tracks-panel" aria-labelledby="schedule-generator-title">
+      <div class="tracks-intro">
+        <p class="tracks-kicker">Schedule generator</p>
+        <h1 id="schedule-generator-title">Build a custom schedule</h1>
+        <p>Choose reusable session plans, set the cadence in the student's timezone, and review every date before saving.</p>
+      </div>
+
+      <section class="generator-step" id="levelStep">
+        <h2>1. Choose a level</h2>
+        <div class="button-grid" id="levelButtons"></div>
+      </section>
+
+      <section class="generator-step hidden" id="subjectStep">
+        <h2>2. Choose a subject</h2>
+        <div class="button-grid" id="subjectButtons"></div>
+      </section>
+
+      <section class="generator-step hidden" id="trackStep">
+        <h2>3. Choose one or more tracks</h2>
+        <p>Combine tracks in one schedule—for example, Algebra 1 with Algebra 2, or Mechanics with Optics.</p>
+        <div class="button-grid track-selection-grid" id="trackButtons"></div>
+        <div class="generator-actions">
+          <button type="button" class="btn-primary" id="continueToTrackSessionsBtn">Continue to session selection</button>
+        </div>
+      </section>
+
+      <section class="generator-step hidden" id="sessionStep">
+        <p class="track-selection-progress" id="trackSelectionProgress"></p>
+        <h2 id="trackSessionHeading">4. Choose sessions</h2>
+        <p id="trackSessionDescription">Choose sessions from this track's modules. Your selections remain saved as you move through the other tracks.</p>
+        <div class="week-preview-list" id="sessionSelectionList"></div>
+
+        <section class="custom-session-builder" aria-labelledby="custom-session-title">
+          <div>
+            <p class="tracks-kicker">Optional</p>
+            <h3 id="custom-session-title">Add a custom session</h3>
+            <p>Add a class, assessment, review, or any other item, then position it in the final preview.</p>
+          </div>
+
+          <div class="custom-session-fields">
+            <div class="input-group">
+              <label for="customSessionName">Session title</label>
+              <input type="text" id="customSessionName" placeholder="Example: Diagnostic review" maxlength="160" />
+            </div>
+
+            <div class="input-group">
+              <label for="customSessionType">Type</label>
+              <select id="customSessionType">
+                <option value="custom">Custom class</option>
+                <option value="review">Review</option>
+                <option value="assessment">Assessment</option>
+              </select>
+            </div>
+
+            <div class="input-group">
+              <label for="customSessionLink">Planning link <span class="field-optional">(optional)</span></label>
+              <input type="text" id="customSessionLink" placeholder="https://… or a relative page" />
+            </div>
+          </div>
+
+          <button type="button" class="btn-secondary" id="addCustomSessionBtn">Add custom session</button>
+          <div class="custom-session-list" id="customSessionList"></div>
+        </section>
+
+        <div class="generator-actions">
+          <button type="button" class="btn-primary" id="continueToSettingsBtn">Continue to schedule settings</button>
+        </div>
+      </section>
+
+      <section class="generator-step hidden" id="settingsStep">
+        <h2>5. Set the schedule cadence</h2>
+
+        <div class="schedule-settings-grid">
+          <div class="input-group">
+            <label for="scheduleName">Schedule name</label>
+            <input type="text" id="scheduleName" placeholder="Example: Algebra foundations" maxlength="120" />
+          </div>
+
+          <div class="input-group">
+            <label for="startDate">Starting date</label>
+            <input type="date" id="startDate" />
+          </div>
+
+          <div class="input-group">
+            <label for="studentTimeZone">Student timezone</label>
+            <input type="text" id="studentTimeZone" list="timeZoneOptions" placeholder="Example: America/Sao_Paulo" autocomplete="off" aria-describedby="studentTimeZoneHelp" />
+            <datalist id="timeZoneOptions"></datalist>
+            <small id="studentTimeZoneHelp">Type any valid IANA timezone. The student's saved timezone will prefill this field after backend wiring.</small>
+          </div>
+
+          <fieldset class="cadence-fieldset">
+            <legend>Cadence</legend>
+            <label class="cadence-choice">
+              <input type="radio" name="cadenceType" value="day_interval" checked />
+              <span><strong>Fixed period</strong><small>Each session covers the same number of calendar days.</small></span>
+            </label>
+            <label class="cadence-choice">
+              <input type="radio" name="cadenceType" value="weekly_frequency" />
+              <span><strong>Meetings per week</strong><small>Choose up to seven meeting weekdays.</small></span>
+            </label>
+          </fieldset>
+        </div>
+
+        <div class="cadence-options" id="intervalCadenceOptions">
+          <div class="input-group">
+            <label for="intervalDays">Days per session</label>
+            <input type="number" id="intervalDays" min="1" max="365" value="7" inputmode="numeric" />
+          </div>
+        </div>
+
+        <fieldset class="cadence-options hidden" id="weeklyCadenceOptions">
+          <legend>Meeting weekdays <span class="field-optional">(choose 1–7)</span></legend>
+          <div class="weekday-grid" id="weekdayGrid">
+            <label><input type="checkbox" value="1" /> Monday</label>
+            <label><input type="checkbox" value="2" /> Tuesday</label>
+            <label><input type="checkbox" value="3" /> Wednesday</label>
+            <label><input type="checkbox" value="4" /> Thursday</label>
+            <label><input type="checkbox" value="5" /> Friday</label>
+            <label><input type="checkbox" value="6" /> Saturday</label>
+            <label><input type="checkbox" value="0" /> Sunday</label>
+          </div>
+        </fieldset>
+
+        <div class="generator-actions">
+          <button type="button" class="btn-primary" id="previewScheduleBtn">Preview calculated dates</button>
+        </div>
+      </section>
+
+      <section class="generator-step hidden" id="previewStep">
+        <h2>6. Review and reorder sessions</h2>
+        <p id="schedulePreviewSummary" class="schedule-preview-summary"></p>
+        <p>Rename, collapse, add, remove, or move modules with drag-and-drop or the arrow controls. Individual sessions can move between modules; each session belongs to the module directly above it, and dates recalculate immediately.</p>
+        <div class="schedule-preview-list" id="schedulePreviewList"></div>
+
+        <div class="schedule-outline-actions" aria-label="Module editing controls">
+          <button type="button" class="btn-primary" id="addPreviewModuleBtn">Add module</button>
+          <button type="button" class="btn-secondary" id="undoPreviewOutlineBtn" disabled>Undo</button>
+          <button type="button" class="btn-secondary" id="redoPreviewOutlineBtn" disabled>Redo</button>
+        </div>
+
+        <div class="generator-actions">
+          <button type="button" class="btn-primary" id="saveScheduleBtn">Save and open interactive schedule</button>
+        </div>
+      </section>
+
+      <p class="message" id="generatorMessage" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script src="../../data/tracks-data.js"></script>
+  <script src="./schedule-domain.js"></script>
+  <script src="./schedule-outline.js"></script>
+  <script src="./schedule-generator.js"></script>
+</body>
+</html>

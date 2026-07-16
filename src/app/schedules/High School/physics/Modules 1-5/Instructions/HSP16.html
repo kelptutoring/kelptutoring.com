@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HS, Physics: Week 16</title>
+  <link rel="stylesheet" href="../../../../../../styles/style.css" />
+</head>
+
+<body class="tracks-body gradient-background">
+  <header class="tracks-header">
+    <div class="container tracks-header-content">
+      <a href="../../../../../dashboard/student-dashboard.html" data-dashboard-link class="tracks-logo-link" aria-label="Back to dashboard">
+        <img src="../../../../../../../public/assets/logos/Kelp-logo-gpt.png" alt="Kelp logo" class="tracks-logo" />
+      </a>
+
+      <nav class="tracks-nav" aria-label="Track navigation">
+        <a href="../HSP_module_4.html">Back</a>
+        <a href="../../../../../dashboard/student-dashboard.html" data-dashboard-link>Home</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container tracks-main" aria-labelledby="page-title">
+    <section class="tracks-panel">
+      <div class="tracks-intro">
+        <p class="tracks-kicker">High school physics</p>
+        <h1 id="page-title">Week 16: Simple harmonic oscillators</h1>
+        <p>Use this plan to prepare, practice, and mark what needs attention during tutoring.</p>
+      </div>
+
+      <div class="week-content">
+      <section class="week-section">
+        <h2>Week goals</h2>
+        <ul class="week-list">
+          <li>Understand the main ideas behind Simple harmonic oscillators.</li>
+          <li>Practice the core procedures until the steps feel predictable.</li>
+          <li>Identify the exact point where confusion begins and bring that question to tutoring.</li>
+        </ul>
+      </section>
+      <section class="week-section">
+        <h2>Prerequisites</h2>
+        <ul class="week-list">
+          <li>Review the previous week&#39;s notes before starting.</li>
+          <li>Be ready to show the setup, not only the final answer.</li>
+          <li>If this topic feels unfamiliar, spend a few minutes rereading the module overview first.</li>
+        </ul>
+      </section>
+      <section class="week-section">
+        <h2>What we are studying</h2>
+        <ul class="week-list">
+          <li>Topic: Simple harmonic oscillators.</li>
+          <li>Difficulty level: To be set after the student&#39;s first attempt.</li>
+          <li>Main skill: Connect the rule or concept to worked examples, then use it independently.</li>
+        </ul>
+      </section>
+      <section class="week-section">
+        <h2>Textbook reading</h2>
+        <ul class="week-list">
+          <li>Textbook: Add the assigned textbook or course material here.</li>
+          <li>Pages: Add the page range or section title here.</li>
+          <li>Estimated time: 20-35 minutes.</li>
+        </ul>
+      </section>
+      <section class="week-section">
+        <h2>Selected problems</h2>
+        <ul class="week-list">
+          <li>Add the selected problem numbers here.</li>
+          <li>Mark each missed problem by type: concept gap, setup error, sign error, calculation slip, or notation issue.</li>
+          <li>Estimated time: 30-45 minutes.</li>
+        </ul>
+      </section>
+      <section class="week-section">
+        <h2>IXL practice</h2>
+        <ul class="week-list">
+          <li>IXL items: Add skill codes or links if assigned.</li>
+          <li>Estimated time: 15-25 minutes if assigned.</li>
+        </ul>
+      </section>
+      <section class="week-section">
+        <h2>Khan Academy videos</h2>
+        <ul class="week-list">
+          <li>Khan Academy: Add video links if assigned.</li>
+          <li>Estimated time: 10-20 minutes if assigned.</li>
+        </ul>
+      </section>
+      <section class="week-section">
+        <h2>PhET simulators</h2>
+        <ul class="week-list">
+          <li>PhET: Add simulator links if assigned.</li>
+          <li>Estimated time: 10-20 minutes if assigned.</li>
+        </ul>
+      </section>
+      <section class="week-section">
+        <h2>YouTube video</h2>
+        <ul class="week-list">
+          <li>YouTube: Add one short review video if useful.</li>
+          <li>Estimated time: 5-12 minutes if assigned.</li>
+        </ul>
+      </section>
+      <section class="week-section">
+        <h2>Visual references</h2>
+        <ul class="week-list">
+          <li>No required visual reference has been assigned for this week yet.</li>
+          <li>If you add one, use the Figure 1, Figure 2 format from the template.</li>
+        </ul>
+      </section>
+      <section class="week-section">
+        <h2>Study tips</h2>
+        <ul class="week-list">
+          <li>Work slowly enough that each line follows from the previous line.</li>
+          <li>Keep a short mistake list while practicing.</li>
+          <li>Write one question you want to ask during tutoring.</li>
+        </ul>
+      </section>
+      <section class="week-section">
+        <h2>Encouragement</h2>
+        <ul class="week-list">
+          <li>This is one step in a larger path. Focus on making today&#39;s step clearer than it was yesterday.</li>
+        </ul>
+      </section>
+      </div>
+    </section>
+  </main>
+  <script>
+    (() => {
+      const links = document.querySelectorAll("[data-dashboard-link]");
+      if (!links.length) return;
+
+      const readStorage = (key) => {
+        try {
+          return localStorage.getItem(key) || sessionStorage.getItem(key) || "";
+        } catch (error) {
+          return "";
+        }
+      };
+
+      const pickDashboardFile = (value) => {
+        const text = String(value || "").toLowerCase();
+        if (text.includes("tutor-dashboard.html")) return "tutor-dashboard.html";
+        if (text.includes("student-dashboard.html")) return "student-dashboard.html";
+        return "";
+      };
+
+      const pickDashboardRole = (value) => {
+        const role = String(value || "").trim().toLowerCase();
+        if (["teacher", "tutor", "mentor", "admin"].includes(role)) return "tutor-dashboard.html";
+        if (role === "student") return "student-dashboard.html";
+        return "";
+      };
+
+      const dashboard = [document.referrer].map(pickDashboardFile).find(Boolean)
+        || [readStorage("kelpUserRole"), readStorage("userRole"), readStorage("role")].map(pickDashboardRole).find(Boolean)
+        || [readStorage("kelpDashboardTarget")].map(pickDashboardFile).find(Boolean);
+      if (!dashboard) return;
+
+      try {
+        localStorage.setItem("kelpDashboardTarget", dashboard);
+      } catch (error) {}
+
+      links.forEach((link) => {
+        const href = link.getAttribute("href") || "";
+        link.setAttribute("href", href.replace(/(?:student|tutor)-dashboard\.html$/i, dashboard));
+      });
+    })();
+    document.querySelectorAll("[data-read-aloud]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const text = button.getAttribute("data-read-aloud") || "";
+        if (!("speechSynthesis" in window) || !text) return;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(new SpeechSynthesisUtterance(text));
+      });
+    });
+  </script>
+</body>
+</html>

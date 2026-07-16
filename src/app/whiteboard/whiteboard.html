@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Kelp Whiteboard</title>
+
+  <link rel="stylesheet" href="https://esm.sh/@excalidraw/excalidraw@0.18.0/dist/dev/index.css" />
+  <link rel="stylesheet" href="../../styles/style.css" />
+  <link rel="stylesheet" href="./whiteboard.css?v=20260713-graph-dock-1" />
+
+  <script>
+    window.EXCALIDRAW_ASSET_PATH = "https://esm.sh/@excalidraw/excalidraw@0.18.0/dist/prod/";
+    window.EXCALIDRAW_EXPORT_SOURCE = "kelp-whiteboard";
+    window.setTimeout(function () {
+      if (window.kelpWhiteboardApi) return;
+
+      var status = document.getElementById("whiteboard-status");
+      var loading = document.getElementById("whiteboard-loading");
+
+      if (status) {
+        status.textContent = "Open with localhost";
+        status.classList.add("is-error");
+      }
+
+      if (loading) {
+        loading.innerHTML =
+          '<div class="whiteboard-load-error">' +
+            '<strong>The whiteboard did not finish loading.</strong>' +
+            '<span>Open it through the local launcher or GitHub Pages instead of a file address.</span>' +
+          '</div>';
+      }
+    }, 9000);
+  </script>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@19.0.0",
+        "react/jsx-runtime": "https://esm.sh/react@19.0.0/jsx-runtime",
+        "react-dom": "https://esm.sh/react-dom@19.0.0",
+        "react-dom/client": "https://esm.sh/react-dom@19.0.0/client"
+      }
+    }
+  </script>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
+  <script type="module" src="./whiteboard.js?v=20260713-graph-dock-1"></script>
+</head>
+
+<body class="whiteboard-body">
+  <div class="whiteboard-live-status" aria-live="polite">
+    <span id="room-label">Draft room</span>
+    <span id="selection-count">No selection</span>
+    <span id="whiteboard-status" role="status">Loading</span>
+  </div>
+
+  <main class="whiteboard-shell">
+    <aside class="whiteboard-toolbar" aria-label="Whiteboard tools">
+      <div id="pinned-tools-home" class="pinned-tools-home">
+        <section id="pinned-tools-group" class="pinned-tools-group" aria-label="Pinned tools" hidden>
+          <div id="pinned-tools-heading" class="pinned-tools-heading" title="Drag pinned tools">
+            <i data-lucide="grip-horizontal" aria-hidden="true"></i>
+            <span>Pinned</span>
+          </div>
+          <div id="pinned-tools-list" class="pinned-tools-list"></div>
+        </section>
+      </div>
+
+      <section class="tool-group" data-tool-group="drawing" aria-label="Drawing tools">
+        <button class="tool-group-toggle" type="button" data-tool-group-toggle aria-expanded="false" aria-controls="drawing-tools-menu" aria-label="Drawing tools" title="Drawing tools">
+          <i data-lucide="pencil-ruler" aria-hidden="true"></i>
+          <i class="tool-group-chevron" data-lucide="chevron-down" aria-hidden="true"></i>
+        </button>
+        <div id="drawing-tools-menu" class="tool-group-items" aria-hidden="true" inert>
+          <button class="tool-button active" type="button" data-tool="selection" data-short="SEL" aria-label="Select and move" title="Select and move"><i data-lucide="mouse-pointer-2" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-tool="hand" aria-label="Hand tool" title="Hand tool (H)"><i data-lucide="hand" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-tool="freedraw" data-short="PEN" aria-label="Pen" title="Pen"><i data-lucide="pencil" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-tool="highlighter" data-short="HI" aria-label="Highlighter" title="Highlighter"><i data-lucide="highlighter" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-tool="eraser" data-short="ER" aria-label="General eraser" title="General eraser (E)"><i data-lucide="eraser" aria-hidden="true"></i></button>
+        </div>
+      </section>
+
+      <section class="tool-group" data-tool-group="shapes" aria-label="Shape tools">
+        <button class="tool-group-toggle" type="button" data-tool-group-toggle aria-expanded="false" aria-controls="shape-tools-menu" aria-label="Shape tools" title="Shape tools">
+          <i data-lucide="shapes" aria-hidden="true"></i>
+          <i class="tool-group-chevron" data-lucide="chevron-down" aria-hidden="true"></i>
+        </button>
+        <div id="shape-tools-menu" class="tool-group-items" aria-hidden="true" inert>
+          <button class="tool-button" type="button" data-tool="line" data-short="LN" aria-label="Line" title="Line"><i data-lucide="slash" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-tool="arrow" data-short="AR" aria-label="Arrow" title="Arrow"><i data-lucide="arrow-right" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-tool="rectangle" data-short="REC" aria-label="Rectangle" title="Rectangle"><i data-lucide="square" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-tool="diamond" aria-label="Diamond" title="Diamond (D or 3)"><i data-lucide="diamond" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-tool="ellipse" data-short="EL" aria-label="Ellipse or circle" title="Ellipse or circle"><i data-lucide="circle" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-tool="text" data-short="TXT" aria-label="Text" title="Text"><i data-lucide="type" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-action="upload-image" data-short="IMG" aria-label="Upload image" title="Upload image"><i data-lucide="image-plus" aria-hidden="true"></i></button>
+        </div>
+      </section>
+
+      <section class="tool-group" data-tool-group="advanced" aria-label="Advanced Excalidraw tools">
+        <button class="tool-group-toggle" type="button" data-tool-group-toggle aria-expanded="false" aria-controls="advanced-tools-menu" aria-label="Advanced Excalidraw tools" title="Advanced Excalidraw tools">
+          <i data-lucide="wand-sparkles" aria-hidden="true"></i>
+          <i class="tool-group-chevron" data-lucide="chevron-down" aria-hidden="true"></i>
+        </button>
+        <div id="advanced-tools-menu" class="tool-group-items" aria-hidden="true" inert>
+          <button class="tool-button" type="button" data-action="toggle-library" aria-label="Library" title="Library"><i data-lucide="library" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-tool="frame" aria-label="Frame tool" title="Frame tool (F)"><i data-lucide="frame" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-tool="embeddable" aria-label="Web Embed" title="Web Embed"><i data-lucide="code-xml" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-tool="laser" aria-label="Laser pointer" title="Laser pointer (K)"><i data-lucide="wand" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-action="open-mermaid" aria-label="Mermaid to Excalidraw" title="Mermaid to Excalidraw"><i data-lucide="workflow" aria-hidden="true"></i></button>
+        </div>
+      </section>
+
+      <section class="tool-group" data-tool-group="geometry" aria-label="Geometry tools">
+        <button class="tool-group-toggle" type="button" data-tool-group-toggle aria-expanded="false" aria-controls="geometry-tools-menu" aria-label="Geometry tools" title="Geometry tools">
+          <i data-lucide="drafting-compass" aria-hidden="true"></i>
+          <i class="tool-group-chevron" data-lucide="chevron-down" aria-hidden="true"></i>
+        </button>
+        <div id="geometry-tools-menu" class="tool-group-items" aria-hidden="true" inert>
+          <button class="tool-button" type="button" data-action="edit-geometry" aria-label="Create or edit geometry frame" title="Create or edit geometry frame (Shift+G)"><i data-lucide="panel-top-open" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-geometry-tool="point" aria-label="Point" title="Point (Shift+Q)"><span class="geometry-point-icon" aria-hidden="true"></span></button>
+          <button class="tool-button" type="button" data-geometry-tool="regularPolygon" aria-label="Regular polygon" title="Regular polygon (Shift+E)"><i data-lucide="hexagon" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-geometry-tool="irregularPolygon" aria-label="Irregular polygon" title="Irregular polygon (Shift+D)"><i data-lucide="pentagon" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-geometry-tool="angle" aria-label="Angle" title="Angle (Shift+A)"><i data-lucide="drafting-compass" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-geometry-tool="trapezoid" aria-label="Trapezoid" title="Trapezoid (Shift+Z)"><span class="geometry-shape-icon geometry-shape-icon-trapezoid" aria-hidden="true"></span></button>
+          <button class="tool-button" type="button" data-geometry-tool="parallelogram" aria-label="Parallelogram" title="Parallelogram (Shift+X)"><span class="geometry-shape-icon geometry-shape-icon-parallelogram" aria-hidden="true"></span></button>
+          <button class="tool-button" type="button" data-geometry-tool="function" aria-label="Function" title="Function (Shift+F)"><i data-lucide="chart-spline" aria-hidden="true"></i></button>
+        </div>
+      </section>
+
+      <section class="tool-group" data-tool-group="clipboard" aria-label="Clipboard actions">
+        <button class="tool-group-toggle" type="button" data-tool-group-toggle aria-expanded="false" aria-controls="clipboard-tools-menu" aria-label="Clipboard actions" title="Clipboard actions">
+          <i data-lucide="clipboard" aria-hidden="true"></i>
+          <i class="tool-group-chevron" data-lucide="chevron-down" aria-hidden="true"></i>
+        </button>
+        <div id="clipboard-tools-menu" class="tool-group-items" aria-hidden="true" inert>
+          <button class="tool-button" type="button" data-action="copy" data-short="CP" aria-label="Copy selection" title="Copy selection"><i data-lucide="copy" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-action="cut" data-short="CUT" aria-label="Cut selection" title="Cut selection"><i data-lucide="scissors" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-action="paste" data-short="PST" aria-label="Paste" title="Paste"><i data-lucide="clipboard-paste" aria-hidden="true"></i></button>
+          <button class="tool-button danger" type="button" data-action="delete-selection" data-short="DEL" aria-label="Delete selection" title="Delete selection"><i data-lucide="trash-2" aria-hidden="true"></i></button>
+        </div>
+      </section>
+
+      <section class="tool-group" data-tool-group="arrange" aria-label="Arrange selected items">
+        <button class="tool-group-toggle" type="button" data-tool-group-toggle aria-expanded="false" aria-controls="arrange-tools-menu" aria-label="Arrange selected items" title="Arrange selected items">
+          <i data-lucide="align-center" aria-hidden="true"></i>
+          <i class="tool-group-chevron" data-lucide="chevron-down" aria-hidden="true"></i>
+        </button>
+        <div id="arrange-tools-menu" class="tool-group-items" aria-hidden="true" inert>
+          <button class="tool-button arrange-control" type="button" data-action="align-vertical" data-short="AV" aria-label="Align vertically" title="Align vertically" disabled><i data-lucide="align-center-vertical" aria-hidden="true"></i></button>
+          <button class="tool-button arrange-control" type="button" data-action="align-horizontal" data-short="AH" aria-label="Align horizontally" title="Align horizontally" disabled><i data-lucide="align-center-horizontal" aria-hidden="true"></i></button>
+          <button class="tool-button arrange-control" type="button" data-action="distribute-vertical" data-short="DV" aria-label="Distribute vertically" title="Distribute vertically" disabled><i data-lucide="rows-3" aria-hidden="true"></i></button>
+          <button class="tool-button arrange-control" type="button" data-action="distribute-horizontal" data-short="DH" aria-label="Distribute horizontally" title="Distribute horizontally" disabled><i data-lucide="columns-3" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-action="toggle-rotation-assist" aria-label="Rotation assist" title="Gently snap rotation near horizontal, vertical, and 45 degrees"><i data-lucide="magnet" aria-hidden="true"></i></button>
+        </div>
+      </section>
+
+      <section class="tool-group" data-tool-group="grid" aria-label="Grid controls">
+        <button class="tool-group-toggle" type="button" data-tool-group-toggle aria-expanded="false" aria-controls="grid-tools-menu" aria-label="Grid controls" title="Grid controls">
+          <i data-lucide="grid-3x3" aria-hidden="true"></i>
+          <i class="tool-group-chevron" data-lucide="chevron-down" aria-hidden="true"></i>
+        </button>
+        <div id="grid-tools-menu" class="tool-group-items" aria-hidden="true" inert>
+          <button id="grid-appearance-trigger" class="tool-button grid-appearance-trigger" type="button" data-action="grid-appearance" aria-label="Grid appearance" title="Grid appearance" aria-expanded="false" aria-controls="grid-appearance-popover"><i data-lucide="palette" aria-hidden="true"></i><span class="grid-color-indicator" aria-hidden="true"></span></button>
+          <button class="tool-button" type="button" data-action="toggle-grid-horizontal" aria-label="Horizontal grid lines" title="Toggle horizontal grid lines"><i data-lucide="rows-3" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-action="toggle-grid-vertical" aria-label="Vertical grid lines" title="Toggle vertical grid lines"><i data-lucide="columns-3" aria-hidden="true"></i></button>
+          <button class="tool-button grid-spacing-button" type="button" data-action="set-grid-compact" aria-label="Medium grid spacing" title="Medium grid spacing"><span class="grid-spacing-icon is-compact" aria-hidden="true"></span></button>
+          <button class="tool-button grid-spacing-button" type="button" data-action="set-grid-standard" aria-label="Large grid spacing" title="Large grid spacing"><span class="grid-spacing-icon is-standard" aria-hidden="true"></span></button>
+          <button class="tool-button grid-spacing-button" type="button" data-action="set-grid-spacious" aria-label="Extra-large grid spacing" title="Extra-large grid spacing"><span class="grid-spacing-icon is-spacious" aria-hidden="true"></span></button>
+        </div>
+      </section>
+
+      <section class="tool-group" data-tool-group="board" aria-label="Board actions">
+        <button class="tool-group-toggle" type="button" data-tool-group-toggle aria-expanded="false" aria-controls="board-tools-menu" aria-label="Board actions" title="Board actions">
+          <i data-lucide="folder-cog" aria-hidden="true"></i>
+          <i class="tool-group-chevron" data-lucide="chevron-down" aria-hidden="true"></i>
+        </button>
+        <div id="board-tools-menu" class="tool-group-items" aria-hidden="true" inert>
+          <button class="tool-button" type="button" data-action="canvas-appearance" aria-label="Canvas appearance" title="Canvas appearance"><i data-lucide="paint-bucket" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-action="save-local" data-short="SAV" aria-label="Save board" title="Save board"><i data-lucide="save" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-action="load-local" data-short="LOD" aria-label="Load saved board" title="Load saved board"><i data-lucide="folder-open" aria-hidden="true"></i></button>
+          <button class="tool-button" type="button" data-action="open-board-file" data-short="OPN" aria-label="Open board file" title="Open board file"><i data-lucide="file-up" aria-hidden="true"></i></button>
+          <button class="tool-button danger" type="button" data-action="clear-board" data-short="CLR" aria-label="Clear board" title="Clear board"><i data-lucide="paintbrush-vertical" aria-hidden="true"></i></button>
+        </div>
+      </section>
+
+      <section class="tool-group" data-tool-group="export" aria-label="Export board">
+        <button class="tool-group-toggle" type="button" data-tool-group-toggle aria-expanded="false" aria-controls="export-tools-menu" aria-label="Export board" title="Export board">
+          <i data-lucide="download" aria-hidden="true"></i>
+          <i class="tool-group-chevron" data-lucide="chevron-down" aria-hidden="true"></i>
+        </button>
+        <div id="export-tools-menu" class="tool-group-items" aria-hidden="true" inert>
+          <button class="format-button" type="button" data-export="png">PNG</button>
+          <button class="format-button" type="button" data-export="jpeg">JPEG</button>
+          <button class="format-button" type="button" data-export="pdf">PDF</button>
+        </div>
+      </section>
+    </aside>
+
+    <button id="pin-focus-tools" class="focus-bar-pin-button whiteboard-toolbar-pin" type="button" aria-label="Keep whiteboard tools open" title="Keep whiteboard tools open" aria-pressed="false">
+      <i data-lucide="pin" aria-hidden="true"></i>
+    </button>
+
+    <section class="whiteboard-stage" aria-label="Whiteboard canvas">
+      <div id="whiteboard-loading" class="whiteboard-loading">Loading whiteboard</div>
+      <div id="excalidraw-root" class="excalidraw-root"></div>
+      <div id="whiteboard-grid-overlay" class="whiteboard-grid-overlay" aria-hidden="true" hidden></div>
+
+      <section id="geometry-editor-shell" class="geometry-editor-shell is-hidden" aria-label="Geometry frame editor">
+        <header id="geometry-editor-header" class="geometry-editor-header">
+          <div class="geometry-editor-title">
+            <i data-lucide="shapes" aria-hidden="true"></i>
+            <strong id="geometry-editor-title">Geometry frame</strong>
+          </div>
+          <div class="geometry-editor-actions">
+            <button id="toggle-geometry-expanded" class="geometry-icon-button" type="button" aria-label="Expand geometry editor" title="Expand geometry editor" aria-pressed="false">
+              <i data-lucide="maximize-2" aria-hidden="true"></i>
+            </button>
+            <button id="toggle-geometry-fullscreen" class="geometry-icon-button" type="button" aria-label="Open geometry editor fullscreen" title="Open geometry editor fullscreen">
+              <i data-lucide="maximize" aria-hidden="true"></i>
+            </button>
+            <button id="close-geometry-editor" class="geometry-icon-button" type="button" aria-label="Close geometry editor" title="Close geometry editor">
+              <i data-lucide="x" aria-hidden="true"></i>
+            </button>
+          </div>
+        </header>
+        <div class="geometry-editor-scroll">
+          <div id="geometry-editor-host"></div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <aside id="standalone-floating-timer" class="standalone-floating-timer" aria-live="polite" hidden>
+    <div id="standalone-floating-timer-header" class="standalone-floating-timer-header">
+      <span>Countdown</span>
+      <strong id="standalone-floating-countdown-time">05:00</strong>
+    </div>
+    <p id="standalone-floating-countdown-state">Time left</p>
+  </aside>
+
+  <section id="standalone-timer-panel" class="standalone-timer-panel" aria-labelledby="standalone-timer-title" hidden>
+    <header id="standalone-timer-panel-header" class="standalone-timer-panel-header">
+      <div>
+        <span>Time</span>
+        <h2 id="standalone-timer-title">Countdown</h2>
+      </div>
+      <button id="close-standalone-timer-panel" class="standalone-icon-button" type="button" aria-label="Close timer" title="Close timer">
+        <i data-lucide="x" aria-hidden="true"></i>
+      </button>
+    </header>
+
+    <div class="standalone-timer-readout">
+      <span>Time remaining</span>
+      <strong id="standalone-countdown-time">05:00</strong>
+    </div>
+
+    <label class="standalone-timer-duration" for="standalone-countdown-minutes">
+      <span>Minutes</span>
+      <input id="standalone-countdown-minutes" type="number" min="1" max="180" value="5" inputmode="numeric" />
+    </label>
+
+    <div class="standalone-timer-actions">
+      <button id="start-standalone-countdown" type="button"><i data-lucide="play" aria-hidden="true"></i><span>Start</span></button>
+      <button id="pause-standalone-countdown" type="button"><i data-lucide="pause" aria-hidden="true"></i><span>Pause</span></button>
+      <button id="reset-standalone-countdown" type="button"><i data-lucide="rotate-ccw" aria-hidden="true"></i><span>Reset</span></button>
+      <button id="toggle-standalone-countdown-box" type="button"><i data-lucide="eye-off" aria-hidden="true"></i><span>Hide box</span></button>
+    </div>
+  </section>
+
+  <nav id="standalone-whiteboard-dock" class="standalone-whiteboard-dock" aria-label="Whiteboard controls" hidden>
+    <button id="pin-standalone-dock" class="standalone-dock-pin" type="button" aria-label="Keep whiteboard controls open" title="Keep whiteboard controls open" aria-pressed="false" hidden>
+      <i data-lucide="pin" aria-hidden="true"></i>
+    </button>
+    <button id="standalone-fullscreen" class="standalone-dock-button" type="button" aria-label="Fullscreen" aria-keyshortcuts="Alt+1" title="Fullscreen (Alt+1)">
+      <i data-lucide="maximize" aria-hidden="true"></i>
+      <span>Full</span>
+    </button>
+    <button id="standalone-focus" class="standalone-dock-button" type="button" aria-label="Focus whiteboard" aria-keyshortcuts="Alt+2" title="Focus whiteboard (Alt+2)" aria-pressed="false">
+      <i data-lucide="maximize-2" aria-hidden="true"></i>
+      <span>Focus</span>
+    </button>
+    <button id="standalone-center-content" class="standalone-dock-button" type="button" aria-label="Return to whiteboard content" aria-keyshortcuts="Alt+3" title="Return to whiteboard content (Alt+3)">
+      <i data-lucide="locate-fixed" aria-hidden="true"></i>
+      <span>Content</span>
+    </button>
+    <button id="standalone-auto-fit" class="standalone-dock-button" type="button" aria-label="Fit whiteboard content to view" aria-keyshortcuts="Alt+4" title="Fit whiteboard content to view (Alt+4)">
+      <i data-lucide="scan" aria-hidden="true"></i>
+      <span>Auto-fit</span>
+    </button>
+    <button id="standalone-time" class="standalone-dock-button" type="button" aria-label="Time" title="Time" aria-expanded="false" aria-controls="standalone-timer-panel">
+      <i data-lucide="timer" aria-hidden="true"></i>
+      <span>Time</span>
+    </button>
+    <span class="standalone-dock-divider" aria-hidden="true"></span>
+    <button id="standalone-exit" class="standalone-dock-button standalone-exit-button" type="button" aria-label="Exit whiteboard" title="Exit whiteboard">
+      <i data-lucide="log-out" aria-hidden="true"></i>
+      <span>Exit</span>
+    </button>
+  </nav>
+
+  <div id="standalone-dock-edge" class="standalone-dock-edge" role="button" tabindex="-1" aria-label="Reveal whiteboard controls" aria-hidden="true" hidden></div>
+
+  <div id="focus-tools-edge" class="whiteboard-focus-tools-edge" role="button" tabindex="-1" aria-label="Reveal whiteboard tools" aria-hidden="true"></div>
+
+  <div id="pinned-focus-layer" class="pinned-focus-layer" aria-label="Pinned tool groups" hidden></div>
+
+  <div id="tool-context-menu" class="tool-context-menu" role="menu" aria-label="Tool actions" hidden></div>
+
+  <div id="grid-appearance-popover" class="grid-appearance-popover" role="dialog" aria-label="Grid appearance" hidden>
+    <div class="appearance-field">
+      <span>Grid color</span>
+      <div class="color-picker-container appearance-color-palette grid-color-palette" role="group" aria-label="Grid color">
+        <div class="color-picker__top-picks">
+          <button class="color-picker__button" type="button" title="Teal" aria-label="Teal grid" data-grid-color="#145c63" style="--swatch-color: #145c63;"><span class="color-picker__button-outline"></span></button>
+          <button class="color-picker__button" type="button" title="Gray" aria-label="Gray grid" data-grid-color="#868e96" style="--swatch-color: #868e96;"><span class="color-picker__button-outline"></span></button>
+          <button class="color-picker__button" type="button" title="Black" aria-label="Black grid" data-grid-color="#1e1e1e" style="--swatch-color: #1e1e1e;"><span class="color-picker__button-outline"></span></button>
+          <button class="color-picker__button" type="button" title="Blue" aria-label="Blue grid" data-grid-color="#74c0fc" style="--swatch-color: #74c0fc;"><span class="color-picker__button-outline"></span></button>
+          <button class="color-picker__button" type="button" title="White" aria-label="White grid" data-grid-color="#ffffff" style="--swatch-color: #ffffff;"><span class="color-picker__button-outline"></span></button>
+        </div>
+        <span class="appearance-color-separator" aria-hidden="true"></span>
+        <span class="kelp-custom-color-swatch appearance-custom-color-swatch grid-custom-color-swatch">
+          <button id="grid-custom-color-swatch" class="color-picker__button active-color properties-trigger" type="button" aria-label="Choose a custom grid color" title="Choose a custom grid color" style="--swatch-color: #145c63;"><span class="color-picker__button-outline"></span></button>
+          <input id="grid-color-input" class="kelp-native-color-input" type="color" value="#145c63" tabindex="-1" aria-hidden="true" />
+        </span>
+      </div>
+    </div>
+
+    <label class="appearance-field" for="grid-opacity-input">
+      <span>Opacity</span>
+      <input id="grid-opacity-input" class="appearance-opacity-input" type="range" min="0" max="100" step="10" value="20" />
+      <span id="grid-opacity-scale" class="appearance-opacity-scale"><span aria-hidden="true">0</span><output id="grid-opacity-value" for="grid-opacity-input" hidden>20</output><span id="grid-opacity-maximum" aria-hidden="true">100</span></span>
+    </label>
+  </div>
+
+  <div id="frame-background-control" class="kelp-frame-background-control" data-testid="kelp-frame-background-control" hidden>
+    <div class="kelp-grid-layer-control">
+      <h3 aria-hidden="true">Grid position</h3>
+      <div class="kelp-grid-layer-toggle" role="group" aria-label="Grid position relative to the frame">
+        <button type="button" data-frame-grid-layer="behind" aria-pressed="true">Behind drawing</button>
+        <button type="button" data-frame-grid-layer="front" aria-pressed="false">In front</button>
+      </div>
+    </div>
+    <div class="kelp-frame-template-control">
+      <h3 aria-hidden="true">Frame size</h3>
+      <div class="kelp-frame-template-grid" role="group" aria-label="Frame size template">
+        <button type="button" data-frame-template="custom" aria-label="Custom frame" title="Custom frame"><span class="frame-template-icon is-custom" aria-hidden="true"></span><span>Custom</span></button>
+        <button type="button" data-frame-template="a4" aria-label="A4 frame 794 by 1123" title="A4 - 794 x 1123"><span class="frame-template-icon is-a4" aria-hidden="true"></span><span>A4</span></button>
+        <button type="button" data-frame-template="16:9" aria-label="16 by 9 frame 1280 by 720" title="16:9 - 1280 x 720"><span class="frame-template-icon is-16-9" aria-hidden="true"></span><span>16:9</span></button>
+        <button type="button" data-frame-template="4:3" aria-label="4 by 3 frame 1024 by 768" title="4:3 - 1024 x 768"><span class="frame-template-icon is-4-3" aria-hidden="true"></span><span>4:3</span></button>
+        <button type="button" data-frame-template="mobile" aria-label="Mobile frame 390 by 844" title="Mobile - 390 x 844"><span class="frame-template-icon is-mobile" aria-hidden="true"></span><span>Mobile</span></button>
+        <button type="button" data-frame-template="tablet" aria-label="Tablet frame 768 by 1024" title="Tablet - 768 x 1024"><span class="frame-template-icon is-tablet" aria-hidden="true"></span><span>Tablet</span></button>
+        <button type="button" data-frame-template="desktop" aria-label="Desktop frame 1440 by 900" title="Desktop - 1440 x 900"><span class="frame-template-icon is-desktop" aria-hidden="true"></span><span>Desktop</span></button>
+      </div>
+    </div>
+    <h3 aria-hidden="true">Background</h3>
+    <div>
+      <div class="color-picker-container" role="group" aria-label="Frame background">
+        <div class="color-picker__top-picks">
+          <button class="color-picker__button is-transparent" type="button" title="Transparent" aria-label="Transparent frame background" data-frame-background-color="transparent" style="--swatch-color: transparent;"><div class="color-picker__button-outline"></div></button>
+          <button class="color-picker__button" type="button" title="Light red" aria-label="Light red frame background" data-frame-background-color="#ffc9c9" style="--swatch-color: #ffc9c9;"><div class="color-picker__button-outline"></div></button>
+          <button class="color-picker__button" type="button" title="Light green" aria-label="Light green frame background" data-frame-background-color="#b2f2bb" style="--swatch-color: #b2f2bb;"><div class="color-picker__button-outline"></div></button>
+          <button class="color-picker__button" type="button" title="Light blue" aria-label="Light blue frame background" data-frame-background-color="#a5d8ff" style="--swatch-color: #a5d8ff;"><div class="color-picker__button-outline"></div></button>
+          <button class="color-picker__button" type="button" title="Light yellow" aria-label="Light yellow frame background" data-frame-background-color="#ffec99" style="--swatch-color: #ffec99;"><div class="color-picker__button-outline"></div></button>
+        </div>
+        <div class="kelp-frame-background-separator" aria-hidden="true"></div>
+        <span class="kelp-custom-color-swatch">
+          <button id="frame-background-custom-button" class="color-picker__button active-color properties-trigger" type="button" aria-label="Choose a custom frame background color" title="Choose a custom frame background color" style="--swatch-color: #e8f6f6;"><span class="color-picker__button-outline"></span></button>
+          <input id="frame-background-color-input" class="kelp-native-color-input" type="color" value="#e8f6f6" tabindex="-1" aria-hidden="true" />
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div id="image-grid-layer-control" class="kelp-image-grid-layer-control kelp-grid-layer-control" data-testid="kelp-image-grid-layer-control" hidden>
+    <h3 aria-hidden="true">Grid position</h3>
+    <div class="kelp-grid-layer-toggle" role="group" aria-label="Grid position relative to the image">
+      <button type="button" data-image-grid-layer="behind" aria-pressed="true">Behind drawing</button>
+      <button type="button" data-image-grid-layer="front" aria-pressed="false">In front</button>
+    </div>
+  </div>
+
+  <dialog id="appearance-dialog" class="appearance-dialog" aria-modal="false" aria-labelledby="appearance-dialog-title">
+    <form id="appearance-form" class="appearance-form">
+      <header class="appearance-dialog-header">
+        <div>
+          <span id="appearance-dialog-eyebrow" class="appearance-dialog-eyebrow">Board appearance</span>
+          <h2 id="appearance-dialog-title">Canvas background</h2>
+        </div>
+        <button id="close-appearance-dialog" class="appearance-icon-button" type="button" aria-label="Close" title="Close">
+          <i data-lucide="x" aria-hidden="true"></i>
+        </button>
+      </header>
+
+      <div class="appearance-dialog-body">
+        <div class="appearance-field">
+          <span>Color</span>
+          <div class="color-picker-container appearance-color-palette" role="group" aria-label="Canvas background color">
+            <div class="color-picker__top-picks">
+              <button class="color-picker__button is-transparent" type="button" title="Transparent" aria-label="Transparent canvas background" data-appearance-color="transparent" style="--swatch-color: transparent;"><span class="color-picker__button-outline"></span></button>
+              <button class="color-picker__button" type="button" title="Light red" aria-label="Light red canvas background" data-appearance-color="#ffc9c9" style="--swatch-color: #ffc9c9;"><span class="color-picker__button-outline"></span></button>
+              <button class="color-picker__button" type="button" title="Light green" aria-label="Light green canvas background" data-appearance-color="#b2f2bb" style="--swatch-color: #b2f2bb;"><span class="color-picker__button-outline"></span></button>
+              <button class="color-picker__button" type="button" title="Light blue" aria-label="Light blue canvas background" data-appearance-color="#a5d8ff" style="--swatch-color: #a5d8ff;"><span class="color-picker__button-outline"></span></button>
+              <button class="color-picker__button" type="button" title="Light yellow" aria-label="Light yellow canvas background" data-appearance-color="#ffec99" style="--swatch-color: #ffec99;"><span class="color-picker__button-outline"></span></button>
+            </div>
+            <span class="appearance-color-separator" aria-hidden="true"></span>
+            <span class="kelp-custom-color-swatch appearance-custom-color-swatch">
+              <button id="appearance-custom-color-swatch" class="color-picker__button active-color properties-trigger" type="button" aria-label="Choose a custom canvas background color" title="Choose a custom canvas background color" style="--swatch-color: #ffffff;"><span class="color-picker__button-outline"></span></button>
+              <input id="appearance-color" class="kelp-native-color-input" type="color" value="#ffffff" tabindex="-1" aria-hidden="true" />
+            </span>
+          </div>
+          <input id="appearance-hex" type="hidden" value="#FFFFFF" />
+        </div>
+
+        <label id="appearance-opacity-field" class="appearance-field" for="appearance-opacity">
+          <span class="appearance-field-heading">
+            <span>Opacity</span>
+          </span>
+          <input id="appearance-opacity" class="appearance-opacity-input" type="range" min="0" max="100" step="10" value="100" />
+          <span class="appearance-opacity-scale"><span id="appearance-opacity-minimum" aria-hidden="true">0</span><output id="appearance-opacity-value" for="appearance-opacity" hidden>100</output><span id="appearance-opacity-maximum" aria-hidden="true">100</span></span>
+        </label>
+      </div>
+
+      <footer class="appearance-dialog-footer">
+        <button id="cancel-appearance-dialog" class="appearance-secondary-button" type="button">Cancel</button>
+        <button id="apply-appearance-dialog" class="appearance-primary-button" type="submit">
+          <i data-lucide="check" aria-hidden="true"></i>
+          <span id="appearance-apply-label">Apply</span>
+        </button>
+      </footer>
+    </form>
+  </dialog>
+
+  <input id="image-upload-input" type="file" accept="image/*" hidden />
+  <input id="board-file-input" type="file" accept=".excalidraw,.json,application/json" hidden />
+</body>
+</html>

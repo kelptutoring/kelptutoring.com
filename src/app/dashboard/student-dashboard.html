@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Workspace</title>
+  <link rel="stylesheet" href="../../styles/style.css" />
+  <script type="module" src="../dashboard/student-dashboard.js"></script>
+  <script>
+    try { localStorage.setItem("kelpDashboardTarget", "student-dashboard.html"); } catch (error) {}
+  </script>
+</head>
+
+<body class="workspace-body gradient-body-1">
+<div class="workspace-shell">
+  <aside class="workspace-sidebar">
+    <div class="workspace-brand">
+      <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="Kelp logo" class="workspace-logo" />
+    </div>
+
+    <nav class="workspace-nav">
+      <a href="../schedules/schedules.html" class="workspace-nav-link">Tracks</a>
+      <a href="../profile/student-profile.html" class="workspace-nav-link">Profile</a>
+      <button type="button" class="workspace-nav-link workspace-logout" id="logout-student">
+        Sign out
+      </button>
+    </nav>
+  </aside>
+
+  <main class="workspace-main">
+    <section class="workspace-card top-links-card">
+      <div class="section-header compact-header">
+        <div>
+          <p class="page-kicker">Student workspace</p>
+          <h2 id="student-heading">Student workspace</h2>
+          <p id="student-profile-line">Loading profile...</p>
+        </div>
+      </div>
+      <div id="important-links" class="link-chip-list"></div>
+    </section>
+
+    <section id="student-calendar" class="workspace-card calendar-card">
+      <div class="section-header">
+        <div>
+          <h2>Month calendar</h2>
+          <p>
+            Classes and due dates. Click any item to mark delivered,
+            reschedule, cancel, or open the assignment.
+          </p>
+        </div>
+
+        <div class="calendar-toolbar">
+          <button id="student-calendar-prev" class="calendar-nav-btn" type="button">←</button>
+          <div id="student-calendar-label" class="calendar-label"></div>
+          <button id="student-calendar-next" class="calendar-nav-btn" type="button">→</button>
+        </div>
+      </div>
+
+      <p id="student-calendar-summary" class="calendar-summary"></p>
+
+      <div class="calendar-legend">
+        <span class="legend-pill class">Class</span>
+        <span class="legend-pill assignment">Due date</span>
+      </div>
+
+      <div id="student-calendar-grid" class="month-grid"></div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

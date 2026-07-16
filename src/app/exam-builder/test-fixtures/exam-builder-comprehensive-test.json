@@ -1,0 +1,359 @@
+{
+  "id": "kelp-comprehensive-test-exam",
+  "title": "Kelp Exam Builder Comprehensive Test",
+  "madeBy": "__KELP_TUTOR_PLACEHOLDER__",
+  "subject": "Cross-feature quality assurance",
+  "instructions": "This exam is a reusable test fixture. Check the builder, live preview, student view, grading, JSON round trips, and both PDF outputs.",
+  "durationMinutes": 75,
+  "titleColor": "#212121",
+  "stripeColor": "#9bf17e",
+  "createdAt": "2026-07-10T12:00:00.000Z",
+  "updatedAt": "2026-07-10T12:00:00.000Z",
+  "questions": [
+    {
+      "id": "test-q01",
+      "name": "Text multiple choice",
+      "type": "multiple-choice",
+      "prompt": "Which value solves $2x+3=11$?",
+      "points": 1,
+      "options": ["$x=2$", "$x=3$", "$x=4$", "$x=7$"],
+      "correctOptionIndex": 2,
+      "correctOptionIndexes": [2],
+      "answer": "$x=4$, because $2(4)+3=11$."
+    },
+    {
+      "id": "test-q02",
+      "name": "Text multiple answers",
+      "type": "multiple-answer",
+      "prompt": "Select every expression equivalent to $x+x+x$.",
+      "points": 2,
+      "options": ["$3x$", "$x^3$", "$2x+x$", "$x+2$"],
+      "correctOptionIndex": 0,
+      "correctOptionIndexes": [0, 2],
+      "answer": "$3x$ and $2x+x$."
+    },
+    {
+      "id": "test-q03",
+      "name": "True or false",
+      "type": "true-false",
+      "prompt": "The graph of $y=x^2$ is symmetric about the $y$-axis.",
+      "points": 1,
+      "options": ["True", "False"],
+      "correctOptionIndex": 0,
+      "correctOptionIndexes": [0],
+      "answer": "True."
+    },
+    {
+      "id": "test-q04",
+      "name": "Numeric exact expression",
+      "type": "numeric",
+      "prompt": "Write one exact expression equal to $\\sqrt{8}$.",
+      "points": 2,
+      "numericExpectedAnswer": "2*sqrt(2)",
+      "numericExactMatch": true,
+      "numericTolerance": 0.0000005,
+      "numericAngleMode": "radians",
+      "numericRequireUnit": false,
+      "answer": "$2\\sqrt{2}$."
+    },
+    {
+      "id": "test-q05",
+      "name": "Numeric equivalent fraction",
+      "type": "numeric",
+      "prompt": "Enter a value equivalent to $5/2$.",
+      "points": 2,
+      "numericExpectedAnswer": "5/2",
+      "numericExactMatch": false,
+      "numericTolerance": 0.0005,
+      "numericAngleMode": "radians",
+      "numericRequireUnit": false,
+      "answer": "$5/2=2.5$."
+    },
+    {
+      "id": "test-q06",
+      "name": "Short written answer",
+      "type": "short-answer",
+      "prompt": "In one sentence, define slope.",
+      "points": 2,
+      "pdfAnswerSpaceSize": "small",
+      "answer": "Slope is the rate of vertical change relative to horizontal change."
+    },
+    {
+      "id": "test-q07",
+      "name": "Essay medium answer block",
+      "type": "essay",
+      "prompt": "Explain how the discriminant predicts the number of real roots of a quadratic equation.",
+      "points": 5,
+      "pdfAnswerSpaceSize": "medium",
+      "answer": "Discuss $b^2-4ac$: positive gives two real roots, zero gives one repeated real root, and negative gives no real roots."
+    },
+    {
+      "id": "test-q08",
+      "name": "Essay custom answer block",
+      "type": "essay",
+      "prompt": "Compare linear and exponential growth and include one example of each.",
+      "points": 6,
+      "pdfAnswerSpaceSize": "custom",
+      "pdfAnswerSpaceCustomMm": 145,
+      "answer": "A complete response identifies constant additive change versus constant multiplicative change."
+    },
+    {
+      "id": "test-q09",
+      "name": "Image multiple choice",
+      "type": "multiple-choice-image",
+      "prompt": "Which image represents a triangle?",
+      "points": 1,
+      "options": ["", "", "", ""],
+      "optionImages": [
+        "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2VlZjlmYSIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9IjEwMCIgcj0iNTgiIGZpbGw9IiMwMGFjYzEiLz48dGV4dCB4PSIxMDAiIHk9IjEwOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjI2IiBmaWxsPSJ3aGl0ZSI+Q2lyY2xlPC90ZXh0Pjwvc3ZnPg==",
+        "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2YyZmJlZiIvPjxyZWN0IHg9IjQyIiB5PSI0MiIgd2lkdGg9IjExNiIgaGVpZ2h0PSIxMTYiIGZpbGw9IiM1ZmFlNjMiLz48dGV4dCB4PSIxMDAiIHk9IjEwOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjI1IiBmaWxsPSJ3aGl0ZSI+U3F1YXJlPC90ZXh0Pjwvc3ZnPg==",
+        "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2ZmZjdlOCIvPjxwb2x5Z29uIHBvaW50cz0iMTAwLDI4IDE3MCwxNjQgMzAsMTY0IiBmaWxsPSIjZjI5YTAwIi8+PHRleHQgeD0iMTAwIiB5PSIxMzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMyIgZmlsbD0id2hpdGUiPlRyaWFuZ2xlPC90ZXh0Pjwvc3ZnPg==",
+        "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2ZmZjJmNCIvPjxlbGxpcHNlIGN4PSIxMDAiIGN5PSIxMDAiIHJ4PSI3MiIgcnk9IjQ2IiBmaWxsPSIjZDk1YjczIi8+PGNpcmNsZSBjeD0iNzIiIGN5PSI4OCIgcj0iMTMiIGZpbGw9IiNmZmYiLz48Y2lyY2xlIGN4PSIxMjQiIGN5PSIxMTIiIHI9IjE4IiBmaWxsPSIjZmZmIi8+PHRleHQgeD0iMTAwIiB5PSIzNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjIyIiBmaWxsPSIjOGIzMDQzIj5DZWxsPC90ZXh0Pjwvc3ZnPg=="
+      ],
+      "correctOptionIndex": 2,
+      "correctOptionIndexes": [2],
+      "answer": "Option C."
+    },
+    {
+      "id": "test-q10",
+      "name": "Image multiple answers",
+      "type": "multiple-answer-image",
+      "prompt": "Select the images that contain a curved boundary.",
+      "points": 2,
+      "options": ["", "", "", ""],
+      "optionImages": [
+        "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2VlZjlmYSIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9IjEwMCIgcj0iNTgiIGZpbGw9IiMwMGFjYzEiLz48dGV4dCB4PSIxMDAiIHk9IjEwOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjI2IiBmaWxsPSJ3aGl0ZSI+Q2lyY2xlPC90ZXh0Pjwvc3ZnPg==",
+        "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2YyZmJlZiIvPjxyZWN0IHg9IjQyIiB5PSI0MiIgd2lkdGg9IjExNiIgaGVpZ2h0PSIxMTYiIGZpbGw9IiM1ZmFlNjMiLz48dGV4dCB4PSIxMDAiIHk9IjEwOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjI1IiBmaWxsPSJ3aGl0ZSI+U3F1YXJlPC90ZXh0Pjwvc3ZnPg==",
+        "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2ZmZjJmNCIvPjxlbGxpcHNlIGN4PSIxMDAiIGN5PSIxMDAiIHJ4PSI3MiIgcnk9IjQ2IiBmaWxsPSIjZDk1YjczIi8+PGNpcmNsZSBjeD0iNzIiIGN5PSI4OCIgcj0iMTMiIGZpbGw9IiNmZmYiLz48Y2lyY2xlIGN4PSIxMjQiIGN5PSIxMTIiIHI9IjE4IiBmaWxsPSIjZmZmIi8+PHRleHQgeD0iMTAwIiB5PSIzNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjIyIiBmaWxsPSIjOGIzMDQzIj5DZWxsPC90ZXh0Pjwvc3ZnPg==",
+        "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2ZmZjdlOCIvPjxwb2x5Z29uIHBvaW50cz0iMTAwLDI4IDE3MCwxNjQgMzAsMTY0IiBmaWxsPSIjZjI5YTAwIi8+PHRleHQgeD0iMTAwIiB5PSIxMzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMyIgZmlsbD0id2hpdGUiPlRyaWFuZ2xlPC90ZXh0Pjwvc3ZnPg=="
+      ],
+      "correctOptionIndex": 0,
+      "correctOptionIndexes": [0, 2],
+      "answer": "Options A and C."
+    },
+    {
+      "id": "test-q11",
+      "name": "Graph multiple choice",
+      "type": "multiple-choice-graph",
+      "prompt": "Which graph represents an increasing linear function?",
+      "points": 2,
+      "options": ["", "", "", ""],
+      "optionGraphs": [
+        {"graphType":"function","displayMode":"coordinate","functions":[{"id":"f1","expression":"2*x+1","stroke":"#007f86","lineWidth":3,"lineDash":"solid","label":"y = 2x + 1"}],"xMin":-6,"xMax":6,"yMin":-6,"yMax":6},
+        {"graphType":"function","displayMode":"coordinate","functions":[{"id":"f1","expression":"-x+2","stroke":"#d95b73","lineWidth":3,"lineDash":"solid","label":"y = -x + 2"}],"xMin":-6,"xMax":6,"yMin":-6,"yMax":6},
+        {"graphType":"function","displayMode":"coordinate","functions":[{"id":"f1","expression":"3","stroke":"#5fae63","lineWidth":3,"lineDash":"dashed","label":"y = 3"}],"xMin":-6,"xMax":6,"yMin":-6,"yMax":6},
+        {"graphType":"function","displayMode":"coordinate","functions":[{"id":"f1","expression":"x^2","stroke":"#6e5cc2","lineWidth":3,"lineDash":"solid","label":"y = x^2"}],"xMin":-6,"xMax":6,"yMin":-2,"yMax":10}
+      ],
+      "correctOptionIndex": 0,
+      "correctOptionIndexes": [0],
+      "answer": "Option A."
+    },
+    {
+      "id": "test-q12",
+      "name": "Graph multiple answers",
+      "type": "multiple-answer-graph",
+      "prompt": "Select every graph that is symmetric about the $y$-axis.",
+      "points": 3,
+      "options": ["", "", "", ""],
+      "optionGraphs": [
+        {"graphType":"function","displayMode":"coordinate","functions":[{"id":"f1","expression":"x^2","stroke":"#007f86","lineWidth":3,"lineDash":"solid","label":"y = x^2"}],"xMin":-5,"xMax":5,"yMin":-2,"yMax":10},
+        {"graphType":"function","displayMode":"coordinate","functions":[{"id":"f1","expression":"x^3","stroke":"#d95b73","lineWidth":3,"lineDash":"solid","label":"y = x^3"}],"xMin":-4,"xMax":4,"yMin":-10,"yMax":10},
+        {"graphType":"function","displayMode":"coordinate","functions":[{"id":"f1","expression":"abs(x)","stroke":"#5fae63","lineWidth":3,"lineDash":"solid","label":"y = |x|"}],"xMin":-5,"xMax":5,"yMin":-2,"yMax":8},
+        {"graphType":"function","displayMode":"coordinate","functions":[{"id":"f1","expression":"x+1","stroke":"#6e5cc2","lineWidth":3,"lineDash":"solid","label":"y = x + 1"}],"xMin":-5,"xMax":5,"yMin":-5,"yMax":7}
+      ],
+      "correctOptionIndex": 0,
+      "correctOptionIndexes": [0, 2],
+      "answer": "Options A and C."
+    },
+    {
+      "id": "test-q13",
+      "name": "Points lines measurements and angle",
+      "type": "short-answer",
+      "prompt": "Inspect the attached diagram. Name one measured object and one directed object.",
+      "points": 3,
+      "graphBeforeText": "This diagram tests points, labels, line styles, endpoints, distance, an arrow, and an angle.",
+      "graphAfterText": "The dashed segment also exercises the reference-line visual style.",
+      "graph": {
+        "graphType": "diagram",
+        "displayMode": "coordinate",
+        "xMin": -10,
+        "xMax": 10,
+        "yMin": -10,
+        "yMax": 10,
+        "points": [
+          {"label":"A","x":-7,"y":0,"color":"#007f86","size":5,"coordinateLabelMode":"nameCoordinates","coordinatePrecision":1},
+          {"label":"B","x":0,"y":0,"color":"#007f86","size":5},
+          {"label":"C","x":0,"y":6,"color":"#007f86","size":5},
+          {"label":"D","x":7,"y":0,"color":"#007f86","size":5},
+          {"label":"E","x":-5,"y":-5,"color":"#d95b73","size":5}
+        ],
+        "segments": [
+          {"from":"A","to":"D","labelMode":"name","color":"#007f86","lineWidth":2,"lineDash":"solid","showEndpointPoints":true},
+          {"from":"E","to":"C","labelMode":"hidden","color":"#d95b73","lineWidth":2,"lineDash":"dashed","showEndpointPoints":true},
+          {"from":"A","to":"C","labelMode":"length","precision":2,"color":"#5fae63","lineWidth":3,"lineDash":"dotted","showEndpointPoints":true},
+          {"from":"B","to":"D","labelMode":"variable","variableLabel":"v","color":"#7a5bc7","lineWidth":3,"lineDash":"arrow","showEndpointPoints":true}
+        ],
+        "angles": [
+          {"from":"A","vertex":"B","to":"C","labelMode":"value","angleMeasure":"minor","color":"#f29a00","lineWidth":2,"radius":28,"precision":1}
+        ],
+        "shapes": []
+      },
+      "pdfAnswerSpaceSize": "small",
+      "answer": "For example: segment AC is measured and vector BD is directed."
+    },
+    {
+      "id": "test-q14",
+      "name": "Multiple functions and domains",
+      "type": "short-answer",
+      "prompt": "How many function curves are visible, and which one has the shortest displayed domain?",
+      "points": 3,
+      "graph": {
+        "graphType": "function",
+        "displayMode": "coordinate",
+        "title": "Three functions",
+        "functions": [
+          {"id":"function-1","expression":"x^2-4","stroke":"#007f86","lineWidth":3,"lineDash":"solid","label":"y = x^2 - 4","xMin":-5,"xMax":5},
+          {"id":"function-2","expression":"-2*x+3","stroke":"#d95b73","lineWidth":2.5,"lineDash":"dashed","label":"y = -2x + 3","xMin":-8,"xMax":8},
+          {"id":"function-3","expression":"sin(x)","stroke":"#5fae63","lineWidth":3,"lineDash":"dotted","label":"y = sin(x)","xMin":-3.14,"xMax":3.14}
+        ],
+        "points": [{"label":"P","x":2,"y":0,"color":"#7a5bc7","size":6}],
+        "segments": [],
+        "angles": [],
+        "shapes": [{"id":"function-note","type":"latexText","text":"x^2 - 4","x":-7,"y":8,"fill":"#145c63","fontSize":20}],
+        "xMin": -10,
+        "xMax": 10,
+        "yMin": -10,
+        "yMax": 10
+      },
+      "pdfAnswerSpaceSize": "small",
+      "answer": "Three curves are visible; $\\sin(x)$ has the shortest domain."
+    },
+    {
+      "id": "test-q15",
+      "name": "Constrained polygon gallery",
+      "type": "short-answer",
+      "prompt": "List the five polygon families shown in the attached geometry diagram.",
+      "points": 4,
+      "graph": {
+        "graphType": "diagram",
+        "displayMode": "geometry",
+        "xMin": -12,
+        "xMax": 12,
+        "yMin": -10,
+        "yMax": 10,
+        "points": [],
+        "segments": [],
+        "angles": [],
+        "shapes": [
+          {"id":"regular-pentagon","type":"regularPolygon","label":"Regular pentagon","sides":5,"radius":2.6,"rotation":90,"centerX":-7,"centerY":5,"showCenter":true,"showApothem":true,"vertexLabels":["A","B","C","D","E"],"stroke":"#007f86","fill":"#c7f1f4","fillOpacity":0.45,"lineWidth":2,"lineDash":"solid"},
+          {"id":"irregular-five","type":"irregularPolygon","label":"Irregular polygon","targetSides":5,"points":[{"label":"F","x":1,"y":7},{"label":"G","x":5,"y":6},{"label":"H","x":6,"y":2},{"label":"I","x":3,"y":1},{"label":"J","x":0,"y":3}],"stroke":"#d95b73","fill":"#f8ccd5","fillOpacity":0.38,"lineWidth":2,"lineDash":"dashed"},
+          {"id":"rectangle-one","type":"irregularPolygon","label":"Rectangle","constraint":"rectangle","targetSides":4,"points":[{"label":"K","x":-10,"y":-2},{"label":"L","x":-4,"y":-2},{"label":"M","x":-4,"y":-6},{"label":"N","x":-10,"y":-6}],"stroke":"#5fae63","fill":"#d8f1d9","fillOpacity":0.42,"lineWidth":3,"lineDash":"solid"},
+          {"id":"trapezoid-one","type":"trapezoid","label":"Trapezoid","points":[{"label":"O","x":-1,"y":-2},{"label":"P","x":5,"y":-2},{"label":"Q","x":4,"y":-6},{"label":"R","x":1,"y":-6}],"stroke":"#f29a00","fill":"#ffe2ad","fillOpacity":0.45,"lineWidth":2,"lineDash":"dotted"},
+          {"id":"parallelogram-one","type":"parallelogram","label":"Parallelogram","points":[{"label":"S","x":7,"y":-2},{"label":"T","x":11,"y":-2},{"label":"U","x":9,"y":-6},{"label":"V","x":5,"y":-6}],"stroke":"#7a5bc7","fill":"#ddd5fa","fillOpacity":0.45,"lineWidth":2,"lineDash":"solid"}
+        ]
+      },
+      "pdfAnswerSpaceSize": "small",
+      "answer": "Regular polygon, irregular polygon, rectangle, trapezoid, and parallelogram."
+    },
+    {
+      "id": "test-q16",
+      "name": "Circles centers and labels",
+      "type": "short-answer",
+      "prompt": "Identify the visible construction points and read the movable labels.",
+      "points": 3,
+      "graph": {
+        "graphType": "diagram",
+        "displayMode": "coordinate",
+        "xMin": -10,
+        "xMax": 10,
+        "yMin": -10,
+        "yMax": 10,
+        "points": [{"label":"X","x":-7,"y":-6,"coordinateLabelMode":"nameCoordinates","coordinatePrecision":2,"color":"#007f86","size":6}],
+        "segments": [],
+        "angles": [],
+        "shapes": [
+          {"id":"circle-one","type":"circle","label":"","center":{"label":"C1","x":-3,"y":2,"color":"#007f86","size":5},"radius":3,"radiusPoint":{"label":"R1","x":0,"y":2,"color":"#007f86","size":5},"showCenter":true,"showRadiusPoint":true,"stroke":"#007f86","fill":"#c7f1f4","fillOpacity":0.25,"lineWidth":3,"lineDash":"solid"},
+          {"id":"circle-two","type":"circle","label":"","center":{"label":"C2","x":5,"y":-1,"color":"#d95b73","size":5},"radius":2.5,"radiusPoint":{"label":"R2","x":5,"y":1.5,"color":"#d95b73","size":5},"showCenter":true,"showRadiusPoint":false,"stroke":"#d95b73","fill":"#f8ccd5","fillOpacity":0.2,"lineWidth":2,"lineDash":"dashed"},
+          {"id":"circle-label","type":"latexText","text":"r = 3","x":-3,"y":5.8,"fill":"#145c63","fontSize":22},
+          {"id":"sqrt-label","type":"latexText","text":"sqrt(x^2 + y^2)","x":1,"y":-6,"fill":"#7a5bc7","fontSize":18}
+        ]
+      },
+      "pdfAnswerSpaceSize": "small",
+      "answer": "The first circle shows center C1 and radius point R1; the second shows center C2."
+    },
+    {
+      "id": "test-q17",
+      "name": "Circuit symbol gallery",
+      "type": "short-answer",
+      "prompt": "Name any four electrical symbols in the gallery.",
+      "points": 4,
+      "graph": {
+        "graphType": "diagram",
+        "displayMode": "geometry",
+        "xMin": -12,
+        "xMax": 12,
+        "yMin": -10,
+        "yMax": 10,
+        "points": [],
+        "segments": [],
+        "angles": [],
+        "shapes": [
+          {"id":"symbol-resistor","type":"circuitSymbol","symbolKind":"resistor","centerX":-8,"centerY":6,"width":4,"height":1.6,"showTerminals":true,"stroke":"#007f86","lineWidth":2},
+          {"id":"symbol-variable","type":"circuitSymbol","symbolKind":"variableResistor","centerX":-2.5,"centerY":6,"width":4,"height":1.6,"showTerminals":true,"stroke":"#007f86","lineWidth":2},
+          {"id":"symbol-battery","type":"circuitSymbol","symbolKind":"battery","centerX":3,"centerY":6,"width":4,"height":1.6,"showTerminals":true,"stroke":"#007f86","lineWidth":2},
+          {"id":"symbol-ammeter","type":"circuitSymbol","symbolKind":"ammeter","centerX":8,"centerY":6,"width":3.5,"height":1.8,"showTerminals":true,"stroke":"#d95b73","lineWidth":2},
+          {"id":"symbol-voltmeter","type":"circuitSymbol","symbolKind":"voltmeter","centerX":-8,"centerY":0,"width":3.5,"height":1.8,"showTerminals":false,"stroke":"#5fae63","lineWidth":2},
+          {"id":"symbol-inductor","type":"circuitSymbol","symbolKind":"inductor","centerX":-2.5,"centerY":0,"width":4,"height":1.6,"showTerminals":true,"stroke":"#5fae63","lineWidth":2},
+          {"id":"symbol-earth","type":"circuitSymbol","symbolKind":"earth","centerX":3,"centerY":0,"width":3.5,"height":2,"showTerminals":true,"stroke":"#f29a00","lineWidth":2},
+          {"id":"symbol-capacitor","type":"circuitSymbol","symbolKind":"capacitor","centerX":8,"centerY":0,"width":4,"height":1.8,"showTerminals":false,"stroke":"#7a5bc7","lineWidth":2}
+        ]
+      },
+      "pdfAnswerSpaceSize": "small",
+      "answer": "Resistor, variable resistor, battery, ammeter, voltmeter, inductor, earth electrode, and capacitor."
+    },
+    {
+      "id": "test-q18",
+      "name": "Body image and caption",
+      "type": "short-answer",
+      "prompt": "Describe one visual feature of the specimen image.",
+      "points": 2,
+      "imageBeforeText": "Use the embedded test image below.",
+      "imageData": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2ZmZjJmNCIvPjxlbGxpcHNlIGN4PSIxMDAiIGN5PSIxMDAiIHJ4PSI3MiIgcnk9IjQ2IiBmaWxsPSIjZDk1YjczIi8+PGNpcmNsZSBjeD0iNzIiIGN5PSI4OCIgcj0iMTMiIGZpbGw9IiNmZmYiLz48Y2lyY2xlIGN4PSIxMjQiIGN5PSIxMTIiIHI9IjE4IiBmaWxsPSIjZmZmIi8+PHRleHQgeD0iMTAwIiB5PSIzNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjIyIiBmaWxsPSIjOGIzMDQzIj5DZWxsPC90ZXh0Pjwvc3ZnPg==",
+      "imageAlt": "Stylized cell test image",
+      "imageAfterText": "The caption and before/after text should survive every output path.",
+      "pdfAnswerSpaceSize": "small",
+      "answer": "For example: the specimen has an oval outer boundary and two light internal circles."
+    },
+    {
+      "id": "test-q19",
+      "name": "Shape graph choices",
+      "type": "multiple-choice-graph",
+      "prompt": "Which option contains a regular hexagon?",
+      "points": 2,
+      "options": ["", "", "", ""],
+      "optionGraphs": [
+        {"graphType":"diagram","displayMode":"geometry","shapes":[{"id":"shape-a","type":"circle","center":{"x":0,"y":0},"radius":4,"radiusPoint":{"x":4,"y":0},"showCenter":true,"showRadiusPoint":true,"stroke":"#007f86","fill":"#c7f1f4","fillOpacity":0.3}],"xMin":-7,"xMax":7,"yMin":-7,"yMax":7},
+        {"graphType":"diagram","displayMode":"geometry","shapes":[{"id":"shape-b","type":"regularPolygon","sides":6,"radius":4,"rotation":90,"centerX":0,"centerY":0,"showCenter":true,"showApothem":true,"stroke":"#5fae63","fill":"#d8f1d9","fillOpacity":0.4}],"xMin":-7,"xMax":7,"yMin":-7,"yMax":7},
+        {"graphType":"diagram","displayMode":"geometry","shapes":[{"id":"shape-c","type":"trapezoid","points":[{"label":"A","x":-4,"y":3},{"label":"B","x":4,"y":3},{"label":"C","x":2,"y":-3},{"label":"D","x":-2,"y":-3}],"stroke":"#f29a00","fill":"#ffe2ad","fillOpacity":0.4}],"xMin":-7,"xMax":7,"yMin":-7,"yMax":7},
+        {"graphType":"diagram","displayMode":"geometry","shapes":[{"id":"shape-d","type":"parallelogram","points":[{"label":"A","x":-4,"y":3},{"label":"B","x":2,"y":3},{"label":"C","x":4,"y":-3},{"label":"D","x":-2,"y":-3}],"stroke":"#7a5bc7","fill":"#ddd5fa","fillOpacity":0.4}],"xMin":-7,"xMax":7,"yMin":-7,"yMax":7}
+      ],
+      "correctOptionIndex": 1,
+      "correctOptionIndexes": [1],
+      "answer": "Option B."
+    },
+    {
+      "id": "test-q20",
+      "name": "Numeric answer with unit",
+      "type": "numeric",
+      "prompt": "A cart travels $12$ meters in $3$ seconds. Enter its average speed with the required unit.",
+      "points": 2,
+      "numericExpectedAnswer": "4",
+      "numericExactMatch": false,
+      "numericTolerance": 0.005,
+      "numericAngleMode": "radians",
+      "numericRequireUnit": true,
+      "numericUnit": "m/s",
+      "answer": "$4\\,\\text{m/s}$."
+    }
+  ]
+}

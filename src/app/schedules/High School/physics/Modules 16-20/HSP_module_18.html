@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HS, Physics: Module 18</title>
+  <link rel="stylesheet" href="../../../../../styles/style.css" />
+</head>
+
+<body class="tracks-body gradient-background">
+  <header class="tracks-header">
+    <div class="container tracks-header-content">
+      <a href="../../../../dashboard/student-dashboard.html" data-dashboard-link class="tracks-logo-link" aria-label="Back to dashboard">
+        <img src="../../../../../../public/assets/logos/Kelp-logo-gpt.png" alt="Kelp logo" class="tracks-logo" />
+      </a>
+
+      <nav class="tracks-nav" aria-label="Track navigation">
+        <a href="../Broad Modules/HSP_group_5.html">Back</a>
+        <a href="../../../../dashboard/student-dashboard.html" data-dashboard-link>Home</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container tracks-main" aria-labelledby="page-title">
+    <section class="tracks-panel">
+      <div class="tracks-intro">
+        <p class="tracks-kicker">High school physics</p>
+        <h1 id="page-title">Physics: Module 18</h1>
+        <p>Select a lesson to open its instructions and activities.</p>
+      </div>
+
+      <div class="link-list lesson-list">
+        <a href="./Instructions/HSP77.html" class="link-card">
+          <span class="link-number">77</span>
+          <span class="link-title">Electric charge, electrification processes, conductors, insulators, and electrostatic experiments</span>
+        </a>
+        <a href="./Instructions/HSP78.html" class="link-card">
+          <span class="link-number">78</span>
+          <span class="link-title">Atoms, quantization of electric charge, and microscopic view of matter</span>
+        </a>
+        <a href="./Instructions/HSP79.html" class="link-card">
+          <span class="link-number">79</span>
+          <span class="link-title">Coulomb&#39;s law, electric field and field lines</span>
+        </a>
+        <a href="./Instructions/HSP80.html" class="link-card">
+          <span class="link-number">80</span>
+          <span class="link-title">Work involving electric forces, electric potential, equipotential lines, and electrical energy</span>
+        </a>
+        <a href="./Instructions/HSP81.html" class="link-card">
+          <span class="link-number">81</span>
+          <span class="link-title">Uniform electric fields and electric potential difference</span>
+        </a>
+        <a href="./Instructions/HSP82.html" class="link-card">
+          <span class="link-number">82</span>
+          <span class="link-title">Surface charge density and capacitors</span>
+        </a>
+        <a href="./Instructions/HSP83.html" class="link-card">
+          <span class="link-number">83</span>
+          <span class="link-title">Dielectrics, polarization, and a comparison between electric force and gravitational force</span>
+        </a>
+      </div>
+    </section>
+  </main>
+  <script>
+    (() => {
+      const links = document.querySelectorAll("[data-dashboard-link]");
+      if (!links.length) return;
+
+      const readStorage = (key) => {
+        try {
+          return localStorage.getItem(key) || sessionStorage.getItem(key) || "";
+        } catch (error) {
+          return "";
+        }
+      };
+
+      const pickDashboardFile = (value) => {
+        const text = String(value || "").toLowerCase();
+        if (text.includes("tutor-dashboard.html")) return "tutor-dashboard.html";
+        if (text.includes("student-dashboard.html")) return "student-dashboard.html";
+        return "";
+      };
+
+      const pickDashboardRole = (value) => {
+        const role = String(value || "").trim().toLowerCase();
+        if (["teacher", "tutor", "mentor", "admin"].includes(role)) return "tutor-dashboard.html";
+        if (role === "student") return "student-dashboard.html";
+        return "";
+      };
+
+      const dashboard = [document.referrer].map(pickDashboardFile).find(Boolean)
+        || [readStorage("kelpUserRole"), readStorage("userRole"), readStorage("role")].map(pickDashboardRole).find(Boolean)
+        || [readStorage("kelpDashboardTarget")].map(pickDashboardFile).find(Boolean);
+      if (!dashboard) return;
+
+      try {
+        localStorage.setItem("kelpDashboardTarget", dashboard);
+      } catch (error) {}
+
+      links.forEach((link) => {
+        const href = link.getAttribute("href") || "";
+        link.setAttribute("href", href.replace(/(?:student|tutor)-dashboard\.html$/i, dashboard));
+      });
+    })();
+    document.querySelectorAll("[data-read-aloud]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const text = button.getAttribute("data-read-aloud") || "";
+        if (!("speechSynthesis" in window) || !text) return;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(new SpeechSynthesisUtterance(text));
+      });
+    });
+  </script>
+</body>
+</html>

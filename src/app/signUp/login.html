@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Kelp Tutoring</title>
+  <link rel="stylesheet" href="../../styles/style.css" />
+</head>
+
+<body class="gradient-body-1">
+  <main class="auth-page">
+    <section class="auth-card">
+      <div class="auth-header">
+        <h1 style="color: var(--color-primary)">Welcome</h1>
+        <p>Log in to your account</p>
+      </div>
+
+      <form id="login-form" class="auth-form">
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="youremail@exemplo.com" required />
+        </div>
+
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input id="password" type="password" placeholder="Enter your password" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Login</button>
+        <a href="./signUp.html" class="btn-secondary header-btn">Sign Up</a>
+      </form>
+<!-- 
+      <div class="divider">
+        <span>or</span>
+      </div>
+
+      <button class="btn-google" type="button">
+        Login with Google
+      </button> -->
+
+      <p id="message" class="message"></p>
+    </section>
+  </main>
+  <script type="module" src="../../auth/login.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kelp Exam Answers and Key</title>
+
+  <link rel="stylesheet" href="../../styles/style.css" />
+  <link rel="stylesheet" href="./exam-builder.css?v=20260705-4" />
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']],
+        processEscapes: true
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+
+<body class="tracks-body gradient-background exam-builder-body">
+  <header class="tracks-header screen-only">
+    <div class="container tracks-header-content">
+      <a href="./exam-builder.html" class="tracks-logo-link exam-brand" aria-label="Back to builder">
+        <span class="exam-brand-mark">K</span>
+        <span class="exam-brand-text">Kelp Tutoring</span>
+      </a>
+
+      <nav class="tracks-nav" aria-label="Answer key navigation">
+        <a href="./exam-results.html">Results</a>
+        <a href="./exam-builder.html">Builder</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container tracks-main exam-builder-main" aria-labelledby="answer-key-title">
+    <section class="tracks-panel exam-results-shell">
+      <div id="answerKeyRoot" class="exam-results-card"></div>
+    </section>
+  </main>
+
+  <script src="./exam-answer-key.js" defer></script>
+</body>
+</html>

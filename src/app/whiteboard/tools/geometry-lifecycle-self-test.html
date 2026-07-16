@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Geometry lifecycle self-test</title>
+  <link rel="stylesheet" href="../../exam-builder/kelp-diagram-editor.css?v=20260713-compact-graph-3" />
+  <style>
+    body {
+      margin: 0;
+      padding: 24px;
+      font: 16px/1.5 system-ui, sans-serif;
+      color: #1f2933;
+      background: #f6faf9;
+    }
+
+    main {
+      width: min(100%, 720px);
+      margin: 0 auto;
+    }
+
+    output {
+      display: block;
+      padding: 12px;
+      border: 1px solid #b9d4d0;
+      border-radius: 6px;
+      background: #ffffff;
+      white-space: pre-wrap;
+    }
+
+    output.pass {
+      border-color: #5fae63;
+      color: #2d6b33;
+    }
+
+    output.fail {
+      border-color: #c62828;
+      color: #9c2424;
+    }
+
+    #editor-host {
+      width: 720px;
+      height: 720px;
+      position: fixed;
+      left: -10000px;
+      top: 0;
+    }
+  </style>
+  <script src="../../exam-builder/kelp-diagram-editor.js?v=20260713-compact-graph-3"></script>
+</head>
+<body>
+  <main>
+    <h1>Geometry lifecycle self-test</h1>
+    <output id="result">Running...</output>
+    <div id="editor-host"></div>
+  </main>
+
+  <script>
+    const host = document.getElementById("editor-host");
+    const result = document.getElementById("result");
+    const receivedLabels = [];
+    const graphFor = (label) => ({
+      displayMode: "geometry",
+      points: [{ label, x: 0, y: 0 }]
+    });
+
+    host.addEventListener("kelp-diagram-attach", (event) => {
+      receivedLabels.push(event.detail?.graph?.points?.[0]?.label || "");
+    });
+
+    const first = new window.KelpDiagramEditor(host, { graph: graphFor("A"), tools: ["point"] });
+    first.destroy();
+    new window.KelpDiagramEditor(host, { graph: graphFor("B"), tools: ["point"] });
+    const third = new window.KelpDiagramEditor(host, { graph: graphFor("C"), tools: ["point"] });
+    third.destroy();
+    const current = new window.KelpDiagramEditor(host, { graph: graphFor("D"), tools: ["point"] });
+
+    host.querySelector('[data-kelp-action="attach"]')?.click();
+
+    const checks = {
+      oneAttachEvent: receivedLabels.length === 1,
+      currentGraphOnly: receivedLabels[0] === "D",
+      currentEditorOwnsHost: host.__kelpDiagramEditor === current,
+      regularEditorKeepsDiagramLabel: Boolean(host.querySelector('[data-kelp-field="title"]')),
+      regularEditorKeepsObjectsPanel: Boolean(host.querySelector(".kde-object-panel"))
+    };
+    current.destroy();
+    checks.ownerClearedOnDestroy = host.__kelpDiagramEditor == null;
+
+    const report = {
+      pass: Object.values(checks).every(Boolean),
+      receivedLabels,
+      checks
+    };
+    result.textContent = JSON.stringify(report, null, 2);
+    result.className = report.pass ? "pass" : "fail";
+    document.documentElement.dataset.testResult = report.pass ? "pass" : "fail";
+  </script>
+</body>
+</html>

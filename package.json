@@ -1,0 +1,20 @@
+{
+  "name": "kelptutoring.com",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "extract:schedules": "node tools/extract-schedule-markdown.mjs",
+    "generate:tracks": "node tools/generate-tracks-data.mjs",
+    "generate:schedules": "node tools/generate-schedules.mjs && node tools/generate-tracks-data.mjs",
+    "test:adapters": "node tools/backend-adapters-self-test.mjs",
+    "test:exam-builder": "node tools/exam-builder-reorder-self-test.mjs",
+    "test:schedule-builder": "node tools/schedule-builder-integrity-test.mjs",
+    "test:schedule-domain": "node tools/schedule-domain-self-test.mjs",
+    "test:schedule-outline": "node tools/schedule-outline-self-test.mjs",
+    "test:smoke": "node tools/classroom-whiteboard-smoke.mjs",
+    "serve:whiteboard": "node tools/serve-whiteboard.mjs --open",
+    "serve:classroom": "node tools/serve-classroom.mjs --open",
+    "watch:schedules": "node tools/watch-schedules.mjs"
+  }
+}

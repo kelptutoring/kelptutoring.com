@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Kelp Form Builder for tutor check-ins, feedback forms, and student or parent questionnaires." />
+  <title>Kelp Form Builder</title>
+  <link rel="stylesheet" href="form-builder.css" />
+</head>
+
+<body class="form-builder-body">
+  <header class="form-builder-header">
+    <div class="form-builder-container form-builder-header-content">
+      <a class="form-builder-brand" href="#editor" aria-label="Kelp Form Builder home">
+        <span class="form-builder-brand-mark" aria-hidden="true">K</span>
+        <span class="form-builder-brand-name">Kelp</span>
+      </a>
+
+      <nav class="form-builder-nav" aria-label="Form builder navigation">
+        <a href="#editor">Builder</a>
+        <a href="#preview">Preview</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="form-builder-container form-builder-main" id="editor">
+    <section class="form-builder-panel" aria-labelledby="page-title">
+      <div class="form-builder-intro">
+        <p class="form-builder-kicker">Tutor tools</p>
+        <h1 id="page-title">Form Builder</h1>
+        <p>
+          Create focused check-ins, feedback forms, parent questionnaires, and mid-course reflections.
+          Keep the experience simple for respondents while still organizing it in clear phases.
+        </p>
+      </div>
+
+      <div class="form-builder-layout">
+        <section class="form-builder-editor" aria-label="Form editor">
+          <section class="form-builder-meta-card" aria-labelledby="form-details-heading">
+            <div class="form-builder-section-heading">
+              <div>
+                <p class="form-builder-kicker">Form details</p>
+                <h2 id="form-details-heading">Set the context</h2>
+              </div>
+              <span class="form-builder-status-pill" id="blockCountPill">0 blocks</span>
+            </div>
+
+            <div class="form-builder-field-grid">
+              <div class="form-builder-input-group">
+                <label for="formTitle">Form title</label>
+                <input id="formTitle" type="text" autocomplete="off" placeholder="Example: Mid-course student check-in" />
+              </div>
+
+              <div class="form-builder-input-group">
+                <label for="formAudience">Audience / context</label>
+                <input id="formAudience" type="text" autocomplete="off" placeholder="Example: Algebra 1 students" />
+              </div>
+            </div>
+
+            <div class="form-builder-input-group">
+              <label for="formDescription">Short description</label>
+              <textarea id="formDescription" rows="3" placeholder="Explain why you are collecting these answers and how you will use them."></textarea>
+            </div>
+
+            <label class="form-builder-check-row" for="collectName">
+              <input id="collectName" type="checkbox" />
+              <span>
+                <strong>Ask for the respondent's name</strong>
+                <small>Add one short-answer field before the form's other questions.</small>
+              </span>
+            </label>
+          </section>
+
+
+          <section class="form-builder-block-list" id="blockList" aria-live="polite" aria-label="Form blocks"></section>
+
+
+          <section class="form-builder-block-tools" aria-labelledby="add-block-heading">
+            <div>
+              <p class="form-builder-kicker">Build the flow</p>
+              <h2 id="add-block-heading">Add a block</h2>
+              <p>Greeting and goodbye pages are optional and limited to one each. A phase starts a new respondent page.</p>
+            </div>
+
+            <div class="form-builder-add-grid">
+              <button type="button" class="form-builder-add-button" id="addGreetingBtn" data-add-kind="greeting">
+                <span class="form-builder-add-icon" aria-hidden="true">+</span>
+                <span><strong>Greeting page</strong><small>Welcome message</small></span>
+              </button>
+              <button type="button" class="form-builder-add-button" id="addQuestionBtn" data-add-kind="question">
+                <span class="form-builder-add-icon" aria-hidden="true">+</span>
+                <span><strong>Question</strong><small>Collect one answer</small></span>
+              </button>
+              <button type="button" class="form-builder-add-button" id="addPhaseBtn" data-add-kind="phase">
+                <span class="form-builder-add-icon" aria-hidden="true">+</span>
+                <span><strong>Phase</strong><small>Start a new page</small></span>
+              </button>
+              <button type="button" class="form-builder-add-button" id="addGoodbyeBtn" data-add-kind="goodbye">
+                <span class="form-builder-add-icon" aria-hidden="true">+</span>
+                <span><strong>Goodbye page</strong><small>Submission message</small></span>
+              </button>
+            </div>
+          </section>
+
+          <section class="form-builder-editor-actions" aria-label="Form builder actions">
+            <button type="button" class="form-builder-btn form-builder-btn-primary" id="openStudentViewBtn">Open student view</button>
+            <button type="button" class="form-builder-btn form-builder-btn-secondary" id="saveDraftBtn">Save draft</button>
+            <button type="button" class="form-builder-btn form-builder-btn-secondary" id="loadDraftBtn">Load draft</button>
+            <button type="button" class="form-builder-btn form-builder-btn-outline" id="exportJsonBtn">Export JSON</button>
+            <label class="form-builder-btn form-builder-btn-outline form-builder-import-label" for="importJsonInput">Import JSON</label>
+            <input id="importJsonInput" type="file" accept="application/json,.json" hidden />
+            <button type="button" class="form-builder-btn form-builder-btn-danger" id="resetFormBtn">Reset</button>
+          </section>
+
+          <p class="form-builder-live-message" id="builderMessage" role="status" aria-live="polite"></p>
+        </section>
+
+        <aside class="form-builder-preview-column" id="preview" aria-label="Live form preview">
+          <div class="form-builder-preview-sticky">
+            <div class="form-builder-preview-heading">
+              <div>
+                <h2>Live preview</h2>
+                <p>Pages are generated from greeting, phases, questions, and goodbye blocks.</p>
+              </div>
+              <span class="form-builder-preview-page-count" id="previewPageCount">Page 1 of 1</span>
+            </div>
+
+            <div class="form-builder-paper" id="formPreview"></div>
+
+            <div class="form-builder-preview-controls">
+              <button type="button" class="form-builder-btn form-builder-btn-outline form-builder-small-btn" id="previewPreviousBtn">Previous</button>
+              <button type="button" class="form-builder-btn form-builder-btn-primary form-builder-small-btn" id="previewNextBtn">Next</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <script src="form-builder.js"></script>
+</body>
+</html>

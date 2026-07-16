@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HS, Math Tracks</title>
+  <link rel="stylesheet" href="../../../../styles/style.css" />
+</head>
+
+<body class="tracks-body gradient-background">
+  <header class="tracks-header">
+    <div class="container tracks-header-content">
+      <a href="../../../dashboard/student-dashboard.html" data-dashboard-link class="tracks-logo-link" aria-label="Back to dashboard">
+        <img src="../../../../../public/assets/logos/Kelp-logo-gpt.png" alt="Kelp logo" class="tracks-logo" />
+      </a>
+
+      <nav class="tracks-nav" aria-label="Track navigation">
+        <a href="../HS-tracks.html">Back</a>
+        <a href="../../../dashboard/student-dashboard.html" data-dashboard-link>Home</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container tracks-main" aria-labelledby="page-title">
+    <section class="tracks-panel">
+      <div class="tracks-intro">
+        <p class="tracks-kicker">High school math</p>
+        <h1 id="page-title">High School Math</h1>
+        <p>Select a subject track to open its modules and study path.</p>
+      </div>
+
+      <div class="link-list">
+        <a href="./Algebra 1/Algebra_1_indexes.html" class="link-card">
+          <span class="link-title">Algebra 1</span>
+          <span class="link-description">Foundations, functions, linear modeling, equations, and elementary functions.</span>
+        </a>
+        <a href="./Algebra 2/Algebra_2_indexes.html" class="link-card">
+          <span class="link-title">Algebra 2</span>
+          <span class="link-description">Function transformations, polynomials, exponentials, logarithms, systems, and matrices.</span>
+        </a>
+        <a href="./Geometry/Plane_geometry_indexes.html" class="link-card">
+          <span class="link-title">Geometry</span>
+          <span class="link-description">Logic, plane geometry, triangles, transformations, polygons, circles, and measurement.</span>
+        </a>
+        <a href="./Trigonometry/Trigonometry.html" class="link-card">
+          <span class="link-title">Trigonometry</span>
+          <span class="link-description">Right triangles, trigonometric functions, identities, and applications.</span>
+        </a>
+      </div>
+    </section>
+  </main>
+  <script>
+    (() => {
+      const links = document.querySelectorAll("[data-dashboard-link]");
+      if (!links.length) return;
+
+      const readStorage = (key) => {
+        try {
+          return localStorage.getItem(key) || sessionStorage.getItem(key) || "";
+        } catch (error) {
+          return "";
+        }
+      };
+
+      const pickDashboardFile = (value) => {
+        const text = String(value || "").toLowerCase();
+        if (text.includes("tutor-dashboard.html")) return "tutor-dashboard.html";
+        if (text.includes("student-dashboard.html")) return "student-dashboard.html";
+        return "";
+      };
+
+      const pickDashboardRole = (value) => {
+        const role = String(value || "").trim().toLowerCase();
+        if (["teacher", "tutor", "mentor", "admin"].includes(role)) return "tutor-dashboard.html";
+        if (role === "student") return "student-dashboard.html";
+        return "";
+      };
+
+      const dashboard = [document.referrer].map(pickDashboardFile).find(Boolean)
+        || [readStorage("kelpUserRole"), readStorage("userRole"), readStorage("role")].map(pickDashboardRole).find(Boolean)
+        || [readStorage("kelpDashboardTarget")].map(pickDashboardFile).find(Boolean);
+      if (!dashboard) return;
+
+      try {
+        localStorage.setItem("kelpDashboardTarget", dashboard);
+      } catch (error) {}
+
+      links.forEach((link) => {
+        const href = link.getAttribute("href") || "";
+        link.setAttribute("href", href.replace(/(?:student|tutor)-dashboard\.html$/i, dashboard));
+      });
+    })();
+    document.querySelectorAll("[data-read-aloud]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const text = button.getAttribute("data-read-aloud") || "";
+        if (!("speechSynthesis" in window) || !text) return;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(new SpeechSynthesisUtterance(text));
+      });
+    });
+  </script>
+</body>
+</html>

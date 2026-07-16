@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Generated Schedule</title>
+
+  <link rel="stylesheet" href="../../styles/style.css" />
+</head>
+
+<body class="tracks-body gradient-background">
+  <header class="tracks-header">
+    <div class="container tracks-header-content">
+      <a href="../dashboard/tutor-dashboard.html" class="tracks-logo-link" aria-label="Back to tutor dashboard">
+        <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="Kelp logo" class="tracks-logo" />
+      </a>
+
+      <nav class="tracks-nav" aria-label="Generated schedule navigation">
+        <a href="./schedule-generator.html">Back</a>
+        <a href="../dashboard/tutor-dashboard.html">Home</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container tracks-main">
+    <section class="tracks-panel generated-schedule-panel" aria-labelledby="generated-schedule-title">
+      <div class="tracks-intro screen-only">
+        <p class="tracks-kicker">Generated schedule</p>
+        <h1 id="generated-schedule-title">Custom Schedule</h1>
+        <p id="scheduleSummary">Review the generated session plan below.</p>
+      </div>
+
+    <div class="schedule-actions screen-only">
+      <button type="button" class="btn-secondary" id="editProgressBtn">
+        Edit progress
+      </button>
+
+      <button type="button" class="btn-primary hidden" id="saveProgressBtn" disabled>
+        Save
+      </button>
+
+      <button type="button" class="btn-secondary hidden" id="discardProgressBtn" disabled>
+        Discard
+      </button>
+
+      <button type="button" class="btn-primary" id="printScheduleBtn">
+        Generate PDF
+      </button>
+
+      <p class="schedule-save-status" id="scheduleSaveStatus" aria-live="polite">
+        Last saved: Not saved yet
+      </p>
+    </div>
+
+    <div class="schedule-color-controls screen-only">
+      <div class="schedule-color-editor-row" id="scheduleColorEditorRow">
+        <div class="input-group" id="headerColorField">
+          <label for="headerColorInput" id="headerColorLabel">Header color</label>
+          <input type="color" id="headerColorInput" value="#5FAE63" />
+        </div>
+
+        <div class="input-group" id="stripeColorField">
+          <label for="stripeColorInput">Stripe color</label>
+          <input type="color" id="stripeColorInput" value="#5FAE63" />
+        </div>
+
+        <div class="input-group schedule-color-template-field">
+          <span class="input-label">Template</span>
+          <button type="button" class="btn-secondary schedule-color-template-button" id="openColorTemplateBtn">
+            Choose template
+          </button>
+        </div>
+
+        <div class="input-group">
+          <label for="moduleColorTarget">Apply to</label>
+          <select id="moduleColorTarget">
+            <option value="">Entire schedule</option>
+          </select>
+        </div>
+
+        <button type="button" class="btn-primary schedule-color-add" id="addScheduleColorRuleBtn">Add</button>
+      </div>
+
+      <div class="schedule-color-rule-list" id="scheduleColorRuleList" aria-live="polite"></div>
+    </div>
+
+    <dialog class="schedule-color-template-dialog screen-only" id="colorTemplateDialog" aria-labelledby="color-template-title">
+      <div class="schedule-color-template-modal">
+        <header class="schedule-color-template-header">
+          <div>
+            <p class="tracks-kicker">Schedule colors</p>
+            <h2 id="color-template-title">Choose a color template</h2>
+          </div>
+          <button type="button" class="schedule-dialog-close" id="closeColorTemplateBtn" aria-label="Close color templates">&times;</button>
+        </header>
+        <p>Each template uses light colors so the schedule text remains easy to read.</p>
+        <div class="schedule-color-template-grid" id="colorTemplateGrid"></div>
+      </div>
+    </dialog>
+
+    <section class="schedule-print-area" id="schedulePrintArea">
+      <div class="schedule-watermark" aria-hidden="true">
+        <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="" />
+      </div>
+
+      <h1 class="schedule-document-title" id="scheduleDocumentTitle">
+        Generated Schedule
+      </h1>
+
+      <div class="schedule-matrix-list" id="scheduleMatrixList"></div>
+
+      <section class="difficulty-legend" aria-labelledby="difficulty-legend-title">
+        <header class="difficulty-legend-header">
+          <p class="difficulty-legend-kicker">Session guide</p>
+          <h2 id="difficulty-legend-title">Difficulty levels</h2>
+        </header>
+        <ul>
+          <li class="difficulty-legend-item difficulty-low">
+            <span class="difficulty-legend-marker" aria-hidden="true"></span>
+            <span><strong>Low</strong><small>Definitions or direct method application.</small></span>
+          </li>
+          <li class="difficulty-legend-item difficulty-medium">
+            <span class="difficulty-legend-marker" aria-hidden="true"></span>
+            <span><strong>Medium</strong><small>Combines two concepts or requires further interpretation.</small></span>
+          </li>
+          <li class="difficulty-legend-item difficulty-high">
+            <span class="difficulty-legend-marker" aria-hidden="true"></span>
+            <span><strong>High</strong><small>Combines multiple concepts and requires multi-step reasoning.</small></span>
+          </li>
+        </ul>
+      </section>
+    </section>
+
+      <p class="message screen-only" id="generatedScheduleMessage" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script src="./generated-schedule.js"></script>
+</body>
+</html>
