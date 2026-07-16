@@ -95,6 +95,15 @@ Then start the local app server:
 npm run serve:app
 ```
 
+If PowerShell blocks `npm` or `npm` is unavailable, run the same local stack directly:
+
+```bash
+node tools/supabase-local.mjs start
+node tools/serve-app.mjs
+```
+
+If the issue is PowerShell blocking `npm.ps1`, `npm.cmd run supabase:start` and `npm.cmd run serve:app` also work.
+
 Useful local URLs:
 
 - App login: `http://127.0.0.1:3000/src/app/signUp/login.html`

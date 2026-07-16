@@ -1,18 +1,30 @@
 import { existsSync } from "node:fs";
-import { delimiter } from "node:path";
+import { delimiter, dirname, resolve } from "node:path";
 import { spawn } from "node:child_process";
+import { fileURLToPath } from "node:url";
 
 const args = process.argv.slice(2);
 const env = { ...process.env };
+const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const pathKey = Object.keys(env).find((key) => key.toLowerCase() === "path") || "Path";
+const pathEntries = [];
 
 if (process.platform === "win32") {
   const dockerCliPath = "C:\\Program Files\\Docker\\Docker\\resources\\bin";
-  const pathKey = Object.keys(env).find((key) => key.toLowerCase() === "path") || "Path";
-  const currentPath = env[pathKey] || "";
-
-  if (existsSync(dockerCliPath) && !currentPath.toLowerCase().includes(dockerCliPath.toLowerCase())) {
-    env[pathKey] = `${dockerCliPath}${delimiter}${currentPath}`;
+  if (existsSync(dockerCliPath)) {
+    pathEntries.push(dockerCliPath);
   }
+}
+
+pathEntries.push(resolve(projectRoot, "node_modules", ".bin"));
+
+const currentPath = env[pathKey] || "";
+const missingEntries = pathEntries.filter((entry) => {
+  return existsSync(entry) && !currentPath.toLowerCase().includes(entry.toLowerCase());
+});
+
+if (missingEntries.length > 0) {
+  env[pathKey] = `${missingEntries.join(delimiter)}${delimiter}${currentPath}`;
 }
 
 const command = process.platform === "win32" ? "cmd.exe" : "supabase";
