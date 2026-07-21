@@ -8,7 +8,7 @@ The current front end is primarily plain HTML, CSS, and JavaScript. Several tool
 
 - [Schedule generator](src/app/schedule-generator/README.md): catalogue selection, custom sessions, modules, cadence, date preview, editable schedules, progress, appearance, and PDF output.
 - [Exam builder](src/app/exam-builder/README.md): exam authoring, question types, diagrams, student delivery, grading, results, JSON, and print output.
-- [Classroom](src/app/classroom/README.md): waiting room, admission, devices, Jitsi, presence, chat, timers, surveys, and backend adapters.
+- [Classroom](src/app/classroom/README.md): Student Classroom collections and historical access, plus the live-lesson waiting room, Jitsi, whiteboard, and backend adapters.
 - [Whiteboard](src/app/whiteboard/README.md): Excalidraw tools, geometry, grids, room scenes, collaboration adapters, and image/PDF output.
 
 Each tool guide documents its function, code workflow, stored/exported data, integration boundary, commands, and debugging checks.
@@ -18,7 +18,7 @@ Each tool guide documents its function, code workflow, stored/exported data, int
 ```text
 src/
   app/
-    classroom/             Live lesson room and waiting room
+    classroom/             Persistent Classroom surfaces and live lesson tool
     dashboard/             Tutor and student dashboards
     exam-builder/          Exam authoring, taker, results, answer key
     form-builder/          Reusable form-building UI
@@ -124,6 +124,9 @@ npm run generate:schedules
 npm run watch:schedules
 
 npm run test:adapters
+npm run test:relationships
+npm run test:student-dashboard
+npm run test:student-classrooms
 npm run test:exam-builder
 npm run test:schedule-builder
 npm run test:schedule-domain
@@ -136,6 +139,8 @@ npm run serve:app
 
 npm run supabase:start
 npm run supabase:status
+npm run supabase:test:db
+npm run supabase:audit
 npm run supabase:reset
 npm run supabase:stop
 ```
@@ -147,11 +152,15 @@ Command roles:
 - `watch:schedules`: watches the planning markdown tree and regenerates outputs after changes.
 - `extract:schedules`: migration helper for extracting supported existing HTML cards into markdown; it is not part of normal editing.
 - `test:adapters`: validates the classroom/whiteboard local adapter contract and override merging.
+- `test:relationships`: validates the Student–Tutor–Mentor relationship and Classroom foundation.
+- `test:student-dashboard`: validates Student Dashboard preferences, Calendar surface, and active Classroom Cards.
+- `test:student-classrooms`: validates Active/Former/Archived collections, historical entry, and responsive interaction contracts.
 - `test:exam-builder`: checks exam question reordering and related static contracts.
 - `test:schedule-*`: checks cadence, outline mutations, catalogue/link integrity, and builder wiring.
 - `test:smoke`: checks classroom/whiteboard integration and browser-facing contracts.
 - `serve:app`: serves the full static site on port `3000` for local Supabase Auth redirects.
-- `supabase:*`: manages the local Docker-backed Supabase stack for auth/profile/backend testing.
+- `supabase:test:db`: runs all rollback database characterizations; `supabase:audit` confirms actor integrity and zero retained characterization rows.
+- Other `supabase:*` commands manage the local Docker-backed Supabase stack for auth/profile/backend testing.
 
 ## Course-planning source of truth
 

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Course Builder · Assign</title>
+  <link rel="stylesheet" href="../../styles/style.css" />
+  <link rel="stylesheet" href="./course-builder.css" />
+  <link rel="stylesheet" href="./question-bank.css" />
+  <link rel="stylesheet" href="./course-composer.css" />
+  <script type="module" src="./course-composer.js"></script>
+</head>
+
+<body class="curriculum-body gradient-body-1 course-composer-body">
+  <header class="curriculum-topbar">
+    <a href="../dashboard/mentor-dashboard.html" id="workspace-home" class="curriculum-brand" aria-label="Return to workspace">
+      <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="Kelp logo" />
+    </a>
+    <div class="curriculum-topbar-actions">
+      <a href="./question-bank.html" class="curriculum-link-button">Question bank</a>
+      <a href="./course-builder.html" class="curriculum-link-button">Curriculum taxonomy</a>
+      <a href="../dashboard/mentor-dashboard.html" id="back-to-workspace" class="curriculum-link-button">Back to workspace</a>
+    </div>
+  </header>
+
+  <main class="curriculum-main course-composer-main">
+    <section class="curriculum-hero course-composer-hero">
+      <div>
+        <p class="page-kicker">Course Builder · Phase 7</p>
+        <h1>Compose a course</h1>
+        <p>Compose approved questions, save the reusable course, then freeze an independent practice snapshot for a student’s scheduled session.</p>
+      </div>
+      <div class="course-composer-hero-actions">
+        <button type="button" class="curriculum-secondary-button" id="course-drafts-button">My course drafts</button>
+        <button type="button" class="curriculum-secondary-button" id="course-assignments-button">Assignments</button>
+        <button type="button" class="curriculum-primary-button" id="new-course-button">New course</button>
+      </div>
+    </section>
+
+    <p class="curriculum-page-status" id="course-composer-status" role="status" aria-live="polite"></p>
+
+    <div class="course-composer-workspace">
+      <section class="curriculum-panel course-composer-definition" aria-labelledby="course-definition-title">
+        <div class="curriculum-panel-heading">
+          <div>
+            <p class="page-kicker">Course identity</p>
+            <h2 id="course-definition-title">Name and curriculum path</h2>
+            <p>The deepest selected track or topic becomes the course’s stable curriculum destination.</p>
+          </div>
+          <span class="course-dirty-badge" id="course-dirty-badge">New draft</span>
+        </div>
+
+        <div class="course-composer-form">
+          <label>
+            <span>Course title</span>
+            <input id="course-title" maxlength="180" placeholder="e.g. Two-dimensional motion practice" />
+          </label>
+          <label>
+            <span>Description <small>(optional)</small></span>
+            <textarea id="course-description" maxlength="4000" rows="4" placeholder="Explain the purpose, prerequisites, or intended progression."></textarea>
+          </label>
+          <fieldset class="course-curriculum-fieldset">
+            <legend>Curriculum destination</legend>
+            <div class="course-curriculum-cascade" id="course-curriculum-cascade"></div>
+            <p class="course-field-help" id="course-curriculum-help">Choose a degree, subject, and track. Add as many nested topic levels as needed.</p>
+          </fieldset>
+        </div>
+      </section>
+
+      <aside class="curriculum-panel course-composer-summary" aria-labelledby="course-summary-title">
+        <div class="curriculum-panel-heading">
+          <div>
+            <p class="page-kicker">Live composition</p>
+            <h2 id="course-summary-title">Course summary</h2>
+          </div>
+        </div>
+        <div class="course-summary-metrics">
+          <article><span>Questions</span><strong id="course-question-count">0</strong></article>
+          <article><span>Total points</span><strong id="course-point-count">0</strong></article>
+        </div>
+        <div class="course-difficulty-summary" id="course-difficulty-summary"></div>
+        <p class="course-order-note">Student order is enforced from very easy through challenge. Selection order is retained only within the same difficulty.</p>
+        <button type="button" class="curriculum-primary-button course-add-questions-button" id="add-course-questions" disabled>Add approved questions</button>
+      </aside>
+    </div>
+
+    <section class="curriculum-panel course-selected-panel" aria-labelledby="selected-course-questions-title">
+      <div class="curriculum-panel-heading course-selected-heading">
+        <div>
+          <p class="page-kicker">Course sequence</p>
+          <h2 id="selected-course-questions-title">Selected questions</h2>
+          <p>Items are read-only references to approved exam questions. Remove an item here or inspect its source in the Question Bank.</p>
+        </div>
+        <button type="button" class="curriculum-secondary-button" id="clear-course-questions" disabled>Clear questions</button>
+      </div>
+      <div class="course-selected-list" id="course-selected-list" aria-live="polite"></div>
+      <div class="course-composer-save-row">
+        <span id="course-save-guidance">Add a title and curriculum track before saving.</span>
+        <div class="course-composer-save-actions">
+          <button type="button" class="curriculum-secondary-button" id="assign-course-button" disabled>Assign to session</button>
+          <button type="button" class="curriculum-primary-button" id="save-course-button">Save course draft</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="curriculum-panel curriculum-boundary-note course-phase-boundary">
+      <div>
+        <p class="page-kicker">Practice delivery</p>
+        <h2>Immutable at assignment time</h2>
+      </div>
+      <p>The saved course remains editable, while every assignment freezes its own questions, grading data, curriculum path, and schedule metadata. Students receive only the answer-free delivery projection in their Practice space.</p>
+    </section>
+  </main>
+
+  <div class="question-bank-modal course-selection-modal" id="course-selection-modal" aria-hidden="true">
+    <button type="button" class="question-bank-modal-backdrop" data-course-selection-close aria-label="Close question selection"></button>
+    <section class="question-bank-dialog course-selection-dialog" role="dialog" aria-modal="true" aria-labelledby="course-selection-title">
+      <header class="question-bank-dialog-header">
+        <div>
+          <p class="page-kicker">Approved question bank</p>
+          <h2 id="course-selection-title">Add questions</h2>
+          <p id="course-selection-path">Choose a curriculum path first.</p>
+        </div>
+        <button type="button" class="question-bank-close" data-course-selection-close aria-label="Close">×</button>
+      </header>
+      <div class="course-selection-body">
+        <form class="course-selection-filters" id="course-selection-filters">
+          <label>
+            <span>Question or source exam</span>
+            <input type="search" id="course-question-query" maxlength="180" placeholder="Search wording" />
+          </label>
+          <label>
+            <span>Question category</span>
+            <select id="course-question-type">
+              <option value="">All categories</option>
+              <option value="word-problem">Word problem</option>
+              <option value="numeric">Numeric</option>
+              <option value="graph">Graph</option>
+              <option value="image">Image</option>
+              <option value="true-false">True / false</option>
+              <option value="multiple-choice">Multiple choice</option>
+              <option value="multiple-answer">Multiple answers</option>
+              <option value="short-answer">Short answer</option>
+              <option value="essay">Essay / explanation</option>
+            </select>
+          </label>
+          <label>
+            <span>Difficulty</span>
+            <select id="course-question-difficulty">
+              <option value="">All difficulties</option>
+              <option value="very-easy">Very easy</option>
+              <option value="easy">Easy</option>
+              <option value="difficult">Difficult</option>
+              <option value="very-difficult">Very difficult</option>
+              <option value="challenge">Challenge</option>
+            </select>
+          </label>
+          <button type="submit" class="curriculum-primary-button">Search</button>
+        </form>
+        <div class="course-selection-toolbar">
+          <p id="course-selection-summary">Loading questions…</p>
+          <strong id="course-selection-count">0 selected</strong>
+        </div>
+        <p class="curriculum-page-status" id="course-selection-status" role="status" aria-live="polite"></p>
+        <div class="course-selection-results" id="course-selection-results" aria-live="polite"></div>
+        <nav class="question-bank-pagination" aria-label="Question selection pages">
+          <button type="button" class="curriculum-secondary-button" id="course-selection-previous">Previous</button>
+          <span id="course-selection-page">Page 1 of 1</span>
+          <button type="button" class="curriculum-secondary-button" id="course-selection-next">Next</button>
+        </nav>
+      </div>
+      <footer class="question-bank-dialog-footer">
+        <p>Added questions are sorted by difficulty in the course sequence.</p>
+        <button type="button" class="curriculum-primary-button" data-course-selection-close>Done</button>
+      </footer>
+    </section>
+  </div>
+
+  <div class="question-bank-modal course-drafts-modal" id="course-drafts-modal" aria-hidden="true">
+    <button type="button" class="question-bank-modal-backdrop" data-course-drafts-close aria-label="Close course drafts"></button>
+    <section class="question-bank-dialog course-drafts-dialog" role="dialog" aria-modal="true" aria-labelledby="course-drafts-title">
+      <header class="question-bank-dialog-header">
+        <div>
+          <p class="page-kicker">Author library</p>
+          <h2 id="course-drafts-title">My course drafts</h2>
+          <p>Open an active draft, create an independent copy, or archive it before permanent deletion.</p>
+        </div>
+        <button type="button" class="question-bank-close" data-course-drafts-close aria-label="Close">×</button>
+      </header>
+      <div class="course-drafts-body">
+        <div class="course-drafts-tabs" role="group" aria-label="Course draft status">
+          <button type="button" class="curriculum-secondary-button is-active" data-course-draft-status="active">Active</button>
+          <button type="button" class="curriculum-secondary-button" data-course-draft-status="archived">Archived</button>
+        </div>
+        <p class="curriculum-page-status" id="course-drafts-status" role="status" aria-live="polite"></p>
+        <div class="course-drafts-list" id="course-drafts-list" aria-live="polite"></div>
+      </div>
+      <footer class="question-bank-dialog-footer">
+        <p>Deleting an archived course does not delete its source questions.</p>
+        <button type="button" class="curriculum-secondary-button" data-course-drafts-close>Close</button>
+      </footer>
+    </section>
+  </div>
+
+  <div class="question-bank-modal course-assignments-modal" id="course-assignments-modal" aria-hidden="true">
+    <button type="button" class="question-bank-modal-backdrop" data-course-assignments-close aria-label="Close course assignments"></button>
+    <section class="question-bank-dialog course-assignments-dialog" role="dialog" aria-modal="true" aria-labelledby="course-assignments-title">
+      <header class="question-bank-dialog-header">
+        <div>
+          <p class="page-kicker">Scheduled practice delivery</p>
+          <h2 id="course-assignments-title">Course assignments</h2>
+          <p id="course-assignment-course-label">Save a populated course before assigning it.</p>
+        </div>
+        <button type="button" class="question-bank-close" data-course-assignments-close aria-label="Close">×</button>
+      </header>
+      <div class="course-assignments-body">
+        <section class="course-assignment-create" aria-labelledby="course-assignment-create-title">
+          <div class="curriculum-panel-heading">
+            <div>
+              <h3 id="course-assignment-create-title">Assign the open course</h3>
+              <p>Choose a student and one authoritative session. If this browser contains a generated schedule, synchronize it after choosing the student.</p>
+            </div>
+          </div>
+          <div class="course-assignment-form">
+            <label>
+              <span>Student</span>
+              <select id="course-assignment-student">
+                <option value="">Choose a student</option>
+              </select>
+            </label>
+            <label>
+              <span>Scheduled session</span>
+              <select id="course-assignment-session" disabled>
+                <option value="">Choose a student first</option>
+              </select>
+            </label>
+            <div class="course-assignment-form-actions">
+              <button type="button" class="curriculum-secondary-button" id="sync-browser-schedule" disabled>Sync browser schedule</button>
+              <button type="button" class="curriculum-primary-button" id="confirm-course-assignment" disabled>Assign course</button>
+            </div>
+          </div>
+          <p class="course-assignment-sync-note" id="course-assignment-sync-note">No student selected.</p>
+        </section>
+
+        <section class="course-assignment-history" aria-labelledby="course-assignment-history-title">
+          <div class="course-selection-toolbar">
+            <div>
+              <h3 id="course-assignment-history-title">Assignment history</h3>
+              <p>Completed snapshots remain attached to their original student and session.</p>
+            </div>
+            <button type="button" class="curriculum-secondary-button" id="refresh-course-assignments">Refresh</button>
+          </div>
+          <p class="curriculum-page-status" id="course-assignments-status" role="status" aria-live="polite"></p>
+          <div class="course-assignments-list" id="course-assignments-list" aria-live="polite"></div>
+        </section>
+      </div>
+      <footer class="question-bank-dialog-footer">
+        <p>Course edits never rewrite an existing assignment snapshot.</p>
+        <button type="button" class="curriculum-secondary-button" data-course-assignments-close>Close</button>
+      </footer>
+    </section>
+  </div>
+</body>
+</html>

@@ -25,6 +25,10 @@
       </div>
 
       <nav class="workspace-nav" aria-label="Tutor workspace navigation">
+        <a href="./tutor-dashboard.html" class="workspace-nav-link active" aria-current="page">
+          Overview
+        </a>
+
         <a href="../schedules/schedules.html" class="workspace-nav-link">
           Tracks
         </a>
@@ -53,6 +57,12 @@
           Sign out
         </button>
       </nav>
+
+      <section class="workspace-role-panel" aria-labelledby="tutor-workspaces-label">
+        <p class="workspace-role-label" id="tutor-workspaces-label">Your workspaces</p>
+        <div class="workspace-switcher-list" id="workspace-switcher"></div>
+        <p class="workspace-switcher-status" id="workspace-switcher-status" role="status" aria-live="polite"></p>
+      </section>
     </aside>
 
     <main class="workspace-main">
@@ -62,6 +72,7 @@
             <p class="page-kicker">Tutor workspace</p>
             <h2 id="tutor-heading">Tutor workspace</h2>
             <p id="tutor-profile-line">Loading profile...</p>
+            <div class="workspace-role-badges" id="tutor-role-list" aria-label="Assigned roles"></div>
           </div>
         </div>
 
@@ -72,6 +83,14 @@
 
           <a href="../exam-builder/exam-builder.html" class="link-chip">
             Exam builder
+          </a>
+
+          <a href="../exam-builder/exam-review.html" class="link-chip" id="exam-review-workspace-link" hidden>
+            Review exams
+          </a>
+
+          <a href="../form-builder/form-builder.html" class="link-chip">
+            Form builder
           </a>
 
           <a href="../whiteboard/whiteboard.html" class="link-chip">

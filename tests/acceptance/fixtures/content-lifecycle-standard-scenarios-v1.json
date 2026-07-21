@@ -1,0 +1,109 @@
+{
+  "schema": "kelp-acceptance-content-lifecycle-fixture-v1",
+  "version": 1,
+  "createdOn": "2026-07-19",
+  "purpose": "Map synthetic form, exam, and publication acceptance scenarios to reusable builder fixtures without duplicating their content or storing environment-specific identities.",
+  "actorFixture": "./authorization-standard-actors-v1.json",
+  "externalFixtures": {
+    "FORM-COMPREHENSIVE": {
+      "path": "../../../src/app/form-builder/test-fixtures/comprehensive-five-phase-template.json",
+      "importMode": "copy",
+      "expectedQuestions": 20,
+      "expectedPhases": 5
+    },
+    "FORM-ROUTING": {
+      "path": "../../../src/app/form-builder/test-fixtures/routing-cases.json",
+      "importMode": "characterization-only",
+      "expectedCases": 6
+    },
+    "EXAM-COMPREHENSIVE": {
+      "path": "../../../src/app/exam-builder/test-fixtures/exam-builder-comprehensive-test.json",
+      "importMode": "copy",
+      "expectedQuestions": 20
+    }
+  },
+  "symbolicResources": [
+    {
+      "alias": "FORM-TUTOR-DRAFT",
+      "type": "form",
+      "owner": "ACT-TUTOR",
+      "status": "active",
+      "reviewStatus": "draft",
+      "visibility": "private",
+      "sourceFixture": "FORM-COMPREHENSIVE"
+    },
+    {
+      "alias": "FORM-MENTOR-DRAFT",
+      "type": "form",
+      "owner": "ACT-MENTOR",
+      "status": "active",
+      "reviewStatus": "draft",
+      "visibility": "private",
+      "sourceFixture": "FORM-COMPREHENSIVE"
+    },
+    {
+      "alias": "EXAM-TUTOR-DRAFT",
+      "type": "exam",
+      "owner": "ACT-TUTOR",
+      "status": "active",
+      "reviewStatus": "draft",
+      "visibility": "private",
+      "sourceFixture": "EXAM-COMPREHENSIVE"
+    },
+    {
+      "alias": "EXAM-MENTOR-DRAFT",
+      "type": "exam",
+      "owner": "ACT-MENTOR",
+      "status": "active",
+      "reviewStatus": "draft",
+      "visibility": "private",
+      "sourceFixture": "EXAM-COMPREHENSIVE"
+    }
+  ],
+  "ephemeralRespondents": [
+    {
+      "alias": "RESPONDENT-ONE",
+      "actor": "ACT-STUDENT",
+      "purpose": "Primary authenticated form respondent and exam taker."
+    },
+    {
+      "alias": "RESPONDENT-TWO",
+      "actor": "ACT-OUTSIDER",
+      "purpose": "Independent authenticated respondent and ownership-boundary actor."
+    }
+  ],
+  "rules": [
+    "Every imported builder definition is opened as an independent copy unless a case explicitly tests same-ID editing.",
+    "Fixture file IDs are transport identities and never authorize access.",
+    "Tutor-owned and mentor-owned resources are provisioned separately even when they begin from the same comprehensive content.",
+    "Published definitions are catalog-eligible but are not student assignments.",
+    "All database records created for a run are synthetic and are removed by rollback or disposable database reset."
+  ],
+  "consumedBy": [
+    "FORM-001",
+    "FORM-002",
+    "FORM-003",
+    "FORM-004",
+    "FORM-005",
+    "FORM-006",
+    "FORM-007",
+    "FORM-008",
+    "FORM-009",
+    "EXAM-001",
+    "EXAM-002",
+    "EXAM-003",
+    "EXAM-004",
+    "EXAM-005",
+    "EXAM-006",
+    "EXAM-007",
+    "EXAM-008",
+    "EXAM-009",
+    "EXAM-010",
+    "PUB-001",
+    "PUB-002",
+    "PUB-003",
+    "PUB-004",
+    "PUB-005",
+    "PUB-006"
+  ]
+}

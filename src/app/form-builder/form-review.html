@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kelp Form Review</title>
+  <link rel="stylesheet" href="../../styles/style.css" />
+  <link rel="stylesheet" href="../exam-builder/exam-review.css?v=20260718-publication-1" />
+</head>
+
+<body class="tracks-body gradient-background exam-review-body">
+  <header class="tracks-header">
+    <div class="container tracks-header-content">
+      <a href="../dashboard/mentor-dashboard.html" class="tracks-logo-link" aria-label="Back to the workspace" data-workspace-home>
+        <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="Kelp logo" class="tracks-logo" />
+      </a>
+      <nav class="tracks-nav" aria-label="Form review navigation">
+        <a href="../dashboard/mentor-dashboard.html" data-workspace-home>Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container tracks-main exam-review-main" aria-labelledby="page-title">
+    <section class="tracks-panel exam-review-panel">
+      <div class="exam-review-intro">
+        <div class="tracks-intro exam-review-intro-copy">
+          <p class="tracks-kicker">Mentor and administrator tools</p>
+          <h1 id="page-title">Form Review</h1>
+          <p>Inspect submitted forms without changing their content. Approval publishes the immutable submitted copy; revisions always begin from an independent copy.</p>
+        </div>
+        <div class="exam-review-intro-actions">
+          <span class="exam-review-provider" id="reviewProvider">Connecting to the review library...</span>
+          <button type="button" class="btn-secondary" id="refreshReviewsBtn">Refresh queue</button>
+        </div>
+      </div>
+
+      <aside class="exam-review-scope-note" aria-label="Review scope">
+        <strong>Review scope</strong>
+        <span>Approval makes the definition public and catalog-eligible. Student assignment and delivery remain separate workflows.</span>
+      </aside>
+
+      <div class="exam-review-filters" role="group" aria-label="Filter forms by review status">
+        <button type="button" class="exam-review-filter is-active" data-review-filter="pending_review" aria-pressed="true">Awaiting review</button>
+        <button type="button" class="exam-review-filter" data-review-filter="approved" aria-pressed="false">Approved</button>
+        <button type="button" class="exam-review-filter" data-review-filter="changes_requested" aria-pressed="false">Changes requested</button>
+        <button type="button" class="exam-review-filter" data-review-filter="rejected" aria-pressed="false">Rejected</button>
+      </div>
+
+      <p class="exam-review-message" id="reviewMessage" role="status" aria-live="polite"></p>
+      <div class="exam-review-workspace">
+        <section class="exam-review-queue-panel" aria-labelledby="review-queue-title">
+          <div class="exam-review-section-heading">
+            <div>
+              <p class="tracks-kicker">Review queue</p>
+              <h2 id="review-queue-title">Submitted forms</h2>
+            </div>
+            <span class="exam-review-count" id="reviewQueueCount">0</span>
+          </div>
+          <div class="exam-review-queue" id="reviewQueue" aria-live="polite"></div>
+        </section>
+
+        <section class="exam-review-detail-panel" id="reviewDetail" aria-live="polite" aria-label="Selected form review">
+          <div class="exam-review-empty-detail">
+            <div class="exam-review-empty-icon" aria-hidden="true">&#10003;</div>
+            <h2>Select a form to inspect</h2>
+            <p>Its metadata, respondent fields, phase routing, question order, options, and review history will appear here.</p>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script src="./form-adapters.js?v=20260718-publication-1"></script>
+  <script>
+    window.KelpFormProviderReady = /^https?:$/.test(window.location.protocol)
+      ? import('./form-supabase-provider.js?v=20260718-publication-1')
+      : Promise.resolve(null);
+  </script>
+  <script src="./form-review.js?v=20260718-publication-1"></script>
+</body>
+</html>

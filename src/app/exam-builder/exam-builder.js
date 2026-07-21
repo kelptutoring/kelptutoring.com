@@ -1,11 +1,77 @@
 /* Kelp Exam Builder v5 - vanilla HTML/CSS/JS */
 
+const EXAM_CONTRACT = window.KelpExamContract;
+if (!EXAM_CONTRACT) throw new Error("The exam definition contract could not be loaded.");
+const EXAM_ADAPTER_DOMAIN = window.KelpExamAdapters;
+if (!EXAM_ADAPTER_DOMAIN) throw new Error("The exam persistence adapters could not be loaded.");
+
 const STORAGE_DRAFT_KEY = "kelp-exam-builder-draft-v5";
-const LIBRARY_KEY = "kelp-exam-library-v1";
 const ACTIVE_EXAM_KEY = "kelp-active-exam-v1";
 const BUILDER_RETURN_KEY = "kelp-exam-builder-return-v1";
 const EXAM_MADE_BY_PLACEHOLDER = "__KELP_TUTOR_PLACEHOLDER__";
 const ONLINE_RENDER_SIZE_LIMIT_BYTES = 10 * 1024 * 1024;
+const EXAM_DEFINITION_SCHEMA = EXAM_CONTRACT.DEFINITION_SCHEMA;
+const QUESTION_DIFFICULTIES = new Set(EXAM_CONTRACT.DIFFICULTIES);
+const QUESTION_CLASSIFICATION_STATUSES = new Set(["unclassified", "proposed", "reviewed"]);
+const QUESTION_BANK_TYPE_TAGS = new Set(EXAM_CONTRACT.QUESTION_TYPE_TAGS || []);
+const localExamAdapters = EXAM_ADAPTER_DOMAIN.createLocalAdapters();
+let examAdapterResolutionError = null;
+let builderAuthorization = null;
+let curriculumNodeOptions = [];
+let curriculumNodeLoadError = null;
+const builderAuthorizationReady = /^https?:$/.test(window.location.protocol)
+  ? import("../../auth/auth-guard.js")
+    .then(async ({ getCurrentAuthState, getHomePathByRole }) => {
+      builderAuthorization = await getCurrentAuthState();
+      if (builderAuthorization) {
+        const homePath = getHomePathByRole(builderAuthorization.primaryRole);
+        document.querySelectorAll("[data-workspace-home]").forEach((link) => {
+          link.href = homePath;
+        });
+      }
+      return builderAuthorization;
+    })
+    .catch(() => null)
+  : Promise.resolve(null);
+const examAdaptersReady = Promise.resolve(window.KelpExamProviderReady)
+  .catch((error) => {
+    examAdapterResolutionError = error;
+  })
+  .then(() => EXAM_ADAPTER_DOMAIN.resolveAdapters({
+    localAdapters: localExamAdapters,
+    context: {
+      definitionSchema: EXAM_CONTRACT.DEFINITION_SCHEMA,
+      persistenceSchema: EXAM_CONTRACT.PERSISTENCE_BUNDLE_SCHEMA,
+      questionRecordSchema: EXAM_CONTRACT.QUESTION_RECORD_SCHEMA
+    }
+  }))
+  .catch((error) => {
+    examAdapterResolutionError = error;
+    return localExamAdapters;
+  });
+examAdaptersReady.then((adapters) => {
+  window.kelpExamAdapters = adapters;
+});
+const curriculumNodesReady = /^https?:$/.test(window.location.protocol)
+  ? Promise.all([
+    import("../course-builder/curriculum-domain.js"),
+    import("../course-builder/curriculum-supabase-adapters.js"),
+    import("../../lib/supabase/supabaseClient.js")
+  ]).then(async ([domain, adaptersModule, supabaseModule]) => {
+    const adapters = adaptersModule.createSupabaseCurriculumAdapters({ supabase: supabaseModule.supabase });
+    const nodes = await adapters.nodes.list();
+    const forest = domain.buildCurriculumForest(nodes);
+    curriculumNodeOptions = domain.flattenCurriculumForest(forest)
+      .filter((node) => node.type === "track" || node.type === "topic")
+      .map((node) => ({ id: node.id, type: node.type, label: node.pathLabel }));
+    refreshRenderedCurriculumSelects();
+    return curriculumNodeOptions;
+  }).catch((error) => {
+    curriculumNodeLoadError = error;
+    refreshRenderedCurriculumSelects();
+    return [];
+  })
+  : Promise.resolve([]);
 
 const state = createExam();
 const graphDrafts = new Map();
@@ -20,6 +86,8 @@ let suppressNextCanvasClick = false;
 let draggedQuestionId = null;
 let printPreviewPrepared = false;
 let builderHasUnsavedChanges = false;
+let examLibraryReturnFocus = null;
+let examStructureReturnFocus = null;
 const diagramToolByQuestionId = new Map();
 const diagramSelectionByQuestionId = new Map();
 const diagramObjectSelectionByQuestionId = new Map();
@@ -52,6 +120,12 @@ function markBuilderSaved() {
   delete document.documentElement.dataset.builderUnsaved;
 }
 
+function showBuilderMessage(message, isError = false) {
+  if (!els.builderMessage) return;
+  els.builderMessage.textContent = String(message || "");
+  els.builderMessage.classList.toggle("is-error", Boolean(isError));
+}
+
 function handleBuilderBeforeUnload(event) {
   if (!builderHasUnsavedChanges) return;
   event.preventDefault();
@@ -73,6 +147,9 @@ const MOTION = {
   previewMs: 900,
   foldMs: 1900
 };
+const PREVIEW_TOGGLE_MS = 2700;
+const PREVIEW_COLLAPSE_SETTLE_MS = 2150;
+const PREVIEW_RETURN_MS = 950;
 
 const els = {
   title: document.getElementById("examTitle"),
@@ -86,6 +163,8 @@ const els = {
   saveDraftBtn: document.getElementById("saveDraftBtn"),
   loadDraftBtn: document.getElementById("loadDraftBtn"),
   saveLibraryBtn: document.getElementById("saveLibraryBtn"),
+  openLibraryBtn: document.getElementById("openLibraryBtn"),
+  resetExamBtn: document.getElementById("resetExamBtn"),
   openStudentViewBtn: document.getElementById("openStudentViewBtn"),
   examStructureBtn: document.getElementById("examStructureBtn"),
   printExamBtn: document.getElementById("printExamBtn"),
@@ -100,11 +179,18 @@ const els = {
   examPreview: document.getElementById("examPreview"),
   questionTemplate: document.getElementById("questionTemplate"),
   toolbar: document.querySelector(".exam-toolbar"),
+  builderMessage: document.getElementById("builderMessage"),
+  libraryModal: document.getElementById("examLibraryModal"),
+  libraryList: document.getElementById("examLibraryList"),
+  libraryProvider: document.getElementById("examLibraryProvider"),
+  structureModal: document.getElementById("examStructureModal"),
+  structureContent: document.getElementById("examStructureContent"),
 };
 
 function createExam(overrides = {}) {
   return {
-    id: crypto.randomUUID ? crypto.randomUUID() : `exam-${Date.now()}-${Math.random()}`,
+    schema: EXAM_DEFINITION_SCHEMA,
+    id: EXAM_CONTRACT.createId("exam"),
     title: "",
     madeBy: EXAM_MADE_BY_PLACEHOLDER,
     subject: "",
@@ -119,9 +205,32 @@ function createExam(overrides = {}) {
   };
 }
 
+function createStarterExam() {
+  return createExam({
+    title: "Algebra 1 Checkpoint",
+    subject: "Algebra 1",
+    instructions: "Answer each question. For multiple-choice questions, select one option. For written answers, show your reasoning when possible.",
+    questions: [createQuestion({
+      prompt: "What is the solution of $x^2=4$?",
+      options: ["$x=2$ only", "$x=-2$ only", "$x=-2$ or $x=2$", "No real solution"],
+      correctOptionIndex: 2,
+      correctOptionIndexes: [2],
+      answer: "Both $-2$ and $2$ solve the equation because $(-2)^2=4$ and $2^2=4$.",
+      graph: null,
+      collapsed: false
+    })]
+  });
+}
+
 function createQuestion(overrides = {}) {
   return {
-    id: crypto.randomUUID ? crypto.randomUUID() : `q-${Date.now()}-${Math.random()}`,
+    id: EXAM_CONTRACT.createId("q"),
+    copiedFromQuestionId: "",
+    difficulty: "unclassified",
+    classificationStatus: "unclassified",
+    questionTypeTags: ["multiple-choice"],
+    curriculumNodeIds: [],
+    primaryCurriculumNodeId: "",
     name: "",
     type: "multiple-choice",
     prompt: "",
@@ -164,6 +273,20 @@ function cloneQuestionValue(value) {
     }
   }
   return JSON.parse(JSON.stringify(value));
+}
+
+function buildExamDefinitionDocument(examInput = state) {
+  const normalized = normalizeExam(cloneQuestionValue(examInput));
+  return EXAM_CONTRACT.buildDefinition(normalized);
+}
+
+function buildExamEditorDraft(examInput = state) {
+  const normalized = normalizeExam(cloneQuestionValue(examInput));
+  return EXAM_CONTRACT.buildEditorDraft(normalized);
+}
+
+function restoreExamEditorDraft(payload) {
+  return EXAM_CONTRACT.restoreEditorDraft(payload);
 }
 
 function estimateStringBytes(value) {
@@ -266,6 +389,136 @@ function buildOnlineRenderStorageFailureMessage(audit) {
 }
 
 const QUESTION_NAME_MAX_LENGTH = 72;
+
+function normalizeQuestionDifficulty(value) {
+  return EXAM_CONTRACT.normalizeDifficulty(value);
+}
+
+function questionDifficultyLabel(value) {
+  return {
+    "very-easy": "Very easy",
+    easy: "Easy",
+    difficult: "Difficult",
+    "very-difficult": "Very difficult",
+    challenge: "Challenge",
+    unclassified: "Unclassified"
+  }[normalizeQuestionDifficulty(value)];
+}
+
+function normalizeQuestionClassificationStatus(value, difficulty) {
+  const normalizedDifficulty = normalizeQuestionDifficulty(difficulty);
+  if (normalizedDifficulty === "unclassified") return "unclassified";
+  const normalized = String(value || "").trim().toLowerCase();
+  return QUESTION_CLASSIFICATION_STATUSES.has(normalized) && normalized !== "unclassified"
+    ? normalized
+    : "proposed";
+}
+
+function inferStructuralQuestionTypeTags(question) {
+  const tags = [];
+  const type = normalizeQuestionType(question?.type);
+  if (type === "numeric") tags.push("numeric");
+  else if (type === "true-false") tags.push("true-false");
+  else if (type.startsWith("multiple-answer")) tags.push("multiple-answer");
+  else if (type.startsWith("multiple-choice")) tags.push("multiple-choice");
+  else if (type === "essay") tags.push("essay");
+  else tags.push("short-answer");
+  if (type.includes("graph")
+    || (question?.graph && graphHasContent(question.graph))
+    || question?.optionGraphs?.some((graph) => graph && graphHasContent(graph))) {
+    tags.push("graph");
+  }
+  if (type.includes("image") || question?.imageData || question?.optionImages?.some(Boolean)) {
+    tags.push("image");
+  }
+  return tags;
+}
+
+function normalizeQuestionBankTypeTags(values, question) {
+  const requested = EXAM_CONTRACT.normalizeQuestionTypeTags(values)
+    .filter((value) => QUESTION_BANK_TYPE_TAGS.has(value));
+  return EXAM_CONTRACT.normalizeQuestionTypeTags([
+    ...requested,
+    ...inferStructuralQuestionTypeTags(question)
+  ]);
+}
+
+function normalizeQuestionCurriculum(question) {
+  const curriculumNodeIds = EXAM_CONTRACT.normalizeCurriculumNodeIds(
+    question?.curriculumNodeIds || (question?.primaryCurriculumNodeId ? [question.primaryCurriculumNodeId] : [])
+  );
+  const primaryCurriculumNodeId = EXAM_CONTRACT.normalizePrimaryCurriculumNodeId(
+    question?.primaryCurriculumNodeId,
+    curriculumNodeIds
+  );
+  return { curriculumNodeIds, primaryCurriculumNodeId };
+}
+
+function renderCurriculumNodeSelect(select, question) {
+  if (!select) return;
+  const selected = String(question?.primaryCurriculumNodeId || "");
+  select.replaceChildren();
+  const placeholder = document.createElement("option");
+  placeholder.value = "";
+  placeholder.textContent = curriculumNodeLoadError
+    ? "Curriculum paths unavailable"
+    : curriculumNodeOptions.length ? "Choose a track or topic" : "Loading curriculum paths…";
+  select.appendChild(placeholder);
+  curriculumNodeOptions.forEach((node) => {
+    const option = document.createElement("option");
+    option.value = node.id;
+    option.textContent = `${node.label} · ${node.type}`;
+    select.appendChild(option);
+  });
+  if (selected && !curriculumNodeOptions.some((node) => node.id === selected)) {
+    const unavailable = document.createElement("option");
+    unavailable.value = selected;
+    unavailable.textContent = "Saved curriculum path (currently unavailable)";
+    select.appendChild(unavailable);
+  }
+  select.value = selected;
+  select.disabled = !curriculumNodeOptions.length && !selected;
+  const help = select.closest(".exam-bank-classification")?.querySelector("[data-curriculum-node-help]");
+  if (help) {
+    help.textContent = curriculumNodeLoadError
+      ? "The curriculum could not be loaded. Your saved classification has been preserved."
+      : "Choose the most precise active track or topic available.";
+    help.classList.toggle("is-error", Boolean(curriculumNodeLoadError));
+  }
+}
+
+function renderQuestionBankClassification(card, question) {
+  renderCurriculumNodeSelect(card.querySelector("[data-curriculum-node-select]"), question);
+  const tags = new Set(normalizeQuestionBankTypeTags(question.questionTypeTags, question));
+  question.questionTypeTags = [...tags];
+  card.querySelectorAll("[data-question-type-tag]").forEach((checkbox) => {
+    checkbox.checked = tags.has(checkbox.value);
+    const structural = inferStructuralQuestionTypeTags(question).includes(checkbox.value);
+    checkbox.dataset.structural = String(structural);
+    checkbox.title = structural
+      ? "This category is derived from the question structure and stays selected."
+      : "Optional tutor-proposed category.";
+  });
+}
+
+function refreshRenderedCurriculumSelects() {
+  if (typeof els === "undefined" || !els.questionList) return;
+  els.questionList.querySelectorAll("[data-question-card]").forEach((card) => {
+    const question = findQuestion(card.dataset.questionId);
+    if (question) renderCurriculumNodeSelect(card.querySelector("[data-curriculum-node-select]"), question);
+  });
+}
+
+function updateQuestionDifficultyPresentation(card, question) {
+  const difficulty = normalizeQuestionDifficulty(question?.difficulty);
+  const badge = card?.querySelector?.("[data-question-difficulty-badge]");
+  if (!badge) return;
+  badge.dataset.difficulty = difficulty;
+  badge.textContent = questionDifficultyLabel(difficulty);
+  badge.title = difficulty === "unclassified"
+    ? "Choose a difficulty before submitting this exam for review."
+    : `${questionDifficultyLabel(difficulty)} difficulty proposed by the tutor.`;
+}
 
 function normalizeQuestionName(value) {
   return String(value || "").replace(/\s+/g, " ").trim().slice(0, QUESTION_NAME_MAX_LENGTH);
@@ -451,18 +704,7 @@ function syncQuestionOptionAssets(question) {
 function initialize() {
   const returnSession = restoreBuilderReturnSession();
   if (!returnSession) {
-    state.title = "Algebra 1 Checkpoint";
-    state.subject = "Algebra 1";
-    state.instructions = "Answer each question. For multiple-choice questions, select one option. For written answers, show your reasoning when possible.";
-    state.questions.push(createQuestion({
-      prompt: "What is the solution of $x^2=4$?",
-      options: ["$x=2$ only", "$x=-2$ only", "$x=-2$ or $x=2$", "No real solution"],
-      correctOptionIndex: 2,
-      correctOptionIndexes: [2],
-      answer: "Both $-2$ and $2$ solve the equation because $(-2)^2=4$ and $2^2=4$.",
-      graph: null,
-      collapsed: false
-    }));
+    replaceState(createStarterExam());
   }
 
   bindEvents();
@@ -484,8 +726,11 @@ function restoreBuilderReturnSession() {
   if (new URLSearchParams(window.location.search).get("resume") !== "1") return null;
   try {
     const session = JSON.parse(localStorage.getItem(BUILDER_RETURN_KEY) || "null");
-    const returnExam = session?.exam || JSON.parse(localStorage.getItem(ACTIVE_EXAM_KEY) || "null");
-    if (!session || !returnExam) return null;
+    const activeExam = session?.exam || JSON.parse(localStorage.getItem(ACTIVE_EXAM_KEY) || "null");
+    if (!session || !activeExam) return null;
+    const returnExam = session.editor
+      ? EXAM_CONTRACT.applyEditorState(activeExam, session.editor)
+      : activeExam;
     replaceState(returnExam);
     Object.entries(session.graphDrafts || {}).forEach(([questionId, graph]) => {
       graphDrafts.set(questionId, normalizeGraph(graph));
@@ -510,6 +755,7 @@ function captureBuilderReturnSession(exam) {
   try {
     localStorage.setItem(BUILDER_RETURN_KEY, JSON.stringify({
       examId: exam?.id || state.id,
+      editor: EXAM_CONTRACT.captureEditorState(state),
       graphDrafts: Object.fromEntries([...graphDrafts.entries()].map(([questionId, graph]) => [questionId, normalizeGraph(graph)])),
       scrollY: window.scrollY,
       previewCollapsed: document.querySelector(".exam-layout")?.classList.contains("preview-collapsed") !== false
@@ -549,7 +795,7 @@ function bindEvents() {
   els.saveDraftBtn.addEventListener("click", () => {
     updateMetaFromInputs();
     state.updatedAt = new Date().toISOString();
-    localStorage.setItem(STORAGE_DRAFT_KEY, JSON.stringify(state));
+    localStorage.setItem(STORAGE_DRAFT_KEY, JSON.stringify(buildExamEditorDraft(state)));
     markBuilderSaved();
     alert("Draft saved in this browser.");
   });
@@ -562,7 +808,7 @@ function bindEvents() {
     }
 
     try {
-      replaceState(JSON.parse(saved));
+      replaceState(restoreExamEditorDraft(JSON.parse(saved)));
       syncInputsFromState();
       renderQuestions();
       renderAllPreviews();
@@ -573,18 +819,29 @@ function bindEvents() {
     }
   });
 
-  els.saveLibraryBtn.addEventListener("click", () => {
-    const saved = saveExamToLocalLibrary();
-    markBuilderSaved();
-    alert(`Saved to local library: ${saved.title || "Untitled exam"}`);
+  els.saveLibraryBtn.addEventListener("click", async () => {
+    try {
+      const saved = await saveExamToLocalLibrary();
+      markBuilderSaved();
+      showBuilderMessage(`Saved to your library: ${saved.title || "Untitled exam"}.`);
+      if (els.libraryModal?.classList.contains("is-open")) await renderExamLibrary();
+    } catch (error) {
+      showBuilderMessage(error?.message || "The exam could not be saved to the library.", true);
+    }
   });
+
+  els.openLibraryBtn?.addEventListener("click", openExamLibrary);
+  els.resetExamBtn?.addEventListener("click", resetExam);
+  els.libraryModal?.addEventListener("click", handleExamLibraryClick);
+  els.structureModal?.addEventListener("click", handleExamStructureClick);
+  document.addEventListener("keydown", handleExamBuilderModalKeydown);
 
   els.examStructureBtn?.addEventListener("click", openExamStructureModal);
 
   els.openStudentViewBtn.addEventListener("click", () => {
     updateMetaFromInputs();
     state.updatedAt = new Date().toISOString();
-    const activeExam = normalizeExam(JSON.parse(JSON.stringify(state)));
+    const activeExam = buildExamDefinitionDocument(state);
     activeExam.viewerRole = "teacher";
     const sizeAudit = estimateOnlineRenderPayload(activeExam);
     if (sizeAudit.totalBytes > ONLINE_RENDER_SIZE_LIMIT_BYTES
@@ -782,7 +1039,8 @@ function replaceState(nextState) {
 
 function normalizeExam(exam) {
   const normalized = createExam({
-    id: String(exam.id || (crypto.randomUUID ? crypto.randomUUID() : `exam-${Date.now()}`)),
+    schema: EXAM_DEFINITION_SCHEMA,
+    id: EXAM_CONTRACT.normalizeId(exam.id, "exam"),
     title: String(exam.title || ""),
     madeBy: String(exam.madeBy || EXAM_MADE_BY_PLACEHOLDER),
     subject: String(exam.subject || ""),
@@ -793,6 +1051,18 @@ function normalizeExam(exam) {
     createdAt: exam.createdAt || new Date().toISOString(),
     updatedAt: exam.updatedAt || new Date().toISOString(),
     questions: Array.isArray(exam.questions) ? exam.questions.map(normalizeQuestion) : []
+  });
+
+  const usedQuestionIds = new Set();
+  normalized.questions.forEach((question) => {
+    const previousId = String(question.id || "");
+    while (!question.id || usedQuestionIds.has(question.id)) {
+      question.id = EXAM_CONTRACT.createId("q");
+    }
+    if (previousId && previousId !== question.id && !question.copiedFromQuestionId) {
+      question.copiedFromQuestionId = previousId;
+    }
+    usedQuestionIds.add(question.id);
   });
 
   if (normalized.questions.length === 0) {
@@ -807,7 +1077,19 @@ function normalizeQuestion(question) {
   normalized.basicCollapsed = question.basicCollapsed ?? true;
   normalized.imageCollapsed = question.imageCollapsed ?? true;
   normalized.graphCollapsed = question.graphCollapsed ?? true;
-  normalized.id = String(question.id || normalized.id);
+  normalized.id = EXAM_CONTRACT.normalizeId(question.id || normalized.id, "q");
+  normalized.copiedFromQuestionId = String(
+    question.copiedFromQuestionId || question.provenance?.copiedFromQuestionId || ""
+  );
+  normalized.difficulty = normalizeQuestionDifficulty(
+    question.difficulty || question.classification?.difficulty
+  );
+  normalized.classificationStatus = normalizeQuestionClassificationStatus(
+    question.classificationStatus || question.classification?.status,
+    normalized.difficulty
+  );
+  delete normalized.classification;
+  delete normalized.provenance;
   normalized.name = normalizeQuestionName(question.name);
   normalized.prompt = String(question.prompt || "");
   normalized.type = normalizeQuestionType(question.type);
@@ -845,6 +1127,10 @@ function normalizeQuestion(question) {
   normalized.graphBeforeText = String(question.graphBeforeText || "");
   normalized.graphAfterText = String(question.graphAfterText || "");
   normalized.graph = question.graph && graphHasContent(question.graph) ? normalizeGraph(question.graph) : null;
+  normalized.questionTypeTags = normalizeQuestionBankTypeTags(question.questionTypeTags, normalized);
+  const curriculum = normalizeQuestionCurriculum(question);
+  normalized.curriculumNodeIds = curriculum.curriculumNodeIds;
+  normalized.primaryCurriculumNodeId = curriculum.primaryCurriculumNodeId;
   normalized.pdfAnswerSpaceSize = normalizePdfAnswerSpaceSize(question.pdfAnswerSpaceSize, normalized.type);
   normalized.pdfAnswerSpaceCustomMm = normalizePdfAnswerSpaceCustomMm(question.pdfAnswerSpaceCustomMm);
   normalized.numericExpectedAnswer = String(question.numericExpectedAnswer || "");
@@ -978,6 +1264,7 @@ function renderQuestions() {
     node.querySelector('[data-field="name"]').value = question.name || "";
     node.querySelector('[data-field="prompt"]').value = question.prompt;
     node.querySelector('[data-field="type"]').value = question.type;
+    node.querySelector('[data-field="difficulty"]').value = normalizeQuestionDifficulty(question.difficulty);
     node.querySelector('[data-field="points"]').value = question.points;
     node.querySelector('[data-field="answer"]').value = question.answer;
     node.querySelector('[data-field="imageBeforeText"]').value = question.imageBeforeText || "";
@@ -996,6 +1283,8 @@ function renderQuestions() {
     node.querySelector('[data-field="numericUnit"]').value = question.numericUnit || "";
     node.querySelector("[data-question-preview]").textContent =
       question.prompt || "Type a question above to preview LaTeX.";
+    updateQuestionDifficultyPresentation(node, question);
+    renderQuestionBankClassification(node, question);
 
     updateFoldState(node, "basic", question.basicCollapsed ?? true);
     updateFoldState(node, "image", question.imageCollapsed ?? true);
@@ -1147,6 +1436,8 @@ function duplicateQuestion(question) {
   const duplicate = normalizeQuestion({
     ...cloneQuestionValue(question),
     id: createQuestion().id,
+    copiedFromQuestionId: question.id,
+    classificationStatus: normalizeQuestionDifficulty(question.difficulty) === "unclassified" ? "unclassified" : "proposed",
     collapsed: false
   });
   const sourceDraft = graphDrafts.get(question.id);
@@ -1707,6 +1998,15 @@ function applyQuestionDataField(card, question, fieldElement) {
     const normalizedName = normalizeQuestionName(fieldElement.value);
     question.name = normalizedName;
     if (fieldElement.value !== normalizedName) fieldElement.value = normalizedName;
+  } else if (field === "difficulty") {
+    question.difficulty = normalizeQuestionDifficulty(fieldElement.value);
+    question.classificationStatus = question.difficulty === "unclassified" ? "unclassified" : "proposed";
+    fieldElement.value = question.difficulty;
+    updateQuestionDifficultyPresentation(card, question);
+  } else if (field === "primaryCurriculumNodeId") {
+    const selectedNodeId = String(fieldElement.value || "").trim().toLowerCase();
+    question.curriculumNodeIds = selectedNodeId ? [selectedNodeId] : [];
+    question.primaryCurriculumNodeId = selectedNodeId;
   } else {
     question[field] = readQuestionFieldValue(fieldElement);
   }
@@ -1934,6 +2234,7 @@ async function handleQuestionChange(event) {
       question.correctOptionIndexes = [];
     }
     syncQuestionOptionAssets(question);
+    question.questionTypeTags = normalizeQuestionBankTypeTags(question.questionTypeTags, question);
     if (questionAllowsMultipleCorrect(question) && !Array.isArray(question.correctOptionIndexes)) {
       question.correctOptionIndexes = [];
     }
@@ -1945,6 +2246,14 @@ async function handleQuestionChange(event) {
     if (applyQuestionDataField(card, question, event.target)) {
       renderAllPreviewsDebounced();
     }
+  }
+
+  if (event.target.matches("[data-question-type-tag]")) {
+    const selectedTags = [...card.querySelectorAll("[data-question-type-tag]:checked")]
+      .map((checkbox) => checkbox.value);
+    question.questionTypeTags = normalizeQuestionBankTypeTags(selectedTags, question);
+    renderQuestionBankClassification(card, question);
+    renderAllPreviewsDebounced();
   }
 
   if (event.target.matches("[data-correct-option-index]")) {
@@ -2894,32 +3203,206 @@ function renderAnswerSpace(questionOrType) {
   return '<div class="exam-paper-answer-space" aria-label="Answer space"></div>';
 }
 
-function saveExamToLocalLibrary() {
+async function saveExamToLocalLibrary() {
   updateMetaFromInputs();
   state.updatedAt = new Date().toISOString();
-  const exam = normalizeExam(JSON.parse(JSON.stringify(state)));
-  const library = readLocalLibrary();
-  const existingIndex = library.findIndex((item) => item.id === exam.id);
-
-  if (existingIndex >= 0) {
-    library[existingIndex] = exam;
-  } else {
-    library.unshift(exam);
-  }
-
-  localStorage.setItem(LIBRARY_KEY, JSON.stringify(library));
+  const exam = buildExamDefinitionDocument(state);
+  const bundle = EXAM_CONTRACT.buildPersistenceBundle(exam);
+  const adapters = await examAdaptersReady;
+  const record = await adapters.exams.save(bundle);
   localStorage.setItem(ACTIVE_EXAM_KEY, JSON.stringify(exam));
-  localStorage.setItem(STORAGE_DRAFT_KEY, JSON.stringify(exam));
-  return exam;
+  localStorage.setItem(STORAGE_DRAFT_KEY, JSON.stringify(buildExamEditorDraft(state)));
+  return record.definition;
 }
 
-function readLocalLibrary() {
-  try {
-    const parsed = JSON.parse(localStorage.getItem(LIBRARY_KEY) || "[]");
-    return Array.isArray(parsed) ? parsed.map(normalizeExam) : [];
-  } catch (_) {
-    return [];
+function openExamLibrary() {
+  if (!els.libraryModal) return;
+  examLibraryReturnFocus = document.activeElement;
+  void renderExamLibrary();
+  els.libraryModal.classList.add("is-open");
+  els.libraryModal.setAttribute("aria-hidden", "false");
+  window.setTimeout(() => els.libraryModal.querySelector('[data-exam-library-action="close"]')?.focus(), 30);
+}
+
+function closeExamLibrary() {
+  if (!els.libraryModal) return;
+  els.libraryModal.classList.remove("is-open");
+  els.libraryModal.setAttribute("aria-hidden", "true");
+  if (examLibraryReturnFocus?.focus) examLibraryReturnFocus.focus();
+  examLibraryReturnFocus = null;
+}
+
+function examLibraryStatusLabel(record) {
+  if (record?.status === "archived") return "Archived";
+  if (record?.reviewStatus === "approved" && record?.publicationMode === "privileged_direct") {
+    return "Published directly";
   }
+  if (record?.reviewStatus === "approved" && record?.publicationMode === "review_approved") {
+    return "Approved after review";
+  }
+  return {
+    draft: "Private draft",
+    pending_review: "Pending review",
+    approved: "Approved",
+    changes_requested: "Changes requested",
+    rejected: "Rejected"
+  }[record?.reviewStatus] || "Private draft";
+}
+
+async function renderExamLibrary() {
+  if (!els.libraryList) return;
+  els.libraryList.innerHTML = '<div class="exam-library-empty"><p>Loading saved exams&hellip;</p></div>';
+  try {
+    const [adapters] = await Promise.all([examAdaptersReady, builderAuthorizationReady]);
+    const provider = adapters.meta?.provider || "custom";
+    const canPublishDirectly = provider === "local" || Boolean(builderAuthorization?.can?.("exam.publish"));
+    if (els.libraryProvider) {
+      els.libraryProvider.textContent = examAdapterResolutionError
+        ? "Local browser library (custom provider unavailable)"
+        : `${provider === "local" ? "Local browser" : provider} library`;
+    }
+    const records = await adapters.exams.list();
+    if (!records.length) {
+      els.libraryList.innerHTML = `
+        <div class="exam-library-empty">
+          <p>No exams have been saved yet. Save the current exam to create your first library record.</p>
+        </div>
+      `;
+      return;
+    }
+
+    els.libraryList.innerHTML = records.map((record) => {
+      const exam = record.definition;
+      const archived = record.status === "archived";
+      const questionCount = exam.questions.length;
+      const totalPoints = exam.questions.reduce((sum, question) => sum + (Number(question.points) || 0), 0);
+      return `
+        <article class="exam-library-record ${archived ? "is-archived" : ""}">
+          <div class="exam-library-record-copy">
+            <div class="exam-library-title-line">
+              <h3>${escapeHTML(exam.title || "Untitled exam")}</h3>
+              <span class="exam-library-status">${escapeHTML(examLibraryStatusLabel(record))}</span>
+            </div>
+            <p>${questionCount} ${questionCount === 1 ? "question" : "questions"} &middot; ${totalPoints} ${totalPoints === 1 ? "point" : "points"} &middot; Updated ${escapeHTML(formatExamLibraryTimestamp(record.updatedAt))}</p>
+          </div>
+          <div class="exam-library-inline-actions">
+            <button type="button" class="btn-secondary exam-small-btn" data-exam-library-action="open-copy" data-exam-id="${escapeAttribute(record.id)}">Open as copy</button>
+            ${archived
+              ? `<button type="button" class="btn-outline exam-small-btn exam-danger-btn" data-exam-library-action="delete" data-exam-id="${escapeAttribute(record.id)}">Delete</button>`
+              : record.reviewStatus === "draft"
+                ? `<button type="button" class="btn-secondary exam-small-btn" data-exam-library-action="submit-review" data-exam-id="${escapeAttribute(record.id)}">Submit for review</button>
+                   ${canPublishDirectly ? `<button type="button" class="btn-secondary exam-small-btn" data-exam-library-action="publish" data-exam-id="${escapeAttribute(record.id)}">Publish directly</button>` : ""}
+                   <button type="button" class="btn-outline exam-small-btn" data-exam-library-action="archive" data-exam-id="${escapeAttribute(record.id)}">Archive</button>`
+                : ""}
+          </div>
+        </article>
+      `;
+    }).join("");
+  } catch (error) {
+    els.libraryList.innerHTML = `<div class="exam-library-empty is-error"><p>${escapeHTML(error?.message || "The exam library could not be loaded.")}</p></div>`;
+  }
+}
+
+async function handleExamLibraryClick(event) {
+  const button = event.target.closest("[data-exam-library-action]");
+  if (!button) return;
+  const action = button.dataset.examLibraryAction;
+  if (action === "close") {
+    closeExamLibrary();
+    return;
+  }
+  if (action === "save-current") {
+    try {
+      const saved = await saveExamToLocalLibrary();
+      markBuilderSaved();
+      await renderExamLibrary();
+      showBuilderMessage(`Saved to your library: ${saved.title || "Untitled exam"}.`);
+    } catch (error) {
+      showBuilderMessage(error?.message || "The exam could not be saved to the library.", true);
+    }
+    return;
+  }
+  if (action === "refresh") {
+    await renderExamLibrary();
+    return;
+  }
+
+  const examId = button.dataset.examId;
+  if (!examId) return;
+  try {
+    const adapters = await examAdaptersReady;
+    if (action === "open-copy") {
+      await openLibraryExamAsCopy(examId, adapters);
+      return;
+    }
+    if (action === "submit-review") {
+      const confirmed = window.confirm("Submit this exam for mentor or administrator review? The saved exam will be locked; further revisions must be made from a new copy.");
+      if (!confirmed) return;
+      await adapters.exams.submitForReview(examId);
+      await renderExamLibrary();
+      showBuilderMessage("Exam submitted for review. The submitted record is now locked.");
+      return;
+    }
+    if (action === "publish") {
+      const confirmed = window.confirm("Publish this exam directly? The published record will be immutable, and later revisions must be made from a new copy.");
+      if (!confirmed) return;
+      const notes = window.prompt("Optional publication note for the audit trail:", "") ?? "";
+      await adapters.exams.publish(examId, { notes });
+      await renderExamLibrary();
+      showBuilderMessage("Exam published directly. The published record is now locked.");
+      return;
+    }
+    if (action === "archive") {
+      await adapters.exams.archive(examId);
+      await renderExamLibrary();
+      showBuilderMessage("Exam archived. It can still be opened as a copy or deleted.");
+      return;
+    }
+    if (action === "delete") {
+      if (!window.confirm("Permanently delete this archived exam? Existing saved results remain independent.")) return;
+      await adapters.exams.remove(examId);
+      await renderExamLibrary();
+      showBuilderMessage("Archived exam deleted. Existing saved results were not changed.");
+    }
+  } catch (error) {
+    showBuilderMessage(error?.message || "The library action could not be completed.", true);
+  }
+}
+
+async function openLibraryExamAsCopy(examId, adapters = null) {
+  const resolvedAdapters = adapters || await examAdaptersReady;
+  const record = await resolvedAdapters.exams.load(examId);
+  if (!record?.definition) {
+    await renderExamLibrary();
+    showBuilderMessage("The saved exam could not be found.", true);
+    return;
+  }
+  const copy = normalizeExam(EXAM_CONTRACT.createIndependentCopy(record.definition));
+  replaceState(copy);
+  previewQuestionIndex = 0;
+  closeExamLibrary();
+  syncInputsFromState();
+  renderQuestions();
+  renderAllPreviews({ force: true });
+  markBuilderDirty();
+  showBuilderMessage("Saved exam opened as a new independent copy.");
+}
+
+function formatExamLibraryTimestamp(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "recently";
+  return date.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
+}
+
+function resetExam() {
+  if (!window.confirm("Reset the current exam? This only clears the editor. A saved browser draft remains available.")) return;
+  replaceState(createStarterExam());
+  previewQuestionIndex = 0;
+  syncInputsFromState();
+  renderQuestions();
+  renderAllPreviews({ force: true });
+  markBuilderDirty();
+  showBuilderMessage("The exam was reset to the starter example.");
 }
 
 function drawAllGraphs() {
@@ -4044,6 +4527,9 @@ function buildExamStructure() {
     shortAnswer: 0,
     longAnswer: 0
   };
+  const difficultyCounts = Object.fromEntries(
+    [...QUESTION_DIFFICULTIES].map((difficulty) => [difficulty, 0])
+  );
 
   let imageCount = 0;
   const graphEntries = [];
@@ -4051,6 +4537,7 @@ function buildExamStructure() {
   exam.questions.forEach((question, questionIndex) => {
     const baseType = questionBaseType(question);
     const contentType = questionOptionContentType(question);
+    difficultyCounts[normalizeQuestionDifficulty(question.difficulty)] += 1;
 
     if (baseType === "multiple-choice") {
       if (contentType === "image") questionCounts.multipleChoiceImage += 1;
@@ -4120,6 +4607,7 @@ function buildExamStructure() {
     timeMinutes: Number(exam.durationMinutes || 0),
     questionCount: exam.questions.length,
     questionCounts,
+    difficultyCounts,
     imageCount,
     graphCount: graphEntries.length,
     maximumGraphObjectCount: graphWithMostObjects?.objectCount || 0,
@@ -4181,107 +4669,229 @@ function summarizeGraphObjects(rawGraph) {
 }
 
 function openExamStructureModal() {
-  const structure = buildExamStructure();
-  const backdrop = document.createElement("div");
-  backdrop.className = "diagram-modal-backdrop exam-structure-modal-backdrop";
-
-  const modal = document.createElement("div");
-  modal.className = "diagram-modal exam-structure-modal";
-  modal.setAttribute("role", "dialog");
-  modal.setAttribute("aria-modal", "true");
-  modal.setAttribute("aria-labelledby", "examStructureTitle");
-
-  const header = document.createElement("div");
-  header.className = "diagram-modal-header";
-  const title = document.createElement("h3");
-  title.id = "examStructureTitle";
-  title.className = "diagram-modal-title";
-  title.textContent = "Exam structure";
-  const description = document.createElement("p");
-  description.className = "diagram-modal-description";
-  description.textContent = "Review and download this database-ready summary. Labels are not counted as graph objects.";
-  header.append(title, description);
-
-  const summary = document.createElement("dl");
-  summary.className = "exam-structure-summary";
-  getExamStructureRows(structure).forEach(([label, value]) => {
-    const term = document.createElement("dt");
-    term.textContent = label;
-    const detail = document.createElement("dd");
-    detail.textContent = value;
-    summary.append(term, detail);
-  });
-
-  const jsonPreview = document.createElement("pre");
-  jsonPreview.className = "exam-structure-json";
-  jsonPreview.textContent = JSON.stringify(structure, null, 2);
-
-  const actions = document.createElement("div");
-  actions.className = "diagram-modal-actions";
-  const download = document.createElement("button");
-  download.type = "button";
-  download.className = "btn-primary";
-  download.textContent = "Download structure JSON";
-  const closeButton = document.createElement("button");
-  closeButton.type = "button";
-  closeButton.className = "btn-outline";
-  closeButton.textContent = "Close";
-  actions.append(download, closeButton);
-
-  modal.append(header, summary, jsonPreview, actions);
-  backdrop.appendChild(modal);
-
-  const close = () => {
-    document.removeEventListener("keydown", handleKeydown);
-    backdrop.remove();
-  };
-
-  const handleKeydown = (event) => {
-    if (event.key === "Escape") close();
-  };
-
-  backdrop.addEventListener("click", (event) => {
-    if (event.target === backdrop) close();
-  });
-  closeButton.addEventListener("click", close);
-  download.addEventListener("click", () => {
-    downloadJsonFile(`${slugify(structure.examName || "kelp-exam")}-structure.json`, structure);
-  });
-
-  document.addEventListener("keydown", handleKeydown);
-  document.body.appendChild(backdrop);
-  download.focus();
+  if (!els.structureModal || !els.structureContent) return;
+  examStructureReturnFocus = document.activeElement;
+  renderFriendlyExamStructure();
+  els.structureModal.classList.add("is-open");
+  els.structureModal.setAttribute("aria-hidden", "false");
+  window.setTimeout(() => els.structureModal.querySelector('[data-exam-structure-action="close"]')?.focus(), 30);
 }
 
-function getExamStructureRows(structure) {
-  const graphObjects = structure.graphWithMostObjects?.objects?.length
-    ? structure.graphWithMostObjects.objects.map((item) => `${item.type}: ${item.count}`).join(", ")
-    : "No graph objects";
-  const graphLocation = structure.graphWithMostObjects?.location || "No graph attached";
-  return [
-    ["Name of the exam", structure.examName || "Untitled exam"],
-    ["Who made the exam", structure.madeBy],
-    ["Date", structure.date],
-    ["Subject", structure.subject || "Subject not set"],
-    ["Instructions", structure.instructions || "No instructions"],
-    ["Time", `${structure.timeMinutes} minutes`],
-    ["Number of questions", String(structure.questionCount)],
-    ["Multiple choice (text)", String(structure.questionCounts.multipleChoiceText)],
-    ["Multiple choice (image)", String(structure.questionCounts.multipleChoiceImage)],
-    ["Multiple choice (graph)", String(structure.questionCounts.multipleChoiceGraph)],
-    ["Multiple answer (text)", String(structure.questionCounts.multipleAnswerText)],
-    ["Multiple answer (image)", String(structure.questionCounts.multipleAnswerImage)],
-    ["Multiple answer (graph)", String(structure.questionCounts.multipleAnswerGraph)],
-    ["True/false", String(structure.questionCounts.trueFalse)],
-    ["Numeric answer", String(structure.questionCounts.numericAnswer)],
-    ["Short answer", String(structure.questionCounts.shortAnswer)],
-    ["Long answer", String(structure.questionCounts.longAnswer)],
-    ["Images", String(structure.imageCount)],
-    ["Graphs", String(structure.graphCount)],
-    ["Maximum graph objects", String(structure.maximumGraphObjectCount)],
-    ["Most object-heavy graph", graphLocation],
-    ["Objects in that graph", graphObjects]
-  ];
+function closeExamStructureModal() {
+  if (!els.structureModal) return;
+  els.structureModal.classList.remove("is-open");
+  els.structureModal.setAttribute("aria-hidden", "true");
+  if (examStructureReturnFocus?.focus) examStructureReturnFocus.focus();
+  examStructureReturnFocus = null;
+}
+
+function handleExamStructureClick(event) {
+  if (event.target.closest('[data-exam-structure-action="close"]')) closeExamStructureModal();
+}
+
+function handleExamBuilderModalKeydown(event) {
+  if (event.key !== "Escape") return;
+  if (els.libraryModal?.classList.contains("is-open")) {
+    closeExamLibrary();
+    return;
+  }
+  if (els.structureModal?.classList.contains("is-open")) closeExamStructureModal();
+}
+
+function friendlyQuestionTypeLabel(question) {
+  const labels = {
+    "multiple-choice": "Multiple choice (text)",
+    "multiple-choice-text": "Multiple choice (text)",
+    "multiple-choice-image": "Multiple choice (image)",
+    "multiple-choice-graph": "Multiple choice (diagram)",
+    "multiple-answer": "Multiple answers (text)",
+    "multiple-answer-text": "Multiple answers (text)",
+    "multiple-answer-image": "Multiple answers (image)",
+    "multiple-answer-graph": "Multiple answers (diagram)",
+    "true-false": "True / false",
+    numeric: "Numeric answer",
+    "short-answer": "Short answer",
+    essay: "Essay / explanation"
+  };
+  return labels[question?.type] || "Question";
+}
+
+function renderFriendlyExamStructure() {
+  const structure = buildExamStructure();
+  const totalPoints = state.questions.reduce((sum, question) => sum + (Number(question.points) || 0), 0);
+  const visualCount = structure.imageCount + structure.graphCount;
+  const writtenCount = state.questions.filter((question) => ["short-answer", "essay"].includes(question.type)).length;
+  const typeCounts = new Map();
+  state.questions.forEach((question) => {
+    const label = friendlyQuestionTypeLabel(question);
+    typeCounts.set(label, (typeCounts.get(label) || 0) + 1);
+  });
+  const classifiedDifficultyEntries = [...QUESTION_DIFFICULTIES]
+    .map((difficulty) => [questionDifficultyLabel(difficulty), structure.difficultyCounts[difficulty] || 0])
+    .filter(([, count]) => count > 0);
+
+  els.structureContent.innerHTML = `
+    <div class="exam-structure-column">
+      <section class="exam-structure-section" aria-labelledby="exam-structure-overview-heading">
+        <div class="exam-structure-section-heading">
+          <div>
+            <h3 id="exam-structure-overview-heading">Overview</h3>
+            <p>Counts reflect the current unsaved builder state.</p>
+          </div>
+          <span class="exam-structure-live-badge">Live</span>
+        </div>
+        <div class="exam-structure-metrics">
+          ${renderExamStructureMetric(state.questions.length, "Questions")}
+          ${renderExamStructureMetric(totalPoints, "Total points")}
+          ${renderExamStructureMetric(Number(state.durationMinutes || 0), "Minutes")}
+          ${renderExamStructureMetric(visualCount, "Visual assets")}
+        </div>
+        <dl class="exam-structure-details">
+          ${renderExamStructureDetail("Subject", state.subject || "Not set")}
+          ${renderExamStructureDetail("Instructions", state.instructions.trim() ? "Added" : "Not added")}
+          ${renderExamStructureDetail("Written responses", `${writtenCount} ${writtenCount === 1 ? "question" : "questions"}`)}
+          ${renderExamStructureDetail("Images", String(structure.imageCount))}
+          ${renderExamStructureDetail("Diagrams", String(structure.graphCount))}
+        </dl>
+      </section>
+
+      <section class="exam-structure-section" aria-labelledby="exam-structure-types-heading">
+        <div class="exam-structure-section-heading">
+          <div>
+            <h3 id="exam-structure-types-heading">Item types</h3>
+            <p>Question formats currently used in this exam.</p>
+          </div>
+        </div>
+        ${typeCounts.size
+          ? `<div class="exam-structure-type-list">${[...typeCounts.entries()].map(([label, count]) => `
+              <span class="exam-structure-type-chip"><strong>${count}</strong>${escapeHTML(label)}</span>
+            `).join("")}</div>`
+          : '<p class="exam-structure-empty">No questions have been added yet.</p>'}
+      </section>
+
+      <section class="exam-structure-section" aria-labelledby="exam-structure-difficulty-heading">
+        <div class="exam-structure-section-heading">
+          <div>
+            <h3 id="exam-structure-difficulty-heading">Difficulty classification</h3>
+            <p>Tutor-proposed levels that mentors or administrators can confirm during review.</p>
+          </div>
+        </div>
+        ${classifiedDifficultyEntries.length
+          ? `<div class="exam-structure-type-list">${classifiedDifficultyEntries.map(([label, count]) => `
+              <span class="exam-structure-type-chip"><strong>${count}</strong>${escapeHTML(label)}</span>
+            `).join("")}</div>`
+          : '<p class="exam-structure-empty">No questions have been classified yet.</p>'}
+      </section>
+
+      <section class="exam-structure-section" aria-labelledby="exam-structure-checks-heading">
+        <div class="exam-structure-section-heading">
+          <div>
+            <h3 id="exam-structure-checks-heading">Structure checks</h3>
+            <p>Quick signals before opening the student view.</p>
+          </div>
+        </div>
+        ${renderExamStructureChecks()}
+      </section>
+    </div>
+
+    <div class="exam-structure-column">
+      <section class="exam-structure-section" aria-labelledby="exam-structure-tree-heading">
+        <div class="exam-structure-section-heading">
+          <div>
+            <h3 id="exam-structure-tree-heading">Student order</h3>
+            <p>The numbered sequence students receive, including question type and points.</p>
+          </div>
+        </div>
+        ${renderExamStructureTree(totalPoints)}
+      </section>
+
+      <section class="exam-structure-section" aria-labelledby="exam-structure-media-heading">
+        <div class="exam-structure-section-heading">
+          <div>
+            <h3 id="exam-structure-media-heading">Media summary</h3>
+            <p>Images and diagrams attached to question bodies or answer options.</p>
+          </div>
+        </div>
+        ${visualCount
+          ? `<dl class="exam-structure-details exam-structure-media-details">
+              ${renderExamStructureDetail("Images", `${structure.imageCount} attached`)}
+              ${renderExamStructureDetail("Diagrams", `${structure.graphCount} attached`)}
+              ${renderExamStructureDetail("Most detailed diagram", structure.graphWithMostObjects
+                ? `${structure.graphWithMostObjects.location} · ${structure.graphWithMostObjects.objectCount} objects`
+                : "No diagrams attached")}
+            </dl>`
+          : '<p class="exam-structure-empty">No images or diagrams are attached to this exam.</p>'}
+      </section>
+    </div>
+  `;
+}
+
+function renderExamStructureMetric(value, label) {
+  return `<div class="exam-structure-metric"><strong>${escapeHTML(String(value))}</strong><span>${escapeHTML(label)}</span></div>`;
+}
+
+function renderExamStructureDetail(label, value) {
+  return `<div><dt>${escapeHTML(label)}</dt><dd>${escapeHTML(String(value))}</dd></div>`;
+}
+
+function renderExamStructureTree(totalPoints) {
+  const questionNodes = state.questions.map((question, index) => {
+    const media = [];
+    if (question.imageData || question.optionImages?.some(Boolean)) media.push("image");
+    if ((question.graph && graphHasContent(question.graph)) || question.optionGraphs?.some((graph) => graph && graphHasContent(graph))) media.push("diagram");
+    const pointValue = Number(question.points) || 0;
+    const title = getQuestionDisplayName(question);
+    const subtitle = `${friendlyQuestionTypeLabel(question)} · ${questionDifficultyLabel(question.difficulty)} · ${pointValue} ${pointValue === 1 ? "point" : "points"}${media.length ? ` · ${media.join(" + ")}` : ""}`;
+    return `
+      <li>
+        <div class="exam-structure-node">
+          <div class="exam-structure-node-copy">
+            <strong>${escapeHTML(title)}</strong>
+            <small>${escapeHTML(subtitle)}</small>
+          </div>
+          <span class="exam-structure-node-badge">Question ${index + 1}</span>
+        </div>
+      </li>
+    `;
+  }).join("");
+  return `
+    <div class="exam-structure-tree">
+      <div class="exam-structure-node is-root">
+        <div class="exam-structure-node-copy">
+          <strong>${escapeHTML(state.title || "Untitled exam")}</strong>
+          <small>${state.questions.length} ${state.questions.length === 1 ? "question" : "questions"} · ${escapeHTML(String(totalPoints))} ${totalPoints === 1 ? "point" : "points"}</small>
+        </div>
+        <span class="exam-structure-node-badge">Exam</span>
+      </div>
+      <ul>${questionNodes || '<li><p class="exam-structure-empty">No questions have been added yet.</p></li>'}</ul>
+    </div>
+  `;
+}
+
+function renderExamStructureChecks() {
+  const warnings = [];
+  if (!state.title.trim()) warnings.push("Add an exam title before sharing it.");
+  if (!state.subject.trim()) warnings.push("Add a subject or track so students have context.");
+  if (!state.instructions.trim()) warnings.push("Add instructions before opening the student view.");
+  if (!state.questions.length) warnings.push("Add at least one question before sharing this exam.");
+  state.questions.forEach((question, index) => {
+    const label = `Question ${index + 1}`;
+    if (!question.prompt.trim()) warnings.push(`${label} does not have question text yet.`);
+    if (normalizeQuestionDifficulty(question.difficulty) === "unclassified") {
+      warnings.push(`${label} needs a tutor-proposed difficulty before it is submitted for review.`);
+    }
+    if (!question.primaryCurriculumNodeId) {
+      warnings.push(`${label} needs a primary curriculum track or topic before it is submitted for review.`);
+    }
+    if (!normalizeQuestionBankTypeTags(question.questionTypeTags, question).length) {
+      warnings.push(`${label} needs at least one question-bank category before it is submitted for review.`);
+    }
+    if (questionUsesOptions(question) && question.options.filter((option) => String(option || "").trim()).length < 2) {
+      warnings.push(`${label} needs at least two answer options.`);
+    }
+  });
+  if (!warnings.length) return '<p class="exam-structure-check">No structural issues found in the current exam.</p>';
+  return warnings.map((warning) => `<p class="exam-structure-check is-warning">${escapeHTML(warning)}</p>`).join("");
 }
 
 function downloadJsonFile(fileName, payload) {
@@ -4299,7 +4909,7 @@ function downloadJsonFile(fileName, payload) {
 
 function exportJson() {
   updateMetaFromInputs();
-  const exam = normalizeExam(JSON.parse(JSON.stringify(state)));
+  const exam = buildExamDefinitionDocument(state);
   const fileName = `${slugify(exam.title || "kelp-exam")}.json`;
   downloadJsonFile(fileName, exam);
   markBuilderSaved();
@@ -4312,13 +4922,20 @@ function importJson(event) {
   const reader = new FileReader();
   reader.onload = () => {
     try {
-      replaceState(JSON.parse(reader.result));
+      const inspection = EXAM_CONTRACT.inspectImport(JSON.parse(reader.result));
+      const sourceExam = normalizeExam(inspection.definition);
+      const copy = normalizeExam(EXAM_CONTRACT.createIndependentCopy(sourceExam));
+      replaceState(copy);
       syncInputsFromState();
       renderQuestions();
       renderAllPreviews();
-      markBuilderSaved();
+      markBuilderDirty();
+      const repairSummary = inspection.warnings.length
+        ? ` ${inspection.warnings.join(" ")}`
+        : "";
+      showBuilderMessage(`Imported as an independent copy with new exam and question IDs.${repairSummary}`);
     } catch (error) {
-      alert("This JSON file could not be imported.");
+      alert(error?.message || "This JSON file could not be imported.");
       console.error(error);
     } finally {
       event.target.value = "";
@@ -14106,6 +14723,40 @@ function setPreviewToggleState(button, isCollapsed) {
   button.setAttribute("aria-label", isCollapsed ? "Show preview" : "Hide preview");
 }
 
+function clearPreviewToggleTimers(layout) {
+  const timers = layout?._previewToggleTimers || [];
+  timers.forEach((timer) => window.clearTimeout(timer));
+  if (layout) layout._previewToggleTimers = [];
+}
+
+function schedulePreviewToggleTimer(layout, callback, delay) {
+  if (!layout) return null;
+  const timer = window.setTimeout(() => {
+    layout._previewToggleTimers = (layout._previewToggleTimers || []).filter((item) => item !== timer);
+    callback();
+  }, delay);
+  layout._previewToggleTimers = [...(layout._previewToggleTimers || []), timer];
+  return timer;
+}
+
+function syncDiagramCommandPlacement(layout) {
+  if (!layout) return;
+  const previewOpen = !layout.classList.contains("preview-collapsed");
+  layout.querySelectorAll(".kelp-diagram-editor").forEach((host) => {
+    const toolbar = host.querySelector(".kde-toolbar");
+    const editorLayout = host.querySelector(".kde-layout");
+    const stage = host.querySelector(".kde-stage-wrap");
+    const stageActions = stage?.querySelector(".kde-stage-actions");
+    if (!toolbar || !editorLayout || !stage) return;
+    if (previewOpen) {
+      if (toolbar.parentElement !== stage) stage.insertBefore(toolbar, stageActions || stage.firstChild);
+    } else if (toolbar.parentElement !== host) {
+      host.insertBefore(toolbar, editorLayout);
+    }
+    host.classList.toggle("kde-commands-near-canvas", previewOpen);
+  });
+}
+
 function captureDiagramStagePositions(layout) {
   return [...layout.querySelectorAll(".kde-stage-wrap")].map((stage) => ({
     stage,
@@ -14239,32 +14890,36 @@ function performPreviewColumnToggle(layout, button) {
   if (!layout || !button) return;
   const willCollapse = !layout.classList.contains("preview-collapsed");
   const diagramStagePositions = captureDiagramStagePositions(layout);
-  layout.classList.remove("is-preview-opening", "is-preview-closing", "is-preview-animating");
+  clearPreviewToggleTimers(layout);
+  layout.classList.remove("is-preview-opening", "is-preview-closing", "is-preview-settling", "is-preview-animating");
   layout.getBoundingClientRect();
   layout.classList.add("is-preview-animating", willCollapse ? "is-preview-closing" : "is-preview-opening");
   setPreviewToggleState(button, willCollapse);
 
   requestAnimationFrame(() => {
+    if (willCollapse) layout.classList.remove("is-preview-following");
     layout.classList.toggle("preview-collapsed", willCollapse);
+    syncDiagramCommandPlacement(layout);
     requestAnimationFrame(() => animateDiagramStagePositions(diagramStagePositions));
   });
 
   if (willCollapse) {
-    window.setTimeout(() => {
+    schedulePreviewToggleTimer(layout, () => {
       layout.classList.remove("is-preview-closing");
       layout.classList.add("is-preview-settling");
-    }, 2150);
+    }, PREVIEW_COLLAPSE_SETTLE_MS);
   }
 
-  window.setTimeout(() => {
+  schedulePreviewToggleTimer(layout, () => {
     layout.classList.remove("is-preview-opening", "is-preview-closing", "is-preview-settling", "is-preview-animating");
+    syncDiagramCommandPlacement(layout);
     schedulePreviewFollowingUpdate(layout);
     schedulePostPreviewToggleGraphDraw(layout);
-  }, 2700);
+  }, PREVIEW_TOGGLE_MS);
 }
 
 function togglePreviewColumn(layout, button) {
-  if (!layout || !button || layout.classList.contains("is-preview-returning")) return;
+  if (!layout || !button || layout.classList.contains("is-preview-returning") || layout.classList.contains("is-preview-animating")) return;
   const willCollapse = !layout.classList.contains("preview-collapsed");
   const sticky = layout.querySelector(".exam-preview-sticky");
   const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
@@ -14295,7 +14950,7 @@ function togglePreviewColumn(layout, button) {
       { transform: "translate(0, 0)" }
     ],
     {
-      duration: 950,
+      duration: PREVIEW_RETURN_MS,
       easing: "cubic-bezier(0.4, 0, 0.2, 1)"
     }
   );
@@ -14325,6 +14980,7 @@ function setupStage7Runtime() {
   const layout = document.querySelector(".exam-layout");
   if (previewButton && layout) {
     setPreviewToggleState(previewButton, layout.classList.contains("preview-collapsed"));
+    syncDiagramCommandPlacement(layout);
     previewButton.addEventListener("click", () => {
       togglePreviewColumn(layout, previewButton);
     });
@@ -16145,6 +16801,7 @@ setupStage7Runtime();
     if (host.__kelpDiagramEditor) {
       host.__kelpDiagramEditor.setGraph(graph);
       kelpEditorsByQuestionId.set(question.id, host.__kelpDiagramEditor);
+      syncDiagramCommandPlacement(document.querySelector(".exam-layout"));
       return host.__kelpDiagramEditor;
     }
 
@@ -16156,6 +16813,7 @@ setupStage7Runtime();
       card,
       question.graph ? describeKelpAttachedGraph(question.graph) : "Create a body diagram, then click Attach diagram."
     );
+    syncDiagramCommandPlacement(document.querySelector(".exam-layout"));
     return editor;
   }
 

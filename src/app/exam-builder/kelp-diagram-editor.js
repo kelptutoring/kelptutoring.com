@@ -971,6 +971,7 @@
 
     renderShell() {
       const usesSideToolLayout = Boolean(this.options.sideToolLayout);
+      const showsGridLayerControl = Boolean(this.options.showGridLayerControl);
       this.host.classList.add("kelp-diagram-editor");
       this.host.classList.toggle("kde-side-tool-layout", usesSideToolLayout);
       if (!this.host.hasAttribute("tabindex")) this.host.tabIndex = -1;
@@ -1008,13 +1009,13 @@
               </select>
             </div>
 
-            <div class="kde-field kde-grid-layer-field">
+            ${showsGridLayerControl ? `<div class="kde-field kde-grid-layer-field">
               <label>Grid position</label>
               <div class="kde-grid-layer-toggle" role="group" aria-label="Grid position relative to the diagram">
                 <button type="button" data-kelp-grid-layer="behind" aria-pressed="true">Behind drawing</button>
                 <button type="button" data-kelp-grid-layer="front" aria-pressed="false">In front</button>
               </div>
-            </div>
+            </div>` : ""}
 
             <div class="kde-field">
               <label>Frame border</label>

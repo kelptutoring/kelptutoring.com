@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "bundles": [
+    {
+      "id": "openstax-physics-ch01",
+      "title": "What Is Physics?",
+      "subject": "physics",
+      "level": "high-school",
+      "source": "OpenStax Physics, Chapter 1",
+      "license": "CC BY 4.0",
+      "orientation": "landscape",
+      "frameCount": 13,
+      "designRevision": 3,
+      "practiceCounts": {
+        "trueFalse": 5,
+        "multipleChoice": 24,
+        "wordProblems": 4,
+        "total": 33
+      },
+      "scene": "pilots/physics/chapter-01-what-is-physics/openstax-physics-ch01-lesson.excalidraw",
+      "generator": "../../tools/generate-openstax-physics-ch01-whiteboard.mjs",
+      "status": "pilot"
+    },
+    {
+      "id": "openstax-physics-ch02",
+      "title": "Motion in One Dimension",
+      "subject": "physics",
+      "level": "high-school",
+      "source": "OpenStax Physics, Chapter 2",
+      "license": "CC BY 4.0",
+      "orientation": "landscape",
+      "frameCount": 13,
+      "designRevision": 3,
+      "practiceCounts": {
+        "trueFalse": 5,
+        "multipleChoice": 24,
+        "wordProblems": 4,
+        "total": 33
+      },
+      "scene": "pilots/physics/chapter-02-motion-in-one-dimension/openstax-physics-ch02-lesson.excalidraw",
+      "generator": "../../tools/generate-openstax-physics-ch02-whiteboard.mjs",
+      "status": "pilot"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Complete a form shared through Kelp Tutoring." />
+  <title>Kelp Form</title>
+  <link rel="stylesheet" href="../../styles/style.css" />
+  <link rel="stylesheet" href="form-taker.css" />
+</head>
+
+<body class="tracks-body gradient-background form-taker-body">
+  <header class="tracks-header form-taker-header">
+    <div class="container tracks-header-content">
+      <a class="tracks-logo-link" href="../dashboard/student-dashboard.html" aria-label="Back to student dashboard">
+        <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="Kelp logo" class="tracks-logo" />
+      </a>
+      <nav class="tracks-nav" aria-label="Form navigation">
+        <a href="../dashboard/student-dashboard.html">Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container tracks-main form-taker-main">
+    <section class="tracks-panel form-taker-shell">
+      <section class="form-taker-card" id="app" aria-live="polite">
+        <div class="form-taker-loading" role="status">
+          <span class="form-taker-spinner" aria-hidden="true"></span>
+          <p>Preparing your form...</p>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="form-adapters.js"></script>
+  <script>
+    window.KelpFormProviderReady = /^https?:$/.test(window.location.protocol)
+      ? import('./form-supabase-provider.js')
+      : Promise.resolve(null);
+  </script>
+  <script src="form-domain.js"></script>
+  <script src="form-location-data.js"></script>
+  <script src="form-taker.js"></script>
+</body>
+</html>

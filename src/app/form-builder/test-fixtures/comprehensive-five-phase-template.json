@@ -1,0 +1,378 @@
+{
+  "id": "form-comprehensive-five-phase-test",
+  "version": 3,
+  "meta": {
+    "title": "Comprehensive Tutoring Flow Test",
+    "audience": "Internal tutor testing",
+    "description": "A five-phase, twenty-question template for testing question formats, phase styling, conditional routing, respondent details, and repeated submissions.",
+    "respondentDetails": {
+      "fullName": { "enabled": true, "required": true, "verify": false },
+      "birthdate": { "enabled": true, "required": false, "verify": false },
+      "email": { "enabled": true, "required": true, "verify": true },
+      "phone": { "enabled": false, "required": false, "verify": false },
+      "country": { "enabled": true, "required": true, "verify": false },
+      "state": { "enabled": true, "required": true, "verify": false }
+    }
+  },
+  "settings": {
+    "submissionPolicy": { "mode": "multiple" }
+  },
+  "blocks": [
+    {
+      "id": "greeting-comprehensive-test",
+      "kind": "greeting",
+      "title": "Comprehensive form test",
+      "body": "This form intentionally exercises every question type and several conditional routes. Use the route notes in the imported template to choose the path you want to test.",
+      "buttonText": "Begin test",
+      "collapsed": true
+    },
+
+    {
+      "id": "phase-profile",
+      "kind": "phase",
+      "title": "1. Learner profile",
+      "description": "Establish the learner's goals, confidence, and available study time.",
+      "triggers": [],
+      "appearance": { "backgroundColor": "#00ACC1" },
+      "collapsed": true
+    },
+    {
+      "id": "question-profile-confidence",
+      "kind": "question",
+      "prompt": "How confident do you currently feel about the subject?",
+      "helpText": "Choose “I need guided support” to open the Support branch after this phase.",
+      "type": "multiple-choice",
+      "required": true,
+      "options": [
+        { "id": "option-confidence-high", "label": "Very confident" },
+        { "id": "option-confidence-growing", "label": "My confidence is growing" },
+        { "id": "option-confidence-support", "label": "I need guided support" }
+      ],
+      "collapsed": true
+    },
+    {
+      "id": "question-profile-goals",
+      "kind": "question",
+      "prompt": "Which outcomes are you working toward?",
+      "helpText": "Select every outcome that applies.",
+      "type": "multiple-answer",
+      "required": true,
+      "options": [
+        { "id": "option-goal-understanding", "label": "Deeper understanding" },
+        { "id": "option-goal-accuracy", "label": "Better accuracy" },
+        { "id": "option-goal-speed", "label": "Faster problem solving" },
+        { "id": "option-goal-exam", "label": "Exam preparation" }
+      ],
+      "collapsed": true
+    },
+    {
+      "id": "question-profile-topic",
+      "kind": "question",
+      "prompt": "What topic would you most like to improve first?",
+      "helpText": "A short phrase is enough.",
+      "type": "short-answer",
+      "required": true,
+      "options": [],
+      "collapsed": true
+    },
+    {
+      "id": "question-profile-hours",
+      "kind": "question",
+      "prompt": "How many hours can you study in a typical week?",
+      "helpText": "Enter a number, including decimals if needed.",
+      "type": "number",
+      "required": true,
+      "options": [],
+      "collapsed": true
+    },
+
+    {
+      "id": "phase-environment",
+      "kind": "phase",
+      "title": "2. Study environment",
+      "description": "Review the learner's routine, setting, and current study habits.",
+      "triggers": [],
+      "appearance": { "backgroundColor": "#5FAE63" },
+      "collapsed": true
+    },
+    {
+      "id": "question-environment-quiet",
+      "kind": "question",
+      "prompt": "Do you usually have access to a quiet study space?",
+      "helpText": "Choose true when a quiet space is normally available.",
+      "type": "true-false",
+      "required": true,
+      "options": [],
+      "collapsed": true
+    },
+    {
+      "id": "question-environment-routine",
+      "kind": "question",
+      "prompt": "Describe what normally happens during one of your study sessions.",
+      "helpText": "Mention preparation, activities, breaks, and how you finish.",
+      "type": "long-answer",
+      "required": false,
+      "options": [],
+      "collapsed": true
+    },
+    {
+      "id": "question-environment-frequency",
+      "kind": "question",
+      "prompt": "How often do you review material between lessons?",
+      "helpText": "Choose the closest usual pattern.",
+      "type": "multiple-choice",
+      "required": true,
+      "options": [
+        { "id": "option-frequency-daily", "label": "Daily" },
+        { "id": "option-frequency-weekly", "label": "A few times per week" },
+        { "id": "option-frequency-before", "label": "Mostly before lessons or tests" },
+        { "id": "option-frequency-rarely", "label": "Rarely" }
+      ],
+      "collapsed": true
+    },
+    {
+      "id": "question-environment-minutes",
+      "kind": "question",
+      "prompt": "About how many minutes does one study session last?",
+      "helpText": "Enter the typical duration in minutes.",
+      "type": "number",
+      "required": true,
+      "options": [],
+      "collapsed": true
+    },
+
+    {
+      "id": "phase-support",
+      "kind": "phase",
+      "title": "3. Guided support branch",
+      "description": "This phase appears when the learner reports needing guided support in Phase 1.",
+      "triggers": [
+        {
+          "id": "trigger-support-from-confidence",
+          "sourcePhaseId": "phase-profile",
+          "kind": "answer",
+          "questionId": "question-profile-confidence",
+          "matcher": {
+            "type": "equals-option",
+            "optionId": "option-confidence-support",
+            "optionIds": [],
+            "operator": ">=",
+            "value": "",
+            "secondValue": ""
+          }
+        }
+      ],
+      "appearance": { "backgroundColor": "#F59E0B" },
+      "collapsed": true
+    },
+    {
+      "id": "question-support-style",
+      "kind": "question",
+      "prompt": "Which kind of support would help you most right now?",
+      "helpText": "Choose the best first intervention.",
+      "type": "multiple-choice",
+      "required": true,
+      "options": [
+        { "id": "option-support-examples", "label": "More worked examples" },
+        { "id": "option-support-practice", "label": "Guided practice" },
+        { "id": "option-support-explanations", "label": "Different explanations" },
+        { "id": "option-support-plan", "label": "A clearer study plan" }
+      ],
+      "collapsed": true
+    },
+    {
+      "id": "question-support-obstacles",
+      "kind": "question",
+      "prompt": "Which obstacles are currently affecting your progress?",
+      "helpText": "Select all that apply.",
+      "type": "multiple-answer",
+      "required": true,
+      "options": [
+        { "id": "option-obstacle-time", "label": "Not enough time" },
+        { "id": "option-obstacle-foundation", "label": "Missing foundations" },
+        { "id": "option-obstacle-anxiety", "label": "Assessment anxiety" },
+        { "id": "option-obstacle-focus", "label": "Difficulty focusing" }
+      ],
+      "collapsed": true
+    },
+    {
+      "id": "question-support-plan",
+      "kind": "question",
+      "prompt": "Would a written step-by-step study plan be useful?",
+      "helpText": "Choose true if you would use one.",
+      "type": "true-false",
+      "required": true,
+      "options": [],
+      "collapsed": true
+    },
+    {
+      "id": "question-support-challenge",
+      "kind": "question",
+      "prompt": "Describe a recent moment when you became stuck.",
+      "helpText": "Explain what you were trying, what happened, and what you tried next.",
+      "type": "long-answer",
+      "required": false,
+      "options": [],
+      "collapsed": true
+    },
+
+    {
+      "id": "phase-review",
+      "kind": "phase",
+      "title": "4. Progress review",
+      "description": "This phase always opens after the Study environment phase is completed.",
+      "triggers": [
+        {
+          "id": "trigger-review-after-environment",
+          "sourcePhaseId": "phase-environment",
+          "kind": "phase-complete",
+          "questionId": "",
+          "matcher": {
+            "type": "phase-complete",
+            "optionId": "",
+            "optionIds": [],
+            "operator": ">=",
+            "value": "",
+            "secondValue": ""
+          }
+        }
+      ],
+      "appearance": { "backgroundColor": "#8B5CF6" },
+      "collapsed": true
+    },
+    {
+      "id": "question-review-pace",
+      "kind": "question",
+      "prompt": "How does the current lesson pace feel?",
+      "helpText": "Choose the option that best matches your experience.",
+      "type": "multiple-choice",
+      "required": true,
+      "options": [
+        { "id": "option-pace-slow", "label": "Too slow" },
+        { "id": "option-pace-right", "label": "About right" },
+        { "id": "option-pace-fast", "label": "Too fast" },
+        { "id": "option-pace-variable", "label": "It varies by topic" }
+      ],
+      "collapsed": true
+    },
+    {
+      "id": "question-review-resources",
+      "kind": "question",
+      "prompt": "Which learning resources have been useful?",
+      "helpText": "Select every useful resource.",
+      "type": "multiple-answer",
+      "required": false,
+      "options": [
+        { "id": "option-resource-notes", "label": "Lesson notes" },
+        { "id": "option-resource-videos", "label": "Videos" },
+        { "id": "option-resource-practice", "label": "Practice questions" },
+        { "id": "option-resource-feedback", "label": "Tutor feedback" }
+      ],
+      "collapsed": true
+    },
+    {
+      "id": "question-review-difficulty",
+      "kind": "question",
+      "prompt": "Rate the current difficulty from 1 to 10.",
+      "helpText": "A rating of 7 or higher opens the Priority follow-up phase.",
+      "type": "number",
+      "required": true,
+      "options": [],
+      "collapsed": true
+    },
+    {
+      "id": "question-review-next-topic",
+      "kind": "question",
+      "prompt": "Which topic should the next lesson prioritize?",
+      "helpText": "Give one concise topic or skill.",
+      "type": "short-answer",
+      "required": true,
+      "options": [],
+      "collapsed": true
+    },
+
+    {
+      "id": "phase-priority",
+      "kind": "phase",
+      "title": "5. Priority follow-up",
+      "description": "This phase appears when the Phase 4 difficulty rating is 7 or higher.",
+      "triggers": [
+        {
+          "id": "trigger-priority-from-difficulty",
+          "sourcePhaseId": "phase-review",
+          "kind": "answer",
+          "questionId": "question-review-difficulty",
+          "matcher": {
+            "type": "number",
+            "optionId": "",
+            "optionIds": [],
+            "operator": ">=",
+            "value": "7",
+            "secondValue": ""
+          }
+        }
+      ],
+      "appearance": { "backgroundColor": "#EF4444" },
+      "collapsed": true
+    },
+    {
+      "id": "question-priority-context",
+      "kind": "question",
+      "prompt": "What is making the current material feel difficult?",
+      "helpText": "Share enough context for the tutor to plan a focused response.",
+      "type": "long-answer",
+      "required": true,
+      "options": [],
+      "collapsed": true
+    },
+    {
+      "id": "question-priority-format",
+      "kind": "question",
+      "prompt": "Which follow-up format would you prefer?",
+      "helpText": "Choose one format.",
+      "type": "multiple-choice",
+      "required": true,
+      "options": [
+        { "id": "option-format-lesson", "label": "A focused lesson" },
+        { "id": "option-format-practice", "label": "A guided practice set" },
+        { "id": "option-format-video", "label": "A short explanation video" },
+        { "id": "option-format-message", "label": "Written guidance" }
+      ],
+      "collapsed": true
+    },
+    {
+      "id": "question-priority-contact",
+      "kind": "question",
+      "prompt": "Which communication channels may the tutor use for this follow-up?",
+      "helpText": "Select all acceptable channels.",
+      "type": "multiple-answer",
+      "required": true,
+      "options": [
+        { "id": "option-contact-platform", "label": "Platform message" },
+        { "id": "option-contact-email", "label": "E-mail" },
+        { "id": "option-contact-lesson", "label": "Next lesson" },
+        { "id": "option-contact-phone", "label": "Phone or WhatsApp" }
+      ],
+      "collapsed": true
+    },
+    {
+      "id": "question-priority-milestone",
+      "kind": "question",
+      "prompt": "What would count as a successful next milestone?",
+      "helpText": "Describe the result in one sentence.",
+      "type": "short-answer",
+      "required": false,
+      "options": [],
+      "collapsed": true
+    },
+
+    {
+      "id": "goodbye-comprehensive-test",
+      "kind": "goodbye",
+      "title": "Test response ready",
+      "body": "Review the route, colours, progress indicator, validation, and immutable submission snapshot before starting another test response.",
+      "buttonText": "Submit test response",
+      "collapsed": true
+    }
+  ]
+}

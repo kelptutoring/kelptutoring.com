@@ -6,7 +6,7 @@
   <title>Kelp Exam Builder</title>
 
   <link rel="stylesheet" href="../../styles/style.css" />
-  <link rel="stylesheet" href="./exam-builder.css?v=20260714-reorder-hint-1" />
+  <link rel="stylesheet" href="./exam-builder.css?v=20260718-question-bank-1" />
   <link rel="stylesheet" href="./kelp-diagram-editor.css?v=20260713-compact-graph-3" />
 
   <script>
@@ -30,7 +30,7 @@
       </a>
 
       <nav class="tracks-nav" aria-label="Exam builder navigation">
-        <a href="../dashboard/tutor-dashboard.html">Dashboard</a>
+        <a href="../dashboard/tutor-dashboard.html" data-workspace-home aria-label="Back to workspace">Dashboard</a>
       </nav>
     </div>
   </header>
@@ -92,27 +92,32 @@
           <div class="exam-toolbar screen-only">
             <div class="exam-toolbar-row">
               <button type="button" class="btn-primary" id="addQuestionBtn">Add question</button>
-              <button type="button" class="btn-secondary" id="openStudentViewBtn">Open student view</button>
+              <button type="button" class="btn-primary" id="openStudentViewBtn">Open student view</button>
               <button type="button" class="btn-secondary" id="saveDraftBtn">Save draft</button>
               <button type="button" class="btn-outline" id="loadDraftBtn">Load draft</button>
               <button type="button" class="btn-secondary" id="examStructureBtn">Exam structure</button>
             </div>
             <div class="exam-toolbar-row">
               <button type="button" class="btn-secondary" id="exportJsonBtn">Export JSON</button>
-              <label class="btn-outline exam-import-label" for="importJsonInput">Import JSON</label>
+              <label class="btn-outline exam-import-label" for="importJsonInput">Import as copy</label>
               <input id="importJsonInput" class="hidden" type="file" accept="application/json,.json" />
               <button type="button" class="btn-terciary" id="saveLibraryBtn">Save to local library</button>
               <button type="button" class="btn-primary" id="printExamBtn">Print / save as PDF</button>
+            </div>
+            <div class="exam-toolbar-row exam-toolbar-row-utilities" aria-label="Exam library and reset actions">
+              <button type="button" class="btn-outline" id="openLibraryBtn">My exams</button>
+              <button type="button" class="btn-outline exam-danger-btn" id="resetExamBtn">Reset exam</button>
             </div>
             <button
               type="button"
               class="exam-help-button"
               aria-label="Help for builder actions"
               data-help-position="above"
-              data-help-text="Builder actions:&#10;- Add question: create a new question card.&#10;- Open student view: launch the online exam preview.&#10;- Save draft / Load draft: keep work in this browser.&#10;- Exam structure: inspect and download a database-ready summary.&#10;- Export / Import JSON: move an exam between files.&#10;- Save to local library: store this exam locally.&#10;- Print / save as PDF: create the paper exam."
+              data-help-text="Builder actions:&#10;- Add question: create a new question card.&#10;- Open student view: launch the online exam preview.&#10;- Save draft / Load draft: keep work in this browser.&#10;- Exam structure: inspect the exam overview, item types, and question order.&#10;- Export JSON: create a portable, versioned exam file.&#10;- Import as copy: open a portable exam with new exam and question IDs.&#10;- Save to local library / My exams: store and retrieve independent exam copies.&#10;- Print / save as PDF: create the paper exam.&#10;- Reset exam: restore the starter example."
               title="Help for the builder action buttons."
             >?</button>
           </div>
+          <p class="exam-builder-live-message screen-only" id="builderMessage" role="status" aria-live="polite"></p>
         </section>
 
         <aside class="exam-preview-column" id="preview" aria-label="Exam preview">
@@ -163,7 +168,10 @@
     <article class="exam-question-card" data-question-card>
       <header class="exam-question-header">
         <div>
-          <p class="tracks-kicker">Question <span data-question-number></span></p>
+          <div class="exam-question-kicker-row">
+            <p class="tracks-kicker">Question <span data-question-number></span></p>
+            <span class="exam-question-difficulty-badge" data-question-difficulty-badge>Unclassified</span>
+          </div>
           <h2 data-question-heading></h2>
         </div>
 
@@ -256,10 +264,62 @@
                 </div>
 
                 <div class="input-group">
+                  <label>Difficulty</label>
+                  <select data-field="difficulty">
+                    <option value="unclassified">Unclassified</option>
+                    <option value="very-easy">Very easy</option>
+                    <option value="easy">Easy</option>
+                    <option value="difficult">Difficult</option>
+                    <option value="very-difficult">Very difficult</option>
+                    <option value="challenge">Challenge</option>
+                  </select>
+                  <small class="exam-field-help">Tutors propose the difficulty here. A mentor or administrator can confirm it during review.</small>
+                </div>
+
+                <div class="input-group">
                   <label>Points</label>
                   <input type="number" min="0" step="0.5" data-field="points" />
                 </div>
               </div>
+
+              <section class="exam-bank-classification" aria-label="Reusable question classification">
+                <div class="exam-options-header">
+                  <div>
+                    <h3>Question-bank classification</h3>
+                    <p>These stable labels let mentors retrieve this question independently after the exam is approved.</p>
+                  </div>
+                  <button
+                    type="button"
+                    class="exam-help-button"
+                    aria-label="Help for question-bank classification"
+                    data-help-text="Curriculum path links this question to an active track or topic. Categories can overlap: a numeric word problem may also contain a graph or image. Every question needs a path, at least one category, and a difficulty before review or publication."
+                    title="Help for reusable question classification."
+                  >?</button>
+                </div>
+
+                <div class="input-group">
+                  <label>Primary curriculum path</label>
+                  <select data-field="primaryCurriculumNodeId" data-curriculum-node-select>
+                    <option value="">Loading curriculum paths…</option>
+                  </select>
+                  <small class="exam-field-help" data-curriculum-node-help>Choose the most precise track or topic available.</small>
+                </div>
+
+                <fieldset class="exam-bank-type-fieldset">
+                  <legend>Question categories</legend>
+                  <div class="exam-bank-type-grid">
+                    <label><input type="checkbox" value="word-problem" data-question-type-tag /> Word problem</label>
+                    <label><input type="checkbox" value="numeric" data-question-type-tag /> Numeric</label>
+                    <label><input type="checkbox" value="graph" data-question-type-tag /> Graph</label>
+                    <label><input type="checkbox" value="image" data-question-type-tag /> Image</label>
+                    <label><input type="checkbox" value="true-false" data-question-type-tag /> True / false</label>
+                    <label><input type="checkbox" value="multiple-choice" data-question-type-tag /> Multiple choice</label>
+                    <label><input type="checkbox" value="multiple-answer" data-question-type-tag /> Multiple answers</label>
+                    <label><input type="checkbox" value="short-answer" data-question-type-tag /> Short answer</label>
+                    <label><input type="checkbox" value="essay" data-question-type-tag /> Essay / explanation</label>
+                  </div>
+                </fieldset>
+              </section>
 
               <div class="exam-field-grid exam-pdf-answer-settings is-hidden" data-essay-pdf-settings>
                 <div class="input-group">
@@ -521,9 +581,71 @@
     </article>
   </template>
 
+  <div class="exam-builder-modal screen-only" id="examLibraryModal" aria-hidden="true">
+    <div class="exam-builder-modal-backdrop" data-exam-library-action="close"></div>
+    <section class="exam-builder-modal-dialog exam-library-dialog" role="dialog" aria-modal="true" aria-labelledby="examLibraryTitle">
+      <header class="exam-builder-modal-header">
+        <div>
+          <p class="tracks-kicker">Author library</p>
+          <h2 id="examLibraryTitle">My exams</h2>
+          <p>Open a saved exam as a new copy, submit it for independent review, or publish directly when your workspace grants that capability.</p>
+        </div>
+        <button type="button" class="exam-builder-modal-close" data-exam-library-action="close" aria-label="Close exam library" title="Close">&times;</button>
+      </header>
+
+      <div class="exam-builder-modal-content exam-library-content">
+        <div class="exam-library-toolbar">
+          <p class="exam-library-provider" id="examLibraryProvider">Local browser library</p>
+          <div class="exam-library-inline-actions">
+            <button type="button" class="btn-secondary exam-small-btn" data-exam-library-action="save-current">Save current exam</button>
+            <button type="button" class="btn-outline exam-small-btn" data-exam-library-action="refresh">Refresh</button>
+          </div>
+        </div>
+        <div class="exam-library-list" id="examLibraryList" aria-live="polite"></div>
+      </div>
+
+      <footer class="exam-builder-modal-footer">
+        <button type="button" class="btn-outline" data-exam-library-action="close">Close</button>
+      </footer>
+    </section>
+  </div>
+
+  <div class="exam-builder-modal screen-only" id="examStructureModal" aria-hidden="true">
+    <div class="exam-builder-modal-backdrop" data-exam-structure-action="close"></div>
+    <section
+      class="exam-builder-modal-dialog exam-friendly-structure-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="examStructureTitle"
+      aria-describedby="examStructureDescription"
+    >
+      <header class="exam-builder-modal-header">
+        <div>
+          <p class="tracks-kicker">Live exam map</p>
+          <h2 id="examStructureTitle">Exam structure</h2>
+          <p id="examStructureDescription">Review the current overview, question formats, media, and student-facing order without leaving the builder.</p>
+        </div>
+        <button type="button" class="exam-builder-modal-close" data-exam-structure-action="close" aria-label="Close exam structure" title="Close">&times;</button>
+      </header>
+
+      <div class="exam-builder-modal-content exam-friendly-structure-content" id="examStructureContent"></div>
+
+      <footer class="exam-builder-modal-footer">
+        <button type="button" class="btn-outline" data-exam-structure-action="close">Close</button>
+      </footer>
+    </section>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/mathjs@12.4.1/lib/browser/math.min.js" defer></script>
   <script src="./kelp-numeric-answer.js?v=20260710-3" defer></script>
-  <script src="./kelp-diagram-editor.js?v=20260713-compact-graph-3" defer></script>
-  <script src="./exam-builder.js?v=20260714-reorder-hint-1" defer></script>
+  <script src="./kelp-diagram-editor.js?v=20260718-context-controls-1" defer></script>
+  <script src="./exam-contract.js?v=20260718-question-bank-1" defer></script>
+  <script src="./exam-adapters.js?v=20260718-phase3-1" defer></script>
+  <script>
+    window.KelpExamProviderReady = /^https?:$/.test(window.location.protocol)
+      ? import('./exam-supabase-provider.js?v=20260718-phase4-1')
+      : Promise.resolve(null);
+  </script>
+  <script src="./exam-builder.js?v=20260718-question-bank-1" defer></script>
 </body>
 </html>

@@ -12,6 +12,7 @@ create table if not exists public.profiles (
 create or replace function public.set_updated_at()
 returns trigger
 language plpgsql
+set search_path = pg_catalog, public
 as $$
 begin
   new.updated_at = now();
@@ -28,6 +29,7 @@ execute function public.set_updated_at();
 create or replace function public.prevent_profile_identity_changes()
 returns trigger
 language plpgsql
+set search_path = pg_catalog, public
 as $$
 begin
   if new.id is distinct from old.id
@@ -51,7 +53,7 @@ create or replace function public.handle_new_user()
 returns trigger
 language plpgsql
 security definer
-set search_path = public
+set search_path = pg_catalog, public
 as $$
 begin
   insert into public.profiles (
@@ -65,14 +67,13 @@ begin
     new.id,
     coalesce(new.raw_user_meta_data ->> 'full_name', ''),
     coalesce(new.email, ''),
-    coalesce(nullif(new.raw_user_meta_data ->> 'role', ''), 'student'),
+    'student',
     nullif(new.raw_user_meta_data ->> 'birth_date', '')::date
   )
   on conflict (id) do update
   set
     full_name = excluded.full_name,
     email = excluded.email,
-    role = excluded.role,
     birth_date = excluded.birth_date;
 
   return new;

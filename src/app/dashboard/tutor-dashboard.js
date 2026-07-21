@@ -1,4 +1,5 @@
 import { requireAuth, signOutAndRedirect } from '../../auth/auth-guard.js'
+import { mountWorkspaceSwitcher, renderDashboardIdentity } from './workspace-switcher.js'
 
 import {
   seedLocalData,
@@ -25,22 +26,27 @@ let calendarMonth = new Date().getMonth();
 init();
 
 async function init() {
-  const current = await requireAuth(['teacher', 'tutor', 'mentor', 'admin']);
+  const current = await requireAuth(['teacher', 'tutor']);
   if (!current) return;
+
+  const activeRole = current.primaryRole === 'teacher' && current.hasRole('teacher')
+    ? 'teacher'
+    : current.hasRole('tutor') ? 'tutor' : 'teacher';
+  renderDashboardIdentity(current, {
+    activeRole,
+    headingId: 'tutor-heading',
+    profileLineId: 'tutor-profile-line',
+    roleListId: 'tutor-role-list',
+    fallbackName: 'Tutor'
+  });
+  mountWorkspaceSwitcher(current, { activeRole });
 
   await hydrateTemplatesFromSupabase();
 
   const profiles = getProfiles();
-  const heading = document.getElementById('tutor-heading');
-  const profileLine = document.getElementById('tutor-profile-line');
   const profileSummary = document.getElementById('tutor-profile-summary-card');
-  const tutorName = getFirstName(current.profile, profiles.tutor.firstName || 'Tutor');
-  if (heading) heading.textContent = `${tutorName}'s workspace`;
-  if (profileLine) {
-    profileLine.textContent = current.profile.email
-      ? `${current.profile.email} - ${current.profile.role}`
-      : current.profile.role;
-  }
+  const examReviewLink = document.getElementById('exam-review-workspace-link');
+  if (examReviewLink) examReviewLink.hidden = !current.can('exam.review');
   if (profileSummary) {
     profileSummary.innerHTML = `
       <h3>${profiles.tutor.firstName}</h3>
@@ -57,10 +63,6 @@ async function init() {
   document.querySelectorAll('[data-close]').forEach((button) => {
     button.addEventListener('click', () => document.getElementById(button.dataset.close)?.classList.add('hidden'));
   });
-}
-
-function getFirstName(profile, fallback) {
-  return String(profile.full_name || profile.email || fallback).trim().split(/\s+/)[0];
 }
 
 function bindCalendarNavigation() {

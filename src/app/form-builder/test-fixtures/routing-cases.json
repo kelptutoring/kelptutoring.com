@@ -1,0 +1,664 @@
+{
+  "schema": "kelp-form-routing-characterization-v1",
+  "description": "Expected respondent paths produced by the form builder before the routing engine is extracted into a shared domain module.",
+  "cases": [
+    {
+      "id": "normal-phase-order",
+      "description": "Questions before the first phase and normal phases are visited in document order.",
+      "form": {
+        "version": 2,
+        "meta": {
+          "title": "Normal phase order",
+          "audience": "Characterization fixture",
+          "description": "",
+          "respondentDetails": {}
+        },
+        "blocks": [
+          {
+            "id": "question-intro",
+            "kind": "question",
+            "prompt": "Initial question",
+            "type": "short-answer",
+            "required": false,
+            "options": []
+          },
+          {
+            "id": "phase-a",
+            "kind": "phase",
+            "title": "Phase A",
+            "description": "",
+            "triggers": []
+          },
+          {
+            "id": "question-a",
+            "kind": "question",
+            "prompt": "Phase A question",
+            "type": "short-answer",
+            "required": false,
+            "options": []
+          },
+          {
+            "id": "phase-b",
+            "kind": "phase",
+            "title": "Phase B",
+            "description": "",
+            "triggers": []
+          },
+          {
+            "id": "question-b",
+            "kind": "question",
+            "prompt": "Phase B question",
+            "type": "long-answer",
+            "required": false,
+            "options": []
+          }
+        ]
+      },
+      "scenarios": [
+        {
+          "id": "normal-order",
+          "answers": {},
+          "expectedPageIds": [
+            "privacy",
+            "initial-questions",
+            "phase-page-phase-a",
+            "phase-page-phase-b",
+            "goodbye"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-completion-jump",
+      "description": "A phase-completion trigger jumps forward and resumes skipped normal phases in FIFO order.",
+      "form": {
+        "version": 2,
+        "meta": {
+          "title": "Phase completion jump",
+          "audience": "Characterization fixture",
+          "description": "",
+          "respondentDetails": {}
+        },
+        "blocks": [
+          {
+            "id": "phase-intake",
+            "kind": "phase",
+            "title": "Intake",
+            "description": "",
+            "triggers": []
+          },
+          {
+            "id": "question-intake",
+            "kind": "question",
+            "prompt": "Intake note",
+            "type": "short-answer",
+            "required": false,
+            "options": []
+          },
+          {
+            "id": "phase-routine",
+            "kind": "phase",
+            "title": "Routine follow-up",
+            "description": "",
+            "triggers": []
+          },
+          {
+            "id": "question-routine",
+            "kind": "question",
+            "prompt": "Routine question",
+            "type": "short-answer",
+            "required": false,
+            "options": []
+          },
+          {
+            "id": "phase-urgent",
+            "kind": "phase",
+            "title": "Urgent follow-up",
+            "description": "",
+            "triggers": [
+              {
+                "id": "trigger-intake-complete",
+                "sourcePhaseId": "phase-intake",
+                "kind": "phase-complete",
+                "questionId": "",
+                "matcher": {
+                  "type": "phase-complete"
+                }
+              }
+            ]
+          },
+          {
+            "id": "question-urgent",
+            "kind": "question",
+            "prompt": "Urgent question",
+            "type": "short-answer",
+            "required": false,
+            "options": []
+          },
+          {
+            "id": "phase-wrap",
+            "kind": "phase",
+            "title": "Wrap-up",
+            "description": "",
+            "triggers": []
+          },
+          {
+            "id": "question-wrap",
+            "kind": "question",
+            "prompt": "Wrap-up question",
+            "type": "short-answer",
+            "required": false,
+            "options": []
+          }
+        ]
+      },
+      "scenarios": [
+        {
+          "id": "jump-and-resume",
+          "answers": {},
+          "expectedPageIds": [
+            "privacy",
+            "phase-page-phase-intake",
+            "phase-page-phase-urgent",
+            "phase-page-phase-routine",
+            "phase-page-phase-wrap",
+            "goodbye"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "closest-conditional-precedence",
+      "description": "When two later phases match the same answer, the closest phase below the source wins.",
+      "form": {
+        "version": 2,
+        "meta": {
+          "title": "Conditional precedence",
+          "audience": "Characterization fixture",
+          "description": "",
+          "respondentDetails": {}
+        },
+        "blocks": [
+          {
+            "id": "phase-source",
+            "kind": "phase",
+            "title": "Source",
+            "description": "",
+            "triggers": []
+          },
+          {
+            "id": "question-choice",
+            "kind": "question",
+            "prompt": "Open a conditional branch?",
+            "type": "multiple-choice",
+            "required": true,
+            "options": [
+              { "id": "option-yes", "label": "Yes" },
+              { "id": "option-no", "label": "No" }
+            ]
+          },
+          {
+            "id": "phase-branch-a",
+            "kind": "phase",
+            "title": "Closest branch",
+            "description": "",
+            "triggers": [
+              {
+                "id": "trigger-branch-a",
+                "sourcePhaseId": "phase-source",
+                "kind": "answer",
+                "questionId": "question-choice",
+                "matcher": {
+                  "type": "equals-option",
+                  "optionId": "option-yes"
+                }
+              }
+            ]
+          },
+          {
+            "id": "question-branch-a",
+            "kind": "question",
+            "prompt": "Closest branch question",
+            "type": "short-answer",
+            "required": false,
+            "options": []
+          },
+          {
+            "id": "phase-branch-b",
+            "kind": "phase",
+            "title": "Farther branch",
+            "description": "",
+            "triggers": [
+              {
+                "id": "trigger-branch-b",
+                "sourcePhaseId": "phase-source",
+                "kind": "answer",
+                "questionId": "question-choice",
+                "matcher": {
+                  "type": "equals-option",
+                  "optionId": "option-yes"
+                }
+              }
+            ]
+          },
+          {
+            "id": "question-branch-b",
+            "kind": "question",
+            "prompt": "Farther branch question",
+            "type": "short-answer",
+            "required": false,
+            "options": []
+          },
+          {
+            "id": "phase-precedence-wrap",
+            "kind": "phase",
+            "title": "Wrap-up",
+            "description": "",
+            "triggers": []
+          },
+          {
+            "id": "question-precedence-wrap",
+            "kind": "question",
+            "prompt": "Wrap-up question",
+            "type": "short-answer",
+            "required": false,
+            "options": []
+          }
+        ]
+      },
+      "scenarios": [
+        {
+          "id": "closest-match-wins",
+          "answers": {
+            "question-choice": "option-yes"
+          },
+          "expectedPageIds": [
+            "privacy",
+            "phase-page-phase-source",
+            "phase-page-phase-branch-a",
+            "phase-page-phase-precedence-wrap",
+            "goodbye"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "numeric-condition",
+      "description": "Numeric answer triggers compare typed values and preserve skipped normal phases.",
+      "form": {
+        "version": 2,
+        "meta": {
+          "title": "Numeric condition",
+          "audience": "Characterization fixture",
+          "description": "",
+          "respondentDetails": {}
+        },
+        "blocks": [
+          {
+            "id": "phase-score",
+            "kind": "phase",
+            "title": "Score",
+            "description": "",
+            "triggers": []
+          },
+          {
+            "id": "question-score",
+            "kind": "question",
+            "prompt": "Confidence score",
+            "type": "number",
+            "required": true,
+            "options": []
+          },
+          {
+            "id": "phase-baseline",
+            "kind": "phase",
+            "title": "Baseline",
+            "description": "",
+            "triggers": []
+          },
+          {
+            "id": "question-baseline",
+            "kind": "question",
+            "prompt": "Baseline question",
+            "type": "short-answer",
+            "required": false,
+            "options": []
+          },
+          {
+            "id": "phase-high-score",
+            "kind": "phase",
+            "title": "High score",
+            "description": "",
+            "triggers": [
+              {
+                "id": "trigger-high-score",
+                "sourcePhaseId": "phase-score",
+                "kind": "answer",
+                "questionId": "question-score",
+                "matcher": {
+                  "type": "number",
+                  "operator": ">=",
+                  "value": "5",
+                  "secondValue": ""
+                }
+              }
+            ]
+          },
+          {
+            "id": "question-high-score",
+            "kind": "question",
+            "prompt": "High-score follow-up",
+            "type": "short-answer",
+            "required": false,
+            "options": []
+          },
+          {
+            "id": "phase-number-wrap",
+            "kind": "phase",
+            "title": "Wrap-up",
+            "description": "",
+            "triggers": []
+          },
+          {
+            "id": "question-number-wrap",
+            "kind": "question",
+            "prompt": "Wrap-up question",
+            "type": "short-answer",
+            "required": false,
+            "options": []
+          }
+        ]
+      },
+      "scenarios": [
+        {
+          "id": "numeric-match",
+          "answers": {
+            "question-score": "7"
+          },
+          "expectedPageIds": [
+            "privacy",
+            "phase-page-phase-score",
+            "phase-page-phase-high-score",
+            "phase-page-phase-baseline",
+            "phase-page-phase-number-wrap",
+            "goodbye"
+          ]
+        },
+        {
+          "id": "numeric-no-match",
+          "answers": {
+            "question-score": "3"
+          },
+          "expectedPageIds": [
+            "privacy",
+            "phase-page-phase-score",
+            "phase-page-phase-baseline",
+            "phase-page-phase-number-wrap",
+            "goodbye"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "multiple-answer-exact-set",
+      "description": "Multiple-answer triggers require the exact selected option set, regardless of answer order.",
+      "form": {
+        "version": 2,
+        "meta": {
+          "title": "Multiple-answer exact set",
+          "audience": "Characterization fixture",
+          "description": "",
+          "respondentDetails": {}
+        },
+        "blocks": [
+          {
+            "id": "phase-topics",
+            "kind": "phase",
+            "title": "Topics",
+            "description": "",
+            "triggers": []
+          },
+          {
+            "id": "question-topics",
+            "kind": "question",
+            "prompt": "Choose topics",
+            "type": "multiple-answer",
+            "required": true,
+            "options": [
+              { "id": "option-algebra", "label": "Algebra" },
+              { "id": "option-geometry", "label": "Geometry" },
+              { "id": "option-statistics", "label": "Statistics" }
+            ]
+          },
+          {
+            "id": "phase-general",
+            "kind": "phase",
+            "title": "General follow-up",
+            "description": "",
+            "triggers": []
+          },
+          {
+            "id": "question-general",
+            "kind": "question",
+            "prompt": "General follow-up question",
+            "type": "short-answer",
+            "required": false,
+            "options": []
+          },
+          {
+            "id": "phase-exact-topics",
+            "kind": "phase",
+            "title": "Exact topic combination",
+            "description": "",
+            "triggers": [
+              {
+                "id": "trigger-exact-topics",
+                "sourcePhaseId": "phase-topics",
+                "kind": "answer",
+                "questionId": "question-topics",
+                "matcher": {
+                  "type": "exact-set",
+                  "optionIds": [
+                    "option-algebra",
+                    "option-statistics"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": "question-exact-topics",
+            "kind": "question",
+            "prompt": "Exact-set follow-up",
+            "type": "short-answer",
+            "required": false,
+            "options": []
+          },
+          {
+            "id": "phase-topics-wrap",
+            "kind": "phase",
+            "title": "Wrap-up",
+            "description": "",
+            "triggers": []
+          },
+          {
+            "id": "question-topics-wrap",
+            "kind": "question",
+            "prompt": "Wrap-up question",
+            "type": "short-answer",
+            "required": false,
+            "options": []
+          }
+        ]
+      },
+      "scenarios": [
+        {
+          "id": "exact-set-match-in-different-order",
+          "answers": {
+            "question-topics": [
+              "option-statistics",
+              "option-algebra"
+            ]
+          },
+          "expectedPageIds": [
+            "privacy",
+            "phase-page-phase-topics",
+            "phase-page-phase-exact-topics",
+            "phase-page-phase-general",
+            "phase-page-phase-topics-wrap",
+            "goodbye"
+          ]
+        },
+        {
+          "id": "exact-set-rejects-superset",
+          "answers": {
+            "question-topics": [
+              "option-algebra",
+              "option-geometry",
+              "option-statistics"
+            ]
+          },
+          "expectedPageIds": [
+            "privacy",
+            "phase-page-phase-topics",
+            "phase-page-phase-general",
+            "phase-page-phase-topics-wrap",
+            "goodbye"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "backtracking-route-change",
+      "description": "Changing a routing answer rebuilds the future path and discards answers from every previously visited future page.",
+      "form": {
+        "version": 2,
+        "meta": {
+          "title": "Backtracking route change",
+          "audience": "Characterization fixture",
+          "description": "",
+          "respondentDetails": {}
+        },
+        "blocks": [
+          {
+            "id": "phase-decision",
+            "kind": "phase",
+            "title": "Decision",
+            "description": "",
+            "triggers": []
+          },
+          {
+            "id": "question-decision",
+            "kind": "question",
+            "prompt": "Take the conditional branch?",
+            "type": "multiple-choice",
+            "required": true,
+            "options": [
+              { "id": "decision-yes", "label": "Yes" },
+              { "id": "decision-no", "label": "No" }
+            ]
+          },
+          {
+            "id": "phase-backtrack-baseline",
+            "kind": "phase",
+            "title": "Baseline",
+            "description": "",
+            "triggers": []
+          },
+          {
+            "id": "question-backtrack-baseline",
+            "kind": "question",
+            "prompt": "Baseline answer",
+            "type": "short-answer",
+            "required": false,
+            "options": []
+          },
+          {
+            "id": "phase-yes-branch",
+            "kind": "phase",
+            "title": "Yes branch",
+            "description": "",
+            "triggers": [
+              {
+                "id": "trigger-yes-branch",
+                "sourcePhaseId": "phase-decision",
+                "kind": "answer",
+                "questionId": "question-decision",
+                "matcher": {
+                  "type": "equals-option",
+                  "optionId": "decision-yes"
+                }
+              }
+            ]
+          },
+          {
+            "id": "question-yes-branch",
+            "kind": "question",
+            "prompt": "Conditional answer",
+            "type": "short-answer",
+            "required": false,
+            "options": []
+          },
+          {
+            "id": "phase-backtrack-wrap",
+            "kind": "phase",
+            "title": "Wrap-up",
+            "description": "",
+            "triggers": []
+          },
+          {
+            "id": "question-backtrack-wrap",
+            "kind": "question",
+            "prompt": "Wrap-up answer",
+            "type": "short-answer",
+            "required": false,
+            "options": []
+          }
+        ]
+      },
+      "scenarios": [
+        {
+          "id": "route-before-change",
+          "answers": {
+            "question-decision": "decision-yes"
+          },
+          "expectedPageIds": [
+            "privacy",
+            "phase-page-phase-decision",
+            "phase-page-phase-yes-branch",
+            "phase-page-phase-backtrack-baseline",
+            "phase-page-phase-backtrack-wrap",
+            "goodbye"
+          ]
+        },
+        {
+          "id": "route-after-change",
+          "answers": {
+            "question-decision": "decision-no"
+          },
+          "expectedPageIds": [
+            "privacy",
+            "phase-page-phase-decision",
+            "phase-page-phase-backtrack-baseline",
+            "phase-page-phase-backtrack-wrap",
+            "goodbye"
+          ]
+        }
+      ],
+      "backtracking": {
+        "sourcePageId": "phase-page-phase-decision",
+        "answersBeforeChange": {
+          "question-decision": "decision-yes",
+          "question-yes-branch": "Conditional response",
+          "question-backtrack-baseline": "Baseline response",
+          "question-backtrack-wrap": "Wrap-up response"
+        },
+        "expectedDiscardedQuestionIds": [
+          "question-backtrack-baseline",
+          "question-backtrack-wrap",
+          "question-yes-branch"
+        ]
+      }
+    }
+  ]
+}

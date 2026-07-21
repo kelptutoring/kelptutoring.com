@@ -1,0 +1,184 @@
+{
+  "schema": "kelp-acceptance-course-practice-fixture-v1",
+  "version": 1,
+  "createdOn": "2026-07-19",
+  "purpose": "Define a synthetic schedule, approved source course, immutable assignment, student-safe delivery expectations, and repeatable response sets for schedule/assignment/practice acceptance cases.",
+  "actorFixture": "./authorization-standard-actors-v1.json",
+  "courseFixture": "./course-composition-standard-scenarios-v1.json",
+  "resolutionRules": [
+    "Resolve actors to fresh local accounts and create all database IDs during setup; aliases are documentation identities only.",
+    "Provision the source questions in an active public approved exam with reviewed classifications beneath the Physics track.",
+    "Save the source course as an active mentor-owned course before assignment.",
+    "Keep authorContent and gradingExpected private; student delivery must be derived by server-side redaction from the frozen snapshot.",
+    "Use transaction rollback or a confirmed disposable local database for cleanup."
+  ],
+  "schedule": {
+    "alias": "SCHEDULE-STUDENT-PHYSICS",
+    "student": "ACT-STUDENT",
+    "createdBy": "ACT-MENTOR",
+    "schemaVersion": 1,
+    "sourceKey": "acceptance-student-physics-schedule",
+    "name": "Student mechanics schedule",
+    "timeZone": "America/Sao_Paulo",
+    "startDate": "2026-08-01",
+    "endDate": "2026-08-15",
+    "cadence": { "type": "weekly_frequency", "weekdays": [6] },
+    "sessions": [
+      {
+        "alias": "SESSION-VELOCITY",
+        "sourceKey": "acceptance-session-velocity",
+        "title": "Velocity practice",
+        "startDate": "2026-08-01",
+        "endDate": "2026-08-01"
+      },
+      {
+        "alias": "SESSION-ACCELERATION",
+        "sourceKey": "acceptance-session-acceleration",
+        "title": "Acceleration practice",
+        "startDate": "2026-08-08",
+        "endDate": "2026-08-08"
+      },
+      {
+        "alias": "SESSION-REVIEW",
+        "sourceKey": "acceptance-session-review",
+        "title": "Mechanics review",
+        "startDate": "2026-08-15",
+        "endDate": "2026-08-15"
+      }
+    ]
+  },
+  "sourceCourse": {
+    "alias": "COURSE-PRACTICE-SOURCE",
+    "owner": "ACT-MENTOR",
+    "title": "Immutable mechanics practice",
+    "description": "Synthetic assignment and grading characterization.",
+    "primaryCurriculumPath": "PATH-HS-PHYSICS-2D-MOTION",
+    "status": "active",
+    "questions": [
+      {
+        "alias": "PRACTICE-Q-CHOICE",
+        "difficulty": "very-easy",
+        "classification": ["multiple-choice"],
+        "authorContent": {
+          "type": "multiple-choice",
+          "prompt": "Which option includes direction?",
+          "options": ["Speed", "Velocity"],
+          "points": 2,
+          "correctOptionIndex": 1,
+          "answer": "Velocity includes direction."
+        },
+        "deliveryMustExclude": ["correctOptionIndex", "answer"]
+      },
+      {
+        "alias": "PRACTICE-Q-MULTI",
+        "difficulty": "easy",
+        "classification": ["multiple-answer"],
+        "authorContent": {
+          "type": "multiple-answer",
+          "prompt": "Select the vector quantities.",
+          "options": ["Velocity", "Speed", "Acceleration"],
+          "points": 3,
+          "correctOptionIndexes": [0, 2],
+          "answer": "Velocity and acceleration."
+        },
+        "deliveryMustExclude": ["correctOptionIndexes", "answer"]
+      },
+      {
+        "alias": "PRACTICE-Q-NUMERIC",
+        "difficulty": "difficult",
+        "classification": ["numeric", "word-problem"],
+        "authorContent": {
+          "type": "numeric",
+          "prompt": "A cart travels 12 meters in 3 seconds. Enter its average speed.",
+          "points": 2,
+          "numericExpectedAnswer": "4",
+          "numericTolerance": 0.01,
+          "solution": "Distance divided by time equals 4."
+        },
+        "deliveryMustExclude": ["numericExpectedAnswer", "numericTolerance", "solution"]
+      },
+      {
+        "alias": "PRACTICE-Q-ESSAY",
+        "difficulty": "challenge",
+        "classification": ["essay", "word-problem"],
+        "authorContent": {
+          "type": "essay",
+          "prompt": "Explain the relationship between velocity and acceleration.",
+          "points": 4,
+          "answer": "A complete response relates acceleration to velocity change over time.",
+          "teacherNotes": "Review the sign convention.",
+          "rubric": "Award credit for rate of change and direction."
+        },
+        "deliveryMustExclude": ["answer", "teacherNotes", "rubric"]
+      }
+    ]
+  },
+  "assignment": {
+    "alias": "ASSIGNMENT-STUDENT-VELOCITY",
+    "assignedBy": "ACT-MENTOR",
+    "student": "ACT-STUDENT",
+    "course": "COURSE-PRACTICE-SOURCE",
+    "session": "SESSION-VELOCITY",
+    "initialStatus": "assigned",
+    "expectedQuestionOrder": [
+      "PRACTICE-Q-CHOICE",
+      "PRACTICE-Q-MULTI",
+      "PRACTICE-Q-NUMERIC",
+      "PRACTICE-Q-ESSAY"
+    ]
+  },
+  "responseSets": [
+    {
+      "alias": "RESPONSES-CORRECT-WITH-ESSAY",
+      "responses": {
+        "PRACTICE-Q-CHOICE": "1",
+        "PRACTICE-Q-MULTI": ["0", "2"],
+        "PRACTICE-Q-NUMERIC": "4.005",
+        "PRACTICE-Q-ESSAY": "Acceleration measures how velocity changes over time."
+      },
+      "expected": {
+        "autoScore": 7,
+        "autoMaxPoints": 7,
+        "pendingReviewCount": 1,
+        "assignmentStatus": "completed"
+      }
+    },
+    {
+      "alias": "RESPONSES-PARTIAL-INCORRECT",
+      "responses": {
+        "PRACTICE-Q-CHOICE": "0",
+        "PRACTICE-Q-MULTI": ["0"],
+        "PRACTICE-Q-NUMERIC": "4.5",
+        "PRACTICE-Q-ESSAY": ""
+      },
+      "expected": {
+        "autoScore": 0,
+        "autoMaxPoints": 7,
+        "pendingReviewCount": 0,
+        "assignmentStatus": "completed"
+      }
+    }
+  ],
+  "consumedBy": [
+    "SCHED-001",
+    "SCHED-002",
+    "SCHED-003",
+    "SCHED-004",
+    "SCHED-005",
+    "SCHED-006",
+    "SCHED-007",
+    "ASSIGN-001",
+    "ASSIGN-002",
+    "ASSIGN-003",
+    "ASSIGN-004",
+    "ASSIGN-005",
+    "ASSIGN-006",
+    "ASSIGN-007",
+    "ASSIGN-008",
+    "ASSIGN-009",
+    "ASSIGN-010",
+    "ASSIGN-011",
+    "ASSIGN-012",
+    "ASSIGN-013"
+  ]
+}

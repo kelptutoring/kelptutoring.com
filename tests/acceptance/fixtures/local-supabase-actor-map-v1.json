@@ -1,0 +1,92 @@
+{
+  "schema": "kelp-local-supabase-actor-map-v1",
+  "version": 1,
+  "createdOn": "2026-07-19",
+  "purpose": "Resolve stable acceptance actor aliases to synthetic local-only Auth identities without storing passwords, tokens, or production identifiers.",
+  "projectId": "kelptutoring.com-main",
+  "targetEnvironment": "LOCAL-SUPABASE",
+  "credentials": {
+    "passwordEnvironmentVariable": "KELP_LOCAL_ACCEPTANCE_PASSWORD",
+    "storedInFixture": false
+  },
+  "actors": [
+    {
+      "alias": "ACT-STUDENT",
+      "id": "90000000-0000-4000-8000-000000000001",
+      "email": "act-student@kelp.local.test",
+      "fullName": "Acceptance Student",
+      "roles": ["student"],
+      "primaryRole": "student"
+    },
+    {
+      "alias": "ACT-STUDENT-B",
+      "id": "90000000-0000-4000-8000-000000000009",
+      "email": "act-student-b@kelp.local.test",
+      "fullName": "Acceptance Student B",
+      "roles": ["student"],
+      "primaryRole": "student"
+    },
+    {
+      "alias": "ACT-TUTOR",
+      "id": "90000000-0000-4000-8000-000000000002",
+      "email": "act-tutor@kelp.local.test",
+      "fullName": "Acceptance Tutor",
+      "roles": ["tutor"],
+      "primaryRole": "tutor"
+    },
+    {
+      "alias": "ACT-TEACHER",
+      "id": "90000000-0000-4000-8000-000000000003",
+      "email": "act-teacher@kelp.local.test",
+      "fullName": "Acceptance Teacher",
+      "roles": ["teacher"],
+      "primaryRole": "teacher"
+    },
+    {
+      "alias": "ACT-MENTOR",
+      "id": "90000000-0000-4000-8000-000000000004",
+      "email": "act-mentor@kelp.local.test",
+      "fullName": "Acceptance Mentor",
+      "roles": ["mentor"],
+      "primaryRole": "mentor"
+    },
+    {
+      "alias": "ACT-ADMIN",
+      "id": "90000000-0000-4000-8000-000000000005",
+      "email": "act-admin@kelp.local.test",
+      "fullName": "Acceptance Administrator",
+      "roles": ["admin"],
+      "primaryRole": "admin"
+    },
+    {
+      "alias": "ACT-STUDENT-TUTOR",
+      "id": "90000000-0000-4000-8000-000000000006",
+      "email": "act-student-tutor@kelp.local.test",
+      "fullName": "Acceptance Student Tutor",
+      "roles": ["student", "tutor"],
+      "primaryRole": "student"
+    },
+    {
+      "alias": "ACT-TUTOR-MENTOR",
+      "id": "90000000-0000-4000-8000-000000000007",
+      "email": "act-tutor-mentor@kelp.local.test",
+      "fullName": "Acceptance Tutor Mentor",
+      "roles": ["tutor", "mentor"],
+      "primaryRole": "mentor"
+    },
+    {
+      "alias": "ACT-OUTSIDER",
+      "id": "90000000-0000-4000-8000-000000000008",
+      "email": "act-outsider@kelp.local.test",
+      "fullName": "Acceptance Outsider",
+      "roles": ["student"],
+      "primaryRole": "student"
+    }
+  ],
+  "rules": [
+    "These UUIDs and email addresses are reserved for the disposable local Supabase project only.",
+    "The provisioning runner creates Auth users through the Admin API so the profile and role triggers execute.",
+    "The fixture never stores the shared temporary password, API keys, access tokens, or refresh tokens.",
+    "Database characterizations receive actor UUIDs explicitly and must never select actors by row order."
+  ]
+}

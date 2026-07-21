@@ -1,8 +1,43 @@
 # Classroom
 
-## Function
+## Classroom domain boundary
 
-The classroom provides the live-lesson room around video, audio, attendance, chat, timers, files, surveys, and the shared whiteboard. Tutors and students enter the same room with role-specific waiting-room and lesson controls. The page can run entirely with a room-scoped browser record or synchronize through the shared backend adapter contract.
+`classroom-space.html` is the authenticated persistent Course Classroom. Dashboard Cards open this route with a Classroom ID; the server derives the viewer's membership role and returns only an authorized Course/Classroom projection. It is the future home of the Forum, assignments, Files, Report Cards, history, Overview, and Classroom tools.
+
+`classroom.html` is one live-lesson tool inside that persistent Classroom. It is not the complete Classroom and must eventually be opened from an authoritative scheduled Class rather than directly from a persistent Classroom Card.
+
+## Student Classroom membership lifecycle
+
+Phase 3 implements the Student-facing lifecycle shell without inventing Forum, Assignment, Schedule, unread, homework, or Report Card data:
+
+- `../dashboard/student-dashboard.html` shows only mandatory active and wind-down Classroom Cards. Wind-down Cards display `Ending soon`; active Cards cannot be hidden or archived.
+- `student-classrooms.html` lists the signed-in Student's Active, Former, and personally Archived Classrooms.
+- `classroom-space.html?classroom=<uuid>` opens an authorized persistent Classroom projection. Inactive retained Classrooms open read-only; the URL never supplies a trusted role.
+- Archive and Restore change only `classroom_member_preferences` for the signed-in Student. They do not change the shared Classroom lifecycle or another member's view.
+
+The browser calls only trusted RPCs through `src/data/studentData.js`:
+
+| Operation | RPC |
+| --- | --- |
+| Dashboard active Cards | `get_my_student_dashboard` |
+| Active, Former, and Archived collections | `get_my_student_classrooms` |
+| Persistent Classroom entry | `get_my_classroom_space` |
+| Personal archive | `archive_my_student_classroom` |
+| Personal restore | `restore_my_student_classroom` |
+
+The lifecycle source is migrations `202607200010_classroom_membership_visibility.sql` and `202607200011_student_classroom_lifecycle_projection.sql`. Verify changes with:
+
+```bash
+npm run test:student-classrooms
+npm run supabase:test:db
+npm run supabase:audit
+```
+
+The rollback suite covers Student isolation, active/wind-down archive denial, retained historical reads, member-specific archive independence, idempotent restore, and outsider denial. Schedule, Forum, Assignment, Report Card, and live-Class participation rules remain with their owning vertical phases.
+
+## Live-lesson tool
+
+The live-lesson tool provides video, audio, attendance, chat, timers, lesson files, surveys, and the shared whiteboard. Tutors and students enter the same room with role-specific waiting-room and lesson controls. The page can run entirely with a room-scoped browser record or synchronize through the shared backend adapter contract.
 
 The current video layer uses the Jitsi IFrame API. Classroom state and the video call are separate concerns: the room record tracks lesson workflow and UI state, while Jitsi transports live audio/video.
 

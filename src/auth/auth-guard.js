@@ -1,34 +1,26 @@
 import { supabase } from '../lib/supabase/supabaseClient.js'
+import {
+  hasAnyRole,
+  hasCapabilities,
+  hasCapability,
+  hasRole,
+  normalizeAuthorization,
+  normalizeRoleKey
+} from './authorization.js'
+import { getWorkspacePathByRole } from './workspaces.js'
+import { getMyThemePreference } from './theme.js'
 
 const LOGIN_PATH = '/src/app/signUp/login.html'
-const PROFILE_COLUMNS = 'id, full_name, email, role, birth_date'
-
-const ROLE_HOME = {
-  student: '/src/app/dashboard/student-dashboard.html',
-  tutor: '/src/app/dashboard/tutor-dashboard.html',
-  teacher: '/src/app/dashboard/tutor-dashboard.html',
-  mentor: '/src/app/dashboard/tutor-dashboard.html',
-  admin: '/src/app/dashboard/tutor-dashboard.html'
-}
-
-const ROLE_ALIASES = {
-  student: 'student',
-  tutor: 'tutor',
-  teacher: 'tutor',
-  mentor: 'tutor',
-  admin: 'admin'
-}
+const PROFILE_COLUMNS = 'id, full_name, email, role, birth_date, location_key, profile_completed_at, created_at, updated_at'
 
 const delay = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms))
 
 export function normalizeRole(role) {
-  const key = String(role || '').trim().toLowerCase()
-  return ROLE_ALIASES[key] || key
+  return normalizeRoleKey(role)
 }
 
 export function getHomePathByRole(role) {
-  const normalizedRole = normalizeRole(role)
-  return ROLE_HOME[normalizedRole] || ROLE_HOME[role] || LOGIN_PATH
+  return getWorkspacePathByRole(role) || LOGIN_PATH
 }
 
 export function redirectByRole(role) {
@@ -54,18 +46,38 @@ async function getSessionUser() {
   return userData?.user || null
 }
 
-function normalizeProfile(profile, user) {
+function normalizeProfile(profile, user, authorization) {
   const metadata = user?.user_metadata || {}
   const fullName = profile.full_name || metadata.full_name || user?.email || 'Kelp user'
   const email = profile.email || user?.email || ''
-  const role = normalizeRole(profile.role || metadata.role || 'student')
+  const legacyRole = normalizeRole(profile.role || metadata.role || 'student') || 'student'
 
   return {
     ...profile,
-    rawRole: profile.role,
+    rawRole: profile.role || legacyRole,
     full_name: fullName,
     email,
-    role
+    role: authorization.primaryRole,
+    primaryRole: authorization.primaryRole,
+    roles: [...authorization.roles],
+    capabilities: [...authorization.capabilities]
+  }
+}
+
+async function getAuthorization(profile, user) {
+  const legacyRole = profile?.role || user?.user_metadata?.role || 'student'
+  if (typeof supabase.rpc !== 'function') return normalizeAuthorization(null, { legacyRole })
+
+  try {
+    const { data, error } = await supabase.rpc('get_my_authorization')
+    if (error) {
+      console.info('Multi-role authorization is not available yet; using the legacy profile role for this session.', error.message)
+      return normalizeAuthorization(null, { legacyRole })
+    }
+    return normalizeAuthorization(data, { legacyRole })
+  } catch (error) {
+    console.info('Authorization lookup fell back to the legacy profile role.', error?.message || error)
+    return normalizeAuthorization(null, { legacyRole })
   }
 }
 
@@ -80,7 +92,7 @@ async function getProfile(user, retries = 4) {
       .maybeSingle()
 
     if (!error && profile) {
-      return normalizeProfile(profile, user)
+      return profile
     }
 
     lastError = error
@@ -97,13 +109,30 @@ export async function getCurrentAuthState({ waitForProfile = true } = {}) {
   const user = await getSessionUser()
   if (!user) return null
 
-  const profile = await getProfile(user, waitForProfile ? 4 : 0)
-  if (!profile) {
+  const storedProfile = await getProfile(user, waitForProfile ? 4 : 0)
+  if (!storedProfile) {
     console.warn(`Authenticated user does not have a profile row yet. User id: ${user.id}`)
     return null
   }
 
-  return { user, profile }
+  const [authorization, preferences] = await Promise.all([
+    getAuthorization(storedProfile, user),
+    getMyThemePreference(supabase, user.id)
+  ])
+  const profile = normalizeProfile(storedProfile, user, authorization)
+  return {
+    user,
+    profile,
+    preferences,
+    authorization,
+    primaryRole: authorization.primaryRole,
+    roles: [...authorization.roles],
+    capabilities: [...authorization.capabilities],
+    hasRole: (role) => hasRole(authorization, role),
+    can: (capability) => hasCapability(authorization, capability),
+    canAll: (capabilities) => hasCapabilities(authorization, capabilities),
+    canAny: (capabilities) => hasCapabilities(authorization, capabilities, { requireAll: false })
+  }
 }
 
 export async function requireAuth(allowedRoles = []) {
@@ -114,11 +143,26 @@ export async function requireAuth(allowedRoles = []) {
     return null
   }
 
-  const allowed = allowedRoles.map(normalizeRole)
+  if (!hasAnyRole(current.authorization, allowedRoles)) {
+    console.info(`Redirecting ${current.primaryRole} away from a restricted page.`)
+    redirectByRole(current.primaryRole)
+    return null
+  }
 
-  if (allowed.length && !allowed.includes(current.profile.role)) {
-    console.info(`Redirecting ${current.profile.role} away from a restricted page.`)
-    redirectByRole(current.profile.role)
+  return current
+}
+
+export async function requireCapability(requiredCapabilities = [], { requireAll = true } = {}) {
+  const current = await getCurrentAuthState()
+  if (!current) {
+    window.location.replace(LOGIN_PATH)
+    return null
+  }
+
+  const required = Array.isArray(requiredCapabilities) ? requiredCapabilities : [requiredCapabilities]
+  if (!hasCapabilities(current.authorization, required, { requireAll })) {
+    console.info(`Redirecting ${current.primaryRole} away from a capability-protected page.`)
+    redirectByRole(current.primaryRole)
     return null
   }
 
@@ -129,7 +173,7 @@ export async function redirectLoggedUser() {
   const current = await getCurrentAuthState()
   if (!current) return null
 
-  redirectByRole(current.profile.role)
+  redirectByRole(current.primaryRole)
   return current
 }
 
@@ -137,7 +181,7 @@ export async function redirectLoggedUserAwayFromAuthPage() {
   const current = await getCurrentAuthState({ waitForProfile: false })
   if (!current) return null
 
-  redirectByRole(current.profile.role)
+  redirectByRole(current.primaryRole)
   return current
 }
 

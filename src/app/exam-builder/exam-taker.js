@@ -27,6 +27,7 @@ let timerInterval = null;
 let remainingSeconds = 0;
 let studentProfile = readCurrentProfile();
 let viewerRole = readViewerRole(studentProfile);
+let initialViewportPositioned = false;
 const responses = {};
 
 const QUESTION_TYPES = new Set([
@@ -116,6 +117,7 @@ function normalizeOptionImages(rawOptionImages, optionCount) {
 function initialize() {
   if (!exam) {
     renderNoExam();
+    scheduleInitialViewportPosition();
     return;
   }
 
@@ -126,6 +128,31 @@ function initialize() {
   remainingSeconds = Math.max(0, Math.round(Number(exam.durationMinutes || 0) * 60));
   setupHelpPopovers();
   renderStartScreen();
+  scheduleInitialViewportPosition();
+}
+
+function scheduleInitialViewportPosition() {
+  if (initialViewportPositioned) return;
+  if (typeof document.querySelector !== "function") return;
+  initialViewportPositioned = true;
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      const main = document.querySelector(".exam-taker-body .exam-builder-main");
+      if (!main) return;
+      const mainTop = window.scrollY + main.getBoundingClientRect().top;
+      const header = document.querySelector(".exam-taker-body .tracks-header");
+      const headerBottom = header && getComputedStyle(header).display !== "none"
+        ? window.scrollY + header.getBoundingClientRect().bottom
+        : 0;
+      window.scrollTo({
+        left: 0,
+        top: Math.max(0, Math.ceil(mainTop), Math.ceil(headerBottom)),
+        behavior: "auto"
+      });
+    });
+  });
 }
 
 function loadExam() {

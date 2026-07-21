@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Question Bank · Course Builder</title>
+  <link rel="stylesheet" href="../../styles/style.css" />
+  <link rel="stylesheet" href="./course-builder.css" />
+  <link rel="stylesheet" href="./question-bank.css" />
+  <script type="module" src="./question-bank.js"></script>
+</head>
+
+<body class="curriculum-body gradient-body-1 question-bank-body">
+  <header class="curriculum-topbar">
+    <a href="../dashboard/mentor-dashboard.html" id="workspace-home" class="curriculum-brand" aria-label="Return to workspace">
+      <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="Kelp logo" />
+    </a>
+    <div class="curriculum-topbar-actions">
+      <a href="./course-composer.html" class="curriculum-link-button">Compose course</a>
+      <a href="./course-builder.html" class="curriculum-link-button">Curriculum taxonomy</a>
+      <a href="../dashboard/mentor-dashboard.html" id="back-to-workspace" class="curriculum-link-button">Back to workspace</a>
+    </div>
+  </header>
+
+  <main class="curriculum-main question-bank-main">
+    <section class="curriculum-hero question-bank-hero">
+      <div>
+        <p class="page-kicker">Course Builder · Phase 5</p>
+        <h1>Question bank</h1>
+        <p>Find approved exam questions by curriculum path, category, difficulty, or wording. Results are ordered from easiest to hardest.</p>
+      </div>
+      <div class="curriculum-hero-note">
+        <strong>Retrieval workspace</strong>
+        <span>Inspect reusable items and their source metadata here, then open Course Builder to add them to a persistent composition.</span>
+      </div>
+    </section>
+
+    <section class="curriculum-panel question-bank-filter-panel" aria-labelledby="question-bank-filter-title">
+      <div class="curriculum-panel-heading">
+        <div>
+          <p class="page-kicker">Search controls</p>
+          <h2 id="question-bank-filter-title">Narrow the approved catalog</h2>
+          <p>A curriculum selection includes questions attached to any of its descendant paths.</p>
+        </div>
+      </div>
+      <form class="question-bank-filter-form" id="question-bank-filter-form">
+        <label class="question-bank-search-field">
+          <span>Question or source exam</span>
+          <input id="question-bank-query" type="search" maxlength="180" placeholder="Search question names, prompts, or exam titles" />
+        </label>
+        <label>
+          <span>Curriculum path</span>
+          <select id="question-bank-curriculum">
+            <option value="">All curriculum paths</option>
+          </select>
+        </label>
+        <label>
+          <span>Question category</span>
+          <select id="question-bank-type">
+            <option value="">All categories</option>
+            <option value="word-problem">Word problem</option>
+            <option value="numeric">Numeric</option>
+            <option value="graph">Graph</option>
+            <option value="image">Image</option>
+            <option value="true-false">True / false</option>
+            <option value="multiple-choice">Multiple choice</option>
+            <option value="multiple-answer">Multiple answers</option>
+            <option value="short-answer">Short answer</option>
+            <option value="essay">Essay / explanation</option>
+          </select>
+        </label>
+        <label>
+          <span>Difficulty</span>
+          <select id="question-bank-difficulty">
+            <option value="">All difficulties</option>
+            <option value="very-easy">Very easy</option>
+            <option value="easy">Easy</option>
+            <option value="difficult">Difficult</option>
+            <option value="very-difficult">Very difficult</option>
+            <option value="challenge">Challenge</option>
+          </select>
+        </label>
+        <div class="question-bank-filter-actions">
+          <button type="submit" class="curriculum-primary-button">Search questions</button>
+          <button type="button" class="curriculum-secondary-button" id="question-bank-clear">Clear filters</button>
+        </div>
+      </form>
+    </section>
+
+    <p class="curriculum-page-status" id="question-bank-status" role="status" aria-live="polite"></p>
+
+    <section class="curriculum-panel question-bank-results-panel" aria-labelledby="question-bank-results-title">
+      <div class="curriculum-panel-heading question-bank-results-heading">
+        <div>
+          <p class="page-kicker">Approved questions</p>
+          <h2 id="question-bank-results-title">Search results</h2>
+          <p id="question-bank-summary">Loading approved questions…</p>
+        </div>
+        <label class="question-bank-page-size">
+          <span>Per page</span>
+          <select id="question-bank-page-size">
+            <option value="12">12</option>
+            <option value="24">24</option>
+            <option value="48">48</option>
+          </select>
+        </label>
+      </div>
+      <div class="question-bank-results" id="question-bank-results" aria-live="polite"></div>
+      <nav class="question-bank-pagination" aria-label="Question-bank pages">
+        <button type="button" class="curriculum-secondary-button" id="question-bank-previous">Previous</button>
+        <span id="question-bank-page-label">Page 1 of 1</span>
+        <button type="button" class="curriculum-secondary-button" id="question-bank-next">Next</button>
+      </nav>
+    </section>
+  </main>
+
+  <div class="question-bank-modal" id="question-bank-modal" aria-hidden="true">
+    <button type="button" class="question-bank-modal-backdrop" data-question-bank-close aria-label="Close question inspector"></button>
+    <section class="question-bank-dialog" role="dialog" aria-modal="true" aria-labelledby="question-bank-dialog-title">
+      <header class="question-bank-dialog-header">
+        <div>
+          <p class="page-kicker">Approved reusable item</p>
+          <h2 id="question-bank-dialog-title">Question details</h2>
+        </div>
+        <button type="button" class="question-bank-close" data-question-bank-close aria-label="Close">×</button>
+      </header>
+      <div class="question-bank-dialog-body" id="question-bank-dialog-body"></div>
+      <footer class="question-bank-dialog-footer">
+        <p>Course Builder can now select and order this approved item.</p>
+        <button type="button" class="curriculum-secondary-button" data-question-bank-close>Close</button>
+      </footer>
+    </section>
+  </div>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administrator Workspace</title>
+  <link rel="stylesheet" href="../../styles/style.css" />
+  <script type="module" src="./admin-dashboard.js"></script>
+  <script>
+    try { localStorage.setItem("kelpDashboardTarget", "admin-dashboard.html"); } catch (error) {}
+  </script>
+</head>
+
+<body class="workspace-body gradient-body-1 admin-workspace">
+  <div class="workspace-shell">
+    <aside class="workspace-sidebar">
+      <div class="workspace-brand">
+        <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="Kelp logo" class="workspace-logo" />
+      </div>
+
+      <nav class="workspace-nav" aria-label="Administrator workspace navigation">
+        <a href="./admin-dashboard.html" class="workspace-nav-link active" aria-current="page">Overview</a>
+        <a href="../exam-builder/exam-builder.html" class="workspace-nav-link" data-requires-capability="exam.create">Exam Builder</a>
+        <a href="../form-builder/form-builder.html" class="workspace-nav-link" data-requires-capability="form.create">Form Builder</a>
+        <a href="../exam-builder/exam-review.html" class="workspace-nav-link" data-requires-capability="exam.review">Exam review</a>
+        <a href="../form-builder/form-review.html" class="workspace-nav-link" data-requires-capability="form.review">Form review</a>
+        <a href="../course-builder/course-composer.html" class="workspace-nav-link" data-requires-capability="course.compose">Course Builder</a>
+        <a href="../course-builder/question-bank.html" class="workspace-nav-link" data-requires-capability="question_bank.read">Question bank</a>
+        <a href="../course-builder/course-builder.html" class="workspace-nav-link" data-requires-capability="taxonomy.manage">Curriculum taxonomy</a>
+        <span class="workspace-nav-link workspace-nav-placeholder">Access management <small>Planned</small></span>
+        <button type="button" class="workspace-nav-link workspace-logout" id="logout-admin">Sign out</button>
+      </nav>
+
+      <section class="workspace-role-panel" aria-labelledby="admin-workspaces-label">
+        <p class="workspace-role-label" id="admin-workspaces-label">Your workspaces</p>
+        <div class="workspace-switcher-list" id="workspace-switcher"></div>
+        <p class="workspace-switcher-status" id="workspace-switcher-status" role="status" aria-live="polite"></p>
+      </section>
+    </aside>
+
+    <main class="workspace-main">
+      <section class="workspace-card workspace-hero-card">
+        <div class="workspace-hero-layout">
+          <div>
+            <p class="page-kicker">Administrator workspace</p>
+            <h1 id="admin-heading">Administrator workspace</h1>
+            <p id="admin-profile-line">Loading profile...</p>
+            <div class="workspace-role-badges" id="admin-role-list" aria-label="Assigned roles"></div>
+          </div>
+          <div class="workspace-hero-note">
+            <strong>Platform stewardship</strong>
+            <span>Manage trusted access, curriculum structure, and publication boundaries.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="workspace-overview-grid" aria-label="Administrator authorization summary">
+        <article class="workspace-summary-card">
+          <span class="workspace-summary-label">Authorization</span>
+          <strong id="admin-authorization-status">Checking access...</strong>
+          <p>Role changes will use audited server functions rather than profile edits.</p>
+        </article>
+        <article class="workspace-summary-card">
+          <span class="workspace-summary-label">Credentials</span>
+          <strong id="admin-credential-status">Checking access...</strong>
+          <p>Qualification review remains separate from role assignment.</p>
+        </article>
+        <article class="workspace-summary-card">
+          <span class="workspace-summary-label">Effective permissions</span>
+          <strong id="admin-capability-count">0 capabilities</strong>
+          <p>The count reflects the union of every role assigned to this account.</p>
+        </article>
+      </section>
+
+      <section class="workspace-card">
+        <div class="section-header">
+          <div>
+            <p class="page-kicker">Administrator tools</p>
+            <h2>Platform and curriculum controls</h2>
+            <p>Authoring and both trusted review queues are active. The remaining cards reserve the approved information architecture.</p>
+          </div>
+        </div>
+
+        <div class="workspace-action-grid">
+          <a class="workspace-action-card" href="../exam-builder/exam-review.html" data-requires-capability="exam.review">
+            <span class="workspace-action-status is-ready">Available</span>
+            <h3>Review exams</h3>
+            <p>Inspect tutor submissions and record trusted review decisions without editing their content.</p>
+            <span class="workspace-action-link">Open review queue <span aria-hidden="true">&rarr;</span></span>
+          </a>
+
+          <a class="workspace-action-card" href="../form-builder/form-review.html" data-requires-capability="form.review">
+            <span class="workspace-action-status is-ready">Available</span>
+            <h3>Review forms</h3>
+            <p>Inspect tutor form metadata, respondent fields, routing rules, and immutable content before publication.</p>
+            <span class="workspace-action-link">Open form queue <span aria-hidden="true">&rarr;</span></span>
+          </a>
+
+          <a class="workspace-action-card" href="../exam-builder/exam-builder.html" data-requires-capability="exam.create">
+            <span class="workspace-action-status is-ready">Available</span>
+            <h3>Create an exam</h3>
+            <p>Build administrator-owned assessment content with a privileged direct-publication path.</p>
+            <span class="workspace-action-link">Open Exam Builder <span aria-hidden="true">&rarr;</span></span>
+          </a>
+
+          <a class="workspace-action-card" href="../form-builder/form-builder.html" data-requires-capability="form.create">
+            <span class="workspace-action-status is-ready">Available</span>
+            <h3>Create a form</h3>
+            <p>Build administrator-owned forms while retaining the option of independent review.</p>
+            <span class="workspace-action-link">Open Form Builder <span aria-hidden="true">&rarr;</span></span>
+          </a>
+
+          <a class="workspace-action-card" href="../course-builder/course-composer.html" data-requires-capability="course.compose">
+            <span class="workspace-action-status is-ready">Available</span>
+            <h3>Course Builder</h3>
+            <p>Compose approved question-bank items into persistent course drafts ordered from easiest to hardest.</p>
+            <span class="workspace-action-link">Compose a course <span aria-hidden="true">&rarr;</span></span>
+          </a>
+
+          <a class="workspace-action-card" href="../course-builder/question-bank.html" data-requires-capability="question_bank.read">
+            <span class="workspace-action-status is-ready">Available</span>
+            <h3>Question bank</h3>
+            <p>Inspect approved reusable questions with server-enforced curriculum, category, difficulty, and provenance filters.</p>
+            <span class="workspace-action-link">Browse approved questions <span aria-hidden="true">&rarr;</span></span>
+          </a>
+
+          <article class="workspace-action-card is-planned">
+            <span class="workspace-action-status">Planned</span>
+            <h3>Roles and access</h3>
+            <p>Grant or revoke cumulative roles through audited authorization functions.</p>
+          </article>
+
+          <article class="workspace-action-card is-planned">
+            <span class="workspace-action-status">Planned</span>
+            <h3>Credential review</h3>
+            <p>Verify degree and qualification evidence before eligible teaching roles are assigned.</p>
+          </article>
+
+          <a class="workspace-action-card" href="../course-builder/course-builder.html#governance" data-requires-capability="taxonomy.manage">
+            <span class="workspace-action-status is-ready">Available</span>
+            <h3>Taxonomy management</h3>
+            <p>Approve mentor proposals, edit canonical labels, and archive unused leaf nodes without deleting their identities.</p>
+            <span class="workspace-action-link">Open governance queue <span aria-hidden="true">&rarr;</span></span>
+          </a>
+
+        </div>
+      </section>
+
+      <section class="workspace-card workspace-boundary-card">
+        <div>
+          <p class="page-kicker">Security boundary</p>
+          <h2>Administrative access is server-owned</h2>
+        </div>
+        <ul class="workspace-boundary-list">
+          <li>Public sign-up cannot request or create an administrator assignment.</li>
+          <li>Every future access-management action must retain its actor, target, reason, and timestamp.</li>
+          <li>Other workspaces appear only when their roles are separately assigned to the administrator.</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

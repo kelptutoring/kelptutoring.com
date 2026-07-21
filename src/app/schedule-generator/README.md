@@ -187,6 +187,12 @@ It is stored under `kelpGeneratedScheduleProgress_<scheduleId>`. Editing progres
 
 These keys are the current prototype persistence layer. Backend wiring should replace storage access without merging progress into the schedule record.
 
+## Course-assignment sync bridge
+
+Phase 7 introduces authoritative backend schedule/session records for course delivery while leaving the Schedule Generator prototype unchanged. In Course Builder, **Sync browser schedule** reads `kelpGeneratedSchedule`, associates it with the mentor-selected student, and calls `upsert_student_learning_schedule(student_id, schedule_json)`. The server validates the timezone and session document, preserves the supplied stable schedule/session UUIDs, upserts active sessions, and marks sessions removed from a later sync as inactive.
+
+A mentor can then bind a saved course to one active scheduled-session ID. The resulting assignment copies the schedule/session labels and the course questions into an immutable snapshot; later edits to this browser schedule, source course, or source questions cannot alter the student's existing activity. This sync action is a transitional bridge. When the Schedule Generator gains native backend persistence, it should write the same `learning_schedules` and `learning_schedule_sessions` contract directly and remove the manual sync step.
+
 ## Exported output
 
 - Schedule document: the JSON object above, currently stored in `localStorage` and suitable for a schedule API payload.
@@ -205,6 +211,7 @@ npm run watch:schedules
 npm run test:schedule-domain
 npm run test:schedule-outline
 npm run test:schedule-builder
+npm run test:course-practice
 ```
 
 - Use `generate:tracks` after catalogue-only markdown edits.

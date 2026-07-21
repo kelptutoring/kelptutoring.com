@@ -1,71 +1,126 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-kelp-theme="ocean">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Workspace</title>
+  <title>Student Dashboard - Kelp</title>
+  <script src="/src/auth/theme-bootstrap.js"></script>
   <link rel="stylesheet" href="../../styles/style.css" />
-  <script type="module" src="../dashboard/student-dashboard.js"></script>
+  <script type="module" src="./student-dashboard.js"></script>
   <script>
     try { localStorage.setItem("kelpDashboardTarget", "student-dashboard.html"); } catch (error) {}
   </script>
 </head>
 
-<body class="workspace-body gradient-body-1">
-<div class="workspace-shell">
-  <aside class="workspace-sidebar">
-    <div class="workspace-brand">
-      <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="Kelp logo" class="workspace-logo" />
+<body class="student-dashboard-body gradient-body-1">
+  <header class="student-dashboard-topbar">
+    <a class="student-dashboard-brand" href="./student-dashboard.html" aria-label="Kelp Student Dashboard">
+      <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="" />
+    </a>
+
+    <div class="student-dashboard-wallet" aria-label="Lesson-credit balance is not connected yet">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4.75 6.25h13.5A1.75 1.75 0 0 1 20 8v10a1.75 1.75 0 0 1-1.75 1.75H4.75A1.75 1.75 0 0 1 3 18V6.75A2.5 2.5 0 0 1 5.5 4.25h10.75" />
+        <path d="M16.25 11h4.25v4h-4.25a2 2 0 1 1 0-4Z" />
+      </svg>
+      <span>Credits</span>
+      <strong aria-hidden="true">—</strong>
     </div>
 
-    <nav class="workspace-nav">
-      <a href="../schedules/schedules.html" class="workspace-nav-link">Tracks</a>
-      <a href="../profile/student-profile.html" class="workspace-nav-link">Profile</a>
-      <button type="button" class="workspace-nav-link workspace-logout" id="logout-student">
-        Sign out
-      </button>
+    <nav class="student-dashboard-navigation" aria-label="Student Dashboard navigation">
+      <details class="student-dashboard-menu" data-dashboard-menu="learn">
+        <summary>Learn</summary>
+        <div class="student-dashboard-menu-panel">
+          <p class="student-dashboard-menu-label">Learn</p>
+          <a href="../classroom/student-classrooms.html">Classrooms</a>
+          <a href="../course-builder/practice-library.html" data-requires-capability="practice.attempt">Practice</a>
+          <a href="../schedules/schedules.html">Tracks</a>
+        </div>
+      </details>
+
+      <details class="student-dashboard-menu" data-dashboard-menu="schedule">
+        <summary>Schedule</summary>
+        <div class="student-dashboard-menu-panel">
+          <p class="student-dashboard-menu-label">Schedule</p>
+          <a href="#calendar-block">Calendar</a>
+        </div>
+      </details>
+
+      <details class="student-dashboard-menu student-dashboard-account-menu" data-dashboard-menu="account">
+        <summary>Account</summary>
+        <div class="student-dashboard-menu-panel student-dashboard-account-panel">
+          <p class="student-dashboard-menu-label">Account</p>
+          <a href="../profile/student-profile.html">Profile</a>
+          <a href="../profile/student-preferences.html">Themes</a>
+          <section class="student-dashboard-workspaces" aria-labelledby="student-workspaces-label">
+            <p id="student-workspaces-label">Your workspaces</p>
+            <div class="workspace-switcher-list" id="workspace-switcher"></div>
+            <p class="workspace-switcher-status" id="workspace-switcher-status" role="status" aria-live="polite"></p>
+          </section>
+          <button type="button" class="student-dashboard-signout" id="logout-student">Sign out</button>
+        </div>
+      </details>
     </nav>
-  </aside>
+  </header>
 
-  <main class="workspace-main">
-    <section class="workspace-card top-links-card">
-      <div class="section-header compact-header">
-        <div>
-          <p class="page-kicker">Student workspace</p>
-          <h2 id="student-heading">Student workspace</h2>
-          <p id="student-profile-line">Loading profile...</p>
-        </div>
+  <main class="student-dashboard-shell" id="student-dashboard" aria-busy="true">
+    <section class="student-dashboard-hero" aria-labelledby="student-heading">
+      <div>
+        <p class="page-kicker">Student Dashboard</p>
+        <h1 id="student-heading">Your learning Dashboard</h1>
       </div>
-      <div id="important-links" class="link-chip-list"></div>
     </section>
 
-    <section id="student-calendar" class="workspace-card calendar-card">
-      <div class="section-header">
-        <div>
-          <h2>Month calendar</h2>
-          <p>
-            Classes and due dates. Click any item to mark delivered,
-            reschedule, cancel, or open the assignment.
-          </p>
+    <section class="student-dashboard-error is-hidden" id="student-dashboard-error" role="alert"></section>
+
+    <div class="student-dashboard-grid" id="dashboard-grid">
+      <section class="student-dashboard-block" id="calendar-block" data-dashboard-block="calendar" aria-labelledby="calendar-title">
+        <div class="student-dashboard-block-header">
+          <div class="student-dashboard-block-copy" data-dashboard-drag-handle="calendar" draggable="true" title="Drag to move Calendar">
+            <p class="page-kicker">Schedule foundation</p>
+            <h2 id="calendar-title">Calendar</h2>
+            <p>Review Course milestones and assignment deadlines. Scheduled Classes and availability booking arrive with Scheduling.</p>
+          </div>
+          <div class="student-dashboard-block-actions">
+            <div class="student-dashboard-view-switch" aria-label="Calendar display style">
+              <button type="button" data-calendar-view="month" aria-pressed="true">Month</button>
+              <button type="button" data-calendar-view="week" aria-pressed="false">Week</button>
+            </div>
+            <div class="student-dashboard-move-controls" aria-label="Move Calendar">
+              <button type="button" data-move-dashboard-block="up" aria-label="Move Calendar up">&uarr;</button>
+              <button type="button" data-move-dashboard-block="down" aria-label="Move Calendar down">&darr;</button>
+            </div>
+            <button class="student-dashboard-collapse-control" type="button" data-toggle-dashboard-block="calendar" aria-controls="calendar-block-body" aria-expanded="true">Minimize</button>
+          </div>
         </div>
-
-        <div class="calendar-toolbar">
-          <button id="student-calendar-prev" class="calendar-nav-btn" type="button">←</button>
-          <div id="student-calendar-label" class="calendar-label"></div>
-          <button id="student-calendar-next" class="calendar-nav-btn" type="button">→</button>
+        <div class="student-dashboard-block-body" id="calendar-block-body">
+          <div class="student-dashboard-calendar-shell" id="student-calendar-shell"></div>
         </div>
-      </div>
+      </section>
 
-      <p id="student-calendar-summary" class="calendar-summary"></p>
+      <section class="student-dashboard-block" id="classrooms-block" data-dashboard-block="classrooms" aria-labelledby="classrooms-title">
+        <div class="student-dashboard-block-header">
+          <div class="student-dashboard-block-copy" data-dashboard-drag-handle="classrooms" draggable="true" title="Drag to move Classrooms">
+            <p class="page-kicker">Relationship-backed space</p>
+            <h2 id="classrooms-title">Classrooms</h2>
+            <p id="classrooms-summary">Loading your Course relationships...</p>
+          </div>
+          <div class="student-dashboard-block-actions">
+            <a class="student-dashboard-classrooms-link" href="../classroom/student-classrooms.html">View all</a>
+            <div class="student-dashboard-move-controls" aria-label="Move Classrooms">
+              <button type="button" data-move-dashboard-block="up" aria-label="Move Classrooms up">&uarr;</button>
+              <button type="button" data-move-dashboard-block="down" aria-label="Move Classrooms down">&darr;</button>
+            </div>
+            <button class="student-dashboard-collapse-control" type="button" data-toggle-dashboard-block="classrooms" aria-controls="classrooms-block-body" aria-expanded="true">Minimize</button>
+          </div>
+        </div>
+        <div class="student-dashboard-block-body" id="classrooms-block-body">
+          <div class="student-dashboard-classroom-cards" id="student-classroom-cards"></div>
+        </div>
+      </section>
+    </div>
 
-      <div class="calendar-legend">
-        <span class="legend-pill class">Class</span>
-        <span class="legend-pill assignment">Due date</span>
-      </div>
-
-      <div id="student-calendar-grid" class="month-grid"></div>
-    </section>
+    <p class="student-dashboard-feedback" id="student-dashboard-feedback" role="status" aria-live="polite"></p>
   </main>
-</div>
 </body>
 </html>

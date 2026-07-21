@@ -1,4 +1,6 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import vm from "node:vm";
 import {
   KELP_BACKEND_ADAPTER_CONTRACT_VERSION,
   createLocalClassroomAdapters,
@@ -103,5 +105,110 @@ assert.equal((await whiteboard.collaboration.connect()).connected, false);
 assert.equal(typeof whiteboard.collaboration.subscribe(() => {}), "function");
 await whiteboard.whiteboards.clear();
 assert.equal(await whiteboard.whiteboards.load(), null);
+
+const formAdapterSource = await readFile(
+  new URL("../src/app/form-builder/form-adapters.js", import.meta.url),
+  "utf8"
+);
+const formAdapterSandbox = { console, localStorage: storage };
+vm.createContext(formAdapterSandbox);
+vm.runInContext(formAdapterSource, formAdapterSandbox, {
+  filename: "form-adapters.js",
+  timeout: 5000
+});
+const formAdapterDomain = formAdapterSandbox.KelpFormAdapters;
+assert.ok(formAdapterDomain);
+
+let formClock = 0;
+const formAdapters = formAdapterDomain.createLocalAdapters({
+  storage,
+  now() {
+    formClock += 1;
+    return new Date(Date.UTC(2026, 6, 17, 12, 0, formClock)).toISOString();
+  }
+});
+assert.equal(formAdapters.meta.provider, "local");
+assert.equal(formAdapters.meta.contractVersion, 1);
+
+const formDefinition = {
+  id: "form-adapter-test",
+  version: 3,
+  meta: { title: "Adapter form", audience: "", description: "", respondentDetails: {} },
+  settings: { submissionPolicy: { mode: "single" } },
+  blocks: []
+};
+const savedFormRecord = await formAdapters.forms.save(formDefinition);
+assert.equal(savedFormRecord.status, "active");
+assert.notEqual(savedFormRecord.definition, formDefinition);
+formDefinition.meta.title = "Changed outside storage";
+assert.equal((await formAdapters.forms.load(formDefinition.id)).definition.meta.title, "Adapter form");
+assert.equal((await formAdapters.forms.list({ status: "active" })).length, 1);
+await assert.rejects(
+  formAdapters.forms.remove(formDefinition.id),
+  /Archive the form before deleting it/
+);
+
+const archivedFormRecord = await formAdapters.forms.archive(formDefinition.id);
+assert.equal(archivedFormRecord.status, "archived");
+assert.ok(archivedFormRecord.archivedAt);
+await assert.rejects(
+  formAdapters.forms.save(formDefinition),
+  /Archived forms cannot be overwritten/
+);
+
+const immutableSubmission = {
+  id: "submission-adapter-test",
+  version: 1,
+  immutable: true,
+  formId: formDefinition.id,
+  submittedAt: "2026-07-17T15:00:00.000Z",
+  snapshot: {},
+  data: { respondent: {}, answers: [] },
+  metadata: {}
+};
+await formAdapters.submissions.create(immutableSubmission);
+assert.equal((await formAdapters.submissions.list({ formId: formDefinition.id })).length, 1);
+assert.deepEqual(
+  JSON.parse(JSON.stringify(await formAdapters.submissions.create(immutableSubmission))),
+  immutableSubmission
+);
+await assert.rejects(
+  formAdapters.submissions.create({ ...immutableSubmission, submittedAt: "2026-07-18T15:00:00.000Z" }),
+  /different submission already uses this ID/
+);
+
+assert.deepEqual(
+  JSON.parse(JSON.stringify(await formAdapters.forms.remove(formDefinition.id))),
+  { id: formDefinition.id, deleted: true }
+);
+assert.equal(await formAdapters.forms.load(formDefinition.id), null);
+assert.equal(
+  (await formAdapters.submissions.list({ formId: formDefinition.id })).length,
+  1,
+  "Deleting a form must not cascade into immutable submissions."
+);
+
+let overriddenForm = null;
+const resolvedForms = await formAdapterDomain.resolveAdapters({
+  localAdapters: formAdapters,
+  globalObject: {
+    KelpBackendAdapters: {
+      forms: async () => ({
+        meta: { provider: "self-test" },
+        forms: {
+          async save(definition) {
+            overriddenForm = definition;
+            return { id: definition.id, status: "active", definition };
+          }
+        }
+      })
+    }
+  }
+});
+await resolvedForms.forms.save(formDefinition);
+assert.equal(overriddenForm.id, formDefinition.id);
+assert.equal(resolvedForms.meta.provider, "self-test");
+assert.equal(typeof resolvedForms.forms.archive, "function");
+assert.equal(typeof resolvedForms.submissions.create, "function");
 
 console.log("Backend adapter contract self-test passed.");

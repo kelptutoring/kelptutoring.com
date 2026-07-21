@@ -1,0 +1,92 @@
+{
+  "schema": "kelp-acceptance-course-composition-fixture-v1",
+  "version": 1,
+  "createdOn": "2026-07-19",
+  "purpose": "Define symbolic Course Builder drafts and a complete easiest-to-hardest set of approved source-question references without embedding database UUIDs or answer-bearing question content.",
+  "actorFixture": "./authorization-standard-actors-v1.json",
+  "curriculumQuestionFixture": "./curriculum-question-bank-standard-scenarios-v1.json",
+  "resolutionRules": [
+    "Provision every question profile as an independently identified question in an active public approved exam before saving a course.",
+    "Resolve curriculum paths and generated question IDs from the dependency fixture; aliases are never database IDs or authorization tokens.",
+    "A course stores source question references only. Full question content remains in the approved Question Bank and is frozen only during Phase 7 assignment.",
+    "Use transaction rollback or a confirmed disposable local database for cleanup."
+  ],
+  "additionalQuestionProfiles": [
+    {
+      "alias": "COURSE-Q-VERY-EASY",
+      "sourceQuestionId": "test-q03",
+      "difficulty": "very-easy",
+      "questionTypeTags": ["true-false"],
+      "primaryCurriculumPath": "PATH-HS-PHYSICS-VELOCITY"
+    },
+    {
+      "alias": "COURSE-Q-DIFFICULT",
+      "sourceQuestionId": "test-q11",
+      "difficulty": "difficult",
+      "questionTypeTags": ["graph", "multiple-choice"],
+      "primaryCurriculumPath": "PATH-HS-PHYSICS-ACCELERATION"
+    },
+    {
+      "alias": "COURSE-Q-VERY-DIFFICULT",
+      "sourceQuestionId": "test-q12",
+      "difficulty": "very-difficult",
+      "questionTypeTags": ["graph", "multiple-answer"],
+      "primaryCurriculumPath": "PATH-HS-PHYSICS-ACCELERATION"
+    },
+    {
+      "alias": "COURSE-Q-CHALLENGE",
+      "sourceQuestionId": "test-q08",
+      "difficulty": "challenge",
+      "questionTypeTags": ["essay", "word-problem"],
+      "primaryCurriculumPath": "PATH-HS-PHYSICS-2D-MOTION"
+    }
+  ],
+  "courseDrafts": [
+    {
+      "alias": "COURSE-MECHANICS-DRAFT",
+      "owner": "ACT-MENTOR",
+      "schema": "kelp-course-composition-v1",
+      "title": "Mechanics progression",
+      "description": "Synthetic easiest-to-hardest practice progression.",
+      "primaryCurriculumPath": "PATH-HS-PHYSICS-2D-MOTION",
+      "requestedQuestionAliases": [
+        "COURSE-Q-CHALLENGE",
+        "COURSE-Q-DIFFICULT",
+        "QBANK-NUMERIC-EASY",
+        "COURSE-Q-VERY-DIFFICULT",
+        "COURSE-Q-VERY-EASY"
+      ],
+      "expectedQuestionOrder": [
+        "COURSE-Q-VERY-EASY",
+        "QBANK-NUMERIC-EASY",
+        "COURSE-Q-DIFFICULT",
+        "COURSE-Q-VERY-DIFFICULT",
+        "COURSE-Q-CHALLENGE"
+      ],
+      "status": "active"
+    },
+    {
+      "alias": "COURSE-EMPTY-DRAFT",
+      "owner": "ACT-ADMIN",
+      "schema": "kelp-course-composition-v1",
+      "title": "Empty planning draft",
+      "description": "Valid authoring placeholder without assignment-ready questions.",
+      "primaryCurriculumPath": "PATH-HS-ALGEBRA-LINEAR",
+      "requestedQuestionAliases": [],
+      "expectedQuestionOrder": [],
+      "status": "active"
+    }
+  ],
+  "consumedBy": [
+    "COURSE-001",
+    "COURSE-002",
+    "COURSE-003",
+    "COURSE-004",
+    "COURSE-005",
+    "COURSE-006",
+    "COURSE-007",
+    "COURSE-008",
+    "COURSE-009",
+    "COURSE-010"
+  ]
+}

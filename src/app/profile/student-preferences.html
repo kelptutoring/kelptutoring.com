@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" data-kelp-theme="ocean">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Themes - Kelp</title>
+  <script src="/src/auth/theme-bootstrap.js"></script>
+  <link rel="stylesheet" href="../../styles/style.css" />
+  <link rel="stylesheet" href="./profile.css" />
+  <script type="module" src="./student-preferences.js"></script>
+</head>
+<body class="profile-page-body">
+  <header class="profile-topbar">
+    <a class="profile-brand" href="../dashboard/student-dashboard.html" aria-label="Kelp Student Dashboard">
+      <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="" />
+    </a>
+    <nav class="profile-topbar-actions" aria-label="Theme navigation">
+      <a href="../dashboard/student-dashboard.html" class="btn-outline">Dashboard</a>
+      <a href="./student-profile.html" class="btn-secondary">Profile</a>
+    </nav>
+  </header>
+
+  <main class="profile-shell preferences-shell">
+    <section class="profile-hero" aria-labelledby="preferences-title">
+      <div>
+        <p class="page-kicker">Appearance</p>
+        <h1 id="preferences-title">Make Kelp feel like yours</h1>
+        <p class="profile-hero-copy">Your theme is synchronized from Kelp and follows you across devices.</p>
+      </div>
+    </section>
+
+    <div class="profile-loading" id="preferences-loading" role="status">
+      <span class="profile-spinner" aria-hidden="true"></span>
+      Loading your preferences...
+    </div>
+
+    <form class="preferences-content is-hidden" id="preferences-form">
+      <section class="profile-card" aria-labelledby="theme-title">
+        <div class="profile-card-heading">
+          <div>
+            <p class="profile-card-kicker">Page background</p>
+            <h2 id="theme-title">Theme</h2>
+            <p>Choose a softened gradient template. Saving updates your Kelp account—not only this browser.</p>
+          </div>
+          <div class="preferences-theme-actions" aria-label="Theme actions">
+            <button class="btn-outline" id="reset-theme" type="button">Reset theme</button>
+            <button class="btn-primary" id="save-preferences" type="submit">Save theme</button>
+          </div>
+        </div>
+        <fieldset class="theme-grid" id="theme-grid">
+          <legend class="sr-only">Choose a Kelp theme</legend>
+        </fieldset>
+      </section>
+    </form>
+
+    <p class="profile-feedback" id="preferences-message" role="status" aria-live="polite"></p>
+  </main>
+</body>
+</html>

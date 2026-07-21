@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Course Practice · Kelp</title>
+  <link rel="stylesheet" href="../../styles/style.css" />
+  <link rel="stylesheet" href="./course-builder.css" />
+  <link rel="stylesheet" href="./practice-space.css" />
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']],
+        processEscapes: true
+      },
+      svg: { fontCache: 'global' }
+    }
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script type="module" src="./course-practice.js"></script>
+</head>
+<body class="practice-body practice-player-body gradient-body-1">
+  <header class="practice-player-topbar">
+    <a href="./practice-library.html" class="curriculum-link-button">← My practice</a>
+    <span id="practice-save-state">Loading…</span>
+  </header>
+
+  <main class="practice-player-main">
+    <section class="practice-player-shell" id="practice-player-shell" aria-live="polite">
+      <p class="practice-empty">Loading the assigned activity…</p>
+    </section>
+  </main>
+</body>
+</html>

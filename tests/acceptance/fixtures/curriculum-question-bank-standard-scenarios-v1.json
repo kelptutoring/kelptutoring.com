@@ -1,0 +1,125 @@
+{
+  "schema": "kelp-acceptance-curriculum-question-bank-fixture-v1",
+  "version": 1,
+  "createdOn": "2026-07-19",
+  "purpose": "Define symbolic taxonomy paths, proposals, and classified exam-question profiles for curriculum-governance and Question Bank acceptance cases without storing environment-specific identities.",
+  "actorFixture": "./authorization-standard-actors-v1.json",
+  "contentFixture": "../../../src/app/exam-builder/test-fixtures/exam-builder-comprehensive-test.json",
+  "resolutionRules": [
+    "Resolve canonical taxonomy nodes by their complete type-and-slug path after migrations are applied; do not treat fixture aliases as database UUIDs.",
+    "Import the comprehensive exam as a new tutor-owned private draft before applying question classifications.",
+    "Resolve source questions by their fixture ID only during import, then retain the newly generated database question IDs for the run.",
+    "All proposed nodes and classified questions are synthetic and must be removed by transaction rollback or disposable database reset."
+  ],
+  "taxonomyPaths": [
+    {
+      "alias": "PATH-HS-ALGEBRA-LINEAR",
+      "segments": [
+        { "type": "degree", "slug": "high-school", "name": "High School" },
+        { "type": "subject", "slug": "mathematics", "name": "Mathematics" },
+        { "type": "track", "slug": "algebra-1", "name": "Algebra 1" },
+        { "type": "topic", "slug": "linear-equations", "name": "Linear equations" }
+      ]
+    },
+    {
+      "alias": "PATH-HS-PHYSICS-2D-MOTION",
+      "segments": [
+        { "type": "degree", "slug": "high-school", "name": "High School" },
+        { "type": "subject", "slug": "physics", "name": "Physics" },
+        { "type": "track", "slug": "physics", "name": "Physics" },
+        { "type": "topic", "slug": "mechanics", "name": "Mechanics" },
+        { "type": "topic", "slug": "kinematics", "name": "Kinematics" },
+        { "type": "topic", "slug": "two-dimensional-motion", "name": "Two-dimensional motion" }
+      ]
+    },
+    {
+      "alias": "PATH-HS-PHYSICS-VELOCITY",
+      "segments": [
+        { "type": "degree", "slug": "high-school", "name": "High School" },
+        { "type": "subject", "slug": "physics", "name": "Physics" },
+        { "type": "track", "slug": "physics", "name": "Physics" },
+        { "type": "topic", "slug": "mechanics", "name": "Mechanics" },
+        { "type": "topic", "slug": "kinematics", "name": "Kinematics" },
+        { "type": "topic", "slug": "two-dimensional-motion", "name": "Two-dimensional motion" },
+        { "type": "topic", "slug": "velocity", "name": "Velocity" }
+      ]
+    },
+    {
+      "alias": "PATH-HS-PHYSICS-ACCELERATION",
+      "segments": [
+        { "type": "degree", "slug": "high-school", "name": "High School" },
+        { "type": "subject", "slug": "physics", "name": "Physics" },
+        { "type": "track", "slug": "physics", "name": "Physics" },
+        { "type": "topic", "slug": "mechanics", "name": "Mechanics" },
+        { "type": "topic", "slug": "kinematics", "name": "Kinematics" },
+        { "type": "topic", "slug": "two-dimensional-motion", "name": "Two-dimensional motion" },
+        { "type": "topic", "slug": "acceleration", "name": "Acceleration" }
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "alias": "PROPOSAL-PROJECTILE-MOTION",
+      "proposer": "ACT-MENTOR",
+      "parentPath": "PATH-HS-PHYSICS-2D-MOTION",
+      "nodeType": "topic",
+      "name": "Projectile motion",
+      "description": "Synthetic nested topic used to verify governed arbitrary-depth taxonomy."
+    },
+    {
+      "alias": "PROPOSAL-DUPLICATE-LINEAR",
+      "proposer": "ACT-MENTOR",
+      "parentPath": "PATH-HS-ALGEBRA-LINEAR",
+      "nodeType": "topic",
+      "name": "Worked examples",
+      "description": "Synthetic proposal used for duplicate-pending and decision-history checks."
+    }
+  ],
+  "questionProfiles": [
+    {
+      "alias": "QBANK-NUMERIC-EASY",
+      "sourceQuestionId": "test-q20",
+      "difficulty": "easy",
+      "questionTypeTags": ["word-problem", "numeric"],
+      "primaryCurriculumPath": "PATH-HS-PHYSICS-VELOCITY",
+      "additionalCurriculumPaths": ["PATH-HS-PHYSICS-ACCELERATION"]
+    },
+    {
+      "alias": "QBANK-GRAPH-DIFFICULT",
+      "sourceQuestionId": "test-q11",
+      "difficulty": "difficult",
+      "questionTypeTags": ["graph", "multiple-choice"],
+      "primaryCurriculumPath": "PATH-HS-ALGEBRA-LINEAR",
+      "additionalCurriculumPaths": []
+    },
+    {
+      "alias": "QBANK-ESSAY-CHALLENGE",
+      "sourceQuestionId": "test-q08",
+      "difficulty": "challenge",
+      "questionTypeTags": ["essay"],
+      "primaryCurriculumPath": "PATH-HS-ALGEBRA-LINEAR",
+      "additionalCurriculumPaths": []
+    }
+  ],
+  "consumedBy": [
+    "CURR-001",
+    "CURR-002",
+    "CURR-003",
+    "CURR-004",
+    "CURR-005",
+    "CURR-006",
+    "CURR-007",
+    "CURR-008",
+    "CURR-009",
+    "QBANK-001",
+    "QBANK-002",
+    "QBANK-003",
+    "QBANK-004",
+    "QBANK-005",
+    "QBANK-006",
+    "QBANK-007",
+    "QBANK-008",
+    "QBANK-009",
+    "QBANK-010"
+  ]
+}

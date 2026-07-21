@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" data-kelp-theme="ocean">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Classroom - Kelp</title>
+  <script src="/src/auth/theme-bootstrap.js"></script>
+  <link rel="stylesheet" href="../../styles/style.css" />
+  <link rel="stylesheet" href="./classroom-space.css" />
+  <script type="module" src="./classroom-space.js"></script>
+</head>
+
+<body class="classroom-space-body gradient-body-1">
+  <header class="classroom-space-topbar">
+    <a class="classroom-space-brand" href="../dashboard/student-dashboard.html" aria-label="Kelp Student Dashboard">
+      <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="" />
+    </a>
+    <a class="classroom-space-back" id="classroom-space-back" href="../dashboard/student-dashboard.html">Dashboard</a>
+  </header>
+
+  <main class="classroom-space-shell" id="classroom-space" aria-busy="true">
+    <section class="classroom-space-error is-hidden" id="classroom-space-error" role="alert"></section>
+
+    <section class="classroom-space-read-only is-hidden" id="classroom-space-read-only" role="status">
+      <div>
+        <strong>Historical Classroom</strong>
+        <p>This Course is no longer active. You can review retained Classroom information, but participation and live lesson tools are unavailable.</p>
+      </div>
+      <span>Read-only</span>
+    </section>
+
+    <section class="classroom-space-hero" aria-labelledby="classroom-space-title">
+      <div>
+        <p class="page-kicker" id="classroom-space-subject">Classroom</p>
+        <h1 id="classroom-space-title">Loading Classroom...</h1>
+        <p class="classroom-space-tutor" id="classroom-space-tutor"></p>
+      </div>
+      <span class="classroom-space-status" id="classroom-space-status">Loading</span>
+    </section>
+
+    <nav class="classroom-space-navigation" aria-label="Classroom areas">
+      <a href="#overview" aria-current="page">Overview</a>
+      <span aria-disabled="true">Forum</span>
+      <span aria-disabled="true">Assignments</span>
+      <span aria-disabled="true">Files</span>
+      <span aria-disabled="true">Report cards</span>
+      <span aria-disabled="true">History</span>
+    </nav>
+
+    <section class="classroom-space-overview" id="overview" aria-labelledby="classroom-overview-title">
+      <div class="classroom-space-section-heading">
+        <p class="page-kicker">Course foundation</p>
+        <h2 id="classroom-overview-title">Overview</h2>
+      </div>
+      <dl class="classroom-space-details">
+        <div>
+          <dt>Subject</dt>
+          <dd id="classroom-detail-subject">—</dd>
+        </div>
+        <div>
+          <dt>Focus</dt>
+          <dd id="classroom-detail-focus">—</dd>
+        </div>
+        <div>
+          <dt>Tutor</dt>
+          <dd id="classroom-detail-tutor">—</dd>
+        </div>
+        <div>
+          <dt>Course dates</dt>
+          <dd id="classroom-detail-dates">—</dd>
+        </div>
+        <div>
+          <dt>Learning model</dt>
+          <dd id="classroom-detail-model">—</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="classroom-space-destinations" aria-labelledby="classroom-destinations-title">
+      <div class="classroom-space-section-heading">
+        <p class="page-kicker">One Classroom, connected areas</p>
+        <h2 id="classroom-destinations-title">Classroom areas</h2>
+      </div>
+      <div class="classroom-space-destination-grid">
+        <article><strong>Forum</strong><p>Course conversations and announcements.</p></article>
+        <article><strong>Assignments</strong><p>Tasks, submissions, feedback, and grades.</p></article>
+        <article><strong>Files</strong><p>Shared references and Course material.</p></article>
+        <article><strong>Report cards</strong><p>Monthly and final downloadable reports.</p></article>
+        <article><strong>History</strong><p>Lessons and Classroom activity over time.</p></article>
+        <article><strong>Live lesson</strong><p>A scheduled Classroom tool—not the Classroom itself.</p></article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

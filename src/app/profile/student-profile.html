@@ -1,29 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-kelp-theme="ocean">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Student Profile - Kelp</title>
+  <script src="/src/auth/theme-bootstrap.js"></script>
   <link rel="stylesheet" href="../../styles/style.css" />
-  <script type="module" src="./profile.js"></script>
+  <link rel="stylesheet" href="./profile.css" />
+  <script type="module" src="./student-profile.js"></script>
 </head>
-<body class="workspace-body profile-page-body" data-profile-role="student">
+<body class="profile-page-body">
+  <header class="profile-topbar">
+    <a class="profile-brand" href="../dashboard/student-dashboard.html" aria-label="Kelp Student Dashboard">
+      <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="" />
+    </a>
+    <nav class="profile-topbar-actions" aria-label="Profile navigation">
+      <a href="../dashboard/student-dashboard.html" class="btn-outline">Dashboard</a>
+      <a href="./student-preferences.html" class="btn-secondary">Themes</a>
+    </nav>
+  </header>
+
   <main class="profile-shell">
-    <section class="workspace-card profile-card-page">
-      <div class="section-header">
-        <div>
-          <p class="page-kicker">Profile</p>
-          <h1>Student profile</h1>
-          <p class="page-copy">Visible only to the student, linked tutor, and admin.</p>
-        </div>
-        <div class="profile-header-links">
-          <a href="../dashboard/student-dashboard.html" class="btn-outline">Back to dashboard</a>
-          <button class="btn-secondary" id="profile-edit-toggle" type="button">Edit profile</button>
-        </div>
+    <section class="profile-hero" aria-labelledby="profile-title">
+      <div>
+        <p class="page-kicker">Student Profile</p>
+        <h1 id="profile-title">Your learning profile</h1>
+        <p class="profile-hero-copy">Keep the information your Kelp learning team uses accurate and useful.</p>
       </div>
-      <form id="profile-form" class="profile-form-grid"></form>
-      <p id="profile-message" class="mini-note"></p>
+      <details class="profile-privacy-helper">
+        <summary aria-label="Who can see your Profile information?">i</summary>
+        <div class="profile-privacy-popover">
+          <strong>Your Profile is never public.</strong>
+          <p>Only you and authorized Kelp relationships can access the information allowed for their role.</p>
+          <ul>
+            <li><b>Private to you and Kelp:</b> email, birth year, state or region, and city.</li>
+            <li><b>Shown to your Tutor:</b> full name, birthday without the year, country, timezone, hobbies, learning goals, and relevant learning totals.</li>
+            <li>No Profile field is published to other Students or the public.</li>
+          </ul>
+        </div>
+      </details>
+      <div class="profile-hero-actions">
+        <span class="profile-member-pill" id="profile-member-since">Loading membership...</span>
+        <button class="btn-primary" id="profile-edit-toggle" type="button" disabled>Edit Profile</button>
+      </div>
     </section>
+
+    <div class="profile-loading" id="profile-loading" role="status">
+      <span class="profile-spinner" aria-hidden="true"></span>
+      Loading your Profile...
+    </div>
+
+    <div class="profile-content is-hidden" id="profile-content">
+      <section class="profile-card profile-identity-card" aria-labelledby="identity-title">
+        <div class="profile-card-heading">
+          <div>
+            <p class="profile-card-kicker">About you</p>
+            <h2 id="identity-title">Personal details</h2>
+          </div>
+          <span class="profile-status-badge" id="profile-completion-status">Profile status</span>
+        </div>
+
+        <dl class="profile-detail-grid" id="profile-detail-grid">
+          <div><dt>Full name</dt><dd id="profile-full-name">—</dd></div>
+          <div><dt>Email</dt><dd id="profile-email">—</dd></div>
+          <div><dt>Birth date</dt><dd id="profile-birth-date">—</dd></div>
+          <div><dt>Location</dt><dd id="profile-location">—</dd></div>
+          <div><dt>Timezone</dt><dd id="profile-time-zone">—</dd></div>
+        </dl>
+
+        <form class="profile-edit-form is-hidden" id="profile-edit-form">
+          <div class="profile-form-grid">
+            <label class="profile-field profile-field-wide">
+              <span>Full name</span>
+              <input id="profile-full-name-input" name="fullName" maxlength="160" autocomplete="name" required />
+              <small>Profile name changes are recorded. Your Stripe billing identity remains separate.</small>
+            </label>
+
+            <label class="profile-field">
+              <span>Birth date</span>
+              <input id="profile-birth-date-input" name="birthDate" type="date" autocomplete="bday" />
+              <small id="profile-birth-date-help">After it is saved, birth-date corrections require Support review.</small>
+            </label>
+
+            <label class="profile-field">
+              <span>Country</span>
+              <select id="profile-country" required></select>
+            </label>
+
+            <label class="profile-field">
+              <span>State or region</span>
+              <select id="profile-region" required disabled></select>
+            </label>
+
+            <label class="profile-field">
+              <span>City</span>
+              <select id="profile-city" name="locationKey" required disabled></select>
+            </label>
+          </div>
+
+          <div class="profile-form-actions">
+            <button class="btn-outline" id="profile-cancel-edit" type="button">Cancel</button>
+            <button class="btn-primary" id="profile-save" type="submit">Save Profile</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="profile-card" aria-labelledby="interests-title">
+        <div class="profile-card-heading">
+          <div>
+            <p class="profile-card-kicker">Personal context</p>
+            <h2 id="interests-title">Hobbies</h2>
+          </div>
+          <span class="profile-selection-count" id="hobby-count">0 selected</span>
+        </div>
+        <div class="profile-chip-view" id="hobby-view"></div>
+        <fieldset class="profile-choice-grid is-hidden" id="hobby-editor">
+          <legend class="sr-only">Choose up to 12 hobbies</legend>
+        </fieldset>
+      </section>
+
+      <section class="profile-card" aria-labelledby="goals-title">
+        <div class="profile-card-heading">
+          <div>
+            <p class="profile-card-kicker">What matters now</p>
+            <h2 id="goals-title">Learning goals</h2>
+          </div>
+          <span class="profile-selection-count" id="goal-count">0 selected</span>
+        </div>
+        <div class="profile-chip-view" id="goal-view"></div>
+        <fieldset class="profile-choice-grid is-hidden" id="goal-editor">
+          <legend class="sr-only">Choose up to 8 learning goals</legend>
+        </fieldset>
+      </section>
+
+      <section class="profile-card profile-learning-card" aria-labelledby="learning-summary-title">
+        <div class="profile-card-heading">
+          <div>
+            <p class="profile-card-kicker">Learning record</p>
+            <h2 id="learning-summary-title">Your Kelp journey</h2>
+          </div>
+        </div>
+        <div class="profile-stat-grid">
+          <article><strong id="profile-class-count">—</strong><span>Completed Classes</span></article>
+          <article><strong id="profile-course-count">—</strong><span>Completed Courses</span></article>
+          <article><strong id="profile-tutor-count">—</strong><span>Active Tutors</span></article>
+          <article><strong id="profile-hour-count">—</strong><span>Tutoring hours</span></article>
+        </div>
+        <p class="profile-data-note">These totals will begin populating when Course, Classroom membership, and Class history are connected. Kelp does not invent zeroes before those records exist.</p>
+      </section>
+    </div>
+
+    <p class="profile-feedback" id="profile-message" role="status" aria-live="polite"></p>
   </main>
 </body>
 </html>

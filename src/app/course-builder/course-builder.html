@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Course Builder · Curriculum</title>
+  <link rel="stylesheet" href="../../styles/style.css" />
+  <link rel="stylesheet" href="./course-builder.css" />
+  <script type="module" src="./course-builder.js"></script>
+</head>
+
+<body class="curriculum-body gradient-body-1">
+  <header class="curriculum-topbar">
+    <a href="../dashboard/mentor-dashboard.html" id="workspace-home" class="curriculum-brand" aria-label="Return to workspace">
+      <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="Kelp logo" />
+    </a>
+    <div class="curriculum-topbar-actions">
+      <span id="active-workspace-label">Curriculum workspace</span>
+      <a href="../dashboard/mentor-dashboard.html" id="back-to-workspace" class="curriculum-link-button">Back to workspace</a>
+    </div>
+  </header>
+
+  <main class="curriculum-main">
+    <section class="curriculum-hero">
+      <div>
+        <p class="page-kicker">Course Builder · Curriculum foundation</p>
+        <h1>Curriculum taxonomy</h1>
+        <p>Shape the shared path used to classify questions and courses. Topics can nest as deeply as the subject needs.</p>
+      </div>
+      <div class="curriculum-hero-note">
+        <strong id="governance-title">Loading permissions…</strong>
+        <span id="governance-copy">Checking the server-owned capability boundary.</span>
+      </div>
+    </section>
+
+    <section class="curriculum-stat-grid" aria-label="Curriculum summary">
+      <article>
+        <span>Active nodes</span>
+        <strong id="active-node-count">—</strong>
+      </article>
+      <article>
+        <span>Deepest path</span>
+        <strong id="deepest-path-count">—</strong>
+      </article>
+      <article>
+        <span>Pending proposals</span>
+        <strong id="pending-proposal-count">—</strong>
+      </article>
+    </section>
+
+    <p class="curriculum-page-status" id="page-status" role="status" aria-live="polite"></p>
+
+    <div class="curriculum-workspace-grid">
+      <section class="curriculum-panel curriculum-tree-panel" aria-labelledby="tree-heading">
+        <div class="curriculum-panel-heading">
+          <div>
+            <p class="page-kicker">Canonical structure</p>
+            <h2 id="tree-heading">Degree to topic tree</h2>
+            <p>Choose a node to use it as the parent of a new proposal.</p>
+          </div>
+          <button type="button" class="curriculum-secondary-button" id="refresh-curriculum">Refresh</button>
+        </div>
+        <div class="curriculum-path-legend" aria-label="Allowed hierarchy">
+          <span>Degree</span><b aria-hidden="true">›</b><span>Subject</span><b aria-hidden="true">›</b><span>Track</span><b aria-hidden="true">›</b><span>Topic…</span>
+        </div>
+        <div class="curriculum-tree" id="curriculum-tree" aria-live="polite">
+          <p class="curriculum-empty-state">Loading the curriculum tree…</p>
+        </div>
+      </section>
+
+      <aside class="curriculum-side-stack">
+        <section class="curriculum-panel" aria-labelledby="new-node-heading">
+          <div class="curriculum-panel-heading">
+            <div>
+              <p class="page-kicker">Extend the tree</p>
+              <h2 id="new-node-heading">Add a curriculum node</h2>
+              <p id="new-node-guidance">Select its parent and describe the missing curriculum space.</p>
+            </div>
+          </div>
+
+          <form id="new-node-form" class="curriculum-form">
+            <label>
+              <span>Parent path</span>
+              <select id="new-node-parent" name="parentId"></select>
+              <small>Choose “Root” only when adding a degree.</small>
+            </label>
+            <div class="curriculum-form-row">
+              <label>
+                <span>Node type</span>
+                <input id="new-node-type" name="nodeType" value="degree" readonly />
+              </label>
+              <label>
+                <span>Name</span>
+                <input id="new-node-name" name="name" maxlength="140" required placeholder="e.g. Vector components" />
+              </label>
+            </div>
+            <label>
+              <span>Description <small>(optional)</small></span>
+              <textarea id="new-node-description" name="description" rows="3" placeholder="Clarify what belongs in this node."></textarea>
+            </label>
+            <div class="curriculum-form-actions">
+              <button type="submit" class="curriculum-primary-button" data-submit-mode="proposal" id="submit-proposal">Submit proposal</button>
+              <button type="submit" class="curriculum-secondary-button is-hidden" data-submit-mode="direct" id="create-canonical-node">Add directly</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="curriculum-panel is-hidden" id="node-inspector" aria-labelledby="node-inspector-heading">
+          <div class="curriculum-panel-heading">
+            <div>
+              <p class="page-kicker">Administrator control</p>
+              <h2 id="node-inspector-heading">Edit selected node</h2>
+              <p>Canonical IDs remain stable when labels change.</p>
+            </div>
+          </div>
+          <form class="curriculum-form" id="node-inspector-form">
+            <input type="hidden" id="inspector-node-id" />
+            <label>
+              <span>Name</span>
+              <input id="inspector-node-name" maxlength="140" required />
+            </label>
+            <label>
+              <span>Description</span>
+              <textarea id="inspector-node-description" rows="3"></textarea>
+            </label>
+            <label>
+              <span>Sibling order</span>
+              <input id="inspector-node-order" type="number" min="0" step="10" />
+            </label>
+            <div class="curriculum-form-actions">
+              <button type="submit" class="curriculum-primary-button">Save node</button>
+              <button type="button" class="curriculum-danger-button" id="archive-node">Archive leaf</button>
+            </div>
+          </form>
+        </section>
+      </aside>
+    </div>
+
+    <section class="curriculum-panel" id="governance" aria-labelledby="proposal-heading">
+      <div class="curriculum-panel-heading">
+        <div>
+          <p class="page-kicker">Governance queue</p>
+          <h2 id="proposal-heading">Curriculum proposals</h2>
+          <p id="proposal-guidance">Your submitted proposals and their current status.</p>
+        </div>
+        <select id="proposal-status-filter" aria-label="Filter proposals by status">
+          <option value="">All statuses</option>
+          <option value="pending">Pending</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+        </select>
+      </div>
+      <div class="curriculum-proposal-list" id="proposal-list">
+        <p class="curriculum-empty-state">Loading proposals…</p>
+      </div>
+    </section>
+
+    <section class="curriculum-panel curriculum-boundary-note">
+      <div>
+        <p class="page-kicker">Phase 6</p>
+        <h2>Course composition available</h2>
+      </div>
+      <p>Choose a track or nested topic, retrieve approved questions, and save an easiest-to-hardest course draft without copying or mutating its source items.</p>
+      <a href="./course-composer.html" class="curriculum-primary-button">Open Course Builder</a>
+    </section>
+  </main>
+</body>
+</html>

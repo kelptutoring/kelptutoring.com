@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mentor Workspace</title>
+  <link rel="stylesheet" href="../../styles/style.css" />
+  <script type="module" src="./mentor-dashboard.js"></script>
+  <script>
+    try { localStorage.setItem("kelpDashboardTarget", "mentor-dashboard.html"); } catch (error) {}
+  </script>
+</head>
+
+<body class="workspace-body gradient-body-1 mentor-workspace">
+  <div class="workspace-shell">
+    <aside class="workspace-sidebar">
+      <div class="workspace-brand">
+        <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="Kelp logo" class="workspace-logo" />
+      </div>
+
+      <nav class="workspace-nav" aria-label="Mentor workspace navigation">
+        <a href="./mentor-dashboard.html" class="workspace-nav-link active" aria-current="page">Overview</a>
+        <a href="../exam-builder/exam-builder.html" class="workspace-nav-link" data-requires-capability="exam.create">Exam Builder</a>
+        <a href="../form-builder/form-builder.html" class="workspace-nav-link" data-requires-capability="form.create">Form Builder</a>
+        <a href="../exam-builder/exam-review.html" class="workspace-nav-link" data-requires-capability="exam.review">Exam review</a>
+        <a href="../form-builder/form-review.html" class="workspace-nav-link" data-requires-capability="form.review">Form review</a>
+        <a href="../course-builder/course-composer.html" class="workspace-nav-link" data-requires-capability="course.compose">Course Builder</a>
+        <a href="../course-builder/question-bank.html" class="workspace-nav-link" data-requires-capability="question_bank.read">Question bank</a>
+        <a href="../course-builder/course-builder.html" class="workspace-nav-link" data-requires-capability="taxonomy.propose">Curriculum taxonomy</a>
+        <button type="button" class="workspace-nav-link workspace-logout" id="logout-mentor">Sign out</button>
+      </nav>
+
+      <section class="workspace-role-panel" aria-labelledby="mentor-workspaces-label">
+        <p class="workspace-role-label" id="mentor-workspaces-label">Your workspaces</p>
+        <div class="workspace-switcher-list" id="workspace-switcher"></div>
+        <p class="workspace-switcher-status" id="workspace-switcher-status" role="status" aria-live="polite"></p>
+      </section>
+    </aside>
+
+    <main class="workspace-main">
+      <section class="workspace-card workspace-hero-card">
+        <div class="workspace-hero-layout">
+          <div>
+            <p class="page-kicker">Mentor workspace</p>
+            <h1 id="mentor-heading">Mentor workspace</h1>
+            <p id="mentor-profile-line">Loading profile...</p>
+            <div class="workspace-role-badges" id="mentor-role-list" aria-label="Assigned roles"></div>
+          </div>
+          <div class="workspace-hero-note">
+            <strong>Curriculum and quality</strong>
+            <span>Review tutor work, shape learning tracks, and prepare reusable course material.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="workspace-overview-grid" aria-label="Mentor authorization summary">
+        <article class="workspace-summary-card">
+          <span class="workspace-summary-label">Authoring</span>
+          <strong>Exams and forms</strong>
+          <p>Create mentor-owned material without losing access to review tools.</p>
+        </article>
+        <article class="workspace-summary-card">
+          <span class="workspace-summary-label">Quality review</span>
+          <strong id="mentor-review-status">Checking access...</strong>
+          <p>Regular tutor submissions remain protected by the review workflow.</p>
+        </article>
+        <article class="workspace-summary-card">
+          <span class="workspace-summary-label">Curriculum</span>
+          <strong>Curriculum taxonomy available</strong>
+          <p>Browse stable degree-to-topic paths and propose missing curriculum nodes.</p>
+        </article>
+      </section>
+
+      <section class="workspace-card mentor-roster-section" aria-labelledby="mentor-roster-heading">
+        <div class="section-header">
+          <div>
+            <p class="page-kicker">Supervised learning</p>
+            <h2 id="mentor-roster-heading">Your Courses and Classrooms</h2>
+            <p>Open the persistent Classroom for a Course assigned through your Tutor supervision.</p>
+          </div>
+          <span class="mentor-roster-count" id="mentor-roster-count" aria-label="Supervised Course count">0 Courses</span>
+        </div>
+
+        <p class="mentor-roster-status" id="mentor-roster-status" role="status" aria-live="polite">Loading supervised Courses...</p>
+        <div class="mentor-course-grid" id="mentor-course-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="workspace-card">
+        <div class="section-header">
+          <div>
+            <p class="page-kicker">Mentor tools</p>
+            <h2>Review and curriculum work</h2>
+            <p>Create mentor-owned material, publish it directly when appropriate, or use independent review as an optional quality check.</p>
+          </div>
+        </div>
+
+        <div class="workspace-action-grid">
+          <a class="workspace-action-card" href="../exam-builder/exam-review.html" data-requires-capability="exam.review">
+            <span class="workspace-action-status is-ready">Available</span>
+            <h3>Review exams</h3>
+            <p>Inspect immutable tutor submissions, confirm classifications, and record a decision.</p>
+            <span class="workspace-action-link">Open review queue <span aria-hidden="true">&rarr;</span></span>
+          </a>
+
+          <a class="workspace-action-card" href="../form-builder/form-review.html" data-requires-capability="form.review">
+            <span class="workspace-action-status is-ready">Available</span>
+            <h3>Review forms</h3>
+            <p>Inspect immutable tutor submissions, routing rules, respondent fields, and record a trusted decision.</p>
+            <span class="workspace-action-link">Open form queue <span aria-hidden="true">&rarr;</span></span>
+          </a>
+
+          <a class="workspace-action-card" href="../exam-builder/exam-builder.html" data-requires-capability="exam.create">
+            <span class="workspace-action-status is-ready">Available</span>
+            <h3>Create an exam</h3>
+            <p>Build a mentor-owned assessment and choose direct publication or independent review.</p>
+            <span class="workspace-action-link">Open Exam Builder <span aria-hidden="true">&rarr;</span></span>
+          </a>
+
+          <a class="workspace-action-card" href="../form-builder/form-builder.html" data-requires-capability="form.create">
+            <span class="workspace-action-status is-ready">Available</span>
+            <h3>Create a form</h3>
+            <p>Build a mentor-owned conditional form and choose the appropriate publication path.</p>
+            <span class="workspace-action-link">Open Form Builder <span aria-hidden="true">&rarr;</span></span>
+          </a>
+
+          <a class="workspace-action-card" href="../course-builder/course-composer.html" data-requires-capability="course.compose">
+            <span class="workspace-action-status is-ready">Available</span>
+            <h3>Course Builder</h3>
+            <p>Compose approved question-bank items into an easiest-to-hardest course draft and retrieve independent copies later.</p>
+            <span class="workspace-action-link">Compose a course <span aria-hidden="true">&rarr;</span></span>
+          </a>
+
+          <a class="workspace-action-card" href="../course-builder/question-bank.html" data-requires-capability="question_bank.read">
+            <span class="workspace-action-status is-ready">Available</span>
+            <h3>Question bank</h3>
+            <p>Search approved reusable questions by curriculum path, category, difficulty, or source wording.</p>
+            <span class="workspace-action-link">Browse approved questions <span aria-hidden="true">&rarr;</span></span>
+          </a>
+
+          <a class="workspace-action-card" href="../course-builder/course-builder.html#governance" data-requires-capability="taxonomy.propose">
+            <span class="workspace-action-status is-ready">Available</span>
+            <h3>Curriculum proposals</h3>
+            <p>Propose subject, track, and arbitrarily nested topic nodes without directly changing the administrator-owned taxonomy.</p>
+            <span class="workspace-action-link">Open proposal workspace <span aria-hidden="true">&rarr;</span></span>
+          </a>
+        </div>
+      </section>
+
+      <section class="workspace-card workspace-boundary-card">
+        <div>
+          <p class="page-kicker">Permission boundary</p>
+          <h2>Mentor privileges remain explicit</h2>
+        </div>
+        <ul class="workspace-boundary-list">
+          <li>Mentor-owned drafts may be published directly, with an explicit privileged-publication audit event.</li>
+          <li>Mentors may still submit their work for independent review when a second pair of eyes is useful.</li>
+          <li>A mentor cannot approve their own submitted review copy.</li>
+          <li>A mentor sees student or tutor workspaces only when those roles are separately assigned.</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

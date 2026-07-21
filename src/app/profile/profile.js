@@ -14,12 +14,12 @@ async function init() {
   if (!currentAuth) return
 
   const targetRole = normalizeRole(document.body.dataset.profileRole)
-  const isOwnProfilePage = currentAuth.profile.role === targetRole
+  const isOwnProfilePage = currentAuth.hasRole(targetRole)
   const canEdit = isOwnProfilePage
   const editToggle = document.getElementById('profile-edit-toggle')
 
   if (!isOwnProfilePage) {
-    renderLockedMessage(targetRole, currentAuth.profile.role)
+    renderLockedMessage(targetRole, currentAuth.roles.join(', '))
     if (editToggle) editToggle.disabled = true
     return
   }
@@ -27,10 +27,10 @@ async function init() {
   editable = false
   if (editToggle) editToggle.disabled = !canEdit
 
-  renderForm(currentAuth.profile, canEdit)
+  renderForm({ ...currentAuth.profile, roles: currentAuth.roles.join(', ') }, canEdit)
   editToggle?.addEventListener('click', () => {
     editable = !editable && canEdit
-    renderForm(currentAuth.profile, canEdit)
+    renderForm({ ...currentAuth.profile, roles: currentAuth.roles.join(', ') }, canEdit)
   })
 }
 
@@ -53,7 +53,7 @@ function renderForm(profile, canEdit) {
   const fields = [
     { key: 'full_name', label: 'Full name', type: 'text', editable: true },
     { key: 'email', label: 'Email', type: 'email', editable: false },
-    { key: 'role', label: 'Role', type: 'text', editable: false },
+    { key: 'roles', label: 'Roles', type: 'text', editable: false },
     { key: 'birth_date', label: 'Birth date', type: 'date', editable: true }
   ]
 
@@ -114,7 +114,7 @@ async function saveProfile(formData) {
     rawRole: data.role
   }
   editable = false
-  renderForm(currentAuth.profile, true)
+  renderForm({ ...currentAuth.profile, roles: currentAuth.roles.join(', ') }, true)
   showMessage('Profile saved.')
 }
 

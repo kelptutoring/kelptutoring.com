@@ -5,6 +5,10 @@ import {
   createLocalWhiteboardAdapters,
   resolveKelpBackendAdapters
 } from "../shared/backend-adapters.js?v=20260713-phase5";
+import {
+  removeDeletedElementBindings,
+  resolveTemplateDeletionIds
+} from "./whiteboard-template-contract.js";
 
 const GEOMETRY_MATH_URL = "https://cdn.jsdelivr.net/npm/mathjs@12.4.1/lib/browser/math.min.js";
 const GEOMETRY_EDITOR_SCRIPT_URL = new URL(
@@ -348,7 +352,8 @@ const state = {
   nativePropertiesDismissed: false,
   nativePropertiesOwnerGroup: null,
   nativePropertiesSelectionSignature: "",
-  appearanceAnchorRect: null
+  appearanceAnchorRect: null,
+  nativeContextSelectionIds: null
 };
 
 roomLabelEl.textContent = roomId === "draft" ? "Draft room" : `Room ${roomId}`;
@@ -464,6 +469,7 @@ stageEl.addEventListener("pointerdown", handleFrameBackgroundGesturePointerDown,
 stageEl.addEventListener("pointerdown", handleStickyToolPointerDown, true);
 stageEl.addEventListener("click", handleNativeToolControlClick, true);
 stageEl.addEventListener("contextmenu", handleNativeContextMenuOpen, true);
+document.addEventListener("click", handleNativeContextMenuAction, true);
 window.addEventListener("pointerup", handleFrameBackgroundGesturePointerEnd, true);
 window.addEventListener("pointercancel", handleFrameBackgroundGesturePointerEnd, true);
 window.addEventListener("pointerup", handleStickyToolPointerUp, true);
@@ -1768,6 +1774,16 @@ function handleWhiteboardShortcut(event) {
     event.preventDefault();
     event.stopPropagation();
     requestClassroomFocusMode(false);
+    return;
+  }
+  if (!event.ctrlKey
+    && !event.metaKey
+    && !event.altKey
+    && ["Delete", "Backspace"].includes(event.key)
+    && getSelectedElements().length) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    deleteSelection();
     return;
   }
   if (event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey) return;
@@ -3636,8 +3652,27 @@ function positiveModulo(value, divisor) {
 }
 
 function handleNativeContextMenuOpen() {
+  state.nativeContextSelectionIds = Object.entries(
+    state.api?.getAppState?.().selectedElementIds || {}
+  )
+    .filter(([, selected]) => Boolean(selected))
+    .map(([elementId]) => elementId);
   requestNativeContextMenuLayout();
   window.setTimeout(requestNativeContextMenuLayout, 50);
+}
+
+function handleNativeContextMenuAction(event) {
+  const menu = event.target?.closest?.(".excalidraw .context-menu");
+  if (!menu) return;
+  const item = event.target.closest("li, button, [role='menuitem']");
+  if (!item || !/^Delete\b/i.test(item.textContent?.trim() || "")) return;
+  const selectionIds = Array.from(state.nativeContextSelectionIds || []);
+  if (!selectionIds.length) return;
+
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  state.nativeContextSelectionIds = null;
+  window.setTimeout(() => deleteSelection("Deleted", selectionIds), 0);
 }
 
 function requestNativeContextMenuLayout() {
@@ -5444,18 +5479,39 @@ function cloneElementsForPaste(elements) {
   });
 }
 
-function deleteSelection(statusMessage = "Deleted") {
-  const selected = getSelectedElements();
-  if (!selected.length) {
+function deleteSelection(statusMessage = "Deleted", selectedElementIdsOverride = null) {
+  const sceneElements = getSceneElementsForMutation();
+  const selectedElementIds = selectedElementIdsOverride
+    || state.api?.getAppState?.().selectedElementIds
+    || {};
+  const deletionIds = resolveTemplateDeletionIds(sceneElements, selectedElementIds);
+  const liveDeletionIds = new Set(
+    sceneElements
+      .filter((element) => deletionIds.has(element.id) && !element.isDeleted)
+      .map((element) => element.id)
+  );
+  if (!liveDeletionIds.size) {
     setStatus("Select something first", "error");
     return;
   }
 
-  const selectedIds = new Set(selected.map((element) => element.id));
-  const nextElements = getSceneElementsForMutation().map((element) => {
-    if (!selectedIds.has(element.id)) return element;
-    return bumpElement({ ...element, isDeleted: true });
+  const deletedFrameIds = new Set(
+    sceneElements
+      .filter((element) => liveDeletionIds.has(element.id) && element.type === "frame")
+      .map((element) => element.id)
+  );
+  const nextElements = sceneElements.map((element) => {
+    if (liveDeletionIds.has(element.id)) {
+      return bumpElement({
+        ...element,
+        isDeleted: true,
+        frameId: element.customData?.[FRAME_BACKGROUND_OWNER_KEY] ? null : element.frameId
+      });
+    }
+    const cleaned = removeDeletedElementBindings(element, liveDeletionIds);
+    return cleaned === element ? element : bumpElement(cleaned);
   });
+  deletedFrameIds.forEach((frameId) => state.frameBackgroundColors.delete(frameId));
 
   state.api.updateScene({
     elements: nextElements,
@@ -5463,7 +5519,12 @@ function deleteSelection(statusMessage = "Deleted") {
     captureUpdate: CAPTURE_IMMEDIATELY
   });
 
-  setStatus(statusMessage);
+  const deletedBoards = deletedFrameIds.size;
+  setStatus(
+    deletedBoards
+      ? deletedBoards + " " + (deletedBoards === 1 ? "board" : "boards") + " deleted"
+      : statusMessage
+  );
 }
 
 function geometryFrameData(element) {
@@ -5541,7 +5602,8 @@ async function openGeometryEditor(tool = "") {
     attachTitle: selected ? "Update this geometry frame on the whiteboard." : "Place this geometry frame on the whiteboard.",
     maxCanvasSize: 900,
     fitCanvasToViewport: true,
-    sideToolLayout: true
+    sideToolLayout: true,
+    showGridLayerControl: true
   });
 
   setTool("selection");

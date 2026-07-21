@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Practice · Kelp</title>
+  <link rel="stylesheet" href="../../styles/style.css" />
+  <link rel="stylesheet" href="./course-builder.css" />
+  <link rel="stylesheet" href="./practice-space.css" />
+  <script type="module" src="./practice-library.js"></script>
+</head>
+<body class="practice-body gradient-body-1">
+  <header class="practice-topbar">
+    <a href="../dashboard/student-dashboard.html" class="practice-brand" aria-label="Return to student workspace">
+      <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="Kelp logo" />
+    </a>
+    <nav class="practice-topbar-actions" aria-label="Practice navigation">
+      <a href="../dashboard/student-dashboard.html" class="curriculum-link-button">Student workspace</a>
+    </nav>
+  </header>
+
+  <main class="practice-main">
+    <section class="practice-hero">
+      <div>
+        <p class="page-kicker">Student practice</p>
+        <h1>My practice space</h1>
+        <p>Open a scheduled activity, continue an unfinished attempt, or practice it again after submission. Each activity stays tied to the course snapshot originally assigned to you.</p>
+      </div>
+      <button type="button" class="curriculum-secondary-button" id="refresh-practice-library">Refresh</button>
+    </section>
+
+    <section class="practice-library-panel" aria-labelledby="practice-library-title">
+      <div class="practice-library-heading">
+        <div>
+          <h2 id="practice-library-title">Assigned activities</h2>
+          <p id="practice-library-summary">Loading your assigned practice…</p>
+        </div>
+      </div>
+      <p class="curriculum-page-status" id="practice-library-status" role="status" aria-live="polite"></p>
+      <div class="practice-card-grid" id="practice-card-grid" aria-live="polite"></div>
+    </section>
+  </main>
+</body>
+</html>

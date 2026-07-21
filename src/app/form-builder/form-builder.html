@@ -8,28 +8,27 @@
     content="Kelp Form Builder for tutor check-ins, feedback forms, parent questionnaires, and conditional student pathways."
   />
   <title>Kelp Form Builder</title>
+  <link rel="stylesheet" href="../../styles/style.css" />
   <link rel="stylesheet" href="form-builder.css" />
 </head>
 
-<body class="form-builder-body">
-  <header class="form-builder-header">
-    <div class="form-builder-container form-builder-header-content">
-      <a class="form-builder-brand" href="#editor" aria-label="Kelp Form Builder home">
-        <span class="form-builder-brand-mark" aria-hidden="true">K</span>
-        <span class="form-builder-brand-name">Kelp</span>
+<body class="tracks-body gradient-background form-builder-body">
+  <header class="tracks-header form-builder-header">
+    <div class="container tracks-header-content form-builder-header-content">
+      <a class="tracks-logo-link" href="../dashboard/tutor-dashboard.html" aria-label="Back to tutor dashboard">
+        <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="Kelp logo" class="tracks-logo" />
       </a>
 
-      <nav class="form-builder-nav" aria-label="Form builder navigation">
-        <a href="#editor">Builder</a>
-        <a href="#preview">Preview</a>
+      <nav class="tracks-nav form-builder-nav" aria-label="Form builder navigation">
+        <a href="../dashboard/tutor-dashboard.html" data-workspace-home aria-label="Back to workspace">Dashboard</a>
       </nav>
     </div>
   </header>
 
-  <main class="form-builder-container form-builder-main" id="editor">
-    <section class="form-builder-panel" aria-labelledby="page-title">
-      <div class="form-builder-intro">
-        <p class="form-builder-kicker">Tutor tools</p>
+  <main class="container tracks-main form-builder-main" id="editor">
+    <section class="tracks-panel form-builder-panel" aria-labelledby="page-title">
+      <div class="tracks-intro form-builder-intro">
+        <p class="tracks-kicker form-builder-kicker">Tutor tools</p>
         <h1 id="page-title">Form Builder</h1>
         <p>
           Create focused check-ins, feedback forms, parent questionnaires, and mid-course reflections.
@@ -37,15 +36,24 @@
         </p>
       </div>
 
-      <div class="form-builder-layout">
-        <section class="form-builder-editor" aria-label="Form editor">
+      <div class="form-builder-layout preview-collapsed" id="formBuilderLayout">
+        <section class="form-builder-editor" id="formBuilderEditor" aria-label="Form editor">
           <section class="form-builder-meta-card" aria-labelledby="form-details-heading">
             <div class="form-builder-section-heading">
               <div>
                 <p class="form-builder-kicker">Form details</p>
                 <h2 id="form-details-heading">Set the context</h2>
               </div>
-              <span class="form-builder-status-pill" id="blockCountPill">0 blocks</span>
+              <div class="form-builder-section-heading-actions">
+                <span class="form-builder-status-pill" id="blockCountPill">0 blocks</span>
+                <button
+                  type="button"
+                  class="form-builder-context-help"
+                  data-help-text="Form details:&#10;- Title and audience: set the context respondents see.&#10;- Description: explain why you are collecting responses.&#10;- Submission policy: allow one or multiple submissions."
+                  aria-label="Explain form details"
+                  aria-expanded="false"
+                >?</button>
+              </div>
             </div>
 
             <div class="form-builder-field-grid">
@@ -64,25 +72,45 @@
               <label for="formDescription">Short description</label>
               <textarea id="formDescription" rows="3" placeholder="Explain why you are collecting these answers and how you will use them."></textarea>
             </div>
+
+            <div class="form-builder-input-group">
+              <label for="formSubmissionMode">Submission policy</label>
+              <select id="formSubmissionMode">
+                <option value="single">One submission per respondent</option>
+                <option value="multiple">Multiple submissions per respondent</option>
+              </select>
+              <p class="form-builder-field-help">
+                The connected platform will enforce this policy using the respondent identity attached to each submission.
+              </p>
+            </div>
           </section>
 
           <section class="form-builder-identity-card is-collapsed" id="respondentDetailsCard" aria-labelledby="respondent-details-heading">
             <div class="form-builder-section-heading form-builder-identity-heading">
               <div>
                 <p class="form-builder-kicker">Respondent details</p>
-                <h2 id="respondent-details-heading">Capture contact information</h2>
+                <h2 id="respondent-details-heading">Choose respondent details</h2>
                 <p>
                   Request only what the form needs. This standalone version validates plausibility in the browser;
-                  e-mail or phone ownership verification needs a connected back-end flow.
+                  ownership verification and time-zone matching need a connected back-end flow.
                 </p>
               </div>
-              <button
-                type="button"
-                class="form-builder-btn form-builder-btn-outline form-builder-small-btn"
-                id="toggleRespondentDetailsBtn"
-                aria-expanded="false"
-                aria-controls="respondentDetailsBody"
-              >Maximize</button>
+              <div class="form-builder-section-heading-actions">
+                <button
+                  type="button"
+                  class="form-builder-context-help"
+                  data-help-text="Respondent details:&#10;- Collect: ask the respondent for that field.&#10;- Required: prevent them from continuing without it. Requiring state / province also requires country; requiring city also requires state / province and country.&#10;- Verify later: record that the connected platform should confirm an e-mail by link or code, or a phone number by SMS / WhatsApp, after submission. The builder does not perform that verification itself.&#10;- Country may be collected alone.&#10;- State / province also collects country.&#10;- City also collects state / province and country."
+                  aria-label="Explain respondent details"
+                  aria-expanded="false"
+                >?</button>
+                <button
+                  type="button"
+                  class="form-builder-btn form-builder-btn-outline form-builder-small-btn"
+                  id="toggleRespondentDetailsBtn"
+                  aria-expanded="false"
+                  aria-controls="respondentDetailsBody"
+                >Maximize</button>
+              </div>
             </div>
 
             <div class="form-builder-identity-body" id="respondentDetailsBody" aria-hidden="true" inert>
@@ -94,14 +122,23 @@
 
           <section class="form-builder-block-list" id="blockList" aria-live="polite" aria-label="Form blocks"></section>
 
-          <section class="form-builder-block-tools" aria-labelledby="add-block-heading">
-            <div>
-              <p class="form-builder-kicker">Build the flow</p>
-              <h2 id="add-block-heading">Add a block</h2>
-              <p>
-                Greeting and goodbye pages are optional and limited to one each. A phase starts a new respondent page;
-                it may follow the normal order or open after a condition matches.
-              </p>
+          <section class="form-builder-block-tools" id="buildFlowTools" aria-labelledby="add-block-heading">
+            <div class="form-builder-block-tools-heading">
+              <div>
+                <p class="form-builder-kicker">Build the flow</p>
+                <h2 id="add-block-heading">Add a block</h2>
+                <p>
+                  Greeting and goodbye pages are optional and limited to one each. A phase starts a new respondent page;
+                  it may follow the normal order or open after a condition matches.
+                </p>
+              </div>
+              <button
+                type="button"
+                class="form-builder-context-help"
+                data-help-text="Build the flow:&#10;- Greeting page: introduce the form.&#10;- Question: collect one response.&#10;- Phase: start a new page or conditional route.&#10;- Goodbye page: confirm the submission."
+                aria-label="Explain how to build the flow"
+                aria-expanded="false"
+              >?</button>
             </div>
 
             <div class="form-builder-add-grid">
@@ -125,31 +162,65 @@
           </section>
 
           <section class="form-builder-editor-actions" aria-label="Form builder actions">
-            <button type="button" class="form-builder-btn form-builder-btn-primary" id="openStudentViewBtn">Open student view</button>
-            <button type="button" class="form-builder-btn form-builder-btn-secondary" id="saveDraftBtn">Save draft</button>
-            <button type="button" class="form-builder-btn form-builder-btn-secondary" id="loadDraftBtn">Load draft</button>
-            <button type="button" class="form-builder-btn form-builder-btn-outline" id="exportJsonBtn">Export JSON</button>
-            <label class="form-builder-btn form-builder-btn-outline form-builder-import-label" for="importJsonInput">Import JSON</label>
-            <input id="importJsonInput" type="file" accept="application/json,.json" hidden />
-            <button type="button" class="form-builder-btn form-builder-btn-danger" id="resetFormBtn">Reset</button>
+            <div class="form-builder-action-row">
+              <button type="button" class="form-builder-btn form-builder-btn-primary" id="addQuestionActionBtn">Add question</button>
+              <button type="button" class="form-builder-btn form-builder-btn-primary" id="openStudentViewBtn">Open student view</button>
+              <button type="button" class="form-builder-btn form-builder-btn-secondary" id="saveDraftBtn">Save draft</button>
+              <button type="button" class="form-builder-btn form-builder-btn-outline" id="loadDraftBtn">Load draft</button>
+              <button type="button" class="form-builder-btn form-builder-btn-secondary" id="openStructureBtn">Form structure</button>
+            </div>
+            <div class="form-builder-action-row form-builder-action-row-secondary">
+              <button type="button" class="form-builder-btn form-builder-btn-secondary" id="exportJsonBtn">Export JSON</button>
+              <label class="form-builder-btn form-builder-btn-outline form-builder-import-label" for="importJsonInput">Import JSON</label>
+              <input id="importJsonInput" type="file" accept="application/json,.json" hidden />
+              <button type="button" class="form-builder-btn form-builder-btn-library" id="saveLibraryBtn">Save to local library</button>
+              <button type="button" class="form-builder-btn form-builder-btn-primary" id="printFormBtn">Print / save as PDF</button>
+            </div>
+            <div class="form-builder-action-row form-builder-action-row-utilities" aria-label="Form library and reset actions">
+              <button type="button" class="form-builder-btn form-builder-btn-outline" id="openLibraryBtn">My forms</button>
+              <button type="button" class="form-builder-btn form-builder-btn-danger" id="resetFormBtn">Reset form</button>
+            </div>
+            <button
+              type="button"
+              class="form-builder-context-help form-builder-actions-help"
+              data-help-position="above"
+              data-help-text="Builder actions:&#10;- Add question: create a new question card.&#10;- Open student view: launch the respondent experience.&#10;- Save draft / Load draft: keep work in this browser.&#10;- Form structure: inspect the form metadata and routing tree.&#10;- Export / Import JSON: move a form between files. Imported forms become independent copies.&#10;- Save to local library / My forms: store and retrieve independent form copies.&#10;- Print / save as PDF: choose one reachable form path and configure its written-answer space.&#10;- Reset form: restore the starter example."
+              aria-label="Explain form builder actions"
+              aria-expanded="false"
+            >?</button>
           </section>
 
           <p class="form-builder-live-message" id="builderMessage" role="status" aria-live="polite"></p>
         </section>
 
         <aside class="form-builder-preview-column" id="preview" aria-label="Live form preview">
-          <div class="form-builder-preview-sticky">
+          <div class="form-builder-preview-sticky" id="formPreviewSticky">
             <div class="form-builder-preview-heading">
               <div>
-                <h2>Live preview</h2>
+                <div class="form-builder-preview-title-line">
+                  <h2>Live preview</h2>
+                  <span class="form-builder-preview-page-count" id="previewPageCount">Step 1 of 1</span>
+                </div>
                 <p>Preview the complete structure. Conditional phases display their routing rules in the builder.</p>
               </div>
-              <span class="form-builder-preview-page-count" id="previewPageCount">Page 1 of 1</span>
+              <div class="form-builder-preview-heading-actions">
+                <button
+                  type="button"
+                  class="form-builder-btn form-builder-btn-outline form-builder-small-btn form-builder-preview-toggle"
+                  id="togglePreviewColumnBtn"
+                  aria-expanded="false"
+                  aria-controls="formPreview previewControls"
+                  data-preview-toggle-state="collapsed"
+                >
+                  <span class="form-builder-preview-toggle-open">Minimize</span>
+                  <span class="form-builder-preview-toggle-closed">Preview</span>
+                </button>
+              </div>
             </div>
 
             <div class="form-builder-paper" id="formPreview"></div>
 
-            <div class="form-builder-preview-controls">
+            <div class="form-builder-preview-controls" id="previewControls">
               <button type="button" class="form-builder-btn form-builder-btn-outline form-builder-small-btn" id="previewPreviousBtn">Previous</button>
               <button type="button" class="form-builder-btn form-builder-btn-primary form-builder-small-btn" id="previewNextBtn">Next</button>
             </div>
@@ -187,6 +258,97 @@
     </section>
   </div>
 
+  <div class="form-builder-modal" id="formLibraryModal" aria-hidden="true">
+    <div class="form-builder-modal-backdrop" data-library-action="close"></div>
+    <section class="form-builder-modal-dialog form-builder-library-dialog" role="dialog" aria-modal="true" aria-labelledby="formLibraryTitle">
+      <header class="form-builder-modal-header">
+        <div>
+          <p class="form-builder-kicker">Author library</p>
+          <h2 id="formLibraryTitle">My forms</h2>
+          <p>Open a saved form as a new copy, submit it for independent review, or publish directly when your workspace grants that capability.</p>
+        </div>
+        <button type="button" class="form-builder-icon-button" data-library-action="close" aria-label="Close form library" title="Close">&times;</button>
+      </header>
+
+      <div class="form-builder-modal-content form-builder-library-content">
+        <div class="form-builder-library-toolbar">
+          <p class="form-builder-library-provider" id="formLibraryProvider">Local browser library</p>
+          <div class="form-builder-inline-actions">
+            <button type="button" class="form-builder-btn form-builder-btn-secondary form-builder-small-btn" data-library-action="save-current">Save current form</button>
+            <button type="button" class="form-builder-btn form-builder-btn-outline form-builder-small-btn" data-library-action="refresh">Refresh</button>
+          </div>
+        </div>
+        <div class="form-builder-library-list" id="formLibraryList" aria-live="polite"></div>
+      </div>
+
+      <footer class="form-builder-modal-footer">
+        <button type="button" class="form-builder-btn form-builder-btn-outline" data-library-action="close">Close</button>
+      </footer>
+    </section>
+  </div>
+
+  <div class="form-builder-modal" id="formStructureModal" aria-hidden="true">
+    <div class="form-builder-modal-backdrop" data-structure-action="close"></div>
+    <section
+      class="form-builder-modal-dialog form-builder-structure-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="formStructureTitle"
+      aria-describedby="formStructureDescription"
+    >
+      <header class="form-builder-modal-header">
+        <div>
+          <p class="form-builder-kicker">Live form map</p>
+          <h2 id="formStructureTitle">Form structure</h2>
+          <p id="formStructureDescription">Review this form's current metadata, page hierarchy, and conditional routing without leaving the builder.</p>
+        </div>
+        <button type="button" class="form-builder-icon-button" data-structure-action="close" aria-label="Close form structure" title="Close">&times;</button>
+      </header>
+
+      <div class="form-builder-modal-content form-builder-structure-content" id="formStructureContent"></div>
+
+      <footer class="form-builder-modal-footer form-builder-structure-footer">
+        <button type="button" class="form-builder-btn form-builder-btn-outline" data-structure-action="close">Close</button>
+      </footer>
+    </section>
+  </div>
+
+  <div class="form-builder-modal" id="formPrintModal" aria-hidden="true">
+    <div class="form-builder-modal-backdrop" data-print-action="close"></div>
+    <section
+      class="form-builder-modal-dialog form-builder-print-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="formPrintTitle"
+      aria-describedby="formPrintDescription"
+    >
+      <header class="form-builder-modal-header">
+        <div>
+          <p class="form-builder-kicker">Printable form</p>
+          <h2 id="formPrintTitle">Choose a path and review answer space</h2>
+          <p id="formPrintDescription">Select one reachable respondent path, then review the PDF height saved on each written question.</p>
+        </div>
+        <button type="button" class="form-builder-icon-button" data-print-action="close" aria-label="Close print settings" title="Close">&times;</button>
+      </header>
+
+      <div class="form-builder-modal-content form-builder-print-content" id="formPrintContent"></div>
+
+      <footer class="form-builder-modal-footer form-builder-print-footer">
+        <button type="button" class="form-builder-btn form-builder-btn-outline" data-print-action="close">Cancel</button>
+        <button type="button" class="form-builder-btn form-builder-btn-primary" data-print-action="prepare">Continue to PDF</button>
+      </footer>
+    </section>
+  </div>
+
+  <div class="form-builder-print-document" id="formPrintDocument" aria-hidden="true"></div>
+
+  <script src="form-adapters.js"></script>
+  <script>
+    window.KelpFormProviderReady = /^https?:$/.test(window.location.protocol)
+      ? import('./form-supabase-provider.js')
+      : Promise.resolve(null);
+  </script>
+  <script src="form-domain.js"></script>
   <script src="form-builder.js"></script>
 </body>
 </html>

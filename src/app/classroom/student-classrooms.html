@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" data-kelp-theme="ocean">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Classrooms - Kelp</title>
+  <script src="/src/auth/theme-bootstrap.js"></script>
+  <link rel="stylesheet" href="../../styles/style.css" />
+  <link rel="stylesheet" href="./student-classrooms.css" />
+  <script type="module" src="./student-classrooms.js"></script>
+  <script>
+    try { localStorage.setItem("kelpDashboardTarget", "student-dashboard.html"); } catch (error) {}
+  </script>
+</head>
+
+<body class="student-classrooms-body gradient-body-1">
+  <header class="student-dashboard-topbar">
+    <a class="student-dashboard-brand" href="../dashboard/student-dashboard.html" aria-label="Kelp Student Dashboard">
+      <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="" />
+    </a>
+
+    <div class="student-dashboard-wallet" aria-label="Lesson-credit balance is not connected yet">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4.75 6.25h13.5A1.75 1.75 0 0 1 20 8v10a1.75 1.75 0 0 1-1.75 1.75H4.75A1.75 1.75 0 0 1 3 18V6.75A2.5 2.5 0 0 1 5.5 4.25h10.75" />
+        <path d="M16.25 11h4.25v4h-4.25a2 2 0 1 1 0-4Z" />
+      </svg>
+      <span>Credits</span>
+      <strong aria-hidden="true">&mdash;</strong>
+    </div>
+
+    <nav class="student-dashboard-navigation" aria-label="Student navigation">
+      <details class="student-dashboard-menu" data-dashboard-menu="learn">
+        <summary>Learn</summary>
+        <div class="student-dashboard-menu-panel">
+          <p class="student-dashboard-menu-label">Learn</p>
+          <a href="./student-classrooms.html" aria-current="page">Classrooms</a>
+          <a href="../course-builder/practice-library.html" data-requires-capability="practice.attempt">Practice</a>
+          <a href="../schedules/schedules.html">Tracks</a>
+        </div>
+      </details>
+
+      <details class="student-dashboard-menu" data-dashboard-menu="schedule">
+        <summary>Schedule</summary>
+        <div class="student-dashboard-menu-panel">
+          <p class="student-dashboard-menu-label">Schedule</p>
+          <a href="../dashboard/student-dashboard.html#calendar-block">Calendar</a>
+        </div>
+      </details>
+
+      <details class="student-dashboard-menu student-dashboard-account-menu" data-dashboard-menu="account">
+        <summary>Account</summary>
+        <div class="student-dashboard-menu-panel student-dashboard-account-panel">
+          <p class="student-dashboard-menu-label">Account</p>
+          <a href="../profile/student-profile.html">Profile</a>
+          <a href="../profile/student-preferences.html">Themes</a>
+          <section class="student-dashboard-workspaces" aria-labelledby="student-classrooms-workspaces-label">
+            <p id="student-classrooms-workspaces-label">Your workspaces</p>
+            <div class="workspace-switcher-list" id="workspace-switcher"></div>
+            <p class="workspace-switcher-status" id="workspace-switcher-status" role="status" aria-live="polite"></p>
+          </section>
+          <button type="button" class="student-dashboard-signout" id="logout-student">Sign out</button>
+        </div>
+      </details>
+    </nav>
+  </header>
+
+  <main class="student-classrooms-shell" id="student-classrooms" aria-busy="true">
+    <section class="student-classrooms-hero" aria-labelledby="student-classrooms-title">
+      <div>
+        <p class="page-kicker">Your learning spaces</p>
+        <h1 id="student-classrooms-title">Classrooms</h1>
+        <p id="student-classrooms-introduction">Open an active Course or revisit a completed Classroom.</p>
+      </div>
+      <a class="student-classrooms-dashboard-link" href="../dashboard/student-dashboard.html">Dashboard</a>
+    </section>
+
+    <section class="student-classrooms-error is-hidden" id="student-classrooms-error" role="alert"></section>
+
+    <section class="student-classrooms-collection" aria-labelledby="student-classrooms-collection-title">
+      <div class="student-classrooms-tabs" role="tablist" aria-label="Classroom collections">
+        <button type="button" role="tab" id="classrooms-tab-active" aria-controls="student-classrooms-panel" data-classroom-collection="active">
+          Active <span data-classroom-count="active">0</span>
+        </button>
+        <button type="button" role="tab" id="classrooms-tab-former" aria-controls="student-classrooms-panel" data-classroom-collection="former">
+          Former <span data-classroom-count="former">0</span>
+        </button>
+        <button type="button" role="tab" id="classrooms-tab-archived" aria-controls="student-classrooms-panel" data-classroom-collection="archived">
+          Archived <span data-classroom-count="archived">0</span>
+        </button>
+      </div>
+
+      <div class="student-classrooms-heading-row">
+        <div>
+          <p class="page-kicker" id="student-classrooms-collection-kicker">Current Courses</p>
+          <h2 id="student-classrooms-collection-title">Active Classrooms</h2>
+          <p id="student-classrooms-collection-copy">These Classrooms stay visible while their Courses remain active.</p>
+        </div>
+        <a class="student-classrooms-arrange-link" id="student-classrooms-arrange-link" href="../dashboard/student-dashboard.html#classrooms-block">Arrange Cards on Dashboard</a>
+      </div>
+
+      <div class="student-classrooms-grid" id="student-classrooms-panel" role="tabpanel" tabindex="0" aria-labelledby="classrooms-tab-active">
+        <div class="student-classrooms-empty">
+          <strong>Loading your Classrooms&hellip;</strong>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

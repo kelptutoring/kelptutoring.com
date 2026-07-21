@@ -1,0 +1,118 @@
+{
+  "schema": "kelp-acceptance-actor-fixture-v1",
+  "version": 1,
+  "createdOn": "2026-07-19",
+  "purpose": "Define symbolic synthetic actors for identity, authorization, and workspace acceptance cases without storing credentials or environment-specific UUIDs.",
+  "provisioning": {
+    "targetEnvironment": "LOCAL-SUPABASE",
+    "resolveAliasesAtSetup": true,
+    "credentialsStoredHere": false,
+    "productionAccountsAllowed": false,
+    "cleanup": "Delete or reset the disposable local database after the formal run. Individual role mutations must be restored when a full reset will not immediately follow."
+  },
+  "actors": [
+    {
+      "alias": "ACT-STUDENT",
+      "roles": ["student"],
+      "primaryRole": "student",
+      "provisioningPath": "public-signup",
+      "expectedWorkspaces": ["student"]
+    },
+    {
+      "alias": "ACT-STUDENT-B",
+      "roles": ["student"],
+      "primaryRole": "student",
+      "provisioningPath": "public-signup",
+      "expectedWorkspaces": ["student"]
+    },
+    {
+      "alias": "ACT-TUTOR",
+      "roles": ["tutor"],
+      "primaryRole": "tutor",
+      "provisioningPath": "student-signup-then-trusted-role-grant",
+      "expectedWorkspaces": ["tutor"]
+    },
+    {
+      "alias": "ACT-TEACHER",
+      "roles": ["teacher"],
+      "primaryRole": "teacher",
+      "provisioningPath": "student-signup-then-trusted-role-grant",
+      "expectedWorkspaces": ["teacher"]
+    },
+    {
+      "alias": "ACT-MENTOR",
+      "roles": ["mentor"],
+      "primaryRole": "mentor",
+      "provisioningPath": "student-signup-then-trusted-role-grant",
+      "expectedWorkspaces": ["mentor"]
+    },
+    {
+      "alias": "ACT-ADMIN",
+      "roles": ["admin"],
+      "primaryRole": "admin",
+      "provisioningPath": "trusted-migration-or-service-role-bootstrap",
+      "expectedWorkspaces": ["admin"]
+    },
+    {
+      "alias": "ACT-STUDENT-TUTOR",
+      "roles": ["student", "tutor"],
+      "primaryRole": "student",
+      "provisioningPath": "public-signup-then-trusted-role-grant",
+      "expectedWorkspaces": ["student", "tutor"]
+    },
+    {
+      "alias": "ACT-TUTOR-MENTOR",
+      "roles": ["tutor", "mentor"],
+      "primaryRole": "mentor",
+      "provisioningPath": "student-signup-then-trusted-role-grants-and-student-role-revocation",
+      "expectedWorkspaces": ["tutor", "mentor"]
+    },
+    {
+      "alias": "ACT-OUTSIDER",
+      "roles": ["student"],
+      "primaryRole": "student",
+      "provisioningPath": "public-signup",
+      "expectedWorkspaces": ["student"]
+    }
+  ],
+  "ephemeralActors": [
+    {
+      "alias": "ACT-NEW-SIGNUP",
+      "startingState": "no-account",
+      "expectedRolesAfterSignup": ["student"],
+      "purpose": "Prove that public sign-up cannot self-assign a privileged role."
+    },
+    {
+      "alias": "ACT-ROLE-TARGET",
+      "startingState": "student-only",
+      "expectedRolesAfterSetup": ["student"],
+      "purpose": "Receive and lose roles during administrator grant/revoke cases."
+    }
+  ],
+  "rules": [
+    "Aliases are stable documentation identities; local auth UUIDs and credentials are resolved during setup.",
+    "Roles do not imply tutor-student or tutor-mentor relationships; Phase 2.A fixtures create those relationships through protected RPCs.",
+    "The ACT-ADMIN account must never be created by public role metadata.",
+    "No test may depend on actor row order or reuse a production identity."
+  ],
+  "consumedBy": [
+    "AUTH-001",
+    "AUTH-002",
+    "AUTH-003",
+    "AUTH-005",
+    "AUTH-006",
+    "AUTH-007",
+    "AUTH-008",
+    "AUTH-009",
+    "AUTH-010",
+    "WORK-001",
+    "WORK-002",
+    "WORK-003",
+    "WORK-004",
+    "WORK-005",
+    "WORK-006",
+    "WORK-007",
+    "WORK-008",
+    "WORK-009"
+  ]
+}

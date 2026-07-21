@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,42 +7,66 @@
   <link rel="stylesheet" href="../../styles/style.css" />
   <script type="module" src="../../auth/signUp.js"></script>
 </head>
-
 <body class="gradient-body-2">
   <main class="auth-page">
-    <section class="auth-card">
+    <section class="auth-card signup-card">
       <div class="auth-header">
         <h1 style="color: var(--color-secondary)">Welcome</h1>
-        <p>Create a new account</p>
-      </div>  
-    
-    <form id="signup-form" class="auth-form">
-      <div class="input-group">
-        <label for="fullName">Full name</label>
-        <input id="fullName" type="text" required />
+        <p>Create your Student account</p>
       </div>
-    
-      <div class="input-group">
-        <label for="birthDate">Birth date</label>
-        <input id="birthDate" type="date" required />
-      </div>
-    
-      <div class="input-group">
-        <label for="email">Email</label>
-        <input id="email" type="email" required />
-      </div>
-    
-      <div class="input-group">
-        <label for="password">Password</label>
-        <input id="password" type="password" required />
-      </div>
-      
-      <button type="submit" class="btn btn-terciary">Create account</button>
-      <a href="./login.html" class="btn-secondary header-btn">Log in</a>
-     
-    </form>
 
-  <p id="message"></p>
-</main>
+      <form id="signup-form" class="auth-form">
+        <div class="input-group">
+          <label for="fullName">Full name</label>
+          <input id="fullName" type="text" maxlength="160" autocomplete="name" required />
+        </div>
+
+        <div class="input-group">
+          <label for="birthDate">Birth date</label>
+          <input id="birthDate" type="date" autocomplete="bday" required />
+          <small>This becomes read-only after signup. Corrections require Support review.</small>
+        </div>
+
+        <fieldset class="signup-location-fields">
+          <legend>Where you live</legend>
+          <p>Kelp stores country, state, and city—not your street address.</p>
+          <div class="input-group">
+            <label for="country">Country</label>
+            <select id="country" required disabled>
+              <option value="">Loading locations...</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="region">State or region</label>
+            <select id="region" required disabled>
+              <option value="">Choose a country first</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="city">City</label>
+            <select id="city" required disabled>
+              <option value="">Choose a state or region first</option>
+            </select>
+          </div>
+          <p id="location-help" class="auth-field-note" role="status"></p>
+        </fieldset>
+
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input id="email" type="email" autocomplete="email" required />
+        </div>
+
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input id="password" type="password" minlength="6" autocomplete="new-password" required />
+        </div>
+
+        <button type="submit" class="btn btn-terciary" id="signup-submit" disabled>Create account</button>
+        <a href="./login.html" class="btn-secondary header-btn">Log in</a>
+      </form>
+
+      <p id="message" role="status" aria-live="polite"></p>
+    </section>
+  </main>
 </body>
 </html>

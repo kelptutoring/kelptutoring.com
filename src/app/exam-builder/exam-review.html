@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kelp Exam Review</title>
+
+  <link rel="stylesheet" href="../../styles/style.css" />
+  <link rel="stylesheet" href="./exam-review.css?v=20260718-question-bank-1" />
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']],
+        processEscapes: true
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+
+<body class="tracks-body gradient-background exam-review-body">
+  <header class="tracks-header">
+    <div class="container tracks-header-content">
+      <a href="../dashboard/tutor-dashboard.html" class="tracks-logo-link" aria-label="Back to the workspace" data-workspace-home>
+        <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="Kelp logo" class="tracks-logo" />
+      </a>
+
+      <nav class="tracks-nav" aria-label="Exam review navigation">
+        <a href="../dashboard/tutor-dashboard.html" data-workspace-home>Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container tracks-main exam-review-main" aria-labelledby="page-title">
+    <section class="tracks-panel exam-review-panel">
+      <div class="exam-review-intro">
+        <div class="tracks-intro exam-review-intro-copy">
+          <p class="tracks-kicker">Mentor and administrator tools</p>
+          <h1 id="page-title">Exam Review</h1>
+          <p>Inspect submitted exams without changing their content. Approvals confirm the tutor's proposed difficulty, curriculum paths, and question categories and make the exam eligible for the public catalog.</p>
+        </div>
+
+        <div class="exam-review-intro-actions">
+          <span class="exam-review-provider" id="reviewProvider">Connecting to the review library...</span>
+          <button type="button" class="btn-secondary" id="refreshReviewsBtn">Refresh queue</button>
+        </div>
+      </div>
+
+      <aside class="exam-review-scope-note" aria-label="Review scope">
+        <strong>Review scope</strong>
+        <span>Public means catalog-eligible. It does not assign the exam to a student or expose the answer-bearing review bundle to student pages.</span>
+      </aside>
+
+      <div class="exam-review-filters" role="group" aria-label="Filter exams by review status">
+        <button type="button" class="exam-review-filter is-active" data-review-filter="pending_review" aria-pressed="true">Awaiting review</button>
+        <button type="button" class="exam-review-filter" data-review-filter="approved" aria-pressed="false">Approved</button>
+        <button type="button" class="exam-review-filter" data-review-filter="changes_requested" aria-pressed="false">Changes requested</button>
+        <button type="button" class="exam-review-filter" data-review-filter="rejected" aria-pressed="false">Rejected</button>
+      </div>
+
+      <p class="exam-review-message" id="reviewMessage" role="status" aria-live="polite"></p>
+
+      <div class="exam-review-workspace">
+        <section class="exam-review-queue-panel" aria-labelledby="review-queue-title">
+          <div class="exam-review-section-heading">
+            <div>
+              <p class="tracks-kicker">Review queue</p>
+              <h2 id="review-queue-title">Submitted exams</h2>
+            </div>
+            <span class="exam-review-count" id="reviewQueueCount">0</span>
+          </div>
+          <div class="exam-review-queue" id="reviewQueue" aria-live="polite"></div>
+        </section>
+
+        <section class="exam-review-detail-panel" id="reviewDetail" aria-live="polite" aria-label="Selected exam review">
+          <div class="exam-review-empty-detail">
+            <div class="exam-review-empty-icon" aria-hidden="true">&#10003;</div>
+            <h2>Select an exam to inspect</h2>
+            <p>The complete metadata, question order, proposed difficulty, answer settings, media indicators, and review history will appear here.</p>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script src="./exam-contract.js?v=20260718-question-bank-1"></script>
+  <script src="./exam-adapters.js?v=20260718-phase3-1"></script>
+  <script>
+    window.KelpExamProviderReady = /^https?:$/.test(window.location.protocol)
+      ? import('./exam-supabase-provider.js?v=20260718-phase4-1')
+      : Promise.resolve(null);
+  </script>
+  <script src="./exam-review.js?v=20260718-question-bank-1"></script>
+</body>
+</html>
