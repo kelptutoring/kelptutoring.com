@@ -45,7 +45,7 @@ const state = {
   calendar: {
     anchorDate: todayAtNoon(),
     payload: null,
-    loading: false,
+    loading: true,
     transitioning: false,
     transitionId: 0,
     error: '',
@@ -878,8 +878,6 @@ async function playCalendarReel({
 
 function captureCalendarNavigationViewport(button) {
   return {
-    scrollX: window.scrollX,
-    scrollY: window.scrollY,
     focusedDirection: document.activeElement === button
       ? button.dataset.calendarNavigation
       : null
@@ -887,23 +885,10 @@ function captureCalendarNavigationViewport(button) {
 }
 
 function restoreCalendarNavigationViewport(snapshot) {
-  if (!snapshot || !Number.isFinite(snapshot.scrollY)) return
-  if (snapshot.focusedDirection) {
-    elements.calendarShell.querySelector(
-      `[data-calendar-navigation="${snapshot.focusedDirection}"]`
-    )?.focus({ preventScroll: true })
-  }
-  const root = document.documentElement
-  const maxScrollX = Math.max(0, root.scrollWidth - window.innerWidth)
-  const maxScrollY = Math.max(0, root.scrollHeight - window.innerHeight)
-  const targetX = Math.min(Math.max(0, snapshot.scrollX || 0), maxScrollX)
-  const targetY = Math.min(Math.max(0, snapshot.scrollY), maxScrollY)
-  if (
-    Math.abs(window.scrollX - targetX) > 1
-    || Math.abs(window.scrollY - targetY) > 1
-  ) {
-    window.scrollTo({ top: targetY, left: targetX, behavior: 'auto' })
-  }
+  if (!snapshot?.focusedDirection) return
+  elements.calendarShell.querySelector(
+    `[data-calendar-navigation="${snapshot.focusedDirection}"]`
+  )?.focus({ preventScroll: true })
 }
 
 function calendarAnchorsBetween(previousAnchor, nextAnchor, view) {

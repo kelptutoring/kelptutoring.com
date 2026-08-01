@@ -35,6 +35,7 @@
     "test:theme-coverage": "node tools/theme-coverage-self-test.mjs",
     "locations:inspect": "node tools/import-profile-location-catalog.mjs --dry-run",
     "locations:import-local": "node tools/import-profile-location-catalog.mjs --apply-local --confirm-local=kelptutoring.com-main",
+    "locations:import-hosted": "node tools/import-profile-location-catalog.mjs --apply-hosted --confirm-hosted=vzbgijnwmavmdahybcxw",
     "test:exam-builder": "node tools/exam-builder-reorder-self-test.mjs",
     "test:exam-review": "node tools/exam-review-self-test.mjs",
     "test:exam-supabase": "node tools/exam-supabase-self-test.mjs",

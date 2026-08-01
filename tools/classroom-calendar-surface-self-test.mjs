@@ -163,7 +163,6 @@ for (const fragment of [
   'captureCalendarNavigationViewport(',
   'restoreCalendarNavigationViewport(',
   ".focus({ preventScroll: true })",
-  'root.scrollHeight - window.innerHeight',
   "destination.searchParams.set('area', 'schedule')"
   ,'event.compactAcademicLabel || event.focus || event.subject'
   ,'pathwayNames.join(\' + \')'
@@ -173,6 +172,8 @@ for (const fragment of [
     `Classroom Calendar controller is missing: ${fragment}`
   )
 }
+assert.doesNotMatch(calendarController, /snapshot\.scroll[XY]/)
+assert.doesNotMatch(calendarController, /window\.scrollTo\(\{ top: targetY/)
 
 for (const fragment of [
   "'scope', normalized_scope",

@@ -155,7 +155,11 @@ for (const rpc of [
 assert.match(importer, /315d33084e8bdd84948c9991840209fe4bcadc023912b5aac5428e28a0a2fb7b/)
 assert.match(importer, /--apply-local/)
 assert.match(importer, /--confirm-local=/)
+assert.match(importer, /--apply-hosted/)
+assert.match(importer, /--confirm-hosted=/)
+assert.match(importer, /KELP_SUPABASE_SECRET_KEY/)
 assert.match(importer, /Refusing non-local Supabase API/)
+assert.match(importer, /Refusing hosted Supabase API/)
 assert.match(importer, /SUPABASE_TELEMETRY_DISABLED: '1'/)
 assert.doesNotMatch(importer, /console\.log\([^\n]*(serviceRoleKey|SECRET_KEY)/)
 
@@ -175,10 +179,13 @@ for (const id of ['country', 'region', 'city']) {
 }
 assert.doesNotMatch(signupHtml, /id="timeZone"|timezone-help/)
 assert.match(signupHtml, /not your street address/i)
+assert.match(signupHtml, /signUp\.js\?v=20260731-location-refresh-1/)
+assert.match(signupHtml, /id="location-retry"/)
 assert.match(signupJs, /location_key: locationKey/)
 assert.match(signupJs, /listProfileCountries/)
 assert.match(signupJs, /listProfileRegions/)
 assert.match(signupJs, /listProfileCities/)
+assert.match(signupJs, /handleLocationLoadFailure/)
 assert.doesNotMatch(signupJs, /time_zone:|getDetectedTimeZone|listProfileLocations/)
 
 assert.match(styles, /:root\[data-kelp-theme="coral"\]/)

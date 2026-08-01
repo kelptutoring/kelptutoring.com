@@ -13,6 +13,7 @@ const regionSelect = document.getElementById('region')
 const citySelect = document.getElementById('city')
 const submitButton = document.getElementById('signup-submit')
 const locationHelp = document.getElementById('location-help')
+const locationRetry = document.getElementById('location-retry')
 const birthDateInput = document.getElementById('birthDate')
 
 const state = {
@@ -25,10 +26,13 @@ const state = {
   submitting: false
 }
 
-initializeSignup().catch((error) => {
-  console.error('Signup configuration failed:', error)
-  setMessage('Signup locations could not be loaded. Please try again shortly.')
+countrySelect?.addEventListener('change', () => void loadRegions(countrySelect.value))
+regionSelect?.addEventListener('change', () => void loadCities(countrySelect.value, regionSelect.value))
+locationRetry?.addEventListener('click', () => {
+  void initializeSignup().catch(handleLocationLoadFailure)
 })
+
+initializeSignup().catch(handleLocationLoadFailure)
 
 form?.addEventListener('submit', async (event) => {
   event.preventDefault()
@@ -77,16 +81,25 @@ async function initializeSignup() {
     String(today.getDate()).padStart(2, '0')
   ].join('-')
 
+  state.ready = false
+  submitButton.disabled = true
+  locationRetry.hidden = true
+  locationHelp.textContent = 'Loading Kelp\'s governed location catalog…'
+  replaceSelectOptions(countrySelect, [{ value: '', label: 'Loading locations...' }])
+  countrySelect.disabled = true
+  replaceSelectOptions(regionSelect, [{ value: '', label: 'Choose a country first' }])
+  replaceSelectOptions(citySelect, [{ value: '', label: 'Choose a state or region first' }])
+  regionSelect.disabled = true
+  citySelect.disabled = true
   state.countries = [...await listProfileCountries()]
   populateCountries()
-  countrySelect.addEventListener('change', () => void loadRegions(countrySelect.value))
-  regionSelect.addEventListener('change', () => void loadCities(countrySelect.value, regionSelect.value))
 
   state.ready = state.countries.length > 0
   submitButton.disabled = !state.ready
   locationHelp.textContent = state.ready
     ? "Choose from Kelp's governed location catalog. Your timezone is set from the selected city."
     : 'No signup locations are currently available.'
+  if (state.ready) setMessage('')
 }
 
 function populateCountries() {
@@ -192,6 +205,19 @@ async function handleSignUp({ fullName, email, password, birthDate, locationKey 
     session,
     user
   }
+}
+
+function handleLocationLoadFailure(error) {
+  console.error('Signup configuration failed:', error)
+  state.ready = false
+  state.countries = []
+  submitButton.disabled = true
+  countrySelect.disabled = true
+  regionSelect.disabled = true
+  citySelect.disabled = true
+  locationRetry.hidden = false
+  locationHelp.textContent = 'Locations could not be loaded. Check your connection and try again.'
+  setMessage('Signup locations could not be loaded.')
 }
 
 function setMessage(message) {

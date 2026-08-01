@@ -4555,6 +4555,128 @@ a.workspace-action-card:hover {
   overflow: visible;
 }
 
+.student-dashboard-loading-placeholder {
+  display: none;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  padding: 18px;
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--kelp-theme-accent-soft) 52%, white);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--kelp-theme-accent) 12%, transparent);
+}
+
+.student-dashboard-loading-placeholder::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.72) 48%, transparent 100%);
+  background-size: 220% 100%;
+  pointer-events: none;
+  animation: student-dashboard-loading-sheen 1.4s ease-in-out infinite;
+}
+
+#student-dashboard[aria-busy="true"] .student-dashboard-loading-placeholder {
+  display: block;
+}
+
+.student-dashboard-loading-placeholder.is-calendar {
+  min-height: 360px;
+}
+
+.student-dashboard-loading-placeholder.is-classrooms {
+  min-height: 190px;
+  grid-column: 1 / -1;
+}
+
+.student-dashboard-loading-heading {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: color-mix(in srgb, var(--kelp-theme-accent-strong) 72%, white);
+  font-size: 0.82rem;
+  font-weight: 750;
+}
+
+.student-dashboard-loading-control {
+  width: 96px;
+  height: 30px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--kelp-theme-accent) 13%, white);
+}
+
+.student-dashboard-loading-calendar-grid {
+  min-height: 278px;
+  margin-top: 16px;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.student-dashboard-loading-calendar-grid > span {
+  min-width: 0;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.62);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--kelp-theme-accent) 10%, transparent);
+}
+
+.student-dashboard-loading-classroom-grid {
+  margin-top: 16px;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.student-dashboard-loading-classroom-grid > span {
+  min-height: 116px;
+  padding: 17px;
+  display: grid;
+  align-content: center;
+  gap: 11px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.66);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--kelp-theme-accent) 10%, transparent);
+}
+
+.student-dashboard-loading-classroom-grid i {
+  width: 78%;
+  height: 10px;
+  display: block;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--kelp-theme-accent) 12%, white);
+}
+
+.student-dashboard-loading-classroom-grid i:nth-child(2) {
+  width: 58%;
+}
+
+.student-dashboard-loading-classroom-grid i:nth-child(3) {
+  width: 68%;
+}
+
+@keyframes student-dashboard-loading-sheen {
+  from {
+    background-position: 120% 0;
+  }
+
+  to {
+    background-position: -120% 0;
+  }
+}
+
+.signup-location-retry {
+  width: max-content;
+  margin-top: 10px;
+}
+
 .student-dashboard-calendar-motion-viewport {
   min-width: 0;
   overflow-x: auto;
@@ -5556,6 +5678,10 @@ button.student-dashboard-calendar-week-label:focus-visible {
   .student-dashboard-classroom-card {
     transition: none;
   }
+
+  .student-dashboard-loading-placeholder::after {
+    animation: none;
+  }
 }
 
 @media (max-width: 820px) {
@@ -5570,6 +5696,10 @@ button.student-dashboard-calendar-week-label:focus-visible {
   }
 
   .student-dashboard-classroom-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .student-dashboard-loading-classroom-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -5680,6 +5810,10 @@ button.student-dashboard-calendar-week-label:focus-visible {
   }
 
   .student-dashboard-classroom-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .student-dashboard-loading-classroom-grid {
     grid-template-columns: 1fr;
   }
 }

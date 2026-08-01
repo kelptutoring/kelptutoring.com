@@ -7,6 +7,8 @@ import { gunzipSync } from 'node:zlib'
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const expectedProjectId = 'kelptutoring.com-main'
+const expectedHostedProjectRef = 'vzbgijnwmavmdahybcxw'
+const expectedHostedApiUrl = `https://${expectedHostedProjectRef}.supabase.co`
 const provider = 'countries-states-cities'
 const defaultSource = 'data/location-catalog/v3.1-export.2/json-countries+states+cities.json.gz'
 const defaultRevision = 'v3.1-export.2'
@@ -44,11 +46,15 @@ const sourcePath = resolve(projectRoot, args.source || defaultSource)
 const sourceRevision = args.sourceRevision || defaultRevision
 const expectedSha256 = String(args.sha256 || defaultSha256).toLowerCase()
 
-if (!args.dryRun && !args.applyLocal) {
-  throw new Error('Choose --dry-run or --apply-local. No catalog writes are implicit.')
+const selectedModes = [args.dryRun, args.applyLocal, args.applyHosted].filter(Boolean).length
+if (selectedModes !== 1) {
+  throw new Error('Choose exactly one of --dry-run, --apply-local, or --apply-hosted. No catalog writes are implicit.')
 }
 if (args.applyLocal && args.confirmLocal !== expectedProjectId) {
   throw new Error(`Refusing a catalog import without --confirm-local=${expectedProjectId}.`)
+}
+if (args.applyHosted && args.confirmHosted !== expectedHostedProjectRef) {
+  throw new Error(`Refusing a hosted catalog import without --confirm-hosted=${expectedHostedProjectRef}.`)
 }
 
 const compressed = await readFile(sourcePath)
@@ -68,7 +74,9 @@ console.log(`Source ${sourceRevision}; SHA-256 ${sourceSha256}.`)
 if (args.dryRun) {
   console.log('Dry run complete. No database records were changed.')
 } else {
-  const context = await localSupabaseContext()
+  const context = args.applyLocal
+    ? await localSupabaseContext()
+    : hostedSupabaseContext()
   await requireCatalogSchema(context)
   await upsertBatches(context, 'profile_countries', ['country_code'], catalog.countries, 250)
   await upsertBatches(context, 'profile_regions', ['country_code', 'region_code'], catalog.regions, 500)
@@ -79,7 +87,7 @@ if (args.dryRun) {
   await deactivateProviderRows(context, 'profile_regions', 'kelp')
   await recordImport(context, catalog, sourceSha256)
   await verifyImport(context, catalog)
-  console.log('Local governed location catalog import completed and verified.')
+  console.log(`${context.label} governed location catalog import completed and verified.`)
 }
 
 function buildCatalog(countries) {
@@ -205,7 +213,22 @@ async function localSupabaseContext() {
     throw new Error(`Refusing non-local Supabase API: ${url.origin}.`)
   }
   if (!serviceRoleKey) throw new Error('Local Supabase did not expose a service-role key.')
-  return { apiUrl: url.origin, serviceRoleKey }
+  return { apiUrl: url.origin, serviceRoleKey, label: 'Local' }
+}
+
+function hostedSupabaseContext() {
+  const serviceRoleKey = String(process.env.KELP_SUPABASE_SECRET_KEY || '').trim()
+  if (!serviceRoleKey) {
+    throw new Error(
+      'Set KELP_SUPABASE_SECRET_KEY to the hosted project secret/service-role key for this one import. ' +
+      'Never place that key in frontend files.'
+    )
+  }
+  const apiUrl = String(process.env.KELP_SUPABASE_URL || expectedHostedApiUrl).trim().replace(/\/$/, '')
+  if (apiUrl !== expectedHostedApiUrl) {
+    throw new Error(`Refusing hosted Supabase API ${apiUrl}; expected ${expectedHostedApiUrl}.`)
+  }
+  return { apiUrl, serviceRoleKey, label: 'Hosted' }
 }
 
 async function requireCatalogSchema(context) {
@@ -313,7 +336,7 @@ async function fetchExpected(url, options, expectedStatuses) {
   const response = await fetch(url, options)
   if (!expectedStatuses.includes(response.status)) {
     const detail = (await response.text()).slice(0, 500)
-    throw new Error(`Local catalog request failed (${response.status}): ${detail}`)
+    throw new Error(`Catalog request failed (${response.status}): ${detail}`)
   }
   return response
 }
@@ -345,10 +368,12 @@ function parseArgs(values) {
   for (const value of values) {
     if (value === '--dry-run') parsed.dryRun = true
     else if (value === '--apply-local') parsed.applyLocal = true
+    else if (value === '--apply-hosted') parsed.applyHosted = true
     else if (value.startsWith('--source=')) parsed.source = value.slice('--source='.length)
     else if (value.startsWith('--source-revision=')) parsed.sourceRevision = value.slice('--source-revision='.length)
     else if (value.startsWith('--sha256=')) parsed.sha256 = value.slice('--sha256='.length)
     else if (value.startsWith('--confirm-local=')) parsed.confirmLocal = value.slice('--confirm-local='.length)
+    else if (value.startsWith('--confirm-hosted=')) parsed.confirmHosted = value.slice('--confirm-hosted='.length)
     else throw new Error(`Unknown argument: ${value}`)
   }
   return parsed
