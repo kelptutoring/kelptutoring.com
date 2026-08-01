@@ -69,11 +69,56 @@ assert.ok(
 assert.match(javascript, /removeModule/);
 assert.match(javascript, /undoOutlineChange/);
 assert.match(javascript, /redoOutlineChange/);
-assert.match(javascript, /window\.confirm/);
+assert.match(javascript, /confirmScheduleAction/);
+assert.match(html, /id="scheduleActionDialog"/);
+assert.doesNotMatch(javascript, /window\.confirm/);
 assert.match(javascript, /moveSessionAfter/);
 assert.match(javascript, /requestAnimationFrame/);
 assert.match(javascript, /kelpScheduleBuilderDraft/);
 assert.match(javascript, /restoreBuilderDraft/);
+assert.match(javascript, /Classroom content .* active Version/);
+assert.match(javascript, /Current eligible Sessions are preselected/);
+assert.match(javascript, /Add content from another Track/);
+assert.match(javascript, /createClassroomBuilderPreload/);
+assert.match(javascript, /courseDraftMatchesActiveVersion/);
+assert.match(javascript, /courseHierarchyActive/);
+assert.match(html, /id="selectionFinishActions"/);
+assert.match(html, /id="selectScheduleDatesBtn"/);
+assert.match(html, />\s*Select dates and cadence\s*</);
+assert.match(html, /id="courseChangeReason"/);
+assert.match(html, /class="cadence-choice-grid"/);
+assert.match(html, /Choose the IANA timezone used for this Schedule/);
+assert.match(javascript, /function openScheduleSettings\(\)/);
+assert.match(javascript, /Choose at least one governed Track Session for/);
+assert.match(javascript, /studentExplanation:\s*elements\.courseChangeReason\.value\.trim\(\)/);
+assert.match(javascript, /function activeCourseScheduleStartDate\(context\)/);
+assert.match(javascript, /elements\.startDate\.value = activeCourseScheduleStartDate\(courseEditor\)/);
+assert.match(javascript, /const versionStart = context\.schedule\?\.activeStartDate \|\| "";/);
+assert.match(javascript, /const lockedStart = context\.course\?\.startDate \|\| "";/);
+assert.match(javascript, /return versionStart \|\| activeStart \|\| lockedStart;/);
+assert.match(html, /id="restoreCurrentPlanBtn"[^>]*>Restore current plan</);
+assert.match(javascript, /function restoreCurrentCoursePlan\(\)/);
+assert.match(javascript, /elements\.restoreCurrentPlanBtn\.addEventListener\("click", restoreCurrentCoursePlan\)/);
+assert.match(javascript, /function resetReplacementScheduleSettings\(\)/);
+assert.match(javascript, /courseScheduleTrackRemovalState/);
+assert.match(javascript, /startsNewSchedule/);
+assert.match(javascript, /const replacementMode = Boolean\(/);
+assert.match(javascript, /courseEditor && courseRevisionMode\(\) === "replacement"/);
+assert.match(javascript, /activeItems: courseEditor && !replacementMode/);
+assert.match(javascript, /lockedStartDate: courseEditor && !replacementMode/);
+assert.match(javascript, /revisionMode: replacementMode/);
+assert.match(javascript, /state\.scheduledSessionIdsBySourceId = new Map\(\);/);
+assert.match(javascript, /Start a new Schedule without/);
+assert.match(javascript, /if \(!type\) throw new TypeError\("Choose a Schedule cadence\."\)/);
+assert.match(javascript, /state\.activeTrackIndex = 0;\s*renderTrackSessionSelection\(\)/);
+assert.match(javascript, /getOrderedSelectedTrackIds/);
+assert.match(javascript, /courseChangeReason\.value\.trim\(\)/);
+assert.match(javascript, /renderTrackSessionSelection\(\);\s*showStep\("session"\);/);
+assert.match(javascript, /moduleItem\.collapsed \? "Maximize" : "Minimize"/);
+assert.match(javascript, /if \(!state\.isInitializing\) focusCurrentStep\(stepName\)/);
+assert.match(javascript, /studentTimeZone\.readOnly = true/);
+assert.match(javascript, /courseEditor\?\.course\?\.studentTimeZone/);
+assert.match(javascript, /courseEditor && state\.currentStep === "session" && state\.courseHierarchyActive/);
 assert.match(javascript, /localStorage\.getItem\(progressStorageKey\) === null/);
 assert.match(generatedJavascript, /nextModuleNumber = 1/);
 assert.match(generatedHtml, /moduleColorTarget/);
@@ -101,6 +146,8 @@ assert.match(styles, /\.schedule-color-template-dialog\s*\{[\s\S]*?inset:\s*0;[\
 assert.match(styles, /\.schedule-dialog-close\s*\{[\s\S]*?border-radius:\s*9px;/);
 assert.match(styles, /\.schedule-preview-module-card\.is-drop-before::after/);
 assert.match(styles, /\.schedule-preview-module-card\.is-drop-after::after/);
+assert.match(styles, /\.cadence-choice-grid\s*\{[\s\S]*?grid-template-columns:\s*repeat\(2/);
+assert.match(styles, /\.schedule-settings-grid \.input-group textarea\s*\{[\s\S]*?max-width:\s*100%/);
 assert.match(styles, /border-bottom:\s*4px solid var\(--schedule-title-stripe-color\)/);
 assert.match(styles, /@media print[\s\S]*?\.difficulty-legend ul\s*\{[\s\S]*?grid-template-columns:\s*repeat\(3, minmax\(0, 1fr\)\);/);
 
@@ -142,7 +189,14 @@ assert.ok(generatorScriptIndex > outlineScriptIndex, "The builder must load afte
 
 await import("../src/data/tracks-data.js");
 const catalog = globalThis.tracksCatalog;
-assert.equal(catalog.schemaVersion, 1);
+assert.equal(catalog.schemaVersion, 2);
+assert.ok(
+  catalog.levels
+    .flatMap((level) => level.subjects)
+    .flatMap((subject) => subject.tracks)
+    .every((track) => Object.hasOwn(track, "academicPathway")),
+  "Every generated Track must expose explicit pathway metadata, including null for Regular presentation."
+);
 
 const sessions = catalog.levels
   .flatMap((level) => level.subjects)

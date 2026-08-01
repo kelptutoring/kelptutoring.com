@@ -87,7 +87,7 @@ declare payload jsonb := public.get_my_classroom_space(current_setting('test.cla
 begin
   if payload #>> '{classroom,id}' <> current_setting('test.classroom_a_id')
     or payload #>> '{viewer,membershipRole}' <> 'student'
-    or payload #>> '{featureStatus,liveClassTool}' <> 'schedule_bound' then
+    or payload #>> '{featureStatus,liveClassTool}' <> 'scheduled_class_required' then
     raise exception 'Student A could not open their authenticated persistent Classroom space.';
   end if;
 end;

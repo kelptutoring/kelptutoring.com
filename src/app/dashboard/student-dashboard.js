@@ -8,6 +8,7 @@ import {
 } from '../../data/studentData.js'
 import {
   CLASSROOM_CARD_COLOR_KEYS,
+  calendarReelStart,
   calendarRangeForView,
   moveCalendarAnchor,
   moveClassroomCard,
@@ -17,6 +18,7 @@ import {
 } from './student-dashboard-contract.js'
 import { bindStudentNavigation } from './student-navigation.js'
 import { mountWorkspaceSwitcher, renderDashboardIdentity } from './workspace-switcher.js'
+import { createLessonRequestFoundation } from '../shared/lesson-request-foundation.js'
 
 const MONTH_NAMES = [
   'January', 'February', 'March', 'April', 'May', 'June',
@@ -39,10 +41,13 @@ const state = {
   savingClassroomCards: false,
   draggingBlock: '',
   draggingClassroomId: '',
+  lessonRequest: null,
   calendar: {
     anchorDate: todayAtNoon(),
     payload: null,
     loading: false,
+    transitioning: false,
+    transitionId: 0,
     error: '',
     requestId: 0
   }
@@ -62,6 +67,11 @@ async function init() {
   if (!current) return
 
   collectElements()
+  state.lessonRequest = createLessonRequestFoundation({
+    dialogId: 'student-lesson-request-dialog',
+    triggerId: 'student-calendar-request-lesson',
+    storageScope: 'dashboard'
+  })
   renderDashboardIdentity(current, {
     activeRole: 'student',
     headingId: 'student-heading',
@@ -72,6 +82,7 @@ async function init() {
   bindDashboardMovement()
   bindCalendarView()
   bindCalendarNavigation()
+  bindCalendarDialogs()
   bindBlockCollapsing()
   bindDashboardDragAndDrop()
   bindClassroomCardInteractions()
@@ -87,6 +98,9 @@ function collectElements() {
   const ids = [
     'student-dashboard', 'student-dashboard-feedback', 'student-dashboard-error',
     'dashboard-grid', 'student-calendar-shell', 'student-classroom-cards', 'classrooms-summary',
+    'student-calendar-legend-dialog', 'student-calendar-day-dialog',
+    'student-calendar-day-dialog-title', 'student-calendar-day-dialog-events',
+    'student-calendar-event-tooltip',
     'logout-student'
   ]
   for (const id of ids) elements[toCamelCase(id)] = document.getElementById(id)
@@ -140,7 +154,13 @@ function bindCalendarView() {
   document.querySelectorAll('[data-calendar-view]').forEach((button) => {
     button.addEventListener('click', async () => {
       const nextView = button.dataset.calendarView
-      if (!state.preferences || state.saving || nextView === state.preferences.calendarView) return
+      if (
+        !state.preferences
+        || state.saving
+        || state.calendar.loading
+        || state.calendar.transitioning
+        || nextView === state.preferences.calendarView
+      ) return
       const previousPreferences = clonePreferences(state.preferences)
       state.preferences.calendarView = nextView
       renderCalendar()
@@ -155,14 +175,96 @@ function bindCalendarView() {
 function bindCalendarNavigation() {
   elements.calendarShell.addEventListener('click', (event) => {
     const button = event.target.closest('[data-calendar-navigation]')
-    if (!button || state.calendar.loading || state.saving) return
+    if (
+      !button
+      || state.calendar.loading
+      || state.calendar.transitioning
+      || state.saving
+    ) return
     const direction = button.dataset.calendarNavigation
-    state.calendar.anchorDate = direction === 'today'
+    const preservedViewport = captureCalendarNavigationViewport(button)
+    hideCalendarEventTooltip()
+    const previousAnchor = new Date(state.calendar.anchorDate)
+    const nextAnchor = direction === 'today'
       ? todayAtNoon()
       : moveCalendarAnchor(state.calendar.anchorDate, state.preferences.calendarView, direction)
-    renderCalendar()
-    void loadCalendarData()
+    const previousRange = calendarRangeForView(
+      previousAnchor,
+      state.preferences.calendarView
+    )
+    const nextRange = calendarRangeForView(nextAnchor, state.preferences.calendarView)
+    state.calendar.anchorDate = nextAnchor
+    if (
+      previousRange.startDate === nextRange.startDate
+      && previousRange.endDate === nextRange.endDate
+    ) {
+      void renderCalendar({ preservedViewport })
+      return
+    }
+    const motionDirection = calendarMotionDirection(previousAnchor, nextAnchor)
+    void loadCalendarData({
+      motionDirection,
+      fallbackAnchor: previousAnchor,
+      preservedViewport,
+      reelAnchors: direction === 'today'
+        ? calendarAnchorsBetween(previousAnchor, nextAnchor, state.preferences.calendarView)
+        : []
+    })
   })
+}
+
+function bindCalendarDialogs() {
+  elements.calendarShell.addEventListener('click', (event) => {
+    const requestDate = event.target.closest('[data-request-lesson-date]')
+    if (requestDate) {
+      state.lessonRequest?.open({
+        proposedDate: requestDate.dataset.requestLessonDate
+      })
+      return
+    }
+    const helper = event.target.closest('[data-open-calendar-helper]')
+    if (helper) {
+      elements.studentCalendarLegendDialog?.showModal()
+      return
+    }
+    const overflow = event.target.closest('[data-open-calendar-day]')
+    if (overflow) openCalendarDayDialog(overflow.dataset.openCalendarDay)
+  })
+
+  for (const dialog of [
+    elements.studentCalendarLegendDialog,
+    elements.studentCalendarDayDialog
+  ]) {
+    if (!dialog) continue
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog || event.target.closest('[data-close-calendar-dialog]')) {
+        dialog.close()
+      }
+    })
+  }
+
+  elements.calendarShell.addEventListener('pointerover', (event) => {
+    const calendarEvent = event.target.closest('.student-dashboard-calendar-event:not(.is-expanded)')
+    if (calendarEvent) showCalendarEventTooltip(calendarEvent)
+  })
+  elements.calendarShell.addEventListener('pointerout', (event) => {
+    const calendarEvent = event.target.closest('.student-dashboard-calendar-event:not(.is-expanded)')
+    if (calendarEvent && !calendarEvent.contains(event.relatedTarget)) {
+      hideCalendarEventTooltip()
+    }
+  })
+  elements.calendarShell.addEventListener('focusin', (event) => {
+    const calendarEvent = event.target.closest('.student-dashboard-calendar-event:not(.is-expanded)')
+    if (calendarEvent) showCalendarEventTooltip(calendarEvent)
+  })
+  elements.calendarShell.addEventListener('focusout', (event) => {
+    const calendarEvent = event.target.closest('.student-dashboard-calendar-event:not(.is-expanded)')
+    if (calendarEvent && !calendarEvent.contains(event.relatedTarget)) {
+      hideCalendarEventTooltip()
+    }
+  })
+  elements.calendarShell.addEventListener('scroll', hideCalendarEventTooltip, { passive: true })
+  window.addEventListener('resize', hideCalendarEventTooltip, { passive: true })
 }
 
 function bindDashboardDragAndDrop() {
@@ -279,57 +381,115 @@ function applyBlockOrder({ animate = false } = {}) {
       { transform: `translateY(${distance}px)` },
       { transform: 'translateY(0)' }
     ], {
-      duration: 360,
+      duration: 920,
       easing: 'cubic-bezier(0.22, 1, 0.36, 1)'
     })
     animation.id = 'dashboard-block-reorder'
   })
 }
 
-async function loadCalendarData() {
+async function loadCalendarData({
+  motionDirection = '',
+  fallbackAnchor = null,
+  preservedViewport = null,
+  reelAnchors = []
+} = {}) {
   if (!state.preferences) return
   const requestId = state.calendar.requestId + 1
   state.calendar.requestId = requestId
   state.calendar.loading = true
   state.calendar.error = ''
-  renderCalendar()
+  const preserveCurrentPeriod = Boolean(
+    motionDirection && elements.calendarShell.firstElementChild
+  )
+  if (preserveCurrentPeriod) setRenderedCalendarBusy(true)
+  else renderCalendar()
   const range = calendarRangeForView(state.calendar.anchorDate, state.preferences.calendarView)
+  let loaded = false
   try {
     const payload = await getStudentCalendarData(range.startDate, range.endDate)
     if (requestId !== state.calendar.requestId) return
     state.calendar.payload = payload
+    state.lessonRequest?.setCalendarPayload(payload)
+    loaded = true
   } catch (error) {
     if (requestId !== state.calendar.requestId) return
     console.error('Student Calendar failed:', error)
+    if (fallbackAnchor) state.calendar.anchorDate = new Date(fallbackAnchor)
+    if (!state.calendar.payload) state.lessonRequest?.setCalendarPayload(null)
     state.calendar.error = calendarErrorMessage(error)
   } finally {
     if (requestId === state.calendar.requestId) {
       state.calendar.loading = false
-      renderCalendar()
+      if (loaded && reelAnchors.length > 1) {
+        await playCalendarReel({
+          anchors: reelAnchors,
+          direction: motionDirection,
+          requestId,
+          preservedViewport
+        })
+      } else {
+        await renderCalendar({
+          motionDirection: loaded ? motionDirection : '',
+          preservedViewport
+        })
+      }
     }
   }
 }
 
-function renderCalendar() {
-  if (!state.preferences || !elements.calendarShell) return
+function renderCalendar({
+  motionDirection = '',
+  motionDuration = 380,
+  motionEasing = 'cubic-bezier(0.22, 1, 0.36, 1)',
+  keepBusy = false,
+  preservedViewport = null
+} = {}) {
+  if (!state.preferences || !elements.calendarShell) return Promise.resolve()
   const view = state.preferences.calendarView
   const anchor = state.calendar.anchorDate
+  const currentViewport = elements.calendarShell.querySelector(
+    ':scope > .student-dashboard-calendar-motion-viewport'
+  )
+  const shouldTransition = Boolean(
+    ['forward', 'backward'].includes(motionDirection)
+    && motionAllowed()
+    && currentViewport?.firstElementChild
+  )
+  const transitionId = state.calendar.transitionId + 1
+  state.calendar.transitionId = transitionId
+  state.calendar.transitioning = shouldTransition || keepBusy
   document.querySelectorAll('[data-calendar-view]').forEach((button) => {
     button.setAttribute('aria-pressed', String(button.dataset.calendarView === view))
+    button.disabled = state.calendar.loading || state.calendar.transitioning
+    button.setAttribute('aria-disabled', String(button.disabled || state.saving))
   })
-  elements.calendarShell.replaceChildren()
+  elements.calendarShell.setAttribute(
+    'aria-busy',
+    String(state.calendar.loading || state.calendar.transitioning)
+  )
 
   const heading = document.createElement('div')
   heading.className = 'student-dashboard-calendar-heading'
   const headingCopy = document.createElement('div')
   headingCopy.className = 'student-dashboard-calendar-heading-copy'
+  const titleLine = document.createElement('div')
+  titleLine.className = 'student-dashboard-calendar-heading-title'
   const title = document.createElement('strong')
   title.textContent = view === 'month'
     ? `${MONTH_NAMES[anchor.getMonth()]} ${anchor.getFullYear()}`
     : describeCurrentWeek(anchor)
+  const helper = document.createElement('button')
+  helper.type = 'button'
+  helper.className = 'student-dashboard-calendar-helper'
+  helper.dataset.openCalendarHelper = ''
+  helper.textContent = 'i'
+  helper.setAttribute('aria-label', 'Explain Calendar abbreviations')
+  titleLine.append(title, helper)
   const boundary = document.createElement('span')
+  boundary.dataset.calendarStatus = ''
   boundary.textContent = calendarStatusText()
-  headingCopy.append(title, boundary)
+  headingCopy.append(titleLine, boundary)
 
   const navigation = document.createElement('div')
   navigation.className = 'student-dashboard-calendar-navigation'
@@ -341,20 +501,108 @@ function renderCalendar() {
   )
   heading.append(headingCopy, navigation)
 
+  let content
   if (state.calendar.error) {
-    const error = document.createElement('p')
-    error.className = 'student-dashboard-calendar-error'
-    error.setAttribute('role', 'alert')
-    error.textContent = state.calendar.error
-    elements.calendarShell.append(heading, error)
+    content = document.createElement('p')
+    content.className = 'student-dashboard-calendar-error'
+    content.setAttribute('role', 'alert')
+    content.textContent = state.calendar.error
+  } else {
+    content = document.createElement('div')
+    content.className = `student-dashboard-calendar-canvas is-${view}`
+    if (view === 'month') renderMonthCalendar(content, anchor)
+    else renderWeekCalendar(content, anchor)
+  }
+  content.classList.add('calendar-motion-panel')
+
+  if (shouldTransition) {
+    const currentHeading = elements.calendarShell.querySelector(
+      ':scope > .student-dashboard-calendar-heading'
+    )
+    if (currentHeading) currentHeading.replaceWith(heading)
+    else elements.calendarShell.prepend(heading)
+    restoreCalendarNavigationViewport(preservedViewport)
+    return new Promise((resolve) => {
+      animateCalendarReel(currentViewport, content, motionDirection, () => {
+        if (state.calendar.transitionId === transitionId) {
+          state.calendar.transitioning = keepBusy
+          if (keepBusy) elements.calendarShell.setAttribute('aria-busy', 'true')
+          else setRenderedCalendarBusy(false)
+        }
+        restoreCalendarNavigationViewport(preservedViewport)
+        resolve()
+      }, {
+        duration: motionDuration,
+        easing: motionEasing
+      })
+    })
+  }
+
+  state.calendar.transitioning = keepBusy
+  const viewport = document.createElement('div')
+  viewport.className = 'calendar-motion-viewport student-dashboard-calendar-motion-viewport'
+  viewport.append(content)
+  elements.calendarShell.replaceChildren(heading, viewport)
+  restoreCalendarNavigationViewport(preservedViewport)
+  return Promise.resolve()
+}
+
+function animateCalendarReel(
+  viewport,
+  nextPanel,
+  direction,
+  onComplete,
+  {
+    duration = 380,
+    easing = 'cubic-bezier(0.22, 1, 0.36, 1)'
+  } = {}
+) {
+  const currentPanel = viewport.firstElementChild
+  if (!currentPanel || typeof currentPanel.animate !== 'function') {
+    viewport.replaceChildren(nextPanel)
+    onComplete()
     return
   }
 
-  const canvas = document.createElement('div')
-  canvas.className = `student-dashboard-calendar-canvas is-${view}`
-  if (view === 'month') renderMonthCalendar(canvas, anchor)
-  else renderWeekCalendar(canvas, anchor)
-  elements.calendarShell.append(heading, canvas)
+  const enteringFrom = direction === 'forward' ? 100 : -100
+  const leavingTo = enteringFrom * -1
+  const currentHeight = currentPanel.getBoundingClientRect().height
+  currentPanel.classList.add('calendar-motion-panel')
+  currentPanel.inert = true
+  currentPanel.setAttribute('aria-hidden', 'true')
+  nextPanel.inert = true
+  viewport.classList.add('is-transitioning')
+  viewport.append(nextPanel)
+  const nextHeight = nextPanel.getBoundingClientRect().height
+  viewport.style.height = `${Math.max(currentHeight, nextHeight)}px`
+
+  const options = {
+    duration,
+    easing,
+    fill: 'both'
+  }
+  const outgoing = currentPanel.animate([
+    { opacity: 1, transform: 'translate3d(0, 0, 0)' },
+    { opacity: 0.32, transform: `translate3d(${leavingTo}%, 0, 0)` }
+  ], options)
+  const incoming = nextPanel.animate([
+    { opacity: 0.32, transform: `translate3d(${enteringFrom}%, 0, 0)` },
+    { opacity: 1, transform: 'translate3d(0, 0, 0)' }
+  ], options)
+
+  Promise.allSettled([outgoing.finished, incoming.finished]).then(() => {
+    outgoing.cancel()
+    incoming.cancel()
+    if (!viewport.isConnected || !nextPanel.isConnected) {
+      onComplete()
+      return
+    }
+    viewport.replaceChildren(nextPanel)
+    nextPanel.inert = false
+    viewport.classList.remove('is-transitioning')
+    viewport.style.height = ''
+    onComplete()
+  })
 }
 
 function renderMonthCalendar(canvas, date) {
@@ -372,7 +620,7 @@ function renderMonthCalendar(canvas, date) {
   const month = date.getMonth()
   const leadingCells = new Date(year, month, 1).getDay()
   const daysInMonth = new Date(year, month + 1, 0).getDate()
-  const totalCells = Math.ceil((leadingCells + daysInMonth) / 7) * 7
+  const totalCells = 42
   for (let cellIndex = 0; cellIndex < totalCells; cellIndex += 1) {
     const dayNumber = cellIndex - leadingCells + 1
     const cell = document.createElement('div')
@@ -384,9 +632,18 @@ function renderMonthCalendar(canvas, date) {
     } else {
       const calendarDate = new Date(year, month, dayNumber, 12)
       const dateKey = formatCalendarDate(calendarDate)
-      const number = document.createElement('span')
+      const canRequestLesson = state.lessonRequest?.canStart() === true
+      const number = document.createElement(canRequestLesson ? 'button' : 'span')
       number.className = 'student-dashboard-calendar-day-number'
       number.textContent = String(dayNumber)
+      if (canRequestLesson) {
+        number.type = 'button'
+        number.dataset.requestLessonDate = dateKey
+        number.setAttribute(
+          'aria-label',
+          `Prepare a lesson request for ${MONTH_NAMES[month]} ${dayNumber}, ${year}`
+        )
+      }
       const dayEvents = calendarEventsForDate(dateKey)
       cell.setAttribute('aria-label', `${MONTH_NAMES[month]} ${dayNumber}, ${year}${dayEvents.length ? `, ${dayEvents.length} scheduled ${dayEvents.length === 1 ? 'item' : 'items'}` : ''}`)
       if (dateKey === formatCalendarDate(todayAtNoon())) {
@@ -394,7 +651,7 @@ function renderMonthCalendar(canvas, date) {
         cell.setAttribute('aria-current', 'date')
       }
       cell.append(number)
-      appendCalendarEvents(cell, dayEvents)
+      appendCalendarEvents(cell, dayEvents, { dateKey, visibleLimit: 2 })
     }
     canvas.append(cell)
   }
@@ -418,11 +675,20 @@ function renderWeekCalendar(canvas, anchorDate) {
       column.classList.add('is-today')
       column.setAttribute('aria-current', 'date')
     }
-    const label = document.createElement('span')
+    const canRequestLesson = state.lessonRequest?.canStart() === true
+    const label = document.createElement(canRequestLesson ? 'button' : 'span')
     label.className = 'student-dashboard-calendar-week-label'
     label.textContent = `${DAY_NAMES[date.getDay()]} ${date.getDate()}`
+    if (canRequestLesson) {
+      label.type = 'button'
+      label.dataset.requestLessonDate = dateKey
+      label.setAttribute(
+        'aria-label',
+        `Prepare a lesson request for ${MONTH_NAMES[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
+      )
+    }
     column.append(label)
-    appendCalendarEvents(column, dayEvents)
+    appendCalendarEvents(column, dayEvents, { dateKey, visibleLimit: 4 })
     if (!dayEvents.length && !state.calendar.loading) {
       const empty = document.createElement('span')
       empty.className = 'student-dashboard-calendar-empty'
@@ -433,7 +699,7 @@ function renderWeekCalendar(canvas, anchorDate) {
   }
 }
 
-function appendCalendarEvents(container, events) {
+function appendCalendarEvents(container, events, { dateKey = '', visibleLimit = events.length } = {}) {
   if (state.calendar.loading && !events.length) {
     const loading = document.createElement('span')
     loading.className = 'student-dashboard-calendar-empty'
@@ -441,20 +707,110 @@ function appendCalendarEvents(container, events) {
     container.append(loading)
     return
   }
-  events.forEach((event) => container.append(createCalendarEventLink(event)))
+  events.slice(0, visibleLimit).forEach((event) => {
+    container.append(createCalendarEventLink(event))
+  })
+  if (events.length > visibleLimit) {
+    const overflow = document.createElement('button')
+    overflow.type = 'button'
+    overflow.className = 'student-dashboard-calendar-overflow'
+    overflow.dataset.openCalendarDay = dateKey
+    overflow.textContent = `+${events.length - visibleLimit} more`
+    overflow.setAttribute(
+      'aria-label',
+      `Show all ${events.length} scheduled items for ${formatCalendarDayHeading(dateKey)}`
+    )
+    container.append(overflow)
+  }
 }
 
-function createCalendarEventLink(event) {
+function createCalendarEventLink(event, { expanded = false } = {}) {
   const link = document.createElement('a')
   link.className = `student-dashboard-calendar-event is-${event.kind}`
-  link.dataset.cardColor = calendarEventColor(event)
-  link.href = event.action?.type === 'open_practice'
-    ? `../course-builder/course-practice.html?assignment=${encodeURIComponent(event.action.assignmentId)}`
-    : `../classroom/classroom-space.html?classroom=${encodeURIComponent(event.classroomId)}`
-  link.textContent = event.title
-  link.title = `${calendarEventKindLabel(event.kind)}: ${event.title}${event.detail ? ` — ${event.detail}` : ''}`
-  link.setAttribute('aria-label', link.title)
+  if (expanded) link.classList.add('is-expanded')
+  applyCalendarEventPresentation(link, event)
+  link.href = calendarEventDestination(event)
+  const fullLabel = calendarEventFullLabel(event)
+  link.dataset.eventId = event.id
+  if (expanded) renderCalendarEventDescription(link, event)
+  else link.textContent = calendarEventCompactLabel(event)
+  link.setAttribute('aria-label', fullLabel)
   return link
+}
+
+function calendarEventDestination(event) {
+  if (event.action?.type === 'open_practice') {
+    return `../course-builder/course-practice.html?assignment=${encodeURIComponent(event.action.assignmentId)}`
+  }
+  if (event.action?.type === 'open_track_session' && event.action.href) {
+    return event.action.href
+  }
+  return `../classroom/classroom-space.html?classroom=${encodeURIComponent(event.classroomId)}`
+}
+
+function showCalendarEventTooltip(calendarEvent) {
+  const tooltip = elements.studentCalendarEventTooltip
+  const eventId = calendarEvent?.dataset?.eventId
+  const event = state.calendar.payload?.events?.find((item) => item.id === eventId)
+  if (!tooltip || !event) return
+
+  renderCalendarEventDescription(tooltip, event)
+  tooltip.hidden = false
+  tooltip.style.left = '0px'
+  tooltip.style.top = '0px'
+  tooltip.style.maxWidth = ''
+
+  const shellBounds = elements.calendarShell.getBoundingClientRect()
+  const eventBounds = calendarEvent.getBoundingClientRect()
+  const horizontalInset = 8
+  const availableWidth = Math.max(180, shellBounds.width - (horizontalInset * 2))
+  tooltip.style.maxWidth = `${Math.min(300, availableWidth)}px`
+  const tooltipBounds = tooltip.getBoundingClientRect()
+  const minimumLeft = Math.max(shellBounds.left + horizontalInset, horizontalInset)
+  const maximumLeft = Math.max(
+    minimumLeft,
+    Math.min(
+      shellBounds.right - tooltipBounds.width - horizontalInset,
+      window.innerWidth - tooltipBounds.width - horizontalInset
+    )
+  )
+  const left = Math.min(Math.max(eventBounds.left, minimumLeft), maximumLeft)
+
+  let top = eventBounds.bottom + 6
+  if (top + tooltipBounds.height > shellBounds.bottom - 8) {
+    top = eventBounds.top - tooltipBounds.height - 6
+  }
+  const minimumTop = Math.max(shellBounds.top + 8, 8)
+  const maximumTop = Math.max(
+    minimumTop,
+    Math.min(
+      shellBounds.bottom - tooltipBounds.height - 8,
+      window.innerHeight - tooltipBounds.height - 8
+    )
+  )
+  top = Math.min(Math.max(top, minimumTop), maximumTop)
+  tooltip.style.left = `${Math.round(left)}px`
+  tooltip.style.top = `${Math.round(top)}px`
+}
+
+function hideCalendarEventTooltip() {
+  const tooltip = elements.studentCalendarEventTooltip
+  if (!tooltip) return
+  tooltip.hidden = true
+}
+
+function openCalendarDayDialog(dateKey) {
+  const dialog = elements.studentCalendarDayDialog
+  if (!dialog || typeof dialog.showModal !== 'function') return
+  const events = calendarEventsForDate(dateKey)
+  elements.studentCalendarDayDialogTitle.textContent = formatCalendarDayHeading(dateKey)
+  elements.studentCalendarDayDialogEvents.replaceChildren()
+  for (const event of events) {
+    elements.studentCalendarDayDialogEvents.append(
+      createCalendarEventLink(event, { expanded: true })
+    )
+  }
+  dialog.showModal()
 }
 
 function createCalendarNavigationButton(direction, label, accessibleName) {
@@ -463,8 +819,130 @@ function createCalendarNavigationButton(direction, label, accessibleName) {
   button.dataset.calendarNavigation = direction
   button.textContent = label
   button.setAttribute('aria-label', accessibleName)
-  button.disabled = state.calendar.loading || state.saving
+  button.disabled = state.calendar.loading || state.calendar.transitioning
+  button.setAttribute('aria-disabled', String(button.disabled || state.saving))
   return button
+}
+
+function setRenderedCalendarBusy(busy) {
+  elements.calendarShell.setAttribute('aria-busy', String(busy))
+  elements.calendarShell.querySelectorAll('[data-calendar-navigation]').forEach((button) => {
+    button.disabled = busy
+    button.setAttribute('aria-disabled', String(busy || state.saving))
+  })
+  document.querySelectorAll('[data-calendar-view]').forEach((button) => {
+    button.disabled = busy
+    button.setAttribute('aria-disabled', String(busy || state.saving))
+  })
+  const status = elements.calendarShell.querySelector('[data-calendar-status]')
+  if (status && busy) status.textContent = 'Loading your schedule\u2026'
+}
+
+async function playCalendarReel({
+  anchors,
+  direction,
+  requestId,
+  preservedViewport = null
+}) {
+  const finalAnchor = anchors[anchors.length - 1]
+  if (!finalAnchor) {
+    await renderCalendar({ preservedViewport })
+    return
+  }
+  if (
+    !motionAllowed()
+    || !['forward', 'backward'].includes(direction)
+  ) {
+    state.calendar.anchorDate = new Date(finalAnchor)
+    await renderCalendar({ preservedViewport })
+    return
+  }
+
+  const stepDuration = Math.max(
+    72,
+    Math.min(220, Math.round(1800 / anchors.length))
+  )
+  for (let index = 0; index < anchors.length; index += 1) {
+    if (requestId !== state.calendar.requestId) return
+    const isLast = index === anchors.length - 1
+    state.calendar.anchorDate = new Date(anchors[index])
+    await renderCalendar({
+      motionDirection: direction,
+      motionDuration: stepDuration,
+      motionEasing: isLast ? 'cubic-bezier(0.22, 1, 0.36, 1)' : 'linear',
+      keepBusy: !isLast,
+      preservedViewport
+    })
+  }
+}
+
+function captureCalendarNavigationViewport(button) {
+  return {
+    scrollX: window.scrollX,
+    scrollY: window.scrollY,
+    focusedDirection: document.activeElement === button
+      ? button.dataset.calendarNavigation
+      : null
+  }
+}
+
+function restoreCalendarNavigationViewport(snapshot) {
+  if (!snapshot || !Number.isFinite(snapshot.scrollY)) return
+  if (snapshot.focusedDirection) {
+    elements.calendarShell.querySelector(
+      `[data-calendar-navigation="${snapshot.focusedDirection}"]`
+    )?.focus({ preventScroll: true })
+  }
+  const root = document.documentElement
+  const maxScrollX = Math.max(0, root.scrollWidth - window.innerWidth)
+  const maxScrollY = Math.max(0, root.scrollHeight - window.innerHeight)
+  const targetX = Math.min(Math.max(0, snapshot.scrollX || 0), maxScrollX)
+  const targetY = Math.min(Math.max(0, snapshot.scrollY), maxScrollY)
+  if (
+    Math.abs(window.scrollX - targetX) > 1
+    || Math.abs(window.scrollY - targetY) > 1
+  ) {
+    window.scrollTo({ top: targetY, left: targetX, behavior: 'auto' })
+  }
+}
+
+function calendarAnchorsBetween(previousAnchor, nextAnchor, view) {
+  const direction = calendarMotionDirection(previousAnchor, nextAnchor)
+  if (!direction) return []
+  const navigationDirection = direction === 'forward' ? 'next' : 'previous'
+  const targetRange = calendarRangeForView(nextAnchor, view)
+  const anchors = []
+  const boundedStart = calendarReelStart(previousAnchor, nextAnchor, view)
+  let cursor = new Date(boundedStart)
+  if (boundedStart.getTime() !== new Date(previousAnchor).getTime()) {
+    anchors.push(new Date(boundedStart))
+  }
+
+  for (let step = 0; step < 600; step += 1) {
+    const candidate = moveCalendarAnchor(cursor, view, navigationDirection)
+    const candidateRange = calendarRangeForView(candidate, view)
+    const reachedTarget = direction === 'forward'
+      ? candidateRange.startDate >= targetRange.startDate
+      : candidateRange.startDate <= targetRange.startDate
+    if (reachedTarget) {
+      anchors.push(new Date(nextAnchor))
+      return anchors
+    }
+    anchors.push(candidate)
+    cursor = candidate
+  }
+
+  anchors.push(new Date(nextAnchor))
+  return anchors
+}
+
+function calendarMotionDirection(previousAnchor, nextAnchor) {
+  const previousTime = new Date(previousAnchor).getTime()
+  const nextTime = new Date(nextAnchor).getTime()
+  if (!Number.isFinite(previousTime) || !Number.isFinite(nextTime)) return ''
+  if (nextTime > previousTime) return 'forward'
+  if (nextTime < previousTime) return 'backward'
+  return ''
 }
 
 function calendarStatusText() {
@@ -486,17 +964,110 @@ function calendarEventsForDate(dateKey) {
   return visibleCalendarEvents().filter((event) => event.startsOn === dateKey)
 }
 
-function calendarEventColor(event) {
-  return state.dashboard?.classrooms?.find((item) => item.courseId === event.courseId)?.card?.colorKey
-    || event.colorKey
-    || 'ocean'
+function applyCalendarEventPresentation(element, event) {
+  const source = event.presentationColorSource || 'event_kind'
+  element.dataset.colorSource = source
+
+  if (
+    source === 'module'
+    && event.modulePresentation?.headerColor
+    && event.modulePresentation?.rowColor
+  ) {
+    element.style.setProperty('--calendar-event-start', event.modulePresentation.rowColor)
+    element.style.setProperty(
+      '--calendar-event-end',
+      `color-mix(in srgb, ${event.modulePresentation.rowColor} 58%, white)`
+    )
+    element.style.setProperty('--calendar-event-border', event.modulePresentation.headerColor)
+    element.style.setProperty('--calendar-event-accent', event.modulePresentation.headerColor)
+    return
+  }
+
+  if (source === 'classroom') {
+    element.dataset.cardColor = state.dashboard?.classrooms
+      ?.find((item) => item.courseId === event.courseId)?.card?.colorKey
+      || event.colorKey
+      || 'ocean'
+  }
 }
 
 function calendarEventKindLabel(kind) {
+  if (kind === 'regular_class') return 'Regular class'
+  if (kind === 'extra_class') return 'Extra class'
+  if (kind === 'independent_progress') return 'Independent study'
   if (kind === 'assignment_due') return 'Assignment due'
   if (kind === 'schedule_milestone') return 'Schedule milestone'
   if (kind === 'course_start') return 'Course begins'
-  return 'Course scheduled end'
+  return 'Course ends'
+}
+
+function calendarEventCompactLabel(event) {
+  return [
+    event.eventCode || calendarEventCode(event.kind),
+    event.educationLevel?.code,
+    event.compactAcademicLabel || event.focus || event.subject
+  ].filter(Boolean).join(' ')
+}
+
+function calendarEventFullLabel(event) {
+  return calendarEventDescriptionLines(event).join(' · ')
+}
+
+function calendarEventDescriptionLines(event) {
+  const label = calendarEventKindLabel(event.kind) || event.eventLabel || 'Calendar event'
+  const notableStatuses = new Set([
+    'awaiting', 'pending_confirmation', 'not_delivered', 'cancelled'
+  ])
+  const status = notableStatuses.has(event.status)
+    ? ` · ${event.status.replaceAll('_', ' ')}`
+    : ''
+  const pathwayNames = Array.isArray(event.academicPathways)
+    ? event.academicPathways.map((pathway) => pathway?.name).filter(Boolean)
+    : []
+  const educationContext = [
+    event.educationLevel?.name,
+    pathwayNames.join(' + ')
+  ].filter(Boolean).join(' \u00b7 ')
+  const academicContext = [event.subject, event.focus]
+    .filter(Boolean)
+    .filter((value, index, values) => values.indexOf(value) === index)
+    .join(' · ')
+  return [
+    `${label}${status}`,
+    educationContext,
+    event.academicScope === 'course' && event.academicPath
+      ? event.academicPath
+      : academicContext,
+    event.title || event.detail || event.courseTitle
+  ].filter(Boolean)
+}
+
+function renderCalendarEventDescription(container, event) {
+  container.replaceChildren()
+  calendarEventDescriptionLines(event).forEach((line, index) => {
+    const row = document.createElement(index === 0 ? 'strong' : 'span')
+    row.className = `student-dashboard-calendar-description-line is-line-${index + 1}`
+    row.textContent = line
+    container.append(row)
+  })
+}
+
+function calendarEventCode(kind) {
+  return {
+    course_start: 'CB',
+    course_end: 'CE',
+    schedule_milestone: 'SM',
+    regular_class: 'RC',
+    extra_class: 'EC',
+    independent_progress: 'IP',
+    assignment_due: 'AD'
+  }[kind] || 'EV'
+}
+
+function formatCalendarDayHeading(dateKey) {
+  const date = new Date(`${dateKey}T12:00:00`)
+  if (Number.isNaN(date.getTime())) return 'Scheduled items'
+  return `${MONTH_NAMES[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
 }
 
 function calendarErrorMessage(error) {
@@ -680,6 +1251,25 @@ function bindClassroomCardInteractions() {
       card.classList.remove('is-dragging')
     })
   })
+
+  document.addEventListener('click', closeClassroomCardMenusOutside)
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return
+    const openMenu = elements.classroomCards.querySelector(
+      '.student-dashboard-classroom-card-menu[open]'
+    )
+    if (!openMenu) return
+    openMenu.open = false
+    openMenu.querySelector('summary')?.focus({ preventScroll: true })
+  })
+}
+
+function closeClassroomCardMenusOutside(event) {
+  elements.classroomCards.querySelectorAll(
+    '.student-dashboard-classroom-card-menu[open]'
+  ).forEach((menu) => {
+    if (!menu.contains(event.target)) menu.open = false
+  })
 }
 
 async function moveClassroomCardBy(classroomId, direction) {
@@ -777,7 +1367,7 @@ function applyClassroomCardOrder({ animate = false } = {}) {
     const animation = card.animate([
       { transform: `translate(${x}px, ${y}px)` },
       { transform: 'translate(0, 0)' }
-    ], { duration: 360, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' })
+    ], { duration: 920, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' })
     animation.id = 'classroom-card-reorder'
   })
 }
@@ -848,8 +1438,14 @@ function updateMoveControls() {
     const index = state.preferences.blockOrder.indexOf(block.dataset.dashboardBlock)
     const up = block.querySelector('[data-move-dashboard-block="up"]')
     const down = block.querySelector('[data-move-dashboard-block="down"]')
-    if (up) up.disabled = state.saving || index <= 0
-    if (down) down.disabled = state.saving || index >= state.preferences.blockOrder.length - 1
+    if (up) {
+      up.disabled = index <= 0
+      up.setAttribute('aria-disabled', String(up.disabled || state.saving))
+    }
+    if (down) {
+      down.disabled = index >= state.preferences.blockOrder.length - 1
+      down.setAttribute('aria-disabled', String(down.disabled || state.saving))
+    }
   })
 }
 
@@ -860,14 +1456,20 @@ function clearDropTargets() {
 }
 
 function setPreferenceControlsBusy(busy) {
-  elements.root.classList.toggle('is-saving-preferences', busy)
-  document.querySelectorAll('[data-calendar-view]').forEach((button) => { button.disabled = busy })
-  document.querySelectorAll('[data-calendar-navigation]').forEach((button) => {
-    button.disabled = busy || state.calendar.loading
+  elements.root.setAttribute('aria-busy', String(busy))
+  document.querySelectorAll('[data-calendar-view]').forEach((button) => {
+    button.setAttribute('aria-disabled', String(busy || button.disabled))
   })
-  document.querySelectorAll('[data-toggle-dashboard-block]').forEach((button) => { button.disabled = busy })
+  document.querySelectorAll('[data-calendar-navigation]').forEach((button) => {
+    button.disabled = state.calendar.loading || state.calendar.transitioning
+    button.setAttribute('aria-disabled', String(busy || button.disabled))
+  })
+  document.querySelectorAll('[data-toggle-dashboard-block]').forEach((button) => {
+    button.disabled = false
+    button.setAttribute('aria-disabled', String(busy))
+  })
   document.querySelectorAll('[data-dashboard-drag-handle]').forEach((handle) => {
-    handle.draggable = !busy
+    handle.draggable = true
     handle.setAttribute('aria-disabled', String(busy))
   })
   updateMoveControls()

@@ -34,7 +34,7 @@
       trackId: plan.trackId || null,
       trackTitle: plan.trackTitle || "",
       title: stripModuleNumber(plan.moduleTitle),
-      collapsed: false
+      collapsed: true
     };
   }
 
@@ -302,7 +302,7 @@
       trackId: module.trackId || null,
       trackTitle: module.trackTitle || "",
       title: stripModuleNumber(module.title || "New module"),
-      collapsed: false
+      collapsed: true
     });
     return normalizeMembership(items);
   }

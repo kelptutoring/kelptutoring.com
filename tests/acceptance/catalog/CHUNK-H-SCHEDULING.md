@@ -262,6 +262,32 @@ Ensure a mentor/tutor sees only students linked through an active permitted rela
 - Minimum evidence: future E3 relationship-aware RPC/RLS assertions.
 - Invariants: `INV-REL-001`, `INV-REL-002`, `INV-SCOPE-001`, `INV-HISTORY-001`.
 
-## Phase 7 execution note
+### SCHED-008 — Progress and pacing authority remains role-aware
 
-Available automation characterizes the core date/cadence and outline logic, while the complete cases still include browser/environment assertions and therefore remain partial. Browser persistence and database synchronization cases require recorded browser/RPC evidence after the local reset. `SCHED-007` deliberately remains Draft because role membership and account relationships are different authorization facts.
+- Student, assigned Tutor, and supervisory Mentor actions retain their distinct authority.
+- Tutor and Mentor progress changes require one Student-visible explanation.
+- Ordinary current-time pre-start progress is allowed; an explicit historical timestamp before the Course start is rejected.
+- A Student cannot mark Studied during the six-hour hold before a recurring or booked on-demand Class, while Reviewed and Practiced remain available.
+- Adaptive pacing advances unfinished work outside the hold; Static pacing preserves future dates.
+- Reversing Studied progress restores the stable Session after its nearest surviving predecessor on the current cadence, never on a stale mark-time date.
+- A cadence revision publishes one complete frontend-calculated future lane; the server rejects vacancies, identity drift, and weekdays inherited from the former Version.
+- Course End contracts and expands with the same active effective lane; Static pacing retains its frozen terminal date.
+- Evidence: `npm run test:schedule-cadence-change-regressions`, `npm run test:schedule-regression-checkpoint`, `course-progress-ledger-db-self-test.sql`, and `course-schedule-pacing-policy-db-self-test.sql`.
+
+### SCHED-009 — Schedule continuation and replacement preserve the correct history
+
+- Removing an untouched Track is a continuation and does not discard legitimate progress.
+- Removing a started Track requires explicit full replacement; the retired Schedule and its progress remain available through History.
+- Studied and delivered work remain date-locked. Practiced work remains retained but may move with future pacing.
+- Qualification failures reject publication atomically without creating a Version or receipt.
+- Evidence: `npm run test:schedule-cadence-continuation`, `npm run test:schedule-regression-checkpoint`, and `course-schedule-qualification-publication-db-self-test.sql`.
+
+### SCHED-010 — The consolidated regression gate leaves no database residue
+
+- The complete Classroom and Schedule source suites run alongside all canonical rollback database characterizations.
+- The post-run audit verifies all nine deterministic actors and scans nested Phase keys such as `phase5g2-4-7-2-db-*`.
+- Evidence: `RUN-20260731-004`.
+
+## Phase 5.G execution note
+
+Phase 5.G.2.4.7.4 closes the consolidated role, progress, pacing, revision, qualification, History, and cleanup checkpoint. Browser-only visual judgment remains a manual-QA concern, but the underlying source contracts and all 35 database characterizations are executable and passed in `RUN-20260731-004`. `SCHED-007` deliberately remains Draft because role membership and account relationships are different authorization facts.

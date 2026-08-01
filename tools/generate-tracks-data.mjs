@@ -1,4 +1,5 @@
 import { promises as fs } from 'node:fs';
+import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -30,6 +31,29 @@ function getPlanningHref(markdownFile) {
   if (!markdownFile) return null;
   const htmlFile = markdownFile.replace(/\.md$/i, '.html');
   return toPosix(path.relative(scheduleGeneratorRoot, htmlFile));
+}
+
+function getContentVersionKey(markdown) {
+  const normalized = String(markdown || '').replace(/\r\n?/g, '\n');
+  return `sha256:${createHash('sha256').update(normalized, 'utf8').digest('hex')}`;
+}
+
+function taxonomySlug(value) {
+  const slug = slugify(value);
+  return slug === 'math' ? 'mathematics' : slug;
+}
+
+function getAcademicPathway(...pages) {
+  for (const page of pages) {
+    const title = String(page?.meta?.academicPathway || '').trim();
+    if (!title) continue;
+    return {
+      key: slugify(title),
+      title,
+      taxonomySlug: slugify(title)
+    };
+  }
+  return null;
 }
 
 function parseFrontMatter(markdown, sourceFile) {
@@ -123,6 +147,15 @@ async function readWeekBody(markdownFile) {
   return parseFrontMatter(markdown, markdownFile).body;
 }
 
+async function readWeekSource(markdownFile) {
+  const markdown = await fs.readFile(markdownFile, 'utf8');
+  const { body } = parseFrontMatter(markdown, markdownFile);
+  return {
+    body,
+    sourceContentVersionKey: getContentVersionKey(markdown)
+  };
+}
+
 function combineTitleAndDescription(card) {
   if (!card.description) {
     return card.title;
@@ -210,6 +243,23 @@ async function getWeekDifficulty(modulePageFile, weekCard) {
   }
 }
 
+async function getWeekSourceDetails(modulePageFile, weekCard) {
+  const weekFile = toMarkdownPath(modulePageFile, weekCard.href);
+  if (!weekFile) {
+    return { difficulty: '', sourceContentVersionKey: null };
+  }
+
+  try {
+    const source = await readWeekSource(weekFile);
+    return {
+      difficulty: extractDifficulty(source.body),
+      sourceContentVersionKey: source.sourceContentVersionKey
+    };
+  } catch {
+    return { difficulty: '', sourceContentVersionKey: null };
+  }
+}
+
 function getWeekTitle(weekCard) {
   const title = weekCard.title.trim();
   if (/^Week\s+\d+\s*:/i.test(title)) {
@@ -247,13 +297,15 @@ async function buildSessions(modulePage, moduleId) {
     const sessionId = sessionFile
       ? getContentId('session', sessionFile)
       : getContentId('session', `${modulePage.file}-${weekCard.number || weekCard.title}`);
+    const sourceDetails = await getWeekSourceDetails(modulePage.file, weekCard);
 
     sessions.push({
       id: sessionId,
       sourceSessionId: sessionId,
       moduleId,
       title: getWeekTitle(weekCard),
-      difficulty: await getWeekDifficulty(modulePage.file, weekCard),
+      difficulty: sourceDetails.difficulty,
+      sourceContentVersionKey: sourceDetails.sourceContentVersionKey,
       planningHref: getPlanningHref(sessionFile),
       type: 'lesson'
     });
@@ -288,6 +340,8 @@ async function buildCatalogTracks(subjectPage, subjectTitle) {
     return [{
       id: getContentId('track', subjectPage.file),
       title: subjectTitle,
+      taxonomySlug: taxonomySlug(subjectTitle),
+      academicPathway: getAcademicPathway(subjectPage),
       isImplicit: true,
       modules: await buildCatalogModules(subjectPage)
     }];
@@ -305,7 +359,9 @@ async function buildCatalogTracks(subjectPage, subjectTitle) {
     tracks.push({
       id: getContentId('track', trackFile),
       title: trackCard.title,
+      taxonomySlug: taxonomySlug(trackCard.title),
       description: trackCard.description || '',
+      academicPathway: getAcademicPathway(trackPage, subjectPage),
       isImplicit: false,
       modules: await buildCatalogModules(trackPage)
     });
@@ -317,7 +373,7 @@ async function buildCatalogTracks(subjectPage, subjectTitle) {
 export async function buildTracksCatalog({ root = schedulesRoot } = {}) {
   const rootPage = await readSchedulePage(path.join(root, 'schedules.md'));
   const catalog = {
-    schemaVersion: 1,
+    schemaVersion: 2,
     levels: []
   };
 
@@ -331,6 +387,7 @@ export async function buildTracksCatalog({ root = schedulesRoot } = {}) {
     const level = {
       id: getContentId('level', levelFile),
       title: levelCard.title,
+      taxonomySlug: taxonomySlug(levelCard.title),
       subjects: []
     };
 
@@ -344,6 +401,7 @@ export async function buildTracksCatalog({ root = schedulesRoot } = {}) {
       level.subjects.push({
         id: getContentId('subject', subjectFile),
         title: subjectCard.title,
+        taxonomySlug: taxonomySlug(subjectCard.title),
         tracks: await buildCatalogTracks(subjectPage, subjectCard.title)
       });
     }

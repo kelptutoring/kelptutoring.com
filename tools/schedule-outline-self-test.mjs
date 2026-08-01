@@ -40,6 +40,10 @@ const plans = [
 
 const outline = outlineDomain.createOutline(plans);
 assert.deepEqual(outlineDomain.listModules(outline).map((module) => module.id), ["module_a", "module_b"]);
+assert.ok(
+  outline.filter((item) => item.kind === "module").every((module) => module.collapsed),
+  "Review-and-reorder modules must start minimized."
+);
 assert.equal(outlineDomain.listPlans(outline).at(-1).moduleId, "module_b");
 
 outlineDomain.renameModule(outline, "module:module_a", "Core foundations");
@@ -67,6 +71,11 @@ outlineDomain.addModule(editableOutline, {
 assert.deepEqual(
   outlineDomain.listModules(editableOutline).map((module) => module.id),
   ["module_a", "module_b", "module_custom"]
+);
+assert.equal(
+  editableOutline.filter((item) => item.kind === "module").at(-1).collapsed,
+  true,
+  "A newly added Review-and-reorder module must start minimized."
 );
 
 outlineDomain.moveModuleByDirection(editableOutline, "module:module_custom", -1);

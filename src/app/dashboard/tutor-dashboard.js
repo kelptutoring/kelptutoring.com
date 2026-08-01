@@ -22,6 +22,7 @@ let currentStudentId = null;
 let currentClassId = null;
 let calendarYear = new Date().getFullYear();
 let calendarMonth = new Date().getMonth();
+let calendarTransitioning = false;
 
 init();
 
@@ -71,6 +72,7 @@ function bindCalendarNavigation() {
 }
 
 function shiftMonth(delta) {
+  if (calendarTransitioning) return;
   calendarMonth += delta;
   if (calendarMonth < 0) {
     calendarMonth = 11;
@@ -80,13 +82,24 @@ function shiftMonth(delta) {
     calendarMonth = 0;
     calendarYear += 1;
   }
-  renderCalendar();
+  renderCalendar({ motionDirection: delta > 0 ? 'forward' : 'backward' });
 }
 
-function renderCalendar() {
+function renderCalendar({ motionDirection = '' } = {}) {
   const root = document.getElementById('tutor-calendar-grid');
+  const viewport = ensureTutorCalendarViewport(root);
   const label = document.getElementById('tutor-calendar-label');
   const summary = document.getElementById('tutor-calendar-summary');
+  const shouldTransition = Boolean(
+    ['forward', 'backward'].includes(motionDirection)
+    && root.childElementCount
+    && typeof root.animate === 'function'
+    && !window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches
+  );
+  const previousHeight = shouldTransition
+    ? root.getBoundingClientRect().height
+    : 0;
+  const outgoing = shouldTransition ? root.cloneNode(true) : null;
   const year = calendarYear;
   const month = calendarMonth;
   const firstDay = new Date(year, month, 1);
@@ -123,11 +136,93 @@ function renderCalendar() {
       </article>
     `;
   }
+  const trailingCells = Math.max(0, 42 - (startOffset + daysInMonth));
+  for (let i = 0; i < trailingCells; i += 1) {
+    html += '<div class="month-day muted"></div>';
+  }
 
   root.innerHTML = html;
   root.querySelectorAll('[data-calendar-event-id]').forEach((button) => {
     button.addEventListener('click', () => openCalendarModal(button.dataset.calendarEventId));
   });
+  if (outgoing) {
+    animateTutorCalendarReel({
+      viewport,
+      outgoing,
+      incoming: root,
+      direction: motionDirection,
+      previousHeight
+    });
+  }
+}
+
+function ensureTutorCalendarViewport(root) {
+  if (root.parentElement?.classList.contains('tutor-calendar-motion-viewport')) {
+    return root.parentElement;
+  }
+  const viewport = document.createElement('div');
+  viewport.className = 'calendar-motion-viewport tutor-calendar-motion-viewport';
+  root.before(viewport);
+  viewport.append(root);
+  root.classList.add('calendar-motion-panel');
+  return viewport;
+}
+
+function animateTutorCalendarReel({
+  viewport,
+  outgoing,
+  incoming,
+  direction,
+  previousHeight
+}) {
+  calendarTransitioning = true;
+  setTutorCalendarNavigationBusy(true);
+  outgoing.removeAttribute('id');
+  outgoing.classList.add('calendar-motion-panel');
+  outgoing.inert = true;
+  outgoing.setAttribute('aria-hidden', 'true');
+  incoming.inert = true;
+  const nextHeight = incoming.getBoundingClientRect().height;
+  viewport.classList.add('is-transitioning');
+  viewport.style.height = `${Math.max(previousHeight, nextHeight)}px`;
+  viewport.insertBefore(outgoing, incoming);
+
+  const enteringFrom = direction === 'forward' ? 100 : -100;
+  const leavingTo = enteringFrom * -1;
+  const options = {
+    duration: 380,
+    easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+    fill: 'both'
+  };
+  const outgoingAnimation = outgoing.animate([
+    { opacity: 1, transform: 'translate3d(0, 0, 0)' },
+    { opacity: 0.32, transform: `translate3d(${leavingTo}%, 0, 0)` }
+  ], options);
+  const incomingAnimation = incoming.animate([
+    { opacity: 0.32, transform: `translate3d(${enteringFrom}%, 0, 0)` },
+    { opacity: 1, transform: 'translate3d(0, 0, 0)' }
+  ], options);
+
+  Promise.allSettled([
+    outgoingAnimation.finished,
+    incomingAnimation.finished
+  ]).then(() => {
+    outgoingAnimation.cancel();
+    incomingAnimation.cancel();
+    viewport.replaceChildren(incoming);
+    incoming.inert = false;
+    viewport.classList.remove('is-transitioning');
+    viewport.style.height = '';
+    calendarTransitioning = false;
+    setTutorCalendarNavigationBusy(false);
+  });
+}
+
+function setTutorCalendarNavigationBusy(busy) {
+  for (const id of ['tutor-calendar-prev', 'tutor-calendar-next']) {
+    const button = document.getElementById(id);
+    if (button) button.disabled = busy;
+  }
 }
 
 function openCalendarModal(eventId) {

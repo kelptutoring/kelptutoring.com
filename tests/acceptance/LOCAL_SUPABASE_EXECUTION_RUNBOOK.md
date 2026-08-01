@@ -103,6 +103,30 @@ Expected actor result:
 | `ACT-TUTOR-MENTOR` | tutor, mentor | mentor |
 | `ACT-OUTSIDER` | student | student |
 
+Provisioning also restores the interactive local Classroom test network used for
+manual journeys:
+
+| Account | Only active role | Relationship |
+| --- | --- | --- |
+| `al.van.astrea@gmail.com` | mentor | Aldebarã supervises Thiago Kelp |
+| `thiago.loyola@kelptutoring.com` | tutor | Teaches both manual-QA Students |
+| `thiago.d.loyola@gmail.com` | student | Recurring Algebra 1 Course |
+| `thiago.dias.loyola@gmail.com` | student | On-demand Mechanics Course |
+
+`tools/provision-classroom-test-network.sql` verifies this graph atomically and
+is idempotent. It completes and inactivates only the exact known superseded
+sandbox Courses, preserving their Classroom/Schedule history. Its 16 curriculum
+rows are generated from the canonical Track catalogue and must retain Session
+IDs, content-version keys, Module identities, and real planning destinations.
+If Aldebarã must be recreated after a reset, that account receives the current
+acceptance Student password hash. Existing account passwords are never replaced.
+
+To restore only this four-account graph without entering or changing a password:
+
+```powershell
+npm.cmd run supabase:provision:manual-qa -- --confirm-project=kelptutoring.com-main
+```
+
 Any mismatch is a blocker. Do not repair roles with ad hoc table inserts; fix the migration, bootstrap, or provisioning runner and repeat from reset.
 
 ### 7. Execute rollback database characterizations

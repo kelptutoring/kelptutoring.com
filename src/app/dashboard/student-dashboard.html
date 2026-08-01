@@ -79,9 +79,15 @@
           <div class="student-dashboard-block-copy" data-dashboard-drag-handle="calendar" draggable="true" title="Drag to move Calendar">
             <p class="page-kicker">Schedule foundation</p>
             <h2 id="calendar-title">Calendar</h2>
-            <p>Review Course milestones and assignment deadlines. Scheduled Classes and availability booking arrive with Scheduling.</p>
+            <p>Review Course milestones, classes, and assignment deadlines, or start booking a lesson.</p>
           </div>
           <div class="student-dashboard-block-actions">
+            <button
+              class="lesson-request-trigger"
+              id="student-calendar-request-lesson"
+              type="button"
+              disabled
+            >Book a lesson</button>
             <div class="student-dashboard-view-switch" aria-label="Calendar display style">
               <button type="button" data-calendar-view="month" aria-pressed="true">Month</button>
               <button type="button" data-calendar-view="week" aria-pressed="false">Week</button>
@@ -122,5 +128,133 @@
 
     <p class="student-dashboard-feedback" id="student-dashboard-feedback" role="status" aria-live="polite"></p>
   </main>
+
+  <dialog
+    class="student-dashboard-calendar-dialog"
+    id="student-calendar-legend-dialog"
+    aria-labelledby="student-calendar-legend-title"
+  >
+    <section>
+      <div class="student-dashboard-calendar-dialog-heading">
+        <div>
+          <p class="page-kicker">Calendar helper</p>
+          <h2 id="student-calendar-legend-title">Calendar abbreviations</h2>
+        </div>
+        <button type="button" data-close-calendar-dialog aria-label="Close Calendar helper">&times;</button>
+      </div>
+      <dl class="student-dashboard-calendar-legend">
+        <div><dt>CB</dt><dd>Course begins</dd></div>
+        <div><dt>CE</dt><dd>Course ends</dd></div>
+        <div><dt>SM</dt><dd>Schedule milestone</dd></div>
+        <div><dt>RC</dt><dd>Regular class</dd></div>
+        <div><dt>EC</dt><dd>Extra or on-demand class</dd></div>
+        <div><dt>IP</dt><dd>Independent progress</dd></div>
+        <div><dt>AD</dt><dd>Assignment due</dd></div>
+      </dl>
+      <p class="student-dashboard-calendar-dialog-note">
+        Education levels use ES for Elementary School, MS for Middle School,
+        HS for High School, and CL for College. Hover or focus an event to read
+        its complete description. Course begin and end use the Classroom color;
+        Schedule items use their module color; Assignments retain their own
+        deadline color.
+      </p>
+    </section>
+  </dialog>
+
+  <dialog
+    class="student-dashboard-calendar-dialog student-dashboard-calendar-day-dialog"
+    id="student-calendar-day-dialog"
+    aria-labelledby="student-calendar-day-dialog-title"
+  >
+    <section>
+      <div class="student-dashboard-calendar-dialog-heading">
+        <div>
+          <p class="page-kicker">Calendar day</p>
+          <h2 id="student-calendar-day-dialog-title">Scheduled items</h2>
+        </div>
+        <button type="button" data-close-calendar-dialog aria-label="Close Calendar day">&times;</button>
+      </div>
+      <div class="student-dashboard-calendar-day-dialog-events" id="student-calendar-day-dialog-events"></div>
+    </section>
+  </dialog>
+
+  <dialog
+    class="lesson-request-dialog"
+    id="student-lesson-request-dialog"
+    aria-labelledby="student-lesson-request-title"
+  >
+    <form data-lesson-request="form">
+      <header class="lesson-request-dialog-heading">
+        <div>
+          <p class="page-kicker">Lesson request</p>
+          <h2 id="student-lesson-request-title">Prepare a request</h2>
+        </div>
+        <button
+          class="lesson-request-dialog-close"
+          type="button"
+          data-lesson-request="close"
+          aria-label="Close lesson request"
+        >&times;</button>
+      </header>
+
+      <div class="lesson-request-form-grid">
+        <label>
+          Tutor
+          <select data-lesson-request="tutor" required></select>
+        </label>
+        <label>
+          Course
+          <select data-lesson-request="context" required></select>
+        </label>
+        <label>
+          Purpose
+          <select data-lesson-request="purpose" required></select>
+        </label>
+        <label>
+          Duration
+          <select data-lesson-request="duration" required></select>
+        </label>
+        <label>
+          Proposed date
+          <input data-lesson-request="date" type="date" required />
+        </label>
+        <label>
+          Proposed time
+          <input data-lesson-request="time" type="time" step="1800" required />
+        </label>
+        <label class="lesson-request-message-field">
+          Message <span>(optional)</span>
+          <textarea
+            data-lesson-request="message"
+            maxlength="1000"
+            rows="4"
+            placeholder="Add context for your Tutor"
+          ></textarea>
+        </label>
+      </div>
+
+      <p class="lesson-request-draft-note">
+        This draft stays in this browser session. It does not contact the Tutor or reserve a time.
+      </p>
+      <p
+        class="lesson-request-feedback"
+        data-lesson-request="feedback"
+        role="status"
+        aria-live="polite"
+      ></p>
+
+      <footer class="lesson-request-dialog-actions">
+        <button type="button" data-lesson-request="cancel">Cancel</button>
+        <button class="is-primary" type="submit" data-lesson-request="save">Save draft</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <div
+    class="student-dashboard-calendar-tooltip"
+    id="student-calendar-event-tooltip"
+    role="tooltip"
+    hidden
+  ></div>
 </body>
 </html>

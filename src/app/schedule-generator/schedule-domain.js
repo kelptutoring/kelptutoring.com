@@ -134,22 +134,165 @@
     return dates;
   }
 
+  function calculateFutureCadenceLane({
+    sessions,
+    startDate,
+    cadence,
+    today = null,
+    lockedStartDate = null
+  }) {
+    const plannedSessions = Array.isArray(sessions) ? sessions : [];
+    const normalizedStartDate = formatDateOnly(assertDateOnly(startDate, "startDate"));
+    const effectiveToday = formatDateOnly(assertDateOnly(today || normalizedStartDate, "today"));
+    const historicalStart = formatDateOnly(assertDateOnly(
+      lockedStartDate || normalizedStartDate,
+      "lockedStartDate"
+    ));
+    const futureBoundary = [normalizedStartDate, effectiveToday, historicalStart]
+      .sort()
+      .at(-1);
+    const identities = plannedSessions.map((session, index) => {
+      const stableItemKey = String(
+        session?.id || session?.stableItemKey || session?.scheduledSessionId || ""
+      ).trim();
+      if (!stableItemKey) {
+        throw new TypeError(`Schedule Session ${index + 1} requires a stable identity.`);
+      }
+      return stableItemKey;
+    });
+    if (new Set(identities).size !== identities.length) {
+      throw new TypeError("Every Schedule Session requires a unique stable identity.");
+    }
+
+    const dates = calculateSessionDates({
+      startDate: futureBoundary,
+      cadence,
+      sessionCount: identities.length
+    });
+    return identities.map((stableItemKey, index) => ({
+      stableItemKey,
+      startDate: dates[index].startDate,
+      endDate: dates[index].endDate,
+      ordinal: index
+    }));
+  }
+
+  function calculateEffectiveSessionDates({
+    sessions,
+    startDate,
+    cadence,
+    activeItems = [],
+    today = null,
+    lockedStartDate = null,
+    pacingMode = "adaptive"
+  }) {
+    const plannedSessions = Array.isArray(sessions) ? sessions : [];
+    const existingItems = Array.isArray(activeItems) ? activeItems : [];
+    const normalizedCadence = normalizeCadence(cadence);
+    const normalizedStartDate = formatDateOnly(assertDateOnly(startDate, "startDate"));
+    const effectiveToday = formatDateOnly(assertDateOnly(today || normalizedStartDate, "today"));
+    const historicalStart = formatDateOnly(assertDateOnly(
+      lockedStartDate || normalizedStartDate,
+      "lockedStartDate"
+    ));
+    const futureBoundary = [normalizedStartDate, effectiveToday, historicalStart]
+      .sort()
+      .at(-1);
+    const normalizedPacingMode = pacingMode === "static" ? "static" : "adaptive";
+    const identities = plannedSessions.map((session, index) => {
+      const stableItemKey = String(
+        session?.id || session?.stableItemKey || session?.scheduledSessionId || ""
+      ).trim();
+      if (!stableItemKey) {
+        throw new TypeError(`Schedule Session ${index + 1} requires a stable identity.`);
+      }
+      return stableItemKey;
+    });
+    if (new Set(identities).size !== identities.length) {
+      throw new TypeError("Every Schedule Session requires a unique stable identity.");
+    }
+
+    const activeByKey = new Map(existingItems.map((item, index) => {
+      const stableItemKey = String(item?.stableItemKey || item?.id || "").trim();
+      if (!stableItemKey) {
+        throw new TypeError(`Active Schedule item ${index + 1} requires a stable identity.`);
+      }
+      return [stableItemKey, item];
+    }));
+    const retainedByKey = new Map();
+    const flexibleIdentities = [];
+
+    identities.forEach((stableItemKey) => {
+      const existing = activeByKey.get(stableItemKey);
+      const existingDate = existing?.scheduledDate || existing?.startDate || "";
+      const retained = Boolean(existing) && (
+        normalizedPacingMode === "static"
+        || existing.isStudied === true
+      );
+      if (retained) {
+        const retainedStartDate = formatDateOnly(assertDateOnly(
+          existingDate,
+          `Active Schedule item ${stableItemKey} date`
+        ));
+        const retainedEndDate = formatDateOnly(assertDateOnly(
+          existing.endDate || retainedStartDate,
+          `Active Schedule item ${stableItemKey} end date`
+        ));
+        retainedByKey.set(stableItemKey, {
+          startDate: retainedStartDate,
+          endDate: retainedEndDate,
+          retained: true,
+          retainedReason: existing.isStudied === true
+            ? "studied"
+            : "static"
+        });
+      } else {
+        flexibleIdentities.push(stableItemKey);
+      }
+    });
+
+    const flexibleDates = calculateSessionDates({
+      startDate: futureBoundary,
+      cadence: normalizedCadence,
+      sessionCount: flexibleIdentities.length
+    });
+    const flexibleByKey = new Map(
+      flexibleIdentities.map((stableItemKey, index) => [
+        stableItemKey,
+        { ...flexibleDates[index], retained: false, retainedReason: null }
+      ])
+    );
+
+    return identities.map((stableItemKey) =>
+      retainedByKey.get(stableItemKey) || flexibleByKey.get(stableItemKey)
+    );
+  }
+
   function copySessionPlan(plan, index, scheduleId, dates) {
     const isCustom = plan.type === "custom" || !plan.sourceSessionId;
     const sessionNumber = index + 1;
 
     return {
-      id: plan.scheduledSessionId || `${scheduleId}_session_${sessionNumber}`,
+      id: plan.scheduledSessionId || plan.stableItemKey || `${scheduleId}_session_${sessionNumber}`,
       sessionNumber,
       startDate: dates.startDate,
       endDate: dates.endDate,
       sourceSessionId: isCustom ? null : plan.sourceSessionId,
+      educationLevelId: plan.educationLevelId || null,
+      educationLevelTitle: plan.educationLevelTitle || "",
+      educationLevelTaxonomySlug: plan.educationLevelTaxonomySlug || "",
+      subjectId: plan.subjectId || null,
+      subjectTitle: plan.subjectTitle || "",
+      subjectTaxonomySlug: plan.subjectTaxonomySlug || "",
+      academicPathway: plan.academicPathway ? { ...plan.academicPathway } : null,
       trackId: plan.trackId || null,
       trackTitle: plan.trackTitle || "",
+      trackTaxonomySlug: plan.trackTaxonomySlug || "",
       moduleId: plan.moduleId || null,
       moduleTitle: plan.moduleTitle || "Custom sessions",
       title: String(plan.title || "Untitled session").trim(),
       planningHref: plan.planningHref || null,
+      sourceContentVersionKey: isCustom ? null : (plan.sourceContentVersionKey || null),
       type: plan.type || "lesson",
       difficulty: plan.difficulty || "",
       notes: String(plan.notes || "")
@@ -168,12 +311,17 @@
   }
 
   function buildSchedule({
+    schemaVersion = 1,
     id,
     name,
     startDate,
     timeZone,
     cadence,
+    pacingMode = "adaptive",
     sessionPlans,
+    activeItems = [],
+    today = null,
+    lockedStartDate = null,
     modules = [],
     context = {}
   }) {
@@ -189,25 +337,48 @@
 
     const normalizedCadence = normalizeCadence(cadence);
     const normalizedTimeZone = normalizeTimeZone(timeZone);
-    const dates = calculateSessionDates({
+    const normalizedPacingMode = pacingMode === "static" ? "static" : "adaptive";
+    const plansWithIdentity = plans.map((plan, index) => ({
+      ...plan,
+      id: plan.scheduledSessionId
+        || plan.stableItemKey
+        || `${scheduleId}_session_${index + 1}`
+    }));
+    const dates = calculateEffectiveSessionDates({
+      sessions: plansWithIdentity,
       startDate,
       cadence: normalizedCadence,
-      sessionCount: plans.length
+      activeItems,
+      today,
+      lockedStartDate,
+      pacingMode: normalizedPacingMode
+    });
+    const effectiveFutureLane = calculateFutureCadenceLane({
+      sessions: plansWithIdentity,
+      startDate,
+      cadence: normalizedCadence,
+      today,
+      lockedStartDate
     });
     const sessions = plans.map((plan, index) => {
       return copySessionPlan(plan, index, scheduleId, dates[index]);
     });
 
     return {
-      schemaVersion: 1,
+      schemaVersion: Math.max(1, Number(schemaVersion) || 1),
       id: scheduleId,
       name: String(name || "Custom schedule").trim() || "Custom schedule",
       status: "draft",
       startDate,
-      endDate: sessions[sessions.length - 1].endDate,
+      endDate: sessions.map((session) => session.endDate).sort().at(-1),
       timeZone: normalizedTimeZone,
       cadence: normalizedCadence,
-      context: { ...context },
+      pacingMode: normalizedPacingMode,
+      context: {
+        ...context,
+        effectiveFutureLaneAuthority: true,
+        effectiveFutureLane
+      },
       modules: modules.map(copyModule),
       sessions
     };
@@ -217,6 +388,8 @@
     WEEKDAY_NAMES,
     addDays,
     buildSchedule,
+    calculateEffectiveSessionDates,
+    calculateFutureCadenceLane,
     calculateSessionDates,
     getWeekday,
     isValidTimeZone,

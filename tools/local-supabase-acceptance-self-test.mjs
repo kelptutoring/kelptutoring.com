@@ -19,6 +19,67 @@ const sqlContracts = [
     variables: ['admin_id', 'mentor_id', 'tutor_id', 'student_a_id', 'student_b_id', 'outsider_id']
   },
   {
+    file: 'tools/course-progress-hierarchical-aggregation-db-self-test.sql',
+    variables: ['mentor_id', 'tutor_id', 'student_a_id', 'student_b_id', 'outsider_id']
+  },
+  {
+    file: 'tools/builder-effective-student-schedule-db-self-test.sql',
+    variables: ['mentor_id', 'tutor_id', 'student_a_id', 'outsider_id']
+  },
+  {
+    file: 'tools/course-schedule-meeting-pattern-db-self-test.sql',
+    variables: [
+      'admin_id', 'mentor_id', 'tutor_id', 'student_a_id',
+      'student_b_id', 'independent_tutor_id', 'outsider_id'
+    ]
+  },
+  {
+    file: 'tools/course-schedule-academic-slots-db-self-test.sql',
+    variables: ['mentor_id', 'tutor_id', 'student_a_id', 'student_b_id', 'outsider_id']
+  },
+  {
+    file: 'tools/course-schedule-target-mapping-db-self-test.sql',
+    variables: ['mentor_id', 'tutor_id', 'student_a_id', 'student_b_id', 'outsider_id']
+  },
+  {
+    file: 'tools/course-schedule-pacing-policy-db-self-test.sql',
+    variables: ['mentor_id', 'tutor_id', 'student_a_id', 'outsider_id']
+  },
+  {
+    file: 'tools/course-schedule-occurrence-outcomes-db-self-test.sql',
+    variables: ['admin_id', 'mentor_id', 'tutor_id', 'student_a_id', 'outsider_id']
+  },
+  {
+    file: 'tools/unified-course-schedule-db-self-test.sql',
+    variables: [
+      'admin_id', 'mentor_id', 'tutor_id', 'student_a_id',
+      'student_b_id', 'outsider_id'
+    ]
+  },
+  {
+    file: 'tools/unified-schedule-read-contract-db-self-test.sql',
+    variables: [
+      'mentor_id', 'tutor_id', 'student_a_id',
+      'student_b_id', 'outsider_id'
+    ]
+  },
+  {
+    file: 'tools/course-schedule-version-coverage-db-self-test.sql',
+    variables: ['mentor_id', 'tutor_id', 'student_a_id', 'outsider_id']
+  },
+  {
+    file: 'tools/course-schedule-qualification-publication-db-self-test.sql',
+    variables: ['mentor_id', 'tutor_id', 'student_a_id', 'outsider_id']
+  },
+  {
+    file: 'tools/multi-curriculum-consumer-projection-db-self-test.sql',
+    variables: ['mentor_id', 'tutor_id', 'student_a_id', 'outsider_id']
+  },
+  {
+    file: 'tools/classroom-home-multi-curriculum-db-self-test.sql',
+    variables: ['mentor_id', 'tutor_id', 'student_a_id', 'outsider_id']
+  },
+  {
     file: 'tools/student-dashboard-foundation-db-self-test.sql',
     variables: ['student_a_id', 'student_b_id', 'tutor_id', 'outsider_id']
   },
@@ -35,6 +96,25 @@ const sqlContracts = [
     variables: ['student_a_id', 'student_b_id', 'tutor_id', 'outsider_id']
   },
   {
+    file: 'tools/classroom-management-surface-db-self-test.sql',
+    variables: ['admin_id', 'mentor_id', 'tutor_id', 'student_id', 'outsider_id']
+  },
+  {
+    file: 'tools/classroom-overview-projection-db-self-test.sql',
+    variables: ['admin_id', 'mentor_id', 'tutor_id', 'student_id', 'outsider_id']
+  },
+  {
+    file: 'tools/classroom-navigation-privacy-db-self-test.sql',
+    variables: ['admin_id', 'mentor_id', 'tutor_id', 'student_id', 'outsider_id']
+  },
+  {
+    file: 'tools/classroom-private-files-db-self-test.sql',
+    variables: [
+      'admin_id', 'mentor_id', 'tutor_id', 'student_id',
+      'guardian_id', 'former_tutor_id', 'outsider_id'
+    ]
+  },
+  {
     file: 'tools/student-calendar-surface-db-self-test.sql',
     variables: ['student_a_id', 'student_b_id', 'mentor_id', 'tutor_id', 'outsider_id']
   }
@@ -44,6 +124,7 @@ const [
   actorReference,
   actorMap,
   runner,
+  classroomNetworkSql,
   sandboxRunner,
   supabaseWrapper,
   runbook,
@@ -55,6 +136,7 @@ const [
   readJson('tests/acceptance/fixtures/authorization-standard-actors-v1.json'),
   readJson('tests/acceptance/fixtures/local-supabase-actor-map-v1.json'),
   readText('tools/local-supabase-acceptance.mjs'),
+  readText('tools/provision-classroom-test-network.sql'),
   readText('tools/provision-mentor-sandbox.mjs'),
   readText('tools/supabase-local.mjs'),
   readText('tests/acceptance/LOCAL_SUPABASE_EXECUTION_RUNBOOK.md'),
@@ -118,12 +200,49 @@ assert.match(runner, /process\.stdout\.write\(`\[\$\{index \+ 1\}\/\$\{databaseT
 assert.match(runner, /console\.log\('PASS'\)/)
 assert.match(runner, /console\.log\('FAIL'\)/)
 assert.match(runner, /Post-run audit passed: \$\{context\.fixture\.actors\.length\} actors verified/)
+assert.match(runner, /provisionClassroomTestNetwork\(context\)/)
+assert.match(runner, /provision-classroom-test-network\.sql/)
+for (const fragment of [
+  'thiago.loyola@kelptutoring.com',
+  'thiago.dias.loyola@gmail.com',
+  'thiago.d.loyola@gmail.com',
+  'al.van.astrea@gmail.com',
+  'manual-qa-thiago-d-algebra-v1',
+  'manual-qa-thiago-dias-mechanics-v1',
+  '@@ALGEBRA_SCHEDULE_BASE64@@',
+  '@@MECHANICS_SCHEDULE_BASE64@@',
+  'Interactive manual-QA Classroom network provisioned and verified.'
+]) {
+  assert.ok(
+    classroomNetworkSql.includes(fragment),
+    `Classroom test-network fixture is missing ${fragment}`
+  )
+}
+assert.match(classroomNetworkSql, /begin;/i)
+assert.match(classroomNetworkSql, /commit;/i)
+assert.match(classroomNetworkSql, /assign_tutor_supervisor/i)
+assert.match(classroomNetworkSql, /create_student_course_with_schedule_draft/i)
+assert.match(classroomNetworkSql, /classrooms_ready/i)
+assert.match(runner, /manual-qa-network-fixtures\.mjs/)
+assert.match(runner, /unresolved fixture token/)
+for (const block of classroomNetworkSql.matchAll(/do \$[a-z0-9_]*\$[\s\S]*?\$[a-z0-9_]*\$;/gi)) {
+  assert.doesNotMatch(
+    block[0],
+    /:'[a-z_][a-z0-9_]*'/i,
+    'Classroom test-network fixture embeds a psql variable inside a dollar-quoted DO block'
+  )
+}
 assert.match(sandboxRunner, /--mentor-email/)
 assert.match(sandboxRunner, /--student-email/)
 assert.match(sandboxRunner, /reservedIds\.has\(user\.id\)/)
 assert.match(sandboxRunner, /The nine deterministic acceptance actors were not modified/)
 assert.match(sandboxRunner, /Refusing non-local/)
 assert.match(sandboxRunner, /--confirm-project=/)
+assert.match(sandboxRunner, /if \(alreadyPublished\) return false/)
+assert.doesNotMatch(
+  sandboxRunner,
+  /alreadyPublished\s*\|\|\s*currentBuilderTrackItems\.length\s*>\s*0/
+)
 assert.doesNotMatch(sandboxRunner, /thiago\.d\.loyola@gmail\.com|al\.van\.astrea@gmail\.com/i)
 assert.match(supabaseWrapper, /outputMayContainCredentials/)
 assert.match(supabaseWrapper, /sanitizeOutput/)
@@ -159,6 +278,7 @@ assert.equal(packageJson.scripts['test:student-dashboard'], 'node tools/student-
 assert.equal(packageJson.scripts['supabase:preflight'], 'node tools/local-supabase-acceptance.mjs preflight')
 assert.equal(packageJson.scripts['supabase:reset'], 'node tools/local-supabase-acceptance.mjs reset')
 assert.equal(packageJson.scripts['supabase:provision'], 'node tools/local-supabase-acceptance.mjs provision')
+assert.equal(packageJson.scripts['supabase:provision:manual-qa'], 'node tools/local-supabase-acceptance.mjs manual-qa')
 assert.equal(packageJson.scripts['supabase:provision:mentor-sandbox'], 'node tools/provision-mentor-sandbox.mjs')
 assert.equal(packageJson.scripts['supabase:verify-actors'], 'node tools/local-supabase-acceptance.mjs verify')
 assert.equal(packageJson.scripts['supabase:test:db'], 'node tools/local-supabase-acceptance.mjs test')
@@ -170,6 +290,7 @@ for (const command of [
   'npm.cmd run supabase:preflight',
   'npm.cmd run supabase:reset -- --confirm-project=kelptutoring.com-main',
   'npm.cmd run supabase:provision -- --confirm-project=kelptutoring.com-main',
+  'npm.cmd run supabase:provision:manual-qa -- --confirm-project=kelptutoring.com-main',
   'npm.cmd run supabase:verify-actors',
   'npm.cmd run supabase:test:db',
   'npm.cmd run supabase:audit'

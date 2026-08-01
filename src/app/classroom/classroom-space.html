@@ -7,6 +7,7 @@
   <script src="/src/auth/theme-bootstrap.js"></script>
   <link rel="stylesheet" href="../../styles/style.css" />
   <link rel="stylesheet" href="./classroom-space.css" />
+  <style id="classroom-schedule-print-page-style"></style>
   <script type="module" src="./classroom-space.js"></script>
 </head>
 
@@ -35,61 +36,953 @@
         <h1 id="classroom-space-title">Loading Classroom...</h1>
         <p class="classroom-space-tutor" id="classroom-space-tutor"></p>
       </div>
-      <span class="classroom-space-status" id="classroom-space-status">Loading</span>
+      <div class="classroom-space-hero-actions">
+        <span class="classroom-space-status" id="classroom-space-status">Loading</span>
+        <button
+          class="classroom-space-live-entry"
+          id="classroom-space-live-entry"
+          type="button"
+          disabled
+          title="An eligible scheduled Class is required"
+        >Lesson room</button>
+        <button
+          class="classroom-space-manage-toggle"
+          id="classroom-space-manage-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="classroom-space-management"
+          hidden
+        >Manage Classroom</button>
+      </div>
+    </section>
+
+    <section
+      class="classroom-space-management"
+      id="classroom-space-management"
+      aria-labelledby="classroom-space-management-title"
+      aria-hidden="true"
+      hidden
+    >
+      <div class="classroom-space-management-collapse">
+        <div class="classroom-space-management-content">
+          <div class="classroom-space-management-heading">
+            <div>
+              <p class="page-kicker">Mentor tools</p>
+              <h2 id="classroom-space-management-title">Manage Classroom</h2>
+              <p>Review the Classroom authority points that will be connected in the next implementation slices.</p>
+            </div>
+            <button class="classroom-space-management-close" id="classroom-space-management-close" type="button">Close</button>
+          </div>
+
+          <div class="classroom-space-management-grid">
+            <article class="classroom-space-management-card">
+              <div>
+                <span class="classroom-space-management-label">Tutor assignment</span>
+                <h3 id="classroom-management-tutor">Current Tutor</h3>
+                <p>Reassignment will validate qualifications, supervision, availability, and the auditable handoff workflow.</p>
+              </div>
+              <span class="classroom-space-management-state" id="classroom-management-tutor-state">Planned for Phase 6</span>
+              <button type="button" disabled>Change Tutor</button>
+            </article>
+
+            <article class="classroom-space-management-card">
+              <div>
+                <span class="classroom-space-management-label">Recurring meetings</span>
+                <h3>Course schedule</h3>
+                <p>The current linked Schedule is visible in Overview. Versioned editing and Course-date synchronization arrive together.</p>
+              </div>
+              <span class="classroom-space-management-state" id="classroom-management-schedule-state">Planned for Phase 5</span>
+              <button type="button" disabled>Change schedule</button>
+            </article>
+
+            <article class="classroom-space-management-card">
+              <div>
+                <span class="classroom-space-management-label">Course ending</span>
+                <h3 id="classroom-management-end-date">Ending date unavailable</h3>
+                <p>Authorized extensions will preserve the Classroom and version the Course schedule.</p>
+              </div>
+              <span class="classroom-space-management-state" id="classroom-management-ending-state">Lifecycle command pending</span>
+              <button type="button" disabled>Postpone ending</button>
+            </article>
+
+            <article class="classroom-space-management-card is-danger">
+              <div>
+                <span class="classroom-space-management-label">Course lifecycle</span>
+                <h3>Finish Course</h3>
+                <p>Closeout must atomically handle future Classes, pending requests, incomplete work, memberships, and the final Report Card.</p>
+              </div>
+              <span class="classroom-space-management-state" id="classroom-management-termination-state">Lifecycle command pending</span>
+              <button type="button" disabled>Finish Course</button>
+            </article>
+          </div>
+        </div>
+      </div>
     </section>
 
     <nav class="classroom-space-navigation" aria-label="Classroom areas">
-      <a href="#overview" aria-current="page">Overview</a>
-      <span aria-disabled="true">Forum</span>
-      <span aria-disabled="true">Assignments</span>
-      <span aria-disabled="true">Files</span>
-      <span aria-disabled="true">Report cards</span>
-      <span aria-disabled="true">History</span>
+      <button type="button" data-classroom-area="home" data-availability="available" aria-current="page">Home</button>
+      <button type="button" data-classroom-area="overview" data-availability="available">Overview</button>
+      <button type="button" data-classroom-area="forum" data-availability="planned">Forum</button>
+      <button type="button" data-classroom-area="assignments" data-availability="planned">Assignments</button>
+      <button type="button" data-classroom-area="schedule" data-availability="available">Schedule</button>
+      <button type="button" data-classroom-area="files" data-availability="available">Files</button>
+      <button type="button" data-classroom-area="report-cards" data-availability="planned">Report cards</button>
+      <button type="button" data-classroom-area="history" data-availability="available">History</button>
     </nav>
 
-    <section class="classroom-space-overview" id="overview" aria-labelledby="classroom-overview-title">
+    <section
+      class="classroom-space-home"
+      id="classroom-space-home"
+      aria-labelledby="classroom-home-title"
+      aria-busy="false"
+      hidden
+    >
       <div class="classroom-space-section-heading">
-        <p class="page-kicker">Course foundation</p>
+        <h2 id="classroom-home-title">Home</h2>
+        <p>Your progress and the work that matters most in this Classroom.</p>
+      </div>
+      <p
+        class="classroom-home-layout-feedback"
+        id="classroom-home-layout-feedback"
+        role="status"
+        aria-live="polite"
+      ></p>
+
+      <div class="classroom-home-layout" id="classroom-home-layout">
+        <article
+          class="classroom-track-progress-card classroom-home-layout-block is-wide"
+          id="classroom-home-progress-block"
+          data-classroom-home-block="progress"
+          aria-labelledby="classroom-track-progress-title"
+        >
+          <div class="classroom-track-progress-heading">
+            <div
+              data-classroom-home-drag-handle="progress"
+              draggable="false"
+            >
+              <span id="classroom-home-coverage">Current coverage</span>
+              <h3 id="classroom-track-progress-title">
+                Course progress
+                <strong id="classroom-track-progress-percent">&mdash;</strong>
+              </h3>
+            </div>
+            <div class="classroom-home-block-heading-actions">
+              <a href="?area=schedule" id="classroom-home-schedule-link">Open Schedule</a>
+              <div class="classroom-home-layout-controls" hidden>
+                <div class="classroom-home-move-controls" aria-label="Move Course progress">
+                  <button type="button" data-move-classroom-home-block="up" aria-label="Move Course progress up">&uarr;</button>
+                  <button type="button" data-move-classroom-home-block="down" aria-label="Move Course progress down">&darr;</button>
+                </div>
+                <button
+                  class="classroom-home-collapse-control"
+                  type="button"
+                  data-toggle-classroom-home-block="progress"
+                  aria-controls="classroom-home-progress-body"
+                  aria-expanded="true"
+                >Minimize</button>
+              </div>
+            </div>
+          </div>
+          <div class="classroom-home-block-body" id="classroom-home-progress-body">
+            <div>
+              <div
+                class="classroom-track-progress-bar"
+                id="classroom-track-progress-bar"
+                role="progressbar"
+                aria-label="Course progress"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="0"
+              >
+                <span id="classroom-track-progress-fill"></span>
+              </div>
+              <div class="classroom-track-progress-summary">
+                <div class="classroom-track-progress-summary-primary">
+                  <p id="classroom-track-progress-counts">Studied 0/0 &middot; Practiced 0/0</p>
+                  <details
+                    class="classroom-track-progress-help classroom-track-progress-breakdown"
+                    id="classroom-track-progress-breakdown"
+                  >
+                    <summary aria-label="View progress by Track" title="Progress by Track">
+                      <span class="classroom-track-progress-breakdown-icon" aria-hidden="true"></span>
+                    </summary>
+                    <div>
+                      <p class="classroom-course-progress-tracks-heading">Track breakdown</p>
+                      <ul class="classroom-course-progress-tracks is-hidden" id="classroom-course-progress-tracks"></ul>
+                    </div>
+                  </details>
+                </div>
+                <details class="classroom-track-progress-help">
+                  <summary aria-label="How Course progress and the Schedule work">i</summary>
+                  <div>
+                    <p><strong>Studied</strong> advances your Schedule to the next unfinished topic. Only your Tutor or Mentor can undo it.</p>
+                    <p><strong>Practiced</strong> adds to Course progress without moving scheduled lessons.</p>
+                    <p><strong>Reviewed</strong> records reinforcement work, but it does not change the percentage.</p>
+                    <p>Your percentage gives equal weight to Studied and Practiced across the active curriculum topics in this Course.</p>
+                  </div>
+                </details>
+              </div>
+              <p class="classroom-track-progress-status" id="classroom-track-progress-status" role="status">
+                Loading Course progress&hellip;
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <section
+          class="classroom-home-weekly-group"
+          id="classroom-home-weekly-group"
+          aria-label="Weekly Course work"
+        >
+          <article
+            class="classroom-home-work-card classroom-home-layout-block"
+            id="classroom-home-this-week-block"
+            data-classroom-home-block="this-week"
+            aria-labelledby="classroom-home-this-week-title"
+          >
+          <header>
+            <div
+              data-classroom-home-drag-handle="this-week"
+              draggable="false"
+            >
+              <span>Current plan</span>
+              <h3 id="classroom-home-this-week-title">This week</h3>
+            </div>
+            <div class="classroom-home-work-heading-actions">
+              <time id="classroom-home-this-week-range"></time>
+              <div class="classroom-home-layout-controls" hidden>
+                <div class="classroom-home-move-controls" aria-label="Move weekly Course work">
+                  <button type="button" data-move-classroom-home-block="up" aria-label="Move This week and Coming next up">&uarr;</button>
+                  <button type="button" data-move-classroom-home-block="down" aria-label="Move This week and Coming next down">&darr;</button>
+                </div>
+                <button
+                  class="classroom-home-collapse-control"
+                  type="button"
+                  data-toggle-classroom-home-block="weekly"
+                  aria-controls="classroom-home-this-week-body classroom-home-coming-next-body"
+                  aria-expanded="true"
+                >Minimize</button>
+              </div>
+            </div>
+          </header>
+          <div class="classroom-home-block-body" id="classroom-home-this-week-body">
+            <div>
+              <p class="classroom-home-work-empty" id="classroom-home-this-week-empty">
+                No Course work is scheduled for this week.
+              </p>
+              <ul class="classroom-home-work-list" id="classroom-home-this-week-list"></ul>
+            </div>
+          </div>
+          </article>
+
+          <article
+            class="classroom-home-work-card classroom-home-layout-block"
+            id="classroom-home-coming-next-block"
+            data-classroom-home-block="coming-next"
+            aria-labelledby="classroom-home-coming-next-title"
+          >
+          <header>
+            <div
+              data-classroom-home-drag-handle="coming-next"
+              draggable="false"
+            >
+              <span>Next week</span>
+              <h3 id="classroom-home-coming-next-title">Coming next</h3>
+            </div>
+            <div class="classroom-home-work-heading-actions">
+              <time id="classroom-home-coming-next-range"></time>
+              <div class="classroom-home-layout-controls" hidden>
+                <div class="classroom-home-move-controls" aria-label="Move weekly Course work">
+                  <button type="button" data-move-classroom-home-block="up" aria-label="Move This week and Coming next up">&uarr;</button>
+                  <button type="button" data-move-classroom-home-block="down" aria-label="Move This week and Coming next down">&darr;</button>
+                </div>
+                <button
+                  class="classroom-home-collapse-control"
+                  type="button"
+                  data-toggle-classroom-home-block="weekly"
+                  aria-controls="classroom-home-this-week-body classroom-home-coming-next-body"
+                  aria-expanded="true"
+                >Minimize</button>
+              </div>
+            </div>
+          </header>
+          <div class="classroom-home-block-body" id="classroom-home-coming-next-body">
+            <div>
+              <p class="classroom-home-work-empty" id="classroom-home-coming-next-empty">
+                Nothing is scheduled for next week yet.
+              </p>
+              <ul class="classroom-home-work-list" id="classroom-home-coming-next-list"></ul>
+            </div>
+          </div>
+          </article>
+        </section>
+
+        <article
+          class="classroom-calendar-card classroom-home-layout-block is-wide"
+          id="classroom-calendar-card"
+          data-classroom-home-block="calendar"
+          aria-labelledby="classroom-calendar-title"
+          hidden
+        >
+          <header class="classroom-calendar-card-heading">
+            <div
+              data-classroom-home-drag-handle="calendar"
+              draggable="false"
+            >
+              <span>Course schedule</span>
+              <h3 id="classroom-calendar-title">Calendar</h3>
+            </div>
+            <div class="classroom-calendar-card-actions">
+              <button
+                class="lesson-request-trigger"
+                id="classroom-calendar-request-lesson"
+                type="button"
+                hidden
+                disabled
+              >Book a lesson</button>
+              <div class="student-dashboard-view-switch" aria-label="Classroom Calendar display style">
+                <button
+                  type="button"
+                  data-classroom-calendar-view="month"
+                  aria-pressed="true"
+                >Month</button>
+                <button
+                  type="button"
+                  data-classroom-calendar-view="week"
+                  aria-pressed="false"
+                >Week</button>
+              </div>
+              <div class="classroom-home-layout-controls" hidden>
+                <div class="classroom-home-move-controls" aria-label="Move Calendar">
+                  <button type="button" data-move-classroom-home-block="up" aria-label="Move Calendar up">&uarr;</button>
+                  <button type="button" data-move-classroom-home-block="down" aria-label="Move Calendar down">&darr;</button>
+                </div>
+                <button
+                  class="classroom-home-collapse-control"
+                  type="button"
+                  data-toggle-classroom-home-block="calendar"
+                  aria-controls="classroom-home-calendar-body"
+                  aria-expanded="true"
+                >Minimize</button>
+              </div>
+            </div>
+          </header>
+          <div class="classroom-home-block-body" id="classroom-home-calendar-body">
+            <div>
+              <div class="student-dashboard-calendar-shell" id="classroom-calendar-shell"></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section
+      class="classroom-space-overview"
+      id="overview"
+      aria-labelledby="classroom-overview-title"
+      hidden
+    >
+      <div class="classroom-space-section-heading">
         <h2 id="classroom-overview-title">Overview</h2>
       </div>
-      <dl class="classroom-space-details">
-        <div>
-          <dt>Subject</dt>
-          <dd id="classroom-detail-subject">—</dd>
+      <div class="classroom-space-overview-grid">
+        <article class="classroom-space-overview-card">
+          <div class="classroom-space-overview-card-heading">
+            <span>Course</span>
+            <strong id="classroom-detail-provider">&mdash;</strong>
+          </div>
+          <dl class="classroom-space-details">
+            <div>
+              <dt>Subject</dt>
+              <dd id="classroom-detail-subject">&mdash;</dd>
+            </div>
+            <div>
+              <dt>Focus</dt>
+              <dd id="classroom-detail-focus">&mdash;</dd>
+            </div>
+            <div>
+              <dt>Course dates</dt>
+              <dd id="classroom-detail-dates">&mdash;</dd>
+            </div>
+            <div>
+              <dt>Learning model</dt>
+              <dd id="classroom-detail-model">&mdash;</dd>
+            </div>
+          </dl>
+        </article>
+
+        <article class="classroom-space-overview-card">
+          <div class="classroom-space-overview-card-heading">
+            <span>Classroom team</span>
+          </div>
+          <dl class="classroom-space-details classroom-space-team-details">
+            <div>
+              <dt>Student</dt>
+              <dd id="classroom-detail-student">&mdash;</dd>
+            </div>
+            <div>
+              <dt>Tutor</dt>
+              <dd id="classroom-detail-tutor">&mdash;</dd>
+            </div>
+            <div id="classroom-detail-mentor-row" hidden>
+              <dt>Supervisory Mentor</dt>
+              <dd id="classroom-detail-mentor">&mdash;</dd>
+            </div>
+          </dl>
+        </article>
+
+        <article class="classroom-space-overview-card classroom-space-schedule" id="classroom-schedule-summary">
+          <div class="classroom-space-overview-card-heading">
+            <span>Current linked Schedule</span>
+            <strong id="classroom-schedule-linkage">Checking link</strong>
+          </div>
+          <h3 id="classroom-schedule-name">Schedule unavailable</h3>
+          <p class="classroom-space-schedule-message" id="classroom-schedule-message"></p>
+          <dl class="classroom-space-details classroom-space-schedule-details">
+            <div>
+              <dt>Coverage</dt>
+              <dd id="classroom-schedule-dates">&mdash;</dd>
+            </div>
+            <div>
+              <dt>Sessions</dt>
+              <dd id="classroom-schedule-sessions">&mdash;</dd>
+            </div>
+            <div>
+              <dt>Timezone</dt>
+              <dd id="classroom-schedule-time-zone">&mdash;</dd>
+            </div>
+            <div>
+              <dt>Stored versions</dt>
+              <dd id="classroom-schedule-versions">&mdash;</dd>
+            </div>
+          </dl>
+        </article>
+      </div>
+    </section>
+
+    <section
+      class="classroom-space-schedule-view"
+      id="classroom-space-schedule-view"
+      aria-labelledby="classroom-schedule-view-title"
+      aria-busy="false"
+      hidden
+    >
+      <div class="classroom-schedule-view-heading">
+        <div class="classroom-space-section-heading">
+          <h2 id="classroom-schedule-view-title">Schedule</h2>
+          <p id="classroom-schedule-view-description">
+            Your current Course topics, dates, difficulty, and assigned resources.
+          </p>
+          <p class="classroom-schedule-view-coverage is-hidden" id="classroom-schedule-view-coverage"></p>
+          <p
+            class="classroom-schedule-studied-hold is-hidden"
+            id="classroom-schedule-studied-hold"
+            role="status"
+          ></p>
         </div>
+        <div class="classroom-schedule-view-summary">
+          <strong id="classroom-schedule-view-count">0 sessions</strong>
+          <span id="classroom-schedule-view-time-zone">Timezone unavailable</span>
+          <div class="classroom-schedule-view-actions">
+            <button
+              class="classroom-schedule-log-toggle"
+              id="classroom-schedule-log-toggle"
+              type="button"
+              aria-controls="classroom-current-schedule-log"
+              aria-pressed="false"
+            >
+              Log
+            </button>
+            <details class="classroom-schedule-pdf-style" id="classroom-schedule-pdf-style">
+              <summary>Colors</summary>
+              <div class="classroom-schedule-pdf-style-panel">
+                <label>
+                  <span>Rule</span>
+                  <input
+                    type="color"
+                    value="#4e9d68"
+                    data-pdf-color-input="rule"
+                    aria-label="Schedule rule color"
+                  />
+                </label>
+                <label>
+                  <span>Text</span>
+                  <input
+                    type="color"
+                    value="#17333a"
+                    data-pdf-color-input="text"
+                    aria-label="Schedule text color"
+                  />
+                </label>
+              </div>
+            </details>
+            <button class="classroom-schedule-print-button" id="classroom-schedule-print" type="button" disabled>
+              Generate PDF
+            </button>
+            <a class="classroom-schedule-edit-link is-hidden" id="classroom-schedule-edit-link" href="#">
+              Edit in Schedule Builder
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="classroom-schedule-view-error is-hidden" id="classroom-schedule-view-error" role="alert">
+        <span id="classroom-schedule-view-error-message"></span>
+        <button type="button" id="classroom-schedule-view-retry">Try again</button>
+      </div>
+      <div class="classroom-schedule-view-loading is-hidden" id="classroom-schedule-view-loading" role="status">
+        Loading Course Schedule&hellip;
+      </div>
+      <div class="classroom-current-schedule-plan" id="classroom-current-schedule-plan">
+        <div class="classroom-schedule-view-empty is-hidden" id="classroom-schedule-view-empty">
+          <strong>No active Schedule sessions were found.</strong>
+          <p>This Classroom is linked to a Schedule, but it does not currently contain a visible session.</p>
+        </div>
+        <div class="classroom-schedule-module-list" id="classroom-schedule-session-list" aria-label="Course Schedule modules"></div>
+        <div class="classroom-schedule-progress-feedback is-hidden" id="classroom-schedule-progress-feedback" role="status" aria-live="polite"></div>
+      </div>
+      <section
+        class="classroom-current-schedule-log"
+        id="classroom-current-schedule-log"
+        aria-labelledby="classroom-current-schedule-log-title"
+        aria-busy="false"
+        hidden
+      >
+        <div class="classroom-current-schedule-log-heading">
+          <div>
+            <h3 id="classroom-current-schedule-log-title">Current Schedule Log</h3>
+            <p>Studied, pacing, and structural changes retained for this Schedule.</p>
+          </div>
+          <span id="classroom-current-schedule-log-count">0 changes</span>
+        </div>
+        <div class="classroom-current-schedule-log-error is-hidden" id="classroom-current-schedule-log-error" role="alert">
+          <span id="classroom-current-schedule-log-error-message"></span>
+          <button type="button" id="classroom-current-schedule-log-retry">Try again</button>
+        </div>
+        <div class="classroom-current-schedule-log-loading is-hidden" id="classroom-current-schedule-log-loading" role="status">
+          Loading current Schedule changes&hellip;
+        </div>
+        <div class="classroom-current-schedule-log-empty is-hidden" id="classroom-current-schedule-log-empty">
+          No changes have been recorded for this Schedule yet.
+        </div>
+        <ol class="classroom-current-schedule-log-list" id="classroom-current-schedule-log-list"></ol>
+      </section>
+    </section>
+
+    <section
+      class="classroom-space-files"
+      id="classroom-space-files"
+      aria-labelledby="classroom-files-title"
+      aria-busy="false"
+      hidden
+    >
+      <div class="classroom-files-heading">
+        <div class="classroom-space-section-heading">
+          <h2 id="classroom-files-title">Files</h2>
+          <p>Course material shared here stays inside this Classroom.</p>
+        </div>
+        <span class="classroom-files-count" id="classroom-files-count">0 files</span>
+      </div>
+
+      <div class="classroom-files-feedback is-hidden" id="classroom-files-feedback" role="status" aria-live="polite"></div>
+      <div class="classroom-files-error is-hidden" id="classroom-files-error" role="alert">
+        <span id="classroom-files-error-message"></span>
+        <button type="button" id="classroom-files-retry">Try again</button>
+      </div>
+
+      <form class="classroom-files-upload" id="classroom-files-upload-form" hidden>
+        <input
+          class="classroom-files-input"
+          id="classroom-files-input"
+          type="file"
+          aria-label="Choose a Classroom file"
+          accept="application/pdf,image/jpeg,image/png,.pdf,.jpg,.jpeg,.png"
+        />
+        <div class="classroom-files-dropzone" id="classroom-files-dropzone">
+          <div>
+            <strong>Add a Classroom file</strong>
+            <p id="classroom-files-rules">PDF, JPEG, or PNG · up to 20 MB</p>
+          </div>
+          <div class="classroom-files-upload-actions">
+            <button class="classroom-files-button is-secondary" id="classroom-files-choose" type="button">Choose file</button>
+            <button class="classroom-files-button" id="classroom-files-upload" type="submit" disabled>Upload file</button>
+          </div>
+        </div>
+        <p class="classroom-files-selection" id="classroom-files-selection" aria-live="polite">No file selected.</p>
+      </form>
+
+      <div class="classroom-files-read-only is-hidden" id="classroom-files-read-only" role="note">
+        <strong>Read-only Files</strong>
+        <p>You can preview and download visible retained files, but you cannot add or moderate them.</p>
+      </div>
+
+      <div class="classroom-files-loading is-hidden" id="classroom-files-loading" role="status">
+        Loading Classroom files…
+      </div>
+      <div class="classroom-files-empty is-hidden" id="classroom-files-empty">
+        <strong>No files have been shared yet.</strong>
+        <p>PDFs, diagrams, and Course references will appear here.</p>
+      </div>
+      <ul class="classroom-files-list" id="classroom-files-list" aria-label="Classroom files"></ul>
+    </section>
+
+    <section
+      class="classroom-space-history"
+      id="classroom-space-history"
+      aria-labelledby="classroom-history-title"
+      aria-busy="false"
+      hidden
+    >
+      <div class="classroom-history-heading">
+        <div class="classroom-space-section-heading">
+          <h2 id="classroom-history-title">History</h2>
+          <p>Worked Sessions from previous Course Schedules remain here without changing your current progress percentage. Only former Versions with retained work are listed, so Version numbers may skip.</p>
+        </div>
+        <span class="classroom-history-count" id="classroom-history-count">0 worked sessions</span>
+      </div>
+
+      <div class="classroom-history-error is-hidden" id="classroom-history-error" role="alert">
+        <span id="classroom-history-error-message"></span>
+        <button type="button" id="classroom-history-retry">Try again</button>
+      </div>
+      <div class="classroom-history-loading is-hidden" id="classroom-history-loading" role="status">
+        Loading learning history&hellip;
+      </div>
+      <div class="classroom-history-empty is-hidden" id="classroom-history-empty">
+        <strong>No previous worked Sessions yet.</strong>
+        <p>When a completed Session leaves the active Schedule, its learning record will appear here.</p>
+      </div>
+      <div
+        class="classroom-history-version-list"
+        id="classroom-history-version-list"
+        aria-label="Previous Course Schedule progress"
+      ></div>
+
+      <section
+        class="classroom-history-audit is-hidden"
+        id="classroom-history-audit"
+        aria-labelledby="classroom-history-audit-title"
+      >
+        <div class="classroom-history-audit-heading">
+          <div>
+            <span>Staff only</span>
+            <h3 id="classroom-history-audit-title">Schedule audit</h3>
+            <p>Immutable Versions, dropped and restored Sessions, reasons, and private staff notes.</p>
+          </div>
+          <div class="classroom-history-audit-actions">
+            <span id="classroom-history-audit-count">0 Versions</span>
+            <button type="button" id="classroom-history-audit-print">
+              Print audit
+            </button>
+          </div>
+        </div>
+        <div
+          class="classroom-history-audit-error is-hidden"
+          id="classroom-history-audit-error"
+          role="alert"
+        ></div>
+        <div
+          class="classroom-history-audit-list"
+          id="classroom-history-audit-list"
+          aria-label="Course Schedule audit Versions"
+        ></div>
+      </section>
+    </section>
+
+    <section
+      class="classroom-space-area-placeholder"
+      id="classroom-space-area-placeholder"
+      aria-labelledby="classroom-area-placeholder-title"
+      hidden
+    >
+      <div class="classroom-space-section-heading">
+        <h2 id="classroom-area-placeholder-title">Area not available yet</h2>
+      </div>
+      <p class="classroom-space-area-description" id="classroom-area-placeholder-description"></p>
+      <p class="classroom-space-area-phase" id="classroom-area-placeholder-phase"></p>
+    </section>
+
+  </main>
+
+  <section
+    class="classroom-schedule-print-document"
+    id="classroom-schedule-print-document"
+    aria-hidden="true"
+  >
+    <div class="classroom-schedule-print-watermark" aria-hidden="true">
+      <img src="../../../public/assets/logos/Kelp-logo-gpt.png" alt="" />
+    </div>
+    <header class="classroom-schedule-print-header">
+      <h1 id="classroom-schedule-print-title">Course Schedule</h1>
+      <dl class="classroom-schedule-print-context">
         <div>
-          <dt>Focus</dt>
-          <dd id="classroom-detail-focus">—</dd>
+          <dt>Student</dt>
+          <dd id="classroom-schedule-print-student">-</dd>
         </div>
         <div>
           <dt>Tutor</dt>
-          <dd id="classroom-detail-tutor">—</dd>
+          <dd id="classroom-schedule-print-tutor">-</dd>
         </div>
         <div>
-          <dt>Course dates</dt>
-          <dd id="classroom-detail-dates">—</dd>
+          <dt>Education level</dt>
+          <dd id="classroom-schedule-print-education-level">-</dd>
         </div>
         <div>
-          <dt>Learning model</dt>
-          <dd id="classroom-detail-model">—</dd>
+          <dt>Subject</dt>
+          <dd id="classroom-schedule-print-subject">-</dd>
+        </div>
+        <div>
+          <dt>Coverage</dt>
+          <dd id="classroom-schedule-print-track">-</dd>
         </div>
       </dl>
-    </section>
+    </header>
+    <div class="classroom-schedule-print-list" id="classroom-schedule-print-list"></div>
+    <footer class="classroom-schedule-print-footer">
+      <p id="classroom-schedule-print-generated"></p>
+      <p id="classroom-schedule-print-copyright"></p>
+      <span aria-hidden="true"></span>
+    </footer>
+  </section>
 
-    <section class="classroom-space-destinations" aria-labelledby="classroom-destinations-title">
-      <div class="classroom-space-section-heading">
-        <p class="page-kicker">One Classroom, connected areas</p>
-        <h2 id="classroom-destinations-title">Classroom areas</h2>
+  <section
+    class="classroom-audit-print-document"
+    id="classroom-audit-print-document"
+    aria-hidden="true"
+  >
+    <header>
+      <p>Staff schedule audit</p>
+      <h1 id="classroom-audit-print-title">Course Schedule audit</h1>
+      <dl>
+        <div>
+          <dt>Student</dt>
+          <dd id="classroom-audit-print-student">-</dd>
+        </div>
+        <div>
+          <dt>Tutor</dt>
+          <dd id="classroom-audit-print-tutor">-</dd>
+        </div>
+        <div>
+          <dt>Generated</dt>
+          <dd id="classroom-audit-print-generated">-</dd>
+        </div>
+      </dl>
+    </header>
+    <div id="classroom-audit-print-list"></div>
+  </section>
+
+  <dialog
+    class="student-dashboard-calendar-dialog"
+    id="classroom-calendar-legend-dialog"
+    aria-labelledby="classroom-calendar-legend-title"
+  >
+    <section>
+      <div class="student-dashboard-calendar-dialog-heading">
+        <div>
+          <p class="page-kicker">Calendar helper</p>
+          <h2 id="classroom-calendar-legend-title">Calendar abbreviations</h2>
+        </div>
+        <button
+          type="button"
+          data-close-classroom-calendar-dialog
+          aria-label="Close Calendar helper"
+        >&times;</button>
       </div>
-      <div class="classroom-space-destination-grid">
-        <article><strong>Forum</strong><p>Course conversations and announcements.</p></article>
-        <article><strong>Assignments</strong><p>Tasks, submissions, feedback, and grades.</p></article>
-        <article><strong>Files</strong><p>Shared references and Course material.</p></article>
-        <article><strong>Report cards</strong><p>Monthly and final downloadable reports.</p></article>
-        <article><strong>History</strong><p>Lessons and Classroom activity over time.</p></article>
-        <article><strong>Live lesson</strong><p>A scheduled Classroom tool—not the Classroom itself.</p></article>
-      </div>
+      <dl class="student-dashboard-calendar-legend">
+        <div><dt>CB</dt><dd>Course begins</dd></div>
+        <div><dt>CE</dt><dd>Course ends</dd></div>
+        <div><dt>SM</dt><dd>Schedule milestone</dd></div>
+        <div><dt>RC</dt><dd>Regular class</dd></div>
+        <div><dt>EC</dt><dd>Extra or on-demand class</dd></div>
+        <div><dt>IP</dt><dd>Independent progress</dd></div>
+        <div><dt>AD</dt><dd>Assignment due</dd></div>
+      </dl>
+      <p class="student-dashboard-calendar-dialog-note">
+        Education levels use ES for Elementary School, MS for Middle School,
+        HS for High School, and CL for College.
+      </p>
     </section>
-  </main>
+  </dialog>
+
+  <dialog
+    class="student-dashboard-calendar-dialog student-dashboard-calendar-day-dialog"
+    id="classroom-calendar-day-dialog"
+    aria-labelledby="classroom-calendar-day-dialog-title"
+  >
+    <section>
+      <div class="student-dashboard-calendar-dialog-heading">
+        <div>
+          <p class="page-kicker">Calendar day</p>
+          <h2 id="classroom-calendar-day-dialog-title">Scheduled items</h2>
+        </div>
+        <button
+          type="button"
+          data-close-classroom-calendar-dialog
+          aria-label="Close Calendar day"
+        >&times;</button>
+      </div>
+      <div
+        class="student-dashboard-calendar-day-dialog-events"
+        id="classroom-calendar-day-dialog-events"
+      ></div>
+    </section>
+  </dialog>
+
+  <dialog
+    class="lesson-request-dialog"
+    id="classroom-lesson-request-dialog"
+    aria-labelledby="classroom-lesson-request-title"
+  >
+    <form data-lesson-request="form">
+      <header class="lesson-request-dialog-heading">
+        <div>
+          <p class="page-kicker">Lesson request</p>
+          <h2 id="classroom-lesson-request-title">Prepare a request</h2>
+        </div>
+        <button
+          class="lesson-request-dialog-close"
+          type="button"
+          data-lesson-request="close"
+          aria-label="Close lesson request"
+        >&times;</button>
+      </header>
+
+      <div class="lesson-request-form-grid">
+        <label>
+          Tutor
+          <select data-lesson-request="tutor" required></select>
+        </label>
+        <label>
+          Course
+          <select data-lesson-request="context" required></select>
+        </label>
+        <label>
+          Purpose
+          <select data-lesson-request="purpose" required></select>
+        </label>
+        <label>
+          Duration
+          <select data-lesson-request="duration" required></select>
+        </label>
+        <label>
+          Proposed date
+          <input data-lesson-request="date" type="date" required />
+        </label>
+        <label>
+          Proposed time
+          <input data-lesson-request="time" type="time" step="1800" required />
+        </label>
+        <label class="lesson-request-message-field">
+          Message <span>(optional)</span>
+          <textarea
+            data-lesson-request="message"
+            maxlength="1000"
+            rows="4"
+            placeholder="Add context for your Tutor"
+          ></textarea>
+        </label>
+      </div>
+
+      <p class="lesson-request-draft-note">
+        This draft stays in this browser session. It does not contact the Tutor or reserve a time.
+      </p>
+      <p
+        class="lesson-request-feedback"
+        data-lesson-request="feedback"
+        role="status"
+        aria-live="polite"
+      ></p>
+
+      <footer class="lesson-request-dialog-actions">
+        <button type="button" data-lesson-request="cancel">Cancel</button>
+        <button class="is-primary" type="submit" data-lesson-request="save">Save draft</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <div
+    class="student-dashboard-calendar-tooltip"
+    id="classroom-calendar-event-tooltip"
+    role="tooltip"
+    hidden
+  ></div>
+
+  <dialog
+    class="classroom-progress-confirm-dialog"
+    id="classroom-progress-confirm-dialog"
+    aria-labelledby="classroom-progress-confirm-title"
+  >
+    <form method="dialog">
+      <div>
+        <p class="page-kicker">Schedule progress</p>
+        <h2 id="classroom-progress-confirm-title">Mark this topic as Studied?</h2>
+        <p>
+          This advances your Schedule to the next unfinished topic. You&rsquo;ll need your Tutor or Mentor to undo it.
+        </p>
+      </div>
+      <div class="classroom-progress-confirm-actions">
+        <button type="submit" value="cancel">Not yet</button>
+        <button type="submit" value="confirm" class="is-primary">Mark Studied</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog
+    class="classroom-progress-confirm-dialog classroom-progress-reason-dialog"
+    id="classroom-progress-reason-dialog"
+    aria-labelledby="classroom-progress-reason-title"
+    aria-describedby="classroom-progress-reason-description"
+  >
+    <form method="dialog" id="classroom-progress-reason-form">
+      <div>
+        <p class="page-kicker">Schedule progress</p>
+        <h2 id="classroom-progress-reason-title">Add an academic reason</h2>
+        <p id="classroom-progress-reason-description"></p>
+      </div>
+      <label for="classroom-progress-reason">
+        Student-facing reason
+      </label>
+      <textarea
+        id="classroom-progress-reason"
+        rows="4"
+        minlength="10"
+        maxlength="500"
+        required
+      ></textarea>
+      <p
+        class="classroom-progress-reason-error is-hidden"
+        id="classroom-progress-reason-error"
+        role="alert"
+      ></p>
+      <div class="classroom-progress-confirm-actions">
+        <button type="submit" value="cancel" formnovalidate>Cancel</button>
+        <button type="submit" value="confirm" class="is-primary">Continue</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="classroom-file-dialog" id="classroom-file-dialog" aria-labelledby="classroom-file-dialog-title">
+    <form class="classroom-file-dialog-form" id="classroom-file-dialog-form">
+      <div>
+        <p class="page-kicker" id="classroom-file-dialog-kicker">File action</p>
+        <h2 id="classroom-file-dialog-title">Confirm file action</h2>
+        <p class="classroom-file-dialog-description" id="classroom-file-dialog-description"></p>
+      </div>
+      <div class="classroom-file-dialog-file" id="classroom-file-dialog-file"></div>
+      <label for="classroom-file-dialog-reason" id="classroom-file-dialog-reason-label">Reason</label>
+      <textarea
+        id="classroom-file-dialog-reason"
+        rows="4"
+        maxlength="1000"
+        aria-describedby="classroom-file-dialog-reason-help"
+      ></textarea>
+      <p class="classroom-file-dialog-help" id="classroom-file-dialog-reason-help"></p>
+      <div class="classroom-file-dialog-error is-hidden" id="classroom-file-dialog-error" role="alert"></div>
+      <div class="classroom-file-dialog-actions">
+        <button class="classroom-files-button is-secondary" id="classroom-file-dialog-cancel" type="button">Cancel</button>
+        <button class="classroom-files-button" id="classroom-file-dialog-confirm" type="submit">Confirm</button>
+      </div>
+    </form>
+  </dialog>
 </body>
 </html>

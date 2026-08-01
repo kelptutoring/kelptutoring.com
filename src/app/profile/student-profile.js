@@ -24,6 +24,7 @@ const state = {
 }
 
 const elements = {}
+let profileMessageTimer = 0
 
 init().catch((error) => {
   console.error('Student Profile failed:', error)
@@ -186,7 +187,7 @@ async function saveProfile(event) {
     state.editing = false
     render()
     setEditing(false)
-    showMessage('Your Profile was saved and synchronized.', 'success')
+    showMessage('Your Profile was saved and synchronized.', 'success', { transient: true })
   } catch (error) {
     console.error('Student Profile save failed:', error)
     showMessage(error?.message || 'Your Profile could not be saved.', 'error')
@@ -350,9 +351,13 @@ function countLabel(count) {
   return `${count} selected`
 }
 
-function showMessage(message, tone = '') {
+function showMessage(message, tone = '', { transient = false } = {}) {
+  window.clearTimeout(profileMessageTimer)
   elements.profileMessage.textContent = message
   elements.profileMessage.dataset.tone = tone
+  if (transient && message) {
+    profileMessageTimer = window.setTimeout(() => showMessage(''), 2000)
+  }
 }
 
 function showFatal(message) {

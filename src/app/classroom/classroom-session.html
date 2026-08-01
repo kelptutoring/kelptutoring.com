@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" data-kelp-theme="ocean">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Archived Session - Kelp</title>
+  <script src="/src/auth/theme-bootstrap.js"></script>
+  <link rel="stylesheet" href="../../styles/style.css" />
+  <link rel="stylesheet" href="./classroom-session.css" />
+  <script src="../../data/tracks-data.js"></script>
+  <script type="module" src="./classroom-session.js"></script>
+</head>
+<body class="classroom-session-body gradient-body-1">
+  <main class="classroom-session-shell" aria-labelledby="classroom-session-title">
+    <a class="classroom-session-back" id="classroom-session-back" href="./classroom-space.html">
+      Back to History
+    </a>
+
+    <section class="classroom-session-card" id="classroom-session-record" aria-busy="true">
+      <p class="page-kicker">Archived Session</p>
+      <h1 id="classroom-session-title">Loading Session...</h1>
+      <p class="classroom-session-loading" id="classroom-session-loading" role="status">
+        Loading the retained learning record...
+      </p>
+      <p class="classroom-session-error is-hidden" id="classroom-session-error" role="alert"></p>
+
+      <div class="classroom-session-notice is-hidden" id="classroom-session-unavailable" role="status">
+        <strong>This content is unavailable</strong>
+        <p>
+          The original Session page no longer exists in the current curriculum
+          catalog. Its learning record remains safely stored in Course History.
+        </p>
+      </div>
+
+      <a class="classroom-session-open is-hidden" id="classroom-session-open" href="#">
+        Open Session content
+      </a>
+
+      <dl class="classroom-session-context">
+        <div>
+          <dt>Session source</dt>
+          <dd id="classroom-session-source">Unavailable</dd>
+        </div>
+        <div>
+          <dt>Course record</dt>
+          <dd id="classroom-session-course">Retained</dd>
+        </div>
+      </dl>
+
+      <section class="classroom-session-progress is-hidden" id="classroom-session-progress">
+        <h2>Recorded progress</h2>
+        <div id="classroom-session-progress-badges"></div>
+      </section>
+
+      <section class="classroom-session-resources is-hidden" id="classroom-session-resources">
+        <h2>Session resources</h2>
+        <ul id="classroom-session-resource-list"></ul>
+      </section>
+    </section>
+  </main>
+</body>
+</html>

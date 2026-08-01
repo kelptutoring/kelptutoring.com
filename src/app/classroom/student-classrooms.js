@@ -163,11 +163,18 @@ function createClassroomCard(item) {
 
   const footer = document.createElement('div')
   footer.className = 'student-classrooms-card-footer'
+  const links = document.createElement('div')
+  links.className = 'student-classrooms-card-links'
   const open = document.createElement('a')
   open.className = 'student-classrooms-open-link'
   open.href = classroomUrl(item.classroom.id)
   open.textContent = item.classroom.accessMode === 'read_only' ? 'Review Classroom →' : 'Open Classroom →'
-  footer.append(open)
+  const schedule = document.createElement('a')
+  schedule.className = 'student-classrooms-open-link student-classrooms-schedule-link'
+  schedule.href = classroomUrl(item.classroom.id, 'schedule')
+  schedule.textContent = 'Open Schedule →'
+  links.append(open, schedule)
+  footer.append(links)
 
   if (state.collection !== 'active') {
     const action = document.createElement('button')
@@ -250,8 +257,9 @@ function collectionFromLocation() {
   return normalizeStudentClassroomCollection(window.location.hash.replace(/^#/, ''))
 }
 
-function classroomUrl(classroomId) {
-  return `./classroom-space.html?classroom=${encodeURIComponent(classroomId)}`
+function classroomUrl(classroomId, area = '') {
+  const base = `./classroom-space.html?classroom=${encodeURIComponent(classroomId)}`
+  return area ? `${base}&area=${encodeURIComponent(area)}` : base
 }
 
 function presentationLabel(value) {

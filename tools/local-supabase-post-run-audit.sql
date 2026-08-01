@@ -107,7 +107,7 @@ begin
     order by tablename
   loop
     execute format(
-      'select count(*) from %I.%I as candidate where to_jsonb(candidate)::text ~ $pattern$(phase[0-9]+-db-|Forces and free-body diagrams|Temporary administrator leaf|Renamed administrator leaf)$pattern$',
+      'select count(*) from %I.%I as candidate where to_jsonb(candidate)::text ~ $pattern$(phase[0-9][a-z0-9._-]*-db-|Forces and free-body diagrams|Temporary administrator leaf|Renamed administrator leaf)$pattern$',
       table_row.schemaname,
       table_row.tablename
     ) into residue_count;

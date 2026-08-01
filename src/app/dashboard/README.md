@@ -50,6 +50,63 @@ Phase 2.C keeps the topbar, Credits wallet, Student heading, feedback, and fatal
 
 Phase 2.D distinguishes the persistent Classroom from its live-lesson tool. `classroom-space.html` is the membership-authorized Course hub foundation; `classroom.html` remains the schedule-bound video/whiteboard tool. The Card URL carries only a Classroom ID. The server derives membership role and denies unlinked users. Active Cards cannot be hidden, and per-Student Card color/order preferences are stored separately from both the Profile and the Classroom.
 
+The current interface refinement keeps Classroom Cards compact enough for three columns on wide screens, two on medium screens, and one on phones. The entire Card remains an accessible Classroom link, while hover underlining is limited to `Open Classroom`. Dashboard block collapse/expand and reorder motion is deliberately paced rather than abrupt and still respects reduced-motion preferences.
+
+## Canonical Calendar consumer
+
+Phase 5.G.2.2 replaces the Dashboard Calendar's live Course-event dependency
+on `learning_schedules` with the canonical `course_schedule_read` timeline.
+Every active or wind-down Classroom contributes authorized Course lifecycle,
+Past/Next/Upcoming meeting, planned-topic, and independent-progress events. An
+error in any Course read rejects the complete Calendar instead of silently
+omitting that Course or falling back to legacy Schedule data.
+
+Assignment deadlines remain separate immutable Assignment facts and may share
+a date with a Course event. Date-only events use viewer-local noon only as a
+nonblocking display anchor. The compatibility mirror is read solely to resolve
+the immutable Schedule-session snapshot attached to an existing Assignment.
+
+Calendar cells use compact labels because their available width is deliberately
+small: `CB` Course begins, `CE` Course ends, `SM` Schedule milestone, `RC`
+Regular class, `EC` Extra/on-demand class, `IP` Independent progress, and `AD`
+Assignment due. `SM` is intentionally distinct from the `MS` education-level
+code for Middle School. Hover and keyboard focus expose the complete
+description inside the Calendar boundary, the inline circular helper explains
+every code, and crowded days expose a color-coded modal list rather than
+clipping undisplayed events. Full descriptions deliberately omit repeated
+Course metadata and separate event type, education level, Subject/content, and
+the specific description into four short lines.
+
+Color presentation remains private to each member. Module-backed milestones,
+Classes, and independent progress inherit the same saved module header/row
+colors used in that member's Classroom Schedule. Course begin/end inherit the
+Classroom Card color, while independent Assignment deadlines retain their
+fixed deadline palette. Expanded day entries and hover/focus descriptions use
+four concise lines: event type/outcome, education level, Subject/content, and
+the specific item description.
+
+Calendar actions use the most specific retained destination. An Assignment
+deadline opens its Practice page; a Schedule milestone, independent-progress
+fact, or Class target opens the linked Track Session when its immutable
+Schedule snapshot retained a planning route. Events without a dedicated page
+fall back to the current Classroom.
+
+The current Month/Week layout stays in place during this data-source cutover.
+Both Calendar surfaces cap a return-to-Today reel at six months, preventing a
+long browsing session from producing an unbounded animation. The current Lesson
+Request draft is a non-authoritative Phase 5.H entry scaffold; it does not
+contact a Tutor, reserve availability, create a Class, or charge credits.
+
+Phase 10 replaces that scaffold with the Tutor-first booking workflow. `Book a
+lesson` lists Tutors from the Student's authorized many-to-many relationships,
+then overlays the selected Tutor's privacy-safe availability on the Student's
+own commitments. The Student selects an eligible Slot before the request form
+opens. The Classroom variant preselects and locks its assigned Tutor. The full
+hourly view, authoritative submission, and availability mask remain owned by
+Phase 10; credit validation remains owned by Phase 11. The Phase 5.H Classroom
+Calendar consumes the same canonical event model through a role-aware
+current-Course endpoint for active Students, Tutors, and Mentors.
+
 ## Verification
 
 Run:
@@ -57,6 +114,7 @@ Run:
 ```bash
 npm run test:dashboards
 npm run test:student-dashboard
+npm run test:lesson-request-foundation
 npm run test:authorization
 npm run test:exam-review
 npm run test:form-review

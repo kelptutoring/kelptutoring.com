@@ -48,6 +48,187 @@ const databaseTests = [
     }
   },
   {
+    file: 'required-versioned-course-schedule-db-self-test.sql',
+    actors: {
+      admin_id: 'ACT-ADMIN',
+      mentor_id: 'ACT-MENTOR',
+      tutor_id: 'ACT-TUTOR',
+      student_a_id: 'ACT-STUDENT',
+      student_b_id: 'ACT-STUDENT-B',
+      independent_tutor_id: 'ACT-TEACHER',
+      outsider_id: 'ACT-OUTSIDER'
+    }
+  },
+  {
+    file: 'course-date-synchronization-db-self-test.sql',
+    actors: {
+      mentor_id: 'ACT-MENTOR',
+      tutor_id: 'ACT-TUTOR',
+      student_a_id: 'ACT-STUDENT',
+      student_b_id: 'ACT-STUDENT-B',
+      outsider_id: 'ACT-OUTSIDER'
+    }
+  },
+  {
+    file: 'course-schedule-structural-editing-db-self-test.sql',
+    actors: {
+      admin_id: 'ACT-ADMIN',
+      mentor_id: 'ACT-MENTOR',
+      tutor_id: 'ACT-TUTOR',
+      student_a_id: 'ACT-STUDENT',
+      student_b_id: 'ACT-STUDENT-B',
+      independent_tutor_id: 'ACT-TEACHER',
+      outsider_id: 'ACT-OUTSIDER'
+    }
+  },
+  {
+    file: 'course-schedule-session-resources-db-self-test.sql',
+    actors: {
+      mentor_id: 'ACT-MENTOR',
+      tutor_id: 'ACT-TUTOR',
+      student_a_id: 'ACT-STUDENT',
+      outsider_id: 'ACT-OUTSIDER'
+    }
+  },
+  {
+    file: 'course-progress-ledger-db-self-test.sql',
+    actors: {
+      mentor_id: 'ACT-MENTOR',
+      tutor_id: 'ACT-TUTOR',
+      student_a_id: 'ACT-STUDENT',
+      student_b_id: 'ACT-STUDENT-B',
+      outsider_id: 'ACT-OUTSIDER'
+    }
+  },
+  {
+    file: 'course-progress-hierarchical-aggregation-db-self-test.sql',
+    actors: {
+      mentor_id: 'ACT-MENTOR',
+      tutor_id: 'ACT-TUTOR',
+      student_a_id: 'ACT-STUDENT',
+      student_b_id: 'ACT-STUDENT-B',
+      outsider_id: 'ACT-OUTSIDER'
+    }
+  },
+  {
+    file: 'builder-effective-student-schedule-db-self-test.sql',
+    actors: {
+      mentor_id: 'ACT-MENTOR',
+      tutor_id: 'ACT-TUTOR',
+      student_a_id: 'ACT-STUDENT',
+      outsider_id: 'ACT-OUTSIDER'
+    }
+  },
+  {
+    file: 'course-schedule-meeting-pattern-db-self-test.sql',
+    actors: {
+      admin_id: 'ACT-ADMIN',
+      mentor_id: 'ACT-MENTOR',
+      tutor_id: 'ACT-TUTOR',
+      student_a_id: 'ACT-STUDENT',
+      student_b_id: 'ACT-STUDENT-B',
+      independent_tutor_id: 'ACT-TEACHER',
+      outsider_id: 'ACT-OUTSIDER'
+    }
+  },
+  {
+    file: 'course-schedule-academic-slots-db-self-test.sql',
+    actors: {
+      mentor_id: 'ACT-MENTOR',
+      tutor_id: 'ACT-TUTOR',
+      student_a_id: 'ACT-STUDENT',
+      student_b_id: 'ACT-STUDENT-B',
+      outsider_id: 'ACT-OUTSIDER'
+    }
+  },
+  {
+    file: 'course-schedule-target-mapping-db-self-test.sql',
+    actors: {
+      mentor_id: 'ACT-MENTOR',
+      tutor_id: 'ACT-TUTOR',
+      student_a_id: 'ACT-STUDENT',
+      student_b_id: 'ACT-STUDENT-B',
+      outsider_id: 'ACT-OUTSIDER'
+    }
+  },
+  {
+    file: 'course-schedule-pacing-policy-db-self-test.sql',
+    actors: {
+      mentor_id: 'ACT-MENTOR',
+      tutor_id: 'ACT-TUTOR',
+      student_a_id: 'ACT-STUDENT',
+      outsider_id: 'ACT-OUTSIDER'
+    }
+  },
+  {
+    file: 'course-schedule-occurrence-outcomes-db-self-test.sql',
+    actors: {
+      admin_id: 'ACT-ADMIN',
+      mentor_id: 'ACT-MENTOR',
+      tutor_id: 'ACT-TUTOR',
+      student_a_id: 'ACT-STUDENT',
+      outsider_id: 'ACT-OUTSIDER'
+    }
+  },
+  {
+    file: 'unified-course-schedule-db-self-test.sql',
+    actors: {
+      admin_id: 'ACT-ADMIN',
+      mentor_id: 'ACT-MENTOR',
+      tutor_id: 'ACT-TUTOR',
+      student_a_id: 'ACT-STUDENT',
+      student_b_id: 'ACT-STUDENT-B',
+      outsider_id: 'ACT-OUTSIDER'
+    }
+  },
+  {
+    file: 'unified-schedule-read-contract-db-self-test.sql',
+    actors: {
+      mentor_id: 'ACT-MENTOR',
+      tutor_id: 'ACT-TUTOR',
+      student_a_id: 'ACT-STUDENT',
+      student_b_id: 'ACT-STUDENT-B',
+      outsider_id: 'ACT-OUTSIDER'
+    }
+  },
+  {
+    file: 'course-schedule-version-coverage-db-self-test.sql',
+    actors: {
+      mentor_id: 'ACT-MENTOR',
+      tutor_id: 'ACT-TUTOR',
+      student_a_id: 'ACT-STUDENT',
+      outsider_id: 'ACT-OUTSIDER'
+    }
+  },
+  {
+    file: 'course-schedule-qualification-publication-db-self-test.sql',
+    actors: {
+      admin_id: 'ACT-ADMIN',
+      mentor_id: 'ACT-MENTOR',
+      tutor_id: 'ACT-TUTOR',
+      student_a_id: 'ACT-STUDENT',
+      outsider_id: 'ACT-OUTSIDER'
+    }
+  },
+  {
+    file: 'multi-curriculum-consumer-projection-db-self-test.sql',
+    actors: {
+      mentor_id: 'ACT-MENTOR',
+      tutor_id: 'ACT-TUTOR',
+      student_a_id: 'ACT-STUDENT',
+      outsider_id: 'ACT-OUTSIDER'
+    }
+  },
+  {
+    file: 'classroom-home-multi-curriculum-db-self-test.sql',
+    actors: {
+      mentor_id: 'ACT-MENTOR',
+      tutor_id: 'ACT-TUTOR',
+      student_a_id: 'ACT-STUDENT',
+      outsider_id: 'ACT-OUTSIDER'
+    }
+  },
+  {
     file: 'student-dashboard-foundation-db-self-test.sql',
     actors: {
       student_a_id: 'ACT-STUDENT',
@@ -85,6 +266,48 @@ const databaseTests = [
     }
   },
   {
+    file: 'classroom-management-surface-db-self-test.sql',
+    actors: {
+      admin_id: 'ACT-ADMIN',
+      mentor_id: 'ACT-MENTOR',
+      tutor_id: 'ACT-TUTOR',
+      student_id: 'ACT-STUDENT',
+      outsider_id: 'ACT-OUTSIDER'
+    }
+  },
+  {
+    file: 'classroom-overview-projection-db-self-test.sql',
+    actors: {
+      admin_id: 'ACT-ADMIN',
+      mentor_id: 'ACT-MENTOR',
+      tutor_id: 'ACT-TUTOR',
+      student_id: 'ACT-STUDENT',
+      outsider_id: 'ACT-OUTSIDER'
+    }
+  },
+  {
+    file: 'classroom-navigation-privacy-db-self-test.sql',
+    actors: {
+      admin_id: 'ACT-ADMIN',
+      mentor_id: 'ACT-MENTOR',
+      tutor_id: 'ACT-TUTOR',
+      student_id: 'ACT-STUDENT',
+      outsider_id: 'ACT-OUTSIDER'
+    }
+  },
+  {
+    file: 'classroom-private-files-db-self-test.sql',
+    actors: {
+      admin_id: 'ACT-ADMIN',
+      mentor_id: 'ACT-MENTOR',
+      tutor_id: 'ACT-TUTOR',
+      student_id: 'ACT-STUDENT',
+      guardian_id: 'ACT-STUDENT-B',
+      former_tutor_id: 'ACT-STUDENT-TUTOR',
+      outsider_id: 'ACT-OUTSIDER'
+    }
+  },
+  {
     file: 'student-calendar-surface-db-self-test.sql',
     actors: {
       student_a_id: 'ACT-STUDENT',
@@ -105,12 +328,14 @@ function usage() {
   node tools/local-supabase-acceptance.mjs preflight
   node tools/local-supabase-acceptance.mjs reset --confirm-project=${expectedProjectId}
   node tools/local-supabase-acceptance.mjs provision --confirm-project=${expectedProjectId}
+  node tools/local-supabase-acceptance.mjs manual-qa --confirm-project=${expectedProjectId}
   node tools/local-supabase-acceptance.mjs verify
   node tools/local-supabase-acceptance.mjs test
   node tools/local-supabase-acceptance.mjs audit
 
-The reset command targets only the local stack. Provision and verify require
-${passwordVariable} to be set for the disposable synthetic accounts.`)
+The reset and manual-qa commands target only the confirmed local stack.
+Provision and verify require ${passwordVariable} to be set for the disposable
+synthetic accounts. manual-qa preserves passwords and needs no password value.`)
 }
 
 function argumentValue(name) {
@@ -379,16 +604,27 @@ async function provisionRelationshipFixtures(context, actors, password, adminSes
       idempotencyKey: 'acceptance-dashboard-student-b'
     }
   ]
-  for (const input of courseInputs) {
-    const course = await callRpc(context, 'create_student_course_draft', {
+  for (const [index, input] of courseInputs.entries()) {
+    const course = await callRpc(context, 'create_student_course_with_schedule_draft', {
       p_student_id: input.student.id,
       p_tutor_id: tutor.id,
       p_subject_node_id: physicsSubjectId,
       p_focus_node_id: mechanicsNodeId,
       p_title: input.title,
+      p_provider_kind: 'kelp',
       p_service_model: input.serviceModel,
-      p_start_date: dateOnlyFromNow(1),
-      p_scheduled_end_date: dateOnlyFromNow(120),
+      p_schedule: {
+        schemaVersion: 1,
+        id: `${input.idempotencyKey}-schedule-v1`,
+        name: `${input.title} Schedule`,
+        timeZone: 'UTC',
+        sessions: [{
+          id: `${input.idempotencyKey}-topic-1`,
+          title: index === 0 ? 'Motion foundations' : 'Mechanics problem analysis',
+          startDate: dateOnlyFromNow(1),
+          endDate: dateOnlyFromNow(120)
+        }]
+      },
       p_idempotency_key: input.idempotencyKey
     }, mentorSession.token)
     await callRpc(context, 'activate_student_course', { p_course_id: course.id }, mentorSession.token)
@@ -419,6 +655,31 @@ async function verifyRelationshipFixtures(context, password) {
       throw new Error(`${alias} has a Course without its active Classroom projection.`)
     }
   }
+}
+
+async function provisionClassroomTestNetwork(context) {
+  const container = await findDatabaseContainer(context.projectId)
+  const { buildManualQaNetworkSchedules } = await import(
+    './manual-qa-network-fixtures.mjs'
+  )
+  const schedules = buildManualQaNetworkSchedules()
+  const encodeSchedule = (schedule) =>
+    Buffer.from(JSON.stringify(schedule), 'utf8').toString('base64')
+  const sqlTemplate = await readFile(
+    resolve(projectRoot, 'tools', 'provision-classroom-test-network.sql'),
+    'utf8'
+  )
+  const sql = sqlTemplate
+    .replace('@@ALGEBRA_SCHEDULE_BASE64@@', encodeSchedule(schedules.algebra))
+    .replace('@@MECHANICS_SCHEDULE_BASE64@@', encodeSchedule(schedules.mechanics))
+  if (/@@[A-Z0-9_]+@@/.test(sql)) {
+    throw new Error('The manual-QA Classroom SQL still contains an unresolved fixture token.')
+  }
+  await runProcess('docker', [
+    'exec', '-i', container, 'psql', '-X', '--quiet',
+    '--username', 'postgres', '--dbname', 'postgres',
+    '--set', 'ON_ERROR_STOP=1'
+  ], { input: sql })
 }
 
 async function provisionActors() {
@@ -474,10 +735,19 @@ async function provisionActors() {
   }
 
   await provisionRelationshipFixtures(context, actors, password, adminSession)
+  await provisionClassroomTestNetwork(context)
   await verifyActors(context, password)
   await verifyRelationshipFixtures(context, password)
   console.log(`Provisioned and verified ${actors.length} deterministic local acceptance actors.`)
   console.log('Provisioned and verified the Phase 2.A Mentor, Tutor, Student, Course, and Classroom fixtures.')
+  console.log('Provisioned and verified the requested local Mentor-to-Tutor Classroom test network.')
+}
+
+async function provisionManualQaNetwork() {
+  requireConfirmation()
+  const context = await preflight({ quiet: true })
+  await provisionClassroomTestNetwork(context)
+  console.log('Provisioned and verified the four-account interactive manual-QA network.')
 }
 
 async function verifyActors(existingContext = null, suppliedPassword = '') {
@@ -582,6 +852,7 @@ async function main() {
   if (command === 'preflight') return preflight()
   if (command === 'reset') return resetLocalDatabase()
   if (command === 'provision') return provisionActors()
+  if (command === 'manual-qa') return provisionManualQaNetwork()
   if (command === 'verify') return verifyActors()
   if (command === 'test') return runDatabaseTests()
   if (command === 'audit') return auditPostRunState()

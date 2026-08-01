@@ -5,7 +5,8 @@ export const CLASSROOM_CARD_COLOR_KEYS = Object.freeze([
   'ocean', 'kelp', 'coral', 'orchid', 'sunrise', 'slate'
 ])
 export const STUDENT_CALENDAR_EVENT_KINDS = Object.freeze([
-  'course_start', 'course_end', 'schedule_milestone', 'assignment_due'
+  'course_start', 'course_end', 'schedule_milestone', 'assignment_due',
+  'regular_class', 'extra_class', 'independent_progress'
 ])
 
 export function normalizeDashboardBlockOrder(value) {
@@ -87,8 +88,36 @@ export function normalizeClassroomCardColor(value) {
 export function normalizeStudentCalendarPayload(payload = {}) {
   const range = payload?.range || {}
   const availabilityOverlay = payload?.availabilityOverlay || {}
+  const calendarPolicy = payload?.calendarPolicy || {}
+  const lessonRequestFoundation = payload?.lessonRequestFoundation || {}
   return {
     schemaVersion: Math.max(1, Number(payload?.schemaVersion) || 1),
+    contract: {
+      name: String(payload?.contract?.name || ''),
+      phase: String(payload?.contract?.phase || ''),
+      version: Math.max(0, Number(payload?.contract?.version) || 0),
+      scheduleAuthority: String(payload?.contract?.scheduleAuthority || ''),
+      assignmentAuthority: String(payload?.contract?.assignmentAuthority || ''),
+      scope: String(payload?.contract?.scope || 'dashboard'),
+      classroomId: String(payload?.contract?.classroomId || ''),
+      legacyScheduleMirrorAuthoritative:
+        payload?.contract?.legacyScheduleMirrorAuthoritative === true,
+      directEventDestinations:
+        payload?.contract?.directEventDestinations === true,
+      moduleColorPresentation:
+        payload?.contract?.moduleColorPresentation === true,
+      itemAcademicPresentation:
+        payload?.contract?.itemAcademicPresentation === true,
+      courseLifecycleCoveragePresentation:
+        payload?.contract?.courseLifecycleCoveragePresentation === true,
+      roleAwareClassroomAccess:
+        payload?.contract?.roleAwareClassroomAccess === true,
+      failureMode: String(payload?.contract?.failureMode || '')
+    },
+    viewer: {
+      membershipRole: String(payload?.viewer?.membershipRole || '').trim().toLowerCase(),
+      canRequestLesson: payload?.viewer?.canRequestLesson === true
+    },
     range: {
       startDate: normalizeCalendarDate(range.startDate),
       endDate: normalizeCalendarDate(range.endDate),
@@ -102,6 +131,83 @@ export function normalizeStudentCalendarPayload(payload = {}) {
       eligibleContexts: Array.isArray(availabilityOverlay.eligibleContexts)
         ? availabilityOverlay.eligibleContexts.map(normalizeAvailabilityContext).filter(Boolean)
         : []
+    },
+    calendarPolicy: {
+      dateOnlyDisplayAnchor: String(calendarPolicy.dateOnlyDisplayAnchor || ''),
+      dateOnlyDisplayIsPresentationOnly:
+        calendarPolicy.dateOnlyDisplayIsPresentationOnly === true,
+      dateOnlyItemsBlockAvailability:
+        calendarPolicy.dateOnlyItemsBlockAvailability === true,
+      assignmentDeadlinesAreIndependent:
+        calendarPolicy.assignmentDeadlinesAreIndependent === true,
+      assignmentDeadlineChangesMoveMeetings:
+        calendarPolicy.assignmentDeadlineChangesMoveMeetings === true,
+      canonicalFailureIsAtomic: calendarPolicy.canonicalFailureIsAtomic === true,
+      legacyScheduleFallback: calendarPolicy.legacyScheduleFallback === true,
+      classroomCourseFilter: calendarPolicy.classroomCourseFilter === true,
+      availabilityTutorScope: String(calendarPolicy.availabilityTutorScope || '')
+    },
+    lessonRequestFoundation: {
+      schemaVersion: Math.max(
+        0,
+        Number(lessonRequestFoundation.schemaVersion) || 0
+      ),
+      status: normalizeFeatureStatus(
+        lessonRequestFoundation.status,
+        'unavailable'
+      ),
+      scope: ['dashboard', 'classroom'].includes(
+        String(lessonRequestFoundation.scope || '').trim().toLowerCase()
+      )
+        ? String(lessonRequestFoundation.scope).trim().toLowerCase()
+        : '',
+      canStart: lessonRequestFoundation.canStart === true,
+      tutorSelection: String(lessonRequestFoundation.tutorSelection || ''),
+      contextSelection: String(lessonRequestFoundation.contextSelection || ''),
+      purposeOptions: Array.isArray(lessonRequestFoundation.purposeOptions)
+        ? lessonRequestFoundation.purposeOptions
+          .map(normalizeLessonRequestPurpose)
+          .filter(Boolean)
+        : [],
+      durationMinutes: Array.isArray(lessonRequestFoundation.durationMinutes)
+        ? lessonRequestFoundation.durationMinutes
+          .map(Number)
+          .filter((value) => [30, 60, 90].includes(value))
+        : [],
+      constraints: {
+        minimumLeadMinutes: normalizeNonNegativeInteger(
+          lessonRequestFoundation.constraints?.minimumLeadMinutes
+        ),
+        maximumAdvanceDays: normalizeNonNegativeInteger(
+          lessonRequestFoundation.constraints?.maximumAdvanceDays
+        ),
+        pendingRequestExpiresMinutesBeforeClass: normalizeNonNegativeInteger(
+          lessonRequestFoundation.constraints?.pendingRequestExpiresMinutesBeforeClass
+        )
+      },
+      requiredFields: Array.isArray(lessonRequestFoundation.requiredFields)
+        ? [...new Set(
+            lessonRequestFoundation.requiredFields
+              .map((value) => String(value || '').trim())
+              .filter(Boolean)
+          )]
+        : [],
+      draftStorage: String(lessonRequestFoundation.draftStorage || ''),
+      submissionStatus: normalizeFeatureStatus(
+        lessonRequestFoundation.submissionStatus,
+        'pending_phase_10'
+      ),
+      availabilityStatus: normalizeFeatureStatus(
+        lessonRequestFoundation.availabilityStatus,
+        'pending_phase_10'
+      ),
+      creditValidationStatus: normalizeFeatureStatus(
+        lessonRequestFoundation.creditValidationStatus,
+        'pending_phase_11'
+      ),
+      createsReservation: lessonRequestFoundation.createsReservation === true,
+      createsLessonRequest: lessonRequestFoundation.createsLessonRequest === true,
+      createsClass: lessonRequestFoundation.createsClass === true
     },
     featureStatus: {
       calendarProjection: normalizeFeatureStatus(payload?.featureStatus?.calendarProjection, 'active_phase_2e'),
@@ -139,6 +245,36 @@ export function moveCalendarAnchor(anchorDate, view, direction) {
   const next = new Date(anchor)
   next.setDate(anchor.getDate() + (amount * 7))
   return next
+}
+
+export function calendarReelStart(previousAnchor, nextAnchor, view, maximumMonths = 6) {
+  const previous = normalizeCalendarAnchor(previousAnchor)
+  const target = normalizeCalendarAnchor(nextAnchor)
+  const direction = target > previous ? 'forward' : target < previous ? 'backward' : ''
+  const monthLimit = Math.max(1, Math.floor(Number(maximumMonths) || 6))
+  if (!direction) return previous
+
+  const monthStart = new Date(
+    target.getFullYear(),
+    target.getMonth() + (direction === 'forward' ? -monthLimit : monthLimit),
+    1,
+    12
+  )
+  const boundaryDay = normalizeDashboardCalendarView(view) === 'month'
+    ? 1
+    : Math.min(
+      target.getDate(),
+      new Date(monthStart.getFullYear(), monthStart.getMonth() + 1, 0, 12).getDate()
+    )
+  const boundary = new Date(
+    monthStart.getFullYear(),
+    monthStart.getMonth(),
+    boundaryDay,
+    12
+  )
+  if (direction === 'forward' && previous < boundary) return boundary
+  if (direction === 'backward' && previous > boundary) return boundary
+  return previous
 }
 
 export function moveClassroomCard(order, classroomId, direction) {
@@ -212,6 +348,15 @@ function normalizeCalendarEvent(item) {
   if (!id || !title || !startsOn || !courseId || !STUDENT_CALENDAR_EVENT_KINDS.includes(kind)) return null
   const actionType = String(item?.action?.type || '').trim().toLowerCase()
   const assignmentId = String(item?.action?.assignmentId || '').trim()
+  const scheduleItemId = String(
+    item?.scheduleItemId || item?.action?.scheduleItemId || ''
+  ).trim()
+  const trackSessionHref = safeCalendarHref(item?.action?.href)
+  const action = actionType === 'open_practice' && assignmentId
+    ? { type: 'open_practice', assignmentId }
+    : actionType === 'open_track_session' && trackSessionHref
+      ? { type: 'open_track_session', href: trackSessionHref, scheduleItemId }
+      : null
   return {
     id,
     kind,
@@ -219,8 +364,11 @@ function normalizeCalendarEvent(item) {
     endsOn: normalizeCalendarDate(item?.endsOn) || startsOn,
     title,
     detail: String(item?.detail || ''),
+    eventCode: String(item?.eventCode || '').trim().toUpperCase(),
+    eventLabel: String(item?.eventLabel || '').trim(),
     courseId,
     classroomId: String(item?.classroomId || ''),
+    scheduleItemId,
     courseTitle: String(item?.courseTitle || 'Course'),
     tutor: {
       id: String(item?.tutor?.id || ''),
@@ -228,11 +376,62 @@ function normalizeCalendarEvent(item) {
     },
     subject: String(item?.subject || 'Subject'),
     focus: String(item?.focus || ''),
+    educationLevel: {
+      name: String(item?.educationLevel?.name || ''),
+      slug: String(item?.educationLevel?.slug || ''),
+      code: String(item?.educationLevel?.code || '').trim().toUpperCase()
+    },
+    academicScope: item?.academicScope === 'branch' ? 'branch' : 'course',
+    academicPath: String(item?.academicPath || '').trim(),
+    compactAcademicLabel: String(item?.compactAcademicLabel || '').trim(),
+    academicPathways: Array.isArray(item?.academicPathways)
+      ? item.academicPathways.map((pathway) => ({
+          name: String(pathway?.name || '').trim(),
+          slug: String(pathway?.slug || '').trim()
+        })).filter((pathway) => pathway.name)
+      : [],
+    academicCoverage: {
+      displayLabel: String(item?.academicCoverage?.displayLabel || '').trim(),
+      branchCount: Math.max(0, Number(item?.academicCoverage?.branchCount) || 0)
+    },
+    presentationColorSource: ['classroom', 'module', 'event_kind'].includes(
+      String(item?.presentationColorSource || '').trim()
+    )
+      ? String(item.presentationColorSource).trim()
+      : 'event_kind',
+    modulePresentation: {
+      key: String(item?.modulePresentation?.key || '').trim(),
+      title: String(item?.modulePresentation?.title || '').trim(),
+      headerColor: normalizeCalendarHexColor(item?.modulePresentation?.headerColor),
+      rowColor: normalizeCalendarHexColor(item?.modulePresentation?.rowColor)
+    },
     colorKey: normalizeClassroomCardColor(item?.colorKey),
-    action: actionType === 'open_practice' && assignmentId
-      ? { type: 'open_practice', assignmentId }
-      : null
+    status: String(item?.status || '').trim().toLowerCase(),
+    nonDeliveryReason: String(item?.nonDeliveryReason || '').trim().toLowerCase(),
+    startsAt: item?.startsAt || null,
+    endsAt: item?.endsAt || null,
+    calendarPresentation: {
+      sourceKind: String(item?.calendarPresentation?.sourceKind || ''),
+      isDateOnly: item?.calendarPresentation?.isDateOnly === true,
+      effectiveDate: normalizeCalendarDate(item?.calendarPresentation?.effectiveDate),
+      displayAnchor: item?.calendarPresentation?.displayAnchor || null,
+      displayTimeZone: String(item?.calendarPresentation?.displayTimeZone || ''),
+      placement: String(item?.calendarPresentation?.placement || ''),
+      blocksAvailability: item?.calendarPresentation?.blocksAvailability === true
+    },
+    action
   }
+}
+
+function normalizeCalendarHexColor(value) {
+  const color = String(value || '').trim().toLowerCase()
+  return /^#[0-9a-f]{6}$/.test(color) ? color : ''
+}
+
+function safeCalendarHref(value) {
+  const href = String(value || '').trim()
+  if (!href || /^(?:javascript|data|vbscript):/i.test(href)) return ''
+  return href
 }
 
 function normalizeAvailabilityContext(item) {
@@ -247,6 +446,11 @@ function normalizeAvailabilityContext(item) {
     tutor: { id: tutorId, name: String(item?.tutor?.name || 'Tutor') },
     subject: String(item?.subject || 'Subject'),
     focus: String(item?.focus || ''),
+    educationLevel: {
+      name: String(item?.educationLevel?.name || ''),
+      slug: String(item?.educationLevel?.slug || ''),
+      code: String(item?.educationLevel?.code || '').trim().toUpperCase()
+    },
     colorKey: normalizeClassroomCardColor(item?.colorKey)
   }
 }
@@ -282,4 +486,18 @@ function normalizeClassroomCardIds(value) {
 function normalizeFeatureStatus(value, fallback) {
   const normalized = String(value || '').trim().toLowerCase()
   return normalized || fallback
+}
+
+function normalizeLessonRequestPurpose(value) {
+  const key = String(value?.key || '').trim().toLowerCase()
+  if (!['regular', 'extra', 'standalone'].includes(key)) return null
+  return {
+    key,
+    status: normalizeFeatureStatus(value?.status, 'contract_only_phase_10')
+  }
+}
+
+function normalizeNonNegativeInteger(value) {
+  const number = Number(value)
+  return Number.isInteger(number) && number >= 0 ? number : 0
 }

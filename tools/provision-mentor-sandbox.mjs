@@ -3,6 +3,8 @@ import { readFile } from 'node:fs/promises'
 import { delimiter, dirname, resolve } from 'node:path'
 import { spawn } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
+import { createBuilderCoursePublication } from '../src/app/schedule-generator/course-schedule-adapter.js'
+import '../src/data/tracks-data.js'
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const actorMapPath = resolve(projectRoot, 'tests/acceptance/fixtures/local-supabase-actor-map-v1.json')
@@ -46,11 +48,13 @@ function usage() {
   node tools/provision-mentor-sandbox.mjs \\
     --confirm-project=${expectedProjectId} \\
     --mentor-email=<existing local account> \\
-    --student-email=<existing Aldebara local account>
+    --student-email=<existing Aldebara local account> \\
+    [--diagnose-only]
 
 This command mutates only the confirmed disposable local Supabase stack. It
 preserves existing roles and profile data, and it never changes the nine
-deterministic acceptance actors.`)
+deterministic acceptance actors. With --diagnose-only it performs read-only
+Course/Schedule inspection and does not require the acceptance password.`)
 }
 
 function argumentValue(name) {
@@ -91,13 +95,13 @@ function toolEnvironment() {
   return env
 }
 
-function runProcess(command, args) {
+function runProcess(command, args, { input = null } = {}) {
   return new Promise((resolvePromise, rejectPromise) => {
     const child = spawn(command, args, {
       cwd: projectRoot,
       env: toolEnvironment(),
       shell: false,
-      stdio: ['ignore', 'pipe', 'pipe']
+      stdio: [input === null ? 'ignore' : 'pipe', 'pipe', 'pipe']
     })
     let stdout = ''
     let stderr = ''
@@ -110,6 +114,7 @@ function runProcess(command, args) {
       if (code === 0) resolvePromise({ stdout, stderr })
       else rejectPromise(new Error(`${command} exited with code ${code}.\n${stderr || stdout}`))
     })
+    if (input !== null) child.stdin.end(input)
   })
 }
 
@@ -319,6 +324,30 @@ async function ensureQualification(context, adminToken, userId, curriculumNodeId
   }, adminToken)
 }
 
+async function ensureAllActiveSubjectQualifications(context, adminToken, userId, label) {
+  const subjects = await rest(context, 'curriculum_nodes', {
+    query: {
+      select: 'id,name',
+      node_type: 'eq.subject',
+      status: 'eq.active',
+      order: 'name.asc'
+    }
+  })
+  if (!subjects?.length) {
+    throw new Error('The local curriculum has no active Subjects to qualify.')
+  }
+  for (const subject of subjects) {
+    await ensureQualification(
+      context,
+      adminToken,
+      userId,
+      subject.id,
+      `${label}: ${subject.name}`
+    )
+  }
+  return subjects
+}
+
 async function ensureSupervision(context, adminToken, tutorId, mentorId) {
   const existing = await rest(context, 'mentor_tutor_assignments', {
     query: { select: 'id,mentor_id', tutor_id: `eq.${tutorId}`, status: 'eq.active', limit: '1' }
@@ -350,27 +379,388 @@ function nextWeekday(weekday, weekOffset = 0) {
   return value.toISOString().slice(0, 10)
 }
 
+function algebraTrackSource() {
+  for (const level of globalThis.tracksCatalog?.levels || []) {
+    const subject = level.subjects?.find((candidate) => candidate.taxonomySlug === 'mathematics')
+    const track = subject?.tracks?.find((candidate) => candidate.taxonomySlug === 'algebra-1')
+    if (!subject || !track) continue
+    const sessions = track.modules
+      .flatMap((module) => module.sessions.map((session) => ({
+        ...session,
+        moduleId: module.id,
+        moduleTitle: module.title
+      })))
+      .slice(0, 4)
+    if (sessions.length !== 4 || sessions.some((session) => !session.sourceContentVersionKey)) {
+      throw new Error('The generated Algebra 1 Track does not contain four versioned Sessions.')
+    }
+    return { subject, track, sessions }
+  }
+  throw new Error('The generated Track catalogue does not contain Mathematics · Algebra 1.')
+}
+
+function stripTrackWeekPrefix(title) {
+  return String(title || '').replace(/^Week\s+\d+\s*:\s*/i, '').trim()
+}
+
+function buildAlgebraTrackSchedule(timeZone) {
+  const source = algebraTrackSource()
+  return {
+    id: 'interactive-algebra-track-schedule-v1',
+    name: 'Algebra 1 Wednesday Track plan',
+    timeZone,
+    schemaVersion: 1,
+    context: {
+      subjectTaxonomySlug: source.subject.taxonomySlug,
+      trackId: source.track.id,
+      trackIds: [source.track.id],
+      trackTaxonomySlugs: [source.track.taxonomySlug]
+    },
+    sessions: source.sessions.map((session, index) => ({
+      id: `interactive_${session.id}`,
+      title: stripTrackWeekPrefix(session.title),
+      type: 'lesson',
+      startDate: nextWeekday(3, index),
+      endDate: nextWeekday(3, index),
+      sourceSessionId: session.sourceSessionId,
+      sourceContentVersionKey: session.sourceContentVersionKey,
+      sourceTrackKey: source.track.id,
+      sourceModuleKey: session.moduleId,
+      sourceSubjectSlug: source.subject.taxonomySlug,
+      sourceTrackSlug: source.track.taxonomySlug,
+      trackId: source.track.id,
+      moduleId: session.moduleId,
+      moduleTitle: session.moduleTitle,
+      planningHref: session.planningHref,
+      difficulty: session.difficulty,
+      resources: []
+    }))
+  }
+}
+
+function effectiveDateBounds(items) {
+  const effective = items.filter((item) =>
+    ['scheduled', 'requeued'].includes(item.state || item.item_state)
+  )
+  const starts = effective
+    .map((item) => item.scheduledDate || item.scheduled_date)
+    .filter(Boolean)
+    .sort()
+  const ends = effective
+    .map((item) =>
+      item.endDate || item.end_date || item.scheduledDate || item.scheduled_date
+    )
+    .filter(Boolean)
+    .sort()
+  return {
+    firstDate: starts[0] || null,
+    lastDate: ends.at(-1) || null,
+    effectiveItemCount: effective.length
+  }
+}
+
+function isCurrentBuilderTrackItem(item, trackSlug) {
+  const snapshot = item.source_snapshot || {}
+  return ['scheduled', 'requeued'].includes(item.item_state)
+    && item.item_kind === 'curriculum_topic'
+    && String(item.stable_item_key || '').startsWith('schedule_')
+    && snapshot.sourceTrackSlug === trackSlug
+    && Boolean(snapshot.sourceSessionId)
+    && Boolean(snapshot.sourceContentVersionKey)
+    && Boolean(snapshot.planningHref)
+}
+
+async function diagnoseAlgebraSchedule(context, aldebara) {
+  const courses = await rest(context, 'student_courses', {
+    query: {
+      select: 'id,title,status,start_date,activated_start_date,scheduled_end_date,focus_node_id,active_schedule_version_id',
+      student_id: `eq.${aldebara.id}`,
+      idempotency_key: 'eq.interactive-mentor-algebra-v1',
+      limit: '1'
+    }
+  })
+  const course = courses?.[0]
+  if (!course?.active_schedule_version_id) {
+    console.log('No active interactive Algebra Course Schedule exists for the requested Student.')
+    return
+  }
+
+  const versions = await rest(context, 'course_schedule_versions', {
+    query: {
+      select: 'id,version_number,name,time_zone,previous_version_id',
+      id: `eq.${course.active_schedule_version_id}`,
+      limit: '1'
+    }
+  })
+  const version = versions?.[0]
+  const rows = await rest(context, 'course_schedule_items', {
+    query: {
+      select: 'stable_item_key,title,item_kind,curriculum_node_id,scheduled_date,end_date,position,item_state,source_snapshot',
+      version_id: `eq.${course.active_schedule_version_id}`,
+      order: 'position.asc'
+    }
+  })
+  const timeZone = await userTimeZone(context, aldebara.id, version?.time_zone || 'UTC')
+  const builderSchedule = buildAlgebraTrackSchedule(timeZone)
+  const activeItems = rows.map((item) => ({
+    stableItemKey: item.stable_item_key,
+    title: item.title,
+    kind: item.item_kind,
+    curriculumNodeId: item.curriculum_node_id,
+    scheduledDate: item.scheduled_date,
+    endDate: item.end_date,
+    position: item.position,
+    state: item.item_state,
+    sourceSnapshot: item.source_snapshot
+  }))
+  const expected = builderSchedule.sessions.map((session) => ({
+    stableItemKey: session.id,
+    scheduledDate: session.startDate,
+    sourceContentVersionKey: session.sourceContentVersionKey
+  }))
+  const expectedCurrent = expected.every((candidate) => rows.some((item) =>
+    item.stable_item_key === candidate.stableItemKey
+    && item.item_state !== 'dropped'
+    && item.source_snapshot?.sourceContentVersionKey === candidate.sourceContentVersionKey
+  ))
+  const currentBuilderTrackItems = rows.filter((item) =>
+    isCurrentBuilderTrackItem(item, builderSchedule.context.trackTaxonomySlugs[0])
+  )
+
+  let proposed = null
+  let adapterMessage = null
+  try {
+    proposed = createBuilderCoursePublication({
+      schedule: builderSchedule,
+      course: {
+        subject: { slug: builderSchedule.context.subjectTaxonomySlug },
+        focus: {
+          id: course.focus_node_id,
+          slug: builderSchedule.context.trackTaxonomySlugs[0]
+        }
+      },
+      activeItems
+    })
+  } catch (error) {
+    adapterMessage = error.message
+  }
+
+  console.log(JSON.stringify({
+    diagnostic: 'interactive-algebra-course-schedule',
+    student: { id: aldebara.id, email: aldebara.email },
+    course: {
+      id: course.id,
+      title: course.title,
+      status: course.status,
+      startDate: course.start_date,
+      activatedStartDate: course.activated_start_date,
+      scheduledEndDate: course.scheduled_end_date
+    },
+    activeVersion: {
+      id: version?.id || course.active_schedule_version_id,
+      versionNumber: version?.version_number ?? null,
+      previousVersionId: version?.previous_version_id || null,
+      timeZone: version?.time_zone || null,
+      bounds: effectiveDateBounds(rows),
+      items: rows.map((item) => ({
+        stableItemKey: item.stable_item_key,
+        title: item.title,
+        scheduledDate: item.scheduled_date,
+        endDate: item.end_date,
+        state: item.item_state,
+        hasTrackIdentity: Boolean(item.source_snapshot?.sourceContentVersionKey),
+        sourceTrackSlug: item.source_snapshot?.sourceTrackSlug || null,
+        sourceSessionId: item.source_snapshot?.sourceSessionId || null,
+        builderScheduleId: item.source_snapshot?.builderScheduleId || null,
+        planningHref: item.source_snapshot?.planningHref || null
+      }))
+    },
+    expectedBuilderTrack: {
+      alreadyCurrent: expectedCurrent,
+      currentBuilderSchedulePresent: currentBuilderTrackItems.length > 0,
+      currentBuilderSessionCount: currentBuilderTrackItems.length,
+      bounds: effectiveDateBounds(expected.map((item) => ({ ...item, state: 'scheduled' }))),
+      items: expected
+    },
+    proposedSuccessor: proposed ? {
+      bounds: effectiveDateBounds(proposed.items),
+      items: proposed.items.map((item) => ({
+        stableItemKey: item.stableItemKey,
+        scheduledDate: item.scheduledDate,
+        endDate: item.endDate,
+        state: item.state,
+        hasTrackIdentity: Boolean(item.sourceContentVersionKey),
+        sourceTrackSlug: item.sourceTrackSlug || null,
+        sourceSessionId: item.sourceSessionId || null,
+        planningHref: item.planningHref || null
+      }))
+    } : null,
+    adapterMessage
+  }, null, 2))
+}
+
+function base64Json(value) {
+  return Buffer.from(JSON.stringify(value), 'utf8').toString('base64')
+}
+
+function assertUuid(value, label) {
+  const normalized = String(value || '')
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(normalized)) {
+    throw new Error(`${label} is not a valid UUID.`)
+  }
+  return normalized
+}
+
+async function publishLocallyAsActor(actorId, {
+  courseId,
+  expectedVersionId,
+  builderSchedule,
+  items,
+  changeReasons
+}) {
+  const actor = assertUuid(actorId, 'The sandbox Mentor')
+  const course = assertUuid(courseId, 'The sandbox Course')
+  const version = assertUuid(expectedVersionId, 'The active Schedule Version')
+  const sql = `
+begin;
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '${actor}', true);
+select public.publish_course_builder_schedule(
+  '${course}'::uuid,
+  '${version}'::uuid,
+  convert_from(decode('${base64Json(builderSchedule)}', 'base64'), 'utf8')::jsonb,
+  convert_from(decode('${base64Json(items)}', 'base64'), 'utf8')::jsonb,
+  convert_from(decode('${base64Json(changeReasons)}', 'base64'), 'utf8')::jsonb,
+  'interactive-algebra-track-bridge:${version}'
+);
+commit;
+`
+  await runProcess('docker', [
+    'exec', '-i', `supabase_db_${expectedProjectId}`,
+    'psql', '-X', '--username', 'postgres', '--dbname', 'postgres',
+    '--set', 'ON_ERROR_STOP=1'
+  ], { input: sql })
+}
+
+async function publishAlgebraTrackBridge(context, mentor, course, builderSchedule) {
+  const courses = await rest(context, 'student_courses', {
+    query: {
+      select: 'id,title,status,subject_node_id,focus_node_id,active_schedule_version_id',
+      id: `eq.${course.id}`,
+      limit: '1'
+    }
+  })
+  const record = courses?.[0]
+  if (!record?.active_schedule_version_id) {
+    throw new Error('The interactive Algebra Course has no active Schedule Version.')
+  }
+  const versions = await rest(context, 'course_schedule_versions', {
+    query: {
+      select: 'id,version_number,name,time_zone',
+      id: `eq.${record.active_schedule_version_id}`,
+      limit: '1'
+    }
+  })
+  const activeVersion = versions?.[0]
+  const items = await rest(context, 'course_schedule_items', {
+    query: {
+      select: 'stable_item_key,title,item_kind,curriculum_node_id,scheduled_date,end_date,position,item_state,source_snapshot',
+      version_id: `eq.${record.active_schedule_version_id}`,
+      order: 'position.asc'
+    }
+  })
+  const expected = new Map(builderSchedule.sessions.map((session) => [
+    session.id,
+    session.sourceContentVersionKey
+  ]))
+  const alreadyPublished = [...expected.entries()].every(([stableKey, contentKey]) =>
+    items.some((item) =>
+      item.stable_item_key === stableKey
+      && item.item_state !== 'dropped'
+      && item.source_snapshot?.sourceContentVersionKey === contentKey
+    )
+  )
+  if (alreadyPublished) return false
+
+  const publication = createBuilderCoursePublication({
+    schedule: builderSchedule,
+    course: {
+      subject: { slug: builderSchedule.context.subjectTaxonomySlug },
+      focus: {
+        id: record.focus_node_id,
+        slug: builderSchedule.context.trackTaxonomySlugs[0]
+      }
+    },
+    activeItems: items.map((item) => ({
+      stableItemKey: item.stable_item_key,
+      title: item.title,
+      kind: item.item_kind,
+      curriculumNodeId: item.curriculum_node_id,
+      scheduledDate: item.scheduled_date,
+      endDate: item.end_date,
+      position: item.position,
+      state: item.item_state,
+      sourceSnapshot: item.source_snapshot
+    }))
+  })
+  await publishLocallyAsActor(mentor.id, {
+    courseId: record.id,
+    expectedVersionId: activeVersion.id,
+    builderSchedule: publication.builderSchedule,
+    items: publication.items,
+    changeReasons: publication.changeReasons
+  })
+  return true
+}
+
 async function ensureCourse(context, adminToken, input) {
-  const course = await callRpc(context, 'create_student_course_draft', {
+  const course = await callRpc(context, 'create_student_course_with_schedule_draft', {
     p_student_id: input.studentId,
     p_tutor_id: input.tutorId,
     p_subject_node_id: input.subjectId,
     p_focus_node_id: input.focusId,
     p_title: input.title,
+    p_provider_kind: 'kelp',
     p_service_model: input.serviceModel,
-    p_start_date: input.startDate,
-    p_scheduled_end_date: input.endDate,
+    p_schedule: input.schedule,
     p_idempotency_key: input.idempotencyKey
   }, adminToken)
   const activation = await callRpc(context, 'activate_student_course', { p_course_id: course.id }, adminToken)
   return activation.course
 }
 
-async function upsertCourseSchedule(context, adminToken, courseId, schedule) {
-  return callRpc(context, 'upsert_student_course_learning_schedule', {
-    p_student_course_id: courseId,
-    p_schedule: schedule
-  }, adminToken)
+async function readCourseScheduleMirror(context, courseId) {
+  const schedules = await rest(context, 'learning_schedules', {
+    query: {
+      select: 'id,name,time_zone',
+      student_course_id: `eq.${courseId}`,
+      status: 'eq.active',
+      limit: '1'
+    }
+  })
+  const schedule = schedules?.[0]
+  if (!schedule) throw new Error('The Course did not expose its Calendar compatibility mirror.')
+  const sessions = await rest(context, 'learning_schedule_sessions', {
+    query: {
+      select: 'id,source_key,title,scheduled_date,end_date,position',
+      schedule_id: `eq.${schedule.id}`,
+      status: 'eq.active',
+      order: 'position.asc'
+    }
+  })
+  return {
+    id: schedule.id,
+    name: schedule.name,
+    timeZone: schedule.time_zone,
+    sessions: (sessions || []).map((session) => ({
+      id: session.id,
+      sourceKey: session.source_key,
+      title: session.title,
+      scheduledDate: session.scheduled_date,
+      endDate: session.end_date,
+      position: session.position
+    }))
+  }
 }
 
 async function userTimeZone(context, userId, fallback) {
@@ -381,7 +771,9 @@ async function userTimeZone(context, userId, fallback) {
 }
 
 async function ensureAlgebraAssignment(context, mentor, student, schedule) {
-  const targetSession = schedule.sessions.find((session) => session.sourceKey === 'interactive-algebra-session-2') || schedule.sessions[0]
+  const targetSession = schedule.sessions.find((session) =>
+    session.sourceKey.includes('instructions-hsm2')
+  ) || schedule.sessions[1] || schedule.sessions[0]
   if (!targetSession) throw new Error('The Algebra schedule did not return an assignable session.')
 
   const existing = await rest(context, 'course_assignments', {
@@ -525,15 +917,23 @@ async function main() {
     return
   }
   requireConfirmation()
+  const diagnoseOnly = process.argv.includes('--diagnose-only')
   const mentorEmail = requiredEmail('mentor-email')
   const studentEmail = requiredEmail('student-email')
   if (mentorEmail === studentEmail) throw new Error('The Mentor and Aldebara accounts must be different users.')
 
   const password = process.env[passwordVariable] || ''
-  if (password.length < 12) throw new Error(`${passwordVariable} must contain at least 12 characters and must not be committed.`)
+  if (!diagnoseOnly && password.length < 12) {
+    throw new Error(`${passwordVariable} must contain at least 12 characters and must not be committed.`)
+  }
   const context = await preflight()
   const actorFixture = JSON.parse(await readFile(actorMapPath, 'utf8'))
   const reservedIds = new Set(actorFixture.actors.map((actor) => actor.id))
+  if (diagnoseOnly) {
+    const aldebara = await requireExistingUser(context, studentEmail, reservedIds)
+    await diagnoseAlgebraSchedule(context, aldebara)
+    return
+  }
   const admin = actorFixture.actors.find((actor) => actor.alias === 'ACT-ADMIN')
   if (!admin) throw new Error('The deterministic actor map is missing ACT-ADMIN.')
   const adminToken = await signIn(context, admin.email, password)
@@ -567,34 +967,16 @@ async function main() {
   await ensureQualification(context, adminToken, mentor.id, curriculum.mechanics, 'Mentor Mechanics')
   await ensureQualification(context, adminToken, mentor.id, curriculum.algebraOne, 'Mentor Algebra 1')
   await ensureQualification(context, adminToken, saoPauloTutor.id, curriculum.mechanics, 'Tutor Mechanics')
-  await ensureQualification(context, adminToken, londonTutor.id, curriculum.algebraOne, 'Tutor Algebra 1')
+  const londonTutorQualificationScopes = await ensureAllActiveSubjectQualifications(
+    context,
+    adminToken,
+    londonTutor.id,
+    'Oliver Bennett all-Track sandbox access'
+  )
   await ensureSupervision(context, adminToken, saoPauloTutor.id, mentor.id)
   await ensureSupervision(context, adminToken, londonTutor.id, mentor.id)
 
-  const mechanicsCourse = await ensureCourse(context, adminToken, {
-    studentId: syntheticStudent.id,
-    tutorId: saoPauloTutor.id,
-    subjectId: curriculum.physics,
-    focusId: curriculum.mechanics,
-    title: 'Mechanics Foundations',
-    serviceModel: 'recurring',
-    startDate: dateOnlyFromNow(1),
-    endDate: dateOnlyFromNow(90),
-    idempotencyKey: 'interactive-mentor-mechanics-v1'
-  })
-  const algebraCourse = await ensureCourse(context, adminToken, {
-    studentId: aldebara.id,
-    tutorId: londonTutor.id,
-    subjectId: curriculum.mathematics,
-    focusId: curriculum.algebraOne,
-    title: 'Algebra 1 Guided Practice',
-    serviceModel: 'on_demand',
-    startDate: dateOnlyFromNow(3),
-    endDate: dateOnlyFromNow(120),
-    idempotencyKey: 'interactive-mentor-algebra-v1'
-  })
-
-  const mechanicsSchedule = await upsertCourseSchedule(context, adminToken, mechanicsCourse.id, {
+  const mechanicsScheduleInput = {
     id: 'interactive-mechanics-schedule-v1',
     name: 'Mechanics Tuesday and Thursday plan',
     timeZone: saoPaulo.time_zone,
@@ -605,28 +987,53 @@ async function main() {
       { id: 'interactive-mechanics-session-3', title: 'Force diagrams — theory', startDate: nextWeekday(2, 1), endDate: nextWeekday(2, 1) },
       { id: 'interactive-mechanics-session-4', title: 'Newton laws — practice', startDate: nextWeekday(4, 1), endDate: nextWeekday(4, 1) }
     ]
-  })
+  }
   const algebraTimeZone = await userTimeZone(context, aldebara.id, saoPaulo.time_zone)
-  const algebraSchedule = await upsertCourseSchedule(context, adminToken, algebraCourse.id, {
-    id: 'interactive-algebra-schedule-v1',
-    name: 'Algebra 1 Wednesday plan',
-    timeZone: algebraTimeZone,
-    schemaVersion: 1,
-    sessions: [
-      { id: 'interactive-algebra-session-1', title: 'Linear equations — theory', startDate: nextWeekday(3, 0), endDate: nextWeekday(3, 0) },
-      { id: 'interactive-algebra-session-2', title: 'Linear equations — assignment due', startDate: nextWeekday(3, 1), endDate: nextWeekday(3, 1) },
-      { id: 'interactive-algebra-session-3', title: 'Functions and graphs — theory', startDate: nextWeekday(3, 2), endDate: nextWeekday(3, 2) },
-      { id: 'interactive-algebra-session-4', title: 'Slope and intercepts — practice', startDate: nextWeekday(3, 3), endDate: nextWeekday(3, 3) }
-    ]
+  const algebraScheduleInput = buildAlgebraTrackSchedule(algebraTimeZone)
+
+  const mechanicsCourse = await ensureCourse(context, adminToken, {
+    studentId: syntheticStudent.id,
+    tutorId: saoPauloTutor.id,
+    subjectId: curriculum.physics,
+    focusId: curriculum.mechanics,
+    title: 'Mechanics Foundations',
+    serviceModel: 'recurring',
+    schedule: mechanicsScheduleInput,
+    idempotencyKey: 'interactive-mentor-mechanics-v1'
   })
+  const algebraCourse = await ensureCourse(context, adminToken, {
+    studentId: aldebara.id,
+    tutorId: londonTutor.id,
+    subjectId: curriculum.mathematics,
+    focusId: curriculum.algebraOne,
+    title: 'Algebra 1 Guided Practice',
+    serviceModel: 'on_demand',
+    schedule: algebraScheduleInput,
+    idempotencyKey: 'interactive-mentor-algebra-v1'
+  })
+
+  const algebraTrackUpdated = await publishAlgebraTrackBridge(
+    context,
+    mentor,
+    algebraCourse,
+    algebraScheduleInput
+  )
+  const mechanicsSchedule = await readCourseScheduleMirror(context, mechanicsCourse.id)
+  const algebraSchedule = await readCourseScheduleMirror(context, algebraCourse.id)
   await ensureAlgebraAssignment(context, mentor, aldebara, algebraSchedule)
   await verifySandbox(context, mentor, aldebara, [mechanicsCourse, algebraCourse])
 
   console.log('Interactive Mentor sandbox provisioned and verified.')
   console.log(`Mentor: ${mentor.fullName} (existing account; Student + Tutor + Mentor workspaces)`)
   console.log(`Tutors: ${saoPauloTutor.fullName} (${saoPaulo.time_zone}); ${londonTutor.fullName} (${london.time_zone})`)
+  console.log(
+    `Oliver Bennett qualifications: ${londonTutorQualificationScopes.length} active Subject scopes covering every governed Track.`
+  )
   console.log(`Students: ${syntheticStudent.fullName} (synthetic); ${aldebara.fullName} (existing Aldebara account)`)
   console.log('Courses: Mechanics Foundations; Algebra 1 Guided Practice')
+  console.log(algebraTrackUpdated
+    ? 'Aldebara Schedule: published four real Algebra 1 Track Sessions as a governed successor Version.'
+    : 'Aldebara Schedule: preserved the current Builder-backed Algebra 1 Track Schedule.')
   console.log(`Aldebara assignment: Algebra 1 check-in (${algebraAssignmentId})`)
   console.log(`Synthetic account password: the current ${passwordVariable} value.`)
   console.log('The nine deterministic acceptance actors were not modified.')

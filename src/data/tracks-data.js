@@ -4,20 +4,24 @@
 
 (function () {
   globalThis.tracksCatalog = {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "levels": [
     {
       "id": "builtin_level_high-school-hs-tracks",
       "title": "High School",
+      "taxonomySlug": "high-school",
       "subjects": [
         {
           "id": "builtin_subject_high-school-math-hs-math-tracks",
           "title": "Math",
+          "taxonomySlug": "mathematics",
           "tracks": [
             {
               "id": "builtin_track_high-school-math-algebra-1-algebra-1-indexes",
               "title": "Algebra 1",
+              "taxonomySlug": "algebra-1",
               "description": "Foundations, functions, linear modeling, equations, and elementary functions.",
+              "academicPathway": null,
               "isImplicit": false,
               "modules": [
                 {
@@ -30,6 +34,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-1",
                       "title": "Week 1: Sign rules, properties of multiplication, and order of operations (PEMDAS)",
                       "difficulty": "low",
+                      "sourceContentVersionKey": "sha256:d2655bafc8145c5545f073691dd35dbcafaac4c083e863ac0c6f367d5b55358c",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM1.html",
                       "type": "lesson"
                     },
@@ -39,6 +44,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-1",
                       "title": "Week 2: Arithmetic operations involving fractions",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:9d000378c380e789d9fc9aef1326d431655226f9052cf6cafd3531214a0e3438",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM2.html",
                       "type": "lesson"
                     },
@@ -48,6 +54,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-1",
                       "title": "Week 3: Proper fractions, improper fractions, mixed numbers, and decimals",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:a732f7d50b43ee514927bd19620d25a30b9ee61e718a10e09e478c57d6f8d43b",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM3.html",
                       "type": "lesson"
                     },
@@ -57,6 +64,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-1",
                       "title": "Week 4: Number sets, intervals, and number lines",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:2b5391e5a1b059a7b861571a294d91b990e26c82de4a6a098197bf931f77751f",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM4.html",
                       "type": "lesson"
                     },
@@ -66,6 +74,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-1",
                       "title": "Week 5: Repeating decimals, divisibility, factors, and numerical factorization (GCF and LCM)",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:cc92dfd568fbdcc59770d6dec22a87089c1ba2101e50bd32b89374c419ec0f27",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM5.html",
                       "type": "lesson"
                     },
@@ -75,6 +84,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-1",
                       "title": "Week 6: Special products and simplification by factors",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:a68b0f0850330b453d1951115add30d5dd9d254d2de629088dc138aeebf968bd",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM6.html",
                       "type": "lesson"
                     },
@@ -84,6 +94,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-1",
                       "title": "Week 7: Algebraic expressions: variables, operations with monomials, and factoring",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:8575a3f3de19b62b3b8a538435e3430339811d10b57e28d3d784f79916c70a74",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM7.html",
                       "type": "lesson"
                     }
@@ -99,6 +110,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-2",
                       "title": "Week 8: Coordinate systems, mapping data on graphs, diagrams, and introduction to functions",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:55905b8ce913e605acaaef0e05a076ae88c235fb8e46c7dba04ff58442bbd651",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM8.html",
                       "type": "lesson"
                     },
@@ -108,6 +120,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-2",
                       "title": "Week 9: Functions: definition, notation, vertical line test, and linearity",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:f4c12ce35cc6c83f367802d74b28615fbf4f0e1c6df391d24d46197258d30330",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM9.html",
                       "type": "lesson"
                     },
@@ -117,6 +130,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-2",
                       "title": "Week 10: Domain, range, codomain, notable points, and the concept of inverse function",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:b4089bc9b9393a1d2d889569a7857808a9e8f155337983170e513f1401ce9a94",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM10.html",
                       "type": "lesson"
                     }
@@ -132,6 +146,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-3",
                       "title": "Week 11: Equalities and equations: modeling, solution methods, and solution testing",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:f08522d52bfe62d952cb309b8f527205096d9234e196b0848cac953238b34946",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM11.html",
                       "type": "lesson"
                     },
@@ -141,6 +156,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-3",
                       "title": "Week 12: Inequalities: modeling, solution methods, and solution testing",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:45935278a8234f721ad00ba2841d537554c3e29d1741e4d44fbf56e730f2f20f",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM12.html",
                       "type": "lesson"
                     },
@@ -150,6 +166,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-3",
                       "title": "Week 13: Absolute value equations and inequalities",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:c457f123fc8ae2a2a9bff4b3f830f4f5a2b18e5f41c9b6ea154b748abc076191",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM13.html",
                       "type": "lesson"
                     },
@@ -159,6 +176,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-3",
                       "title": "Week 14: Multiple variables: solution analysis and solving for a particular variable",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:93450cd040f86d0645ba6910e893da8019703fa55cf2ed0f392e10081852e31c",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM14.html",
                       "type": "lesson"
                     }
@@ -174,6 +192,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-4",
                       "title": "Week 15: Linear functions: classifications and coefficients",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:071aab32d7025ea495bb0cb7baa338e8cc2d0e252fccc2ca064ae04a64c69952",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM15.html",
                       "type": "lesson"
                     },
@@ -183,6 +202,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-4",
                       "title": "Week 16: Systems of equations: classification and solution analysis",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:736cedb226366539785cd06d9f97eb1fccc85412bb5bc2e75521e6cac003ebf8",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM16.html",
                       "type": "lesson"
                     },
@@ -192,6 +212,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-4",
                       "title": "Week 17: 2 x 2 linear systems: graphical analysis and solving",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:1fa125fb4a4e0f06035db59f1fad65d7a9f90999379a20bbdd07675651009647",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM17.html",
                       "type": "lesson"
                     },
@@ -201,6 +222,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-4",
                       "title": "Week 18: 2 x 2 systems of linear inequalities: graphical analysis and solving",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:3bbf5352c4027a7b384e17d45a6bcb77360e11d819f44fe7f0549f2948ea9555",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM18.html",
                       "type": "lesson"
                     },
@@ -210,6 +232,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-4",
                       "title": "Week 19: Quadratic functions: definition, graph, and solving quadratic equations with the quadratic formula",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:1e86fd249b5cb3b99c9f94cf423330092bb9176dbefda7a2f18711de89de8e40",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM19.html",
                       "type": "lesson"
                     },
@@ -219,6 +242,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-4",
                       "title": "Week 20: Quadratic equations: other solution methods (factoring and bisection)",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:f245a736e3c7df833e905476ffe4b2314bf0772290ef30d458aa3b7c01213006",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM20.html",
                       "type": "lesson"
                     },
@@ -228,6 +252,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-4",
                       "title": "Week 21: Absolute value functions and piecewise-defined functions",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:ddd600d53b28708609864742ba5cac0451be847f25b9434c59de7fbac107af03",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM21.html",
                       "type": "lesson"
                     }
@@ -243,6 +268,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-5",
                       "title": "Week 22: Powers with integer exponents: properties and simplifications",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:c853ffc84807d724b57a50c0973ff2c407ff502e4550da1eb79fdb4895e02989",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM22.html",
                       "type": "lesson"
                     },
@@ -252,6 +278,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-5",
                       "title": "Week 23: Roots: properties and simplifications",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:5b2a8f9072ef65903e3afa2b45efe8593d18b62e450cad145c19f2d12618d1ca",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM23.html",
                       "type": "lesson"
                     },
@@ -261,6 +288,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-5",
                       "title": "Week 24: Scientific notation, decimals, and operations with powers of 10",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:e5c1da6f0a55d8aa94516ffb1e0d7cf8d8be0f3f980af81b7646257a3f4e622b",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM24.html",
                       "type": "lesson"
                     },
@@ -270,6 +298,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-5",
                       "title": "Week 25: Power, exponential, and polynomial functions: definitions and differences through graphical analysis",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:aa3f506cb22cfe1c6c2c62f039313613779b0f103fe0dc35757ad6e59aeb94f2",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM25.html",
                       "type": "lesson"
                     },
@@ -279,6 +308,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-5",
                       "title": "Week 26: Rational functions: simplifying by factors, domain analysis, and solving equations",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:14c06cf65d906be8e9486c37901c23c45c89abe7e5139601ea14019d7d995319",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM26.html",
                       "type": "lesson"
                     },
@@ -288,6 +318,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-5",
                       "title": "Week 27: Exponential equations and inequalities involving rational functions",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:3e35063b581d95f887770c5f5e4f097a9893a574dd0c0407f4dfbfb54d6ee6f5",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM27.html",
                       "type": "lesson"
                     }
@@ -303,6 +334,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-6",
                       "title": "Week 28: Logarithms: definition, graphs, and relationship with powers",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:cf5228a0ecafe26bfb0dba124686d5c9190a4af18cac4ac7a18b22142694a1ad",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM28.html",
                       "type": "lesson"
                     },
@@ -312,6 +344,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-6",
                       "title": "Week 29: Logarithms: algebraic properties (addition and subtraction)",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:583e8355cc17d36b577f1cbd447800625846b729e758e7ee4c37fa4199cca3a4",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM29.html",
                       "type": "lesson"
                     },
@@ -321,6 +354,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-6",
                       "title": "Week 30: Logarithms: properties (change of base and logarithms with powers)",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:8711237565ab57d36fd9c2cdc872c7a7d6aaa6797e542c45922b804b2ce99ab4",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM30.html",
                       "type": "lesson"
                     },
@@ -330,6 +364,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-6",
                       "title": "Week 31: Equations involving logarithms",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:bd9b6a0d14d73f074ea66edb302bb980b3e20e9ed069520e4b5569808856a264",
                       "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM31.html",
                       "type": "lesson"
                     }
@@ -340,7 +375,9 @@
             {
               "id": "builtin_track_high-school-math-algebra-2-algebra-2-indexes",
               "title": "Algebra 2",
+              "taxonomySlug": "algebra-2",
               "description": "Function transformations, polynomials, exponentials, logarithms, systems, and matrices.",
+              "academicPathway": null,
               "isImplicit": false,
               "modules": [
                 {
@@ -353,6 +390,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-1",
                       "title": "Week 1: Review of number sets and introduction to complex numbers",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:adc7a92739a7d4d4241b2b47700671699a30b700759a3337f5902a7b078edfaf",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA21.html",
                       "type": "lesson"
                     },
@@ -362,6 +400,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-1",
                       "title": "Week 2: Functions and equations: vertical line test, solution testing, solving, tables, and graphs",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:74f2f8f598e55685fd6607fc131107a1334bfd7113c9443b09440a7faa0a2ab7",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA22.html",
                       "type": "lesson"
                     },
@@ -371,6 +410,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-1",
                       "title": "Week 3: Domain, range, codomain, injection, surjection, bijection, and the horizontal line test",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:e6657069fda1178a3d2b1e2b25d5d061c80491dacd292e606e279da0bcb47c72",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA23.html",
                       "type": "lesson"
                     },
@@ -380,6 +420,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-1",
                       "title": "Week 4: Inverse functions: existence analysis, algebraic method, and graphical method",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:4ea66f6c1e38b2ae45ffc53399a3aacebf6fd25731a0b623bf5f11b0f5d04c52",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA24.html",
                       "type": "lesson"
                     },
@@ -389,6 +430,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-1",
                       "title": "Week 5: Inequalities: solving and graphical analysis",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:7a49a2e070b81a54c39cc8ea71687b2783e917d5ecd3234d889d9311aacea610",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA25.html",
                       "type": "lesson"
                     },
@@ -398,6 +440,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-1",
                       "title": "Week 6: Equations and inequalities involving absolute value",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:9f4a5350a91c59958309421a43d93a39515fb61362ad6cac3e675645839f838f",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA26.html",
                       "type": "lesson"
                     },
@@ -407,6 +450,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-1",
                       "title": "Week 7: Absolute value functions: graph and properties",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:881cc09fb35444672c64c448b0253c51d845856a7f3234f2b7fc2e6acbd3e9cb",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA27.html",
                       "type": "lesson"
                     }
@@ -422,6 +466,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-2",
                       "title": "Week 8: Operations with functions: algebraic operations and composition",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:cecd78f2037c69ed181a4b8c80e1f23798665a6c337085b4f50824bb595f63ae",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA28.html",
                       "type": "lesson"
                     },
@@ -431,6 +476,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-2",
                       "title": "Week 9: Transformations: reflection, translation, dilation, and rotation",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:e5c6f8e7c642ab8c233aa3e56ee3f47b78a8c8e41b5d37201f89f56c453a2ab0",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA29.html",
                       "type": "lesson"
                     },
@@ -440,6 +486,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-2",
                       "title": "Week 10: Parity of functions, domain analysis, and range analysis",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:04bafbbacb0f403acf6c4b9c386429531e48e877f8f48e5fc12feefc2a1fff01",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA210.html",
                       "type": "lesson"
                     }
@@ -455,6 +502,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-3",
                       "title": "Week 11: Polynomials: definition, graphs, and operations",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:36b7a43c4d48689e980df9374b5b248095722f6b053875a2661afd8b6aeaf022",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA211.html",
                       "type": "lesson"
                     },
@@ -464,6 +512,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-3",
                       "title": "Week 12: Special products, the binomial theorem, and Pascal's triangle",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:bf6e0f1f26431842b45f053f00fc1745d4bdef48dc5d7b5acc0a48c61d04b88a",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA212.html",
                       "type": "lesson"
                     },
@@ -473,6 +522,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-3",
                       "title": "Week 13: Degree, factorization, and polynomial long division",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:687a87a0e59b00f27b2e91f8527c8eda281c6d1da40143e6db92ef3b4504af40",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA213.html",
                       "type": "lesson"
                     },
@@ -482,6 +532,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-3",
                       "title": "Week 14: Polynomial division: the remainder theorem and synthetic division",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:c4c04acc3ec558d766d3370e450331b866d6dd4aa5ac7a841e08105d4c1857db",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA214.html",
                       "type": "lesson"
                     },
@@ -491,6 +542,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-3",
                       "title": "Week 15: Multiplicity of roots in the quadratic case: discriminant and quadratic formula",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:9eaa72883a98d7aadafa6d58bf2367f6cbf654554454d9e71bf52efead589c23",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA215.html",
                       "type": "lesson"
                     },
@@ -500,6 +552,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-3",
                       "title": "Week 16: Quadratic functions: properties, graphs, equations, and applications",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:b388c43499e4233f07eac95e2cf8aa0e4fe59c45f78aab03e3d0fdf463878f84",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA216.html",
                       "type": "lesson"
                     },
@@ -509,6 +562,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-3",
                       "title": "Week 17: Quadratic functions: modeling from points",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:d300359c0ee94c859b0b7448d5685df0a5f721aaca179a9c68bc4db47cd19c20",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA217.html",
                       "type": "lesson"
                     },
@@ -518,6 +572,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-3",
                       "title": "Week 18: Theorems about polynomial roots: rational roots and conjugate roots",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:6fc8e94e6149dca42e4bc678b1226b70def1f3ba4326176724c4ad337b9689ab",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA218.html",
                       "type": "lesson"
                     },
@@ -527,6 +582,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-3",
                       "title": "Week 19: Descartes' rule of signs and the fundamental theorem of algebra",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:69d419c9cdaaedf92653c26aca1e5010b4b5c63c7d4df7cb8df66238494dd3f0",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA219.html",
                       "type": "lesson"
                     }
@@ -542,6 +598,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-4",
                       "title": "Week 20: Review of radicals: properties and operations with roots",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:bac6e6ecf659b93547eac35ecfc724b419e6e233d7385755442f55986a80c906",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA220.html",
                       "type": "lesson"
                     },
@@ -551,6 +608,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-4",
                       "title": "Week 21: Radical functions: graph, domain analysis, and range analysis",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:2b810ed08a03c3ac8df24a817c085331ac409041c5d6ec85067fe9772e6dd7a9",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA221.html",
                       "type": "lesson"
                     },
@@ -560,6 +618,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-4",
                       "title": "Week 22: Powers with decimal exponents: relationship with roots, operations, and graphs",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:545ba37f91443ec56715163120e06465524950426b238e2b3086105912b41836",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA222.html",
                       "type": "lesson"
                     },
@@ -569,6 +628,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-4",
                       "title": "Week 23: Rational functions, equations, and expressions",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:6bc2003aa1ab7528df61d81a6d35fe7e725997007f20b0a7f1c4ed5d1f08c788",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA223.html",
                       "type": "lesson"
                     },
@@ -578,6 +638,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-4",
                       "title": "Week 24: Direct and inverse proportionality: graphical analysis and algebraic modeling",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:490b58ae724b586dadced0606370a557205a9fae16b0dd82eab7760001cc8fd7",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA224.html",
                       "type": "lesson"
                     },
@@ -587,6 +648,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-4",
                       "title": "Week 25: Exponential functions and equations: graphs and algebraic analysis",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:aa8fe3f9f2289ad0d145c470dcecf4526ade96ed62d9b68a4fb7489e519aa335",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA225.html",
                       "type": "lesson"
                     },
@@ -596,6 +658,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-4",
                       "title": "Week 26: Logarithms 1",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:2f0f8941b181b81bd2ae1086dc4b099b68fd9a5e15034aece925c9acf90cb8b5",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA226.html",
                       "type": "lesson"
                     },
@@ -605,6 +668,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-4",
                       "title": "Week 27: Logarithms 2",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:dc0fdde810624a17cc439ad596b8298a1b970095acd6e0faa63982a5306e9267",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA227.html",
                       "type": "lesson"
                     }
@@ -620,6 +684,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-5",
                       "title": "Week 28: Classification of linear systems, solution analysis, and graphical analysis",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:b2386be3becc179a0202149a1136d94192f35f3330f938a5ce79059190a75ef7",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA228.html",
                       "type": "lesson"
                     },
@@ -629,6 +694,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-5",
                       "title": "Week 29: Elementary operations, equivalent systems, and solving",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:9aba9a4d17d642f1731635205cefcafb73b4e835c2647d7f836d5419f3d931a9",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA229.html",
                       "type": "lesson"
                     },
@@ -638,6 +704,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-5",
                       "title": "Week 30: Systems of linear inequalities: solving, solution testing, and graphical analysis",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:916011407be1e1c39a2f362e72900f6d9f3be5c5785749ea0165bda833612af5",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA230.html",
                       "type": "lesson"
                     },
@@ -647,6 +714,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-5",
                       "title": "Week 31: Systems of equations",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:4f6fd1d36094f6ac6e5207f596b3c86336ca4a128c37cbde55dcf0985f87067c",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA231.html",
                       "type": "lesson"
                     }
@@ -662,6 +730,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-6",
                       "title": "Week 32: Matrices: definition, classifications, relationship with systems of equations, and operations",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:a2efbbed0632c05f0a6d23656d80a8a0af30ef01ca80e1b67d3393c120b3d842",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA232.html",
                       "type": "lesson"
                     },
@@ -671,6 +740,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-6",
                       "title": "Week 33: Matrix multiplication: definition and properties",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:b9bd026d03fb88e405fdbada0b01359101c1e5046a7d3035559fd31f27edb151",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA233.html",
                       "type": "lesson"
                     },
@@ -680,6 +750,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-6",
                       "title": "Week 34: Determinant: definition and calculation by permutation",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:c8f2dba9a0517cb90c917e0513fbdec327c0e1b0c90e2d625bdaeffe5ccf319f",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA234.html",
                       "type": "lesson"
                     },
@@ -689,6 +760,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-6",
                       "title": "Week 35: Elementary row operations on a matrix: analysis of the solution and determinant",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:89a646640397be8ea4766481d346017f2a6105b17944364756e7d8382f5975d2",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA235.html",
                       "type": "lesson"
                     },
@@ -698,6 +770,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-6",
                       "title": "Week 36: Minor, cofactor, and Laplace's expansion theorem",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:e1792245df0182a7070fd29d464ba1ae00c02ee3005d67c2ac5d61cfa6c6a23c",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA236.html",
                       "type": "lesson"
                     },
@@ -707,6 +780,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-6",
                       "title": "Week 37: Inverse matrix: matrix definition, determinant definition, alternative method, and use",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:a88307b83211e02bcfef7e6a0ccce1b688b87c1daf2910b00974b1a533e87b30",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA237.html",
                       "type": "lesson"
                     },
@@ -716,6 +790,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-6",
                       "title": "Week 38: Chió's rule and the Rouché-Capelli theorem",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:eeca0a12c5da946a7adb57024ff423f9dd2580deb0c5463e886df01939f2980c",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA238.html",
                       "type": "lesson"
                     },
@@ -725,6 +800,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-6",
                       "title": "Week 39: Cramer's rule and review",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:aca87637659cb5ce3b8955ac7b8d8e5d7131ed29e6751bfa34067be7286061fe",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA239.html",
                       "type": "lesson"
                     }
@@ -740,6 +816,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-7",
                       "title": "Week 40: Sequences: classifications, terms, and general formula",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:655b553339a12c1cf309533074d78b800a2ca5acdc9a4c9384903f6066f875ea",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA240.html",
                       "type": "lesson"
                     },
@@ -749,6 +826,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-7",
                       "title": "Week 41: Arithmetic progressions: properties and problem solving",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:1c498272628d9d48e4242279bfc50c09a90cfc4ea2907336fc984fc7c4e27e12",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA241.html",
                       "type": "lesson"
                     },
@@ -758,6 +836,7 @@
                       "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-7",
                       "title": "Week 42: Series: classifications, sigma notation, and sums",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:8ca9f3a597d2426ebc0291fec301f59e2c3ae05e28cbfea46250f89aa3a541a8",
                       "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA242.html",
                       "type": "lesson"
                     }
@@ -768,7 +847,9 @@
             {
               "id": "builtin_track_high-school-math-geometry-plane-geometry-indexes",
               "title": "Geometry",
+              "taxonomySlug": "geometry",
               "description": "Logic, plane geometry, triangles, transformations, polygons, circles, and measurement.",
+              "academicPathway": null,
               "isImplicit": false,
               "modules": [
                 {
@@ -781,6 +862,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-1",
                       "title": "Week 1: Proposition, truth value, logical operators, logical sentence, argument, and notation",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:e27455a06a55c9fc63f86762077c6508cc57215e98f57e418df682e3596448f0",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG1.html",
                       "type": "lesson"
                     },
@@ -790,6 +872,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-1",
                       "title": "Week 2: Conjunction, disjunction, conditionals, truth tables, and equivalences",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:78498dadd8bfca85be391905ac71054c9bc34be70a46f3603ebef677996cbbbf",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG2.html",
                       "type": "lesson"
                     },
@@ -799,6 +882,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-1",
                       "title": "Week 3: Logical quantifiers, negation, counterexamples, and tautologies",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:f01febca8c9f897749c538e7516fe6a5095bf8253a84994fbf1a6534bae27fb9",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG3.html",
                       "type": "lesson"
                     },
@@ -808,6 +892,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-1",
                       "title": "Week 4: Open sentences, implication relationships, proof methods, and mathematical epistemology",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:8f3c55141b292e40278a60b52f9814701491655fa3facb24d94e98f7f95f1fee",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG4.html",
                       "type": "lesson"
                     }
@@ -823,6 +908,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-2",
                       "title": "Week 5: Point, line segment, ray, line, number line, and coordinate system",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:ac2b58a93760458678f7f53e039a9675185f17c2a621a35f8251846029c18922",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG5.html",
                       "type": "lesson"
                     },
@@ -832,6 +918,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-2",
                       "title": "Week 6: Definition and classification of angles, angle bisectors, and angles between lines",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:a159dad6b6133b74848c3312b4852a76f46d2bbf023b3e3e29166818b4be6e9f",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG6.html",
                       "type": "lesson"
                     },
@@ -841,6 +928,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-2",
                       "title": "Week 7: Midpoint, Pythagorean theorem, and segment length",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:c6eb59ccfcb0ee7693a81947f824d7752ca01b528d2d1df24fb7d5131e2d85a9",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG7.html",
                       "type": "lesson"
                     },
@@ -850,6 +938,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-2",
                       "title": "Week 8: Midpoint, weighted average of positions, proportional segments, and Thales theorem",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:ba92cefb9a9b8677c84642549bb22e627e5d2649f84fcfe524f5253ff1567f4f",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG8.html",
                       "type": "lesson"
                     },
@@ -859,6 +948,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-2",
                       "title": "Week 9: Parallelism and perpendicularity in the plane: definition and identification",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:223faa779f7dc9a1bad4bb547b10f5fc01ae45263360e1af4b7bb7931c52ebe1",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG9.html",
                       "type": "lesson"
                     }
@@ -874,6 +964,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-3",
                       "title": "Week 10: Triangles: notation, triangle inequality, general properties, and classifications",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:730b4bd6bafc0c9035d72c9d5e54abe8ce1f2851cc7a515e4cf301da7521397f",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG10.html",
                       "type": "lesson"
                     },
@@ -883,6 +974,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-3",
                       "title": "Week 11: Midsegment, angle bisector theorem, and triangle similarity",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:f067ec3291638e78b9928ad72a5151753c48ea75c9ed353c0fbc9f404a28ceed",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG11.html",
                       "type": "lesson"
                     },
@@ -892,6 +984,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-3",
                       "title": "Week 12: Triangle congruence",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:080b61737df9e0c2297de9f3ba947b0f741f92bdde7ad2a5eab5aa15e22e565a",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG12.html",
                       "type": "lesson"
                     },
@@ -901,6 +994,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-3",
                       "title": "Week 13: Trigonometric ratios in right triangles: sine, cosine, and tangent",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:f40b77c92778e8b9653ac3c0a739b2f34b21d6d63cdf2770873ca22abe11be5d",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG13.html",
                       "type": "lesson"
                     },
@@ -910,6 +1004,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-3",
                       "title": "Week 14: Projection and altitude in arbitrary triangles",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:ee1a00c72efbf6c64d8456d83c0b6cbbb2c59ab9dbe4c6147e515db309e285a1",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG14.html",
                       "type": "lesson"
                     },
@@ -919,6 +1014,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-3",
                       "title": "Week 15: Notable points in triangles: centroid and orthocenter",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:de4f1026e6ac5af50108124edec9f6d59684f783009bca516fa5e6854bb81ef4",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG15.html",
                       "type": "lesson"
                     },
@@ -928,6 +1024,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-3",
                       "title": "Week 16: Notable points in triangles: incenter and circumcenter",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:2c3f5ab66c271ad5763a851f9baa516d702e8926bea47c50a2c44fed46d73f62",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG16.html",
                       "type": "lesson"
                     },
@@ -937,6 +1034,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-3",
                       "title": "Week 17: Metric relationships in right triangles",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:ac161ed7a6335d95d59646ea207e6fc1558ceb9a8bda038339b455c1756251e8",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG17.html",
                       "type": "lesson"
                     },
@@ -946,6 +1044,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-3",
                       "title": "Week 18: Arbitrary triangles: metric relationships and applications of the Pythagorean theorem",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:2b7d5e80038bb2f87160619c1d82e8ff53701b6c96e047b7d5fa1953abf4b1be",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG18.html",
                       "type": "lesson"
                     },
@@ -955,6 +1054,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-3",
                       "title": "Week 19: Law of cosines",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:fa922d9cea00160cc1d387ce4f4e2ba2e71bbe5c3f3060fd743957e8ace9e21f",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG19.html",
                       "type": "lesson"
                     }
@@ -970,6 +1070,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-4",
                       "title": "Week 20: Similarity and congruence between geometric figures",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:b0dac816474ab0f50d08b15042ef8849375ffb803a24d98945539ab4457894b9",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG20.html",
                       "type": "lesson"
                     },
@@ -979,6 +1080,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-4",
                       "title": "Week 21: Congruence transformations: translation, reflection, and rotation",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:b70ff235a54bcfef2c29e79bf6a57b3a6cdc14b59b4479edd87585265a439989",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG21.html",
                       "type": "lesson"
                     },
@@ -988,6 +1090,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-4",
                       "title": "Week 22: Symmetry: definition and analysis",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:d201af83220d5b2e6e4c3ec57c4c0d6e40002fa71727e32d770caaf48be64059",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG22.html",
                       "type": "lesson"
                     },
@@ -997,6 +1100,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-4",
                       "title": "Week 23: Scale and homothety: definition and analysis of dilation",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:493bd412f4e047a6fc9608dd45ddba9227b9f0d2df92571dbac84f39b01c75b4",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG23.html",
                       "type": "lesson"
                     }
@@ -1012,6 +1116,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-5",
                       "title": "Week 24: Quadrilaterals: definition, properties, and classifications by sides and angles",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:0d781bb12bbb7e0774256309f45db016d1642864c276cf2ccc8dd60123557388",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG24.html",
                       "type": "lesson"
                     },
@@ -1021,6 +1126,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-5",
                       "title": "Week 25: Quadrilaterals: parallelograms",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:e2992a3f277388f7e15b88e094b49fc7eb77566de301a36875ea3d64d43a092b",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG25.html",
                       "type": "lesson"
                     },
@@ -1030,6 +1136,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-5",
                       "title": "Week 26: Quadrilaterals: kites and trapezoids",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:1c65038ccc623fb20bdd54537565a5084e1c8f9d4dab78c28b1a6c87c02155ce",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG26.html",
                       "type": "lesson"
                     },
@@ -1039,6 +1146,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-5",
                       "title": "Week 27: Polygons: definition, classifications, angle analysis, and number of diagonals",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:b7f00a47ecb42be425216957ef00d5cd4e012c65ec11bcba3c95952747e727a5",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG27.html",
                       "type": "lesson"
                     }
@@ -1054,6 +1162,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-6",
                       "title": "Week 28: Circle and circumference: elements and relative positions",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:7465674847eed4cd0a1cac8f3bc42aae8e31a2c4eb9959d8b1fe9eeb36671c87",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG28.html",
                       "type": "lesson"
                     },
@@ -1063,6 +1172,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-6",
                       "title": "Week 29: Circle and circumference: angle operations",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:3575ab7d5ae0784971aac8dada76c432787d6d3c9a6506dda03f8727ae40e534",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG29.html",
                       "type": "lesson"
                     },
@@ -1072,6 +1182,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-6",
                       "title": "Week 30: Circle and circumference: metric relationships",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:a0a9fa808da50491a09f63e1f15380a91cc3199b0e290578ae77325e6dc08725",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG30.html",
                       "type": "lesson"
                     }
@@ -1087,6 +1198,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-7",
                       "title": "Week 31: Unit conversion and dimensional analysis",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:a895b185950ca7f254144b5bc831cad0f77979c7e3bf374aa936a980640ffb95",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG31.html",
                       "type": "lesson"
                     },
@@ -1096,6 +1208,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-7",
                       "title": "Week 32: Perimeter and area of polygons and simple figures",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:342f209f3f6bfd6eebe39bb34d6588845bd80543f0466a9cb7b75e912e729c8f",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG32.html",
                       "type": "lesson"
                     },
@@ -1105,6 +1218,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-7",
                       "title": "Week 33: Perimeter and area of composite figures or figures in a coordinate system",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:126d4fcaf8b9dd125d3b88fbe65df4b6dc40e929a63766902f5b9695f5c592bb",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG33.html",
                       "type": "lesson"
                     },
@@ -1114,6 +1228,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-7",
                       "title": "Week 34: Surface area and volume",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:e3e570a63eb34e457adb73efe3770d60a7ccb5c451794ac0e7c01fa91e586b43",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG34.html",
                       "type": "lesson"
                     }
@@ -1129,6 +1244,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-8",
                       "title": "Week 35: Law of sines and law of cosines",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:f5a5313c157de4ad443283cc3426fe8d4af3a5d47b112022010296cd3cbc346b",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG35.html",
                       "type": "lesson"
                     },
@@ -1138,6 +1254,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-8",
                       "title": "Week 36: Vectors and vector equivalence",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:c22269a8d9849c59f4deed8b03f4113d2ae73d0ecd0920c3938384b1740b412f",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG36.html",
                       "type": "lesson"
                     },
@@ -1147,6 +1264,7 @@
                       "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-8",
                       "title": "Week 37: Dot product and cross product",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:c8bd1e15160664b069299629265d5dbc3f9a427c44e37d747829650fc7245682",
                       "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG37.html",
                       "type": "lesson"
                     }
@@ -1157,7 +1275,9 @@
             {
               "id": "builtin_track_high-school-math-trigonometry-trigonometry",
               "title": "Trigonometry",
+              "taxonomySlug": "trigonometry",
               "description": "Right triangles, trigonometric functions, identities, and applications.",
+              "academicPathway": null,
               "isImplicit": false,
               "modules": [
                 {
@@ -1170,6 +1290,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-1",
                       "title": "Week 1: Angles, degree measure, radian measure, and angle conversion",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:b547cca05871585af1b0e7e3a7a977d9e076d54e57ce1011bf04db4c59c4554e",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST1.html",
                       "type": "lesson"
                     },
@@ -1179,6 +1300,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-1",
                       "title": "Week 2: Arc length, sector area, and angular speed",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:71d0cd43695820c08e2c03132fafeab67d59d30b5ad1fe9b4318fc4a67cb7526",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST2.html",
                       "type": "lesson"
                     },
@@ -1188,6 +1310,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-1",
                       "title": "Week 3: Coterminal angles, reference angles, and quadrant analysis",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:4092fc0c63efd9095322a1761ecbb7e8eeb9dc34b4face075a674c9f2b7b9308",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST3.html",
                       "type": "lesson"
                     },
@@ -1197,6 +1320,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-1",
                       "title": "Week 4: Special angles and exact trigonometric values",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:d4e61e71e4ecd43e76f29d2874ac8f2af069a9a8e785f857492af2b1f140fd51",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST4.html",
                       "type": "lesson"
                     }
@@ -1212,6 +1336,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-2",
                       "title": "Week 5: Sine, cosine, and tangent in right triangles",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:e2ca4e8957b856a79bb0df2025e537a420c8f65f378607938fdb9dd6c1f752ae",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST5.html",
                       "type": "lesson"
                     },
@@ -1221,6 +1346,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-2",
                       "title": "Week 6: Reciprocal ratios: cosecant, secant, and cotangent",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:92c03854d0f3ce507d728c10976606dbcd7a35b5a727917d5cc873edaa5aec9b",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST6.html",
                       "type": "lesson"
                     },
@@ -1230,6 +1356,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-2",
                       "title": "Week 7: Solving right triangles",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:16ac5fa81ad2bbcd6cde675df5b2364503d16432cf4d8f6fb0d92e1a4f3e671a",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST7.html",
                       "type": "lesson"
                     },
@@ -1239,6 +1366,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-2",
                       "title": "Week 8: Applications: height, distance, inclination, and elevation",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:9191a89468433201479ba72470cfcb729d7af24be374b34c24499588587b1915",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST8.html",
                       "type": "lesson"
                     }
@@ -1254,6 +1382,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-3",
                       "title": "Week 9: The unit circle and coordinates",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:395274bfb027ef13dbb5302b536518076dedf34ab7b7e3f6ba9033752c9c070d",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST9.html",
                       "type": "lesson"
                     },
@@ -1263,6 +1392,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-3",
                       "title": "Week 10: Sine and cosine as circular functions",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:bc48849aed80364912741b9bea3b18e1b3a41d1811ab63dcacad7856093938ca",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST10.html",
                       "type": "lesson"
                     },
@@ -1272,6 +1402,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-3",
                       "title": "Week 11: Tangent and reciprocal functions on the unit circle",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:db3ce98b6fd23eb934e3f33ca347f96c4ea8033c4a5d9ca02bd4fd3c1516d7c3",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST11.html",
                       "type": "lesson"
                     },
@@ -1281,6 +1412,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-3",
                       "title": "Week 12: Periodicity, symmetry, and signs by quadrant",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:1fb6e54798586b505eb6cfcc7f783e14c90a93748516ba3f8357e1a40b23b880",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST12.html",
                       "type": "lesson"
                     },
@@ -1290,6 +1422,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-3",
                       "title": "Week 13: Graphs of sine and cosine",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:228ac218a56ae3dcdeb2e669d89907c82b7b0f542f5b5860405f6dcc2a0d0a70",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST13.html",
                       "type": "lesson"
                     },
@@ -1299,6 +1432,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-3",
                       "title": "Week 14: Graphs of tangent and reciprocal functions",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:751f8d00b9def68c5656f676b2c0c1b191447e41f10126c13dba8b8f120e3481",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST14.html",
                       "type": "lesson"
                     }
@@ -1314,6 +1448,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-4",
                       "title": "Week 15: Amplitude, period, phase shift, and vertical shift",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:0d79599d99509008a4ea0d022cca04aac607523e7473e465e2cd7b9c781a50e2",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST15.html",
                       "type": "lesson"
                     },
@@ -1323,6 +1458,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-4",
                       "title": "Week 16: Modeling periodic behavior with sine and cosine",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:f4378b9ae8c824e174dcea8274d67c6a144102463026f54f5c147ff32d77ea02",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST16.html",
                       "type": "lesson"
                     },
@@ -1332,6 +1468,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-4",
                       "title": "Week 17: Comparing sinusoidal models",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:f76359bcdb84cf8b4b126f1a88e5433ea93282556910ac92d879a7047fdd9f27",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST17.html",
                       "type": "lesson"
                     },
@@ -1341,6 +1478,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-4",
                       "title": "Week 18: Inverse trigonometric functions",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:23251669a257bf3a2d32cbba8d37c9d022fec76d0639b79f9167b927e4c92879",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST18.html",
                       "type": "lesson"
                     },
@@ -1350,6 +1488,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-4",
                       "title": "Week 19: Solving basic trigonometric equations",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:f36bf0ea05ce7b7a1bfa134fdbede907354e60b583da7291d886d7ac800e626b",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST19.html",
                       "type": "lesson"
                     }
@@ -1365,6 +1504,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-5",
                       "title": "Week 20: Pythagorean identities",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:958fa1ee56971cb6df5fa00d691b75c9bc22c380881646aa04922a022e15e0a2",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST20.html",
                       "type": "lesson"
                     },
@@ -1374,6 +1514,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-5",
                       "title": "Week 21: Reciprocal and quotient identities",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:7e90db506e0ba1d95824c48f1cdfeb5dbc9835387a9252ec8eb12c103bc8cbda",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST21.html",
                       "type": "lesson"
                     },
@@ -1383,6 +1524,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-5",
                       "title": "Week 22: Sum and difference identities",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:7f29c8335eb17e702a7388c3629ad7b2ba875af888f8e550ca838ecf72ac6b2d",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST22.html",
                       "type": "lesson"
                     },
@@ -1392,6 +1534,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-5",
                       "title": "Week 23: Double-angle and half-angle identities",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:f8806e5d3d5e9b92b362fe17013d649b7be72fd02001ebee386193c77c383b7e",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST23.html",
                       "type": "lesson"
                     },
@@ -1401,6 +1544,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-5",
                       "title": "Week 24: Proving trigonometric identities",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:82cece6ebfac01dc01aea6c2808b9a28256f939a4951e1ba25f99122ef5ef340",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST24.html",
                       "type": "lesson"
                     }
@@ -1416,6 +1560,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-6",
                       "title": "Week 25: Law of sines",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:2d2aad7637c93a92d10706017ec423d4420e393ab64638666c85b2ea4ced978c",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST25.html",
                       "type": "lesson"
                     },
@@ -1425,6 +1570,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-6",
                       "title": "Week 26: Law of cosines",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:fef9b9781cb9105556676a5a56278a639f48c53ac46f3c337fca5b998af38176",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST26.html",
                       "type": "lesson"
                     },
@@ -1434,6 +1580,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-6",
                       "title": "Week 27: Area of triangles using trigonometry",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:810a6a446aa773b354bcdcce4924c22f303996b72063117630225781dd291b81",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST27.html",
                       "type": "lesson"
                     },
@@ -1443,6 +1590,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-6",
                       "title": "Week 28: Vectors and trigonometric components",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:dd471d6796a28a469e8f8083a5d923c3dc7fb555e3d811c24e22329d09176474",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST28.html",
                       "type": "lesson"
                     },
@@ -1452,6 +1600,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-6",
                       "title": "Week 29: Polar coordinates",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:a5fb9a560465dfbd9832e81f7229746be2fd9ed18febc5204651498ec5a7f450",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST29.html",
                       "type": "lesson"
                     },
@@ -1461,6 +1610,7 @@
                       "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-6",
                       "title": "Week 30: Complex numbers in trigonometric form",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:3fdf17a051b0b39361ee3a785e4e8532a491b14d2b2356421255356e9732651a",
                       "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST30.html",
                       "type": "lesson"
                     }
@@ -1473,11 +1623,14 @@
         {
           "id": "builtin_subject_high-school-physics-hs-physics-modules",
           "title": "Physics",
+          "taxonomySlug": "physics",
           "tracks": [
             {
               "id": "builtin_track_high-school-physics-broad-modules-hsp-group-1",
               "title": "Mechanics",
+              "taxonomySlug": "mechanics",
               "description": "Measurement, motion, forces, energy, rotation, gravitation, and celestial mechanics.",
+              "academicPathway": null,
               "isImplicit": false,
               "modules": [
                 {
@@ -1490,6 +1643,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-1",
                       "title": "Week 1: Physics's boundaries, primitive concepts, definitions, hypothesis, theories, laws, models, and the scientific method",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:1e81ced41df81e80cfea00a438cea55d2707f88387b82900b894575797b883b8",
                       "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP1.html",
                       "type": "lesson"
                     },
@@ -1499,6 +1653,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-1",
                       "title": "Week 2: Physical quantities, system of units, conversion, and scientific notation",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:56a6027a89a19e0b16620e651e0653949ac1f4a12a6581a5d42d43991d9055c5",
                       "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP2.html",
                       "type": "lesson"
                     },
@@ -1508,6 +1663,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-1",
                       "title": "Week 3: Significant figures, uncertainty, precision, and multiplicative prefixes",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:fcc67b4f335d07122fa4ad29a1fa5359d33b6f940c5fe5fe8ad5ec38de9f7752",
                       "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP3.html",
                       "type": "lesson"
                     }
@@ -1523,6 +1679,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-2",
                       "title": "Week 4: Coordinate system, position, displacement, speed, and velocity",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:bc5f28fa7a4426228ce00fef9721a68f708bf3aeb8c245904b5037ee8e7dd335",
                       "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP4.html",
                       "type": "lesson"
                     },
@@ -1532,6 +1689,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-2",
                       "title": "Week 5: Instantaneous physical quantities, acceleration, gravity, classification of movements, and functions of movements",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:9f6eb2452dec1641a30cd067ad42e29c468cf36e78c577275f2ee280568e6f55",
                       "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP5.html",
                       "type": "lesson"
                     },
@@ -1541,6 +1699,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-2",
                       "title": "Week 6: Graphs in Uniform Rectilinear Motion (URM): position vs. time, speed vs. time",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:bc3d8f3337d9d8ccaf3f76b14d817d5c4a80fcca2d26936108c42c862337f51e",
                       "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP6.html",
                       "type": "lesson"
                     },
@@ -1550,6 +1709,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-2",
                       "title": "Week 7: Graphs in Uniformly Accelerated Motion (UAM): position vs. time, speed vs. time, acceleration vs. time",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:503f15ed7adc483d42c70e82d338cd361b4b6deea7eba18dfe6713f99fb71239",
                       "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP7.html",
                       "type": "lesson"
                     }
@@ -1565,6 +1725,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-3",
                       "title": "Week 8: 1D vectors, definition of systems, and introduction to forces",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:b642205e3538117da93a1b33bed78c0557fd20338b8a26a013863fd1263b810a",
                       "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP8.html",
                       "type": "lesson"
                     },
@@ -1574,6 +1735,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-3",
                       "title": "Week 9: Newton's first and second laws, center of mass, free-body diagram, and inertial systems of reference",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:cd812d2a172e07c11dad9b3bcbb34cd193e2f75ef43db59e1c63e8099f2b851a",
                       "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP9.html",
                       "type": "lesson"
                     },
@@ -1583,6 +1745,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-3",
                       "title": "Week 10: Newton's third law (action and reaction) and motion analysis (static and dynamic friction)",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:a424c07c6260d0e1f7e280cf86172c6a7cb0502994b3e531e6924cdd1bed50e7",
                       "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP10.html",
                       "type": "lesson"
                     },
@@ -1592,6 +1755,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-3",
                       "title": "Week 11: Problem-solving week: free fall, skating on ice, string and block system, spring and block system",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:c3f3a390e5f90e7f919e0cc15b14102358293bc98021749c8ad6ca3f49a5aea8",
                       "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP11.html",
                       "type": "lesson"
                     },
@@ -1601,6 +1765,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-3",
                       "title": "Week 12: Problem-solving week: elevators and block systems",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:5b32592996f10feb7f9c3f9e39d583190eae8c756184cb7fa1339b9d13a49cda",
                       "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP12.html",
                       "type": "lesson"
                     }
@@ -1616,6 +1781,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-4",
                       "title": "Week 13: Handling 2D vectors: graphical and analytical methods",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:dfee7d8f33ff283d090d38a55549e4893242b0ea13fcd763148c8bdc2513fbd3",
                       "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP13.html",
                       "type": "lesson"
                     },
@@ -1625,6 +1791,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-4",
                       "title": "Week 14: Vertical launching, free fall, and inclined planes",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:528282411c59471b6dcb7196352cb25db0172142ac02e04e6fe37664f7f24278",
                       "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP14.html",
                       "type": "lesson"
                     },
@@ -1634,6 +1801,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-4",
                       "title": "Week 15: Horizontal and oblique launching",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:2afd9b20108ac908eecfb81549d39f2db835dafd11ee7a7f2f3e7af9eea28e0e",
                       "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP15.html",
                       "type": "lesson"
                     },
@@ -1643,6 +1811,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-4",
                       "title": "Week 16: Simple harmonic oscillators",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:125afaa57a6215e2f861493d7ba3868dc3bb6092563ae09b4c09fd4c4c9e0b88",
                       "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP16.html",
                       "type": "lesson"
                     }
@@ -1658,6 +1827,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-5",
                       "title": "Week 17: Work, power, efficiency, work-energy theorem, and kinetic energy",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:c2d680669de5be4d92695497a03fa661f3342465a6b93544e77ec95436c6ab55",
                       "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP17.html",
                       "type": "lesson"
                     },
@@ -1667,6 +1837,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-5",
                       "title": "Week 18: Conservative forces, weight, gravitational potential, gravitational energy, and mechanical energy",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:cfeb2e2c0b0909d0c245537e31749439fed7654a23e18a1fe529234ffe89674d",
                       "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP18.html",
                       "type": "lesson"
                     },
@@ -1676,6 +1847,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-5",
                       "title": "Week 19: Energy balance and energy transformations in conservative and non-conservative systems",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:0050e86b89de1d0702c9ed7c03630a24448ded6dae9db05897c6e18a69eb92ea",
                       "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP19.html",
                       "type": "lesson"
                     },
@@ -1685,6 +1857,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-5",
                       "title": "Week 20: Pendulums, pulleys, block systems and elevators",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:3eebfad9cd4ff84b06a6878712a7b33788c500bbb88d5bc5d119b8c8658d158f",
                       "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP20.html",
                       "type": "lesson"
                     },
@@ -1694,6 +1867,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-5",
                       "title": "Week 21: Linear momentum, impulse theorem, pressure, shock absorption, and ballistics",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:990f8853587d61f204bdd69660af64e3e77dc50b8c2bff3f1de10f6b6afaf794",
                       "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP21.html",
                       "type": "lesson"
                     },
@@ -1703,6 +1877,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-5",
                       "title": "Week 22: Conservation of energy in elastic and inelastic collisions",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:95f1fe6c7247b1760e9edf06d3f19cd9cac776ab9499f32dceae610a0d232596",
                       "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP22.html",
                       "type": "lesson"
                     }
@@ -1718,6 +1893,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-6",
                       "title": "Week 23: Polar coordinate system, relationship with the rectangular system, frequency and period",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:5017c435554075afaca2d37d9ea109cadebfd644a42675de3346bc29c558cbef",
                       "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP23.html",
                       "type": "lesson"
                     },
@@ -1727,6 +1903,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-6",
                       "title": "Week 24: Tangential acceleration, centripetal acceleration, uniform circular motion (UCM), and graphs",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:30704ed78e266c5169fe6b2616bb0f41a6eb8274b4d7f9f1930f376e8493ff4c",
                       "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP24.html",
                       "type": "lesson"
                     },
@@ -1736,6 +1913,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-6",
                       "title": "Week 25: Harmonic oscillator, planetary motion, bumps and loops",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:f4a91fc17543a342d3a2c9a78a3b3b3a4c30b16f1a11949eae9ccc338dd4c927",
                       "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP25.html",
                       "type": "lesson"
                     }
@@ -1751,6 +1929,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-7",
                       "title": "Week 26: Newton's second law in Cartesian coordinates, in polar coordinates, and for rotations",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:edcd4ee6ab7e6da14e3db35914df4e6ea5a9243ed9ccb686c2be38cbcfbd4ba9",
                       "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP26.html",
                       "type": "lesson"
                     },
@@ -1760,6 +1939,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-7",
                       "title": "Week 27: Moment of inertia and parallel axis theorem (Steiner)",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:bd07e20bb9e2258cce595e737f6397cff719fd2fcb386dc25996ffdf1bc9d33d",
                       "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP27.html",
                       "type": "lesson"
                     },
@@ -1769,6 +1949,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-7",
                       "title": "Week 28: Torque, angular momentum, and rotational energy",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:9e54dec686a58be2f32d34eb00521a98eb784650a714ee49368de18f901db975",
                       "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP28.html",
                       "type": "lesson"
                     },
@@ -1778,6 +1959,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-7",
                       "title": "Week 29: Equilibrium of extended bodies and partitioning of energy",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:0cf46313754e56833fcca9507b09bba2049e6433a0afd2e4ca9fc1e418cdc5eb",
                       "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP29.html",
                       "type": "lesson"
                     }
@@ -1793,6 +1975,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-8",
                       "title": "Week 30: Circles, ellipses, Kepler's laws, planets, satellites, and comets",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:84844bf9ecaa006b016a3ca3c2082cc3641951bf3a6c354c84b1f35ce229edbb",
                       "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP30.html",
                       "type": "lesson"
                     },
@@ -1802,6 +1985,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-8",
                       "title": "Week 31: Law of Universal Gravitation, gravity, orbit analysis, and escape velocity",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:5872e81276df356026ba1ca59ed383849f9ac6b98e6688466a847fe580fb3a7f",
                       "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HS31.html",
                       "type": "lesson"
                     },
@@ -1811,6 +1995,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-8",
                       "title": "Week 32: Center of gravity, geometric center, and center of mass",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:55637de5369e9eb54261fb47ae2b005851ac5c757358fccd5e8f615407d03996",
                       "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP32.html",
                       "type": "lesson"
                     },
@@ -1820,6 +2005,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-8",
                       "title": "Week 33: Concepts of General Relativity theory and postulates of Special Relativity",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:1847291ded1695bd7b61b96cbabdd4f25f287a5808f7f38b0e2c1b5d2466c207",
                       "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP33.html",
                       "type": "lesson"
                     },
@@ -1829,6 +2015,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-8",
                       "title": "Week 34: Consequences of special relativity, the twin paradox, and the laser experiment",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:9246442dc5cb272f3b96a4c62a63454696032af05a118f47b79f191c7c4eafdf",
                       "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP34.html",
                       "type": "lesson"
                     }
@@ -1839,7 +2026,9 @@
             {
               "id": "builtin_track_high-school-physics-broad-modules-hsp-group-2",
               "title": "Fluids and thermodynamics",
+              "taxonomySlug": "fluids-and-thermodynamics",
               "description": "Fluids, pressure, heat, temperature, kinetic theory, and the laws of thermodynamics.",
+              "academicPathway": null,
               "isImplicit": false,
               "modules": [
                 {
@@ -1852,6 +2041,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-9",
                       "title": "Week 35: States of matter, fluids, types of flow, mass, volume, density, and mention of temperature",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:876ff3426207cca5dca5b6964823ad55b86b3d876b24f8c9159c457de54945d4",
                       "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP35.html",
                       "type": "lesson"
                     },
@@ -1861,6 +2051,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-9",
                       "title": "Week 36: Stevin's theorem, communicating vessels, types of pressure, and case analysis",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:b0d596de166eb5c38d21e3ac3f62ab4c78ad7502445732e2e8ad4dc36feb4a5a",
                       "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP36.html",
                       "type": "lesson"
                     },
@@ -1870,6 +2061,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-9",
                       "title": "Week 37: Pascal's principle and hydraulic elevators",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:547f9a5308c86a6b778666aad674854cd476fe84347862f4d573fdb8efabe673",
                       "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP37.html",
                       "type": "lesson"
                     },
@@ -1879,6 +2071,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-9",
                       "title": "Week 38: Archimedes' principle, buoyancy, relationship with Stevin's theorem and buoyancy",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:76ef45d881832bf0692d2aaf784f54ecb51b0805ee14aa85274c90b94175501f",
                       "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP38.html",
                       "type": "lesson"
                     },
@@ -1888,6 +2081,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-9",
                       "title": "Week 39: Continuity equation, Bernoulli's theorem, flow rate, hole in a water tank, and waterfall analysis",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:974c43f03fd46a403454e630dcb59041471b911695e99e667dfe53ead56f038c",
                       "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP39.html",
                       "type": "lesson"
                     }
@@ -1903,6 +2097,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-10",
                       "title": "Week 40: Microscopic view of temperature and temperature scales",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:5bf50ef0ff371570e4b73b8af1ae6a501bcbfb0169c2220ad20d0a0058210134",
                       "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP40.html",
                       "type": "lesson"
                     },
@@ -1912,6 +2107,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-10",
                       "title": "Week 41: Thermal energy, Joule's law, heat transfer, thermal equilibrium, and the zeroth law of thermodynamics",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:1b48ce35541c931027db4a1e820ec7423acd2dbcacab11a156820f8b7b0088dc",
                       "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP41.html",
                       "type": "lesson"
                     },
@@ -1921,6 +2117,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-10",
                       "title": "Week 42: Thermal expansion, thermostats, and thermodynamic equilibrium",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:40acd00d0f1a78379d27205ac0e095d24574ab1beaaeba1f7572ac3c0c4dcb0d",
                       "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP42.html",
                       "type": "lesson"
                     },
@@ -1930,6 +2127,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-10",
                       "title": "Week 43: Specific heat, heat capacity, latent heat, and phase changes",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:d9ae4c2ef06800da705250ee0f4ac80d8c244500b3e01abcb643855aca6a172a",
                       "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP43.html",
                       "type": "lesson"
                     }
@@ -1945,6 +2143,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-11",
                       "title": "Week 44: State, state properties, state functions, real gases and ideal gases",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:f350cb4a86f6df61663234354f2f672b0246e97eefe8351842ce76c1f620cd9d",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP44.html",
                       "type": "lesson"
                     },
@@ -1954,6 +2153,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-11",
                       "title": "Week 45: State variables, phase diagrams, thermodynamic processes, and the first law of thermodynamics",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:7c68dce5595c789c0edd4e1a79e17ac89fa73f53f37284394e35364d7cb6725f",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP45.html",
                       "type": "lesson"
                     },
@@ -1963,6 +2163,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-11",
                       "title": "Week 46: Second law of thermodynamics, Clausius statement, entropy and timeline",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:e2dbdcdf25a2d42d621151da582f2103ff11fe608a17cff246059a6d9553958f",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP46.html",
                       "type": "lesson"
                     },
@@ -1972,6 +2173,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-11",
                       "title": "Week 47: Heat engines, Otto cycle and Carnot cycle",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:dce24df0b451b8e07aac66c47b50bdf9a87a248da71b9194a14f6020a169d26e",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP47.html",
                       "type": "lesson"
                     },
@@ -1981,6 +2183,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-11",
                       "title": "Week 48: Refrigerators",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:ff01582515353ed5556ac7b133521e44ddcd3bb6aa23863f4cf9a0cd8c94ab04",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP48.html",
                       "type": "lesson"
                     }
@@ -1991,7 +2194,9 @@
             {
               "id": "builtin_track_high-school-physics-broad-modules-hsp-group-3",
               "title": "Waves and sound",
+              "taxonomySlug": "waves-and-sound",
               "description": "Oscillations, wave behavior, acoustics, resonance, and the Doppler effect.",
+              "academicPathway": null,
               "isImplicit": false,
               "modules": [
                 {
@@ -2004,6 +2209,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-12",
                       "title": "Week 49: Types of waves, notable regions, frequency, wavelength, and propagation speed",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:95adaee510e58478d7d775a953440b80a52ad2f4bc138e3fbb4398875abd25cc",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP49.html",
                       "type": "lesson"
                     },
@@ -2013,6 +2219,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-12",
                       "title": "Week 50: Qualitative analysis of wave phenomena: reflection, refraction, diffraction, and interference",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:aa68c01e024c4c17280804ab6f66ee491df45a04668aa57106f5322dd9122817",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP50.html",
                       "type": "lesson"
                     },
@@ -2022,6 +2229,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-12",
                       "title": "Week 51: Constructive interference and destructive interference",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:2c8e1eb1462d9f7c40a14e5d566366a7f2e3a5cc75457428f2a1e035167780c4",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP51.html",
                       "type": "lesson"
                     },
@@ -2031,6 +2239,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-12",
                       "title": "Week 52: Standing waves and resonance",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:2a59873261209b6f94e58445248862bb4093ab4c94f4ee52e84a890834651806",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP52.html",
                       "type": "lesson"
                     },
@@ -2040,6 +2249,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-12",
                       "title": "Week 53: Normal modes with 1 or 2 fixed ends",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:8161fced8b7c1c44cee2d520ef90e205ec15606e93b3940fefad991137e6ceb8",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP53.html",
                       "type": "lesson"
                     }
@@ -2055,6 +2265,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-13",
                       "title": "Week 54: Sound wave, sound generation and speed, frequency, timbre, vocal cords and musical instruments",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:763f6c86ebd79a64aae0114f1bc10c329dda15c5e281911c547cfb20546dae46",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP54.html",
                       "type": "lesson"
                     },
@@ -2064,6 +2275,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-13",
                       "title": "Week 55: Sound power, sound level, and the inverse square law",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:0455944bba9c2c287a2bc7d628047fe8f12e312de4fb251924f9863a06b8d045",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP55.html",
                       "type": "lesson"
                     },
@@ -2073,6 +2285,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-13",
                       "title": "Week 56: Hearing aid and Doppler effect",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:1fc02260781a7a9fac627e9b6ab0f81c06f0662d5e5d2627f7521d6b4abd5446",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP56.html",
                       "type": "lesson"
                     },
@@ -2082,6 +2295,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-13",
                       "title": "Week 57: Destructive interference, beat, and constructive interference",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:bb1d5009cbbb2ca26ed2fa59d2a7cc1a8359af0bdf2a96a7de28039b3c97883f",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP57.html",
                       "type": "lesson"
                     },
@@ -2091,6 +2305,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-13",
                       "title": "Week 58: Natural frequency, tuning fork, resonance and Dakoma bridge",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:436eb1ba0d5da91101b04672622abcdd12322a7151f576694dc1ff35c55b3cab",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP58.html",
                       "type": "lesson"
                     },
@@ -2100,6 +2315,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-13",
                       "title": "Week 59: Normal modes in pipes and wind instruments",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:bdf4ece2aba0dc1feb004e028518012b4b5fbd20443993a154de09efa704d28b",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP59.html",
                       "type": "lesson"
                     }
@@ -2110,7 +2326,9 @@
             {
               "id": "builtin_track_high-school-physics-broad-modules-hsp-group-4",
               "title": "Optics",
+              "taxonomySlug": "optics",
               "description": "Light, reflection, refraction, mirrors, lenses, diffraction, and interference.",
+              "academicPathway": null,
               "isImplicit": false,
               "modules": [
                 {
@@ -2123,6 +2341,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-14",
                       "title": "Week 60: Light sources, generation and speed of light, frequency, color, and electromagnetic spectrum",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:a01a23f3f73ee5dcc8d78040744d49bda9bca3cf92bcfd808c20e2b1b34f375b",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP60.html",
                       "type": "lesson"
                     },
@@ -2132,6 +2351,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-14",
                       "title": "Week 61: Polarization, luminous power, and the inverse square law",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:e661751352fbc2b85c223313683d56a1fe8acf29775f0a5ae4cba3467e7fefdf",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP61.html",
                       "type": "lesson"
                     }
@@ -2147,6 +2367,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-15",
                       "title": "Week 62: Light sources, postulates of geometric optics, object and image",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:72d17840a8b6e272953f727dbc6ccdb10cb8f5a030ccc31b787374c7e09e4593",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP62.html",
                       "type": "lesson"
                     },
@@ -2156,6 +2377,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-15",
                       "title": "Week 63: Laws of reflection, types of reflection, and visualization of objects",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:091b99bd23a5b3a29f189ddd6d8beec97c148a35292ae941657feacfdf2dc080",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP63.html",
                       "type": "lesson"
                     },
@@ -2165,6 +2387,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-15",
                       "title": "Week 64: Refractive index, law of refraction, total internal reflection, mirages, and optical fibers",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:bcc5398022ed281ed3c0fb246685d9ce42b810324fc36f529404d939fd2ab8a8",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP64.html",
                       "type": "lesson"
                     },
@@ -2174,6 +2397,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-15",
                       "title": "Week 65: Plane mirrors: representation, image classification, and mirror association",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:a45e9862ee5d40afd4f77cd57cabc6c108630a20c3a8739524415f8357235eaa",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP65.html",
                       "type": "lesson"
                     },
@@ -2183,6 +2407,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-15",
                       "title": "Week 66: Concave mirrors: Gauss's law, magnification factor, notable rays, and image classification",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:398bd9b521996b1b703ce5bcdeba8b3855b1b2cbbfbcf15fe3638987b5040e38",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP66.html",
                       "type": "lesson"
                     },
@@ -2192,6 +2417,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-15",
                       "title": "Week 67: Convex mirrors: Gauss's law, magnification factor, notable rays, and image classification",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:858ca600bb69e0a6746611341b9852c9329e7c07ec20affcdc7055b989d43f89",
                       "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP67.html",
                       "type": "lesson"
                     }
@@ -2207,6 +2433,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-16",
                       "title": "Week 68: How lenses work, types of lenses, simplified representations, and objects of study",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:c83e1dfae0abf104678b578a659470b7cab6dd58ba359a1e99c34e96a3f51951",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP68.html",
                       "type": "lesson"
                     },
@@ -2216,6 +2443,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-16",
                       "title": "Week 69: Gauss's law, magnification factor, microscopes and telescopes",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:c8dde309a052bf8046407265d25059376cb60d1fabebdac0cc21d81befc07219",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP69.html",
                       "type": "lesson"
                     },
@@ -2225,6 +2453,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-16",
                       "title": "Week 70: Notable rays and image classification",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:5f0e82ffaeaa4498544ecd087896efb8749b69b8e662e03e2543dc0a09daa2cf",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP70.html",
                       "type": "lesson"
                     },
@@ -2234,6 +2463,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-16",
                       "title": "Week 71: Aberrations, eye anatomy, and eye problems",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:f31127464be21cada03e90206b2fc9c4c0f332b927701d31bc517473838bd903",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP71.html",
                       "type": "lesson"
                     }
@@ -2249,6 +2479,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-17",
                       "title": "Week 72: Light source, light wave, light generation, wavefront, and monochromatic light",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:36015f9b93d25cf56ff096353d932037acb02496d64008e48c1ad7acb5158e79",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP72.html",
                       "type": "lesson"
                     },
@@ -2258,6 +2489,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-17",
                       "title": "Week 73: Refraction, dispersion, sky color, and rainbows",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:f1e28bc69d867b8deac81bb47ce6e4361822e6ff0dbfda04f8b67c1d59f3c548",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP73.html",
                       "type": "lesson"
                     },
@@ -2267,6 +2499,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-17",
                       "title": "Week 74: Huygens's principle and diffraction of light waves by single slits",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:5aaf5f4a79033617a98b9b64e444bd4cb388a6a80803379a1e00f5ef3de27e67",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP74.html",
                       "type": "lesson"
                     },
@@ -2276,6 +2509,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-17",
                       "title": "Week 75: Wave diffraction by double slits, Young's experiment and interference pattern",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:969142b74faabfd0adb161cb18034ce135b93eeadbe1a61b13319356fb5ac617",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP75.html",
                       "type": "lesson"
                     },
@@ -2285,6 +2519,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-17",
                       "title": "Week 76: Resolution and Rayleigh's criterion",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:63128e7b787291c83f6edd8e25d6f1278a257014dc0e5be36f6903b870fc514b",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP76.html",
                       "type": "lesson"
                     }
@@ -2295,7 +2530,9 @@
             {
               "id": "builtin_track_high-school-physics-broad-modules-hsp-group-5",
               "title": "Electricity and magnetism",
+              "taxonomySlug": "electricity-and-magnetism",
               "description": "Electric charge, fields, circuits, magnetism, induction, and electromagnetic applications.",
+              "academicPathway": null,
               "isImplicit": false,
               "modules": [
                 {
@@ -2308,6 +2545,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-18",
                       "title": "Week 77: Electric charge, electrification processes, conductors, insulators, and electrostatic experiments",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:1461b44cf17968abec17ef3e6425361487f9643e81e576ab5fe1001d23cbfb49",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP77.html",
                       "type": "lesson"
                     },
@@ -2317,6 +2555,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-18",
                       "title": "Week 78: Atoms, quantization of electric charge, and microscopic view of matter",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:c74d794c5a30100c83e468d6c85a246a647b6b59864e8732a647094c159c0390",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP78.html",
                       "type": "lesson"
                     },
@@ -2326,6 +2565,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-18",
                       "title": "Week 79: Coulomb's law, electric field and field lines",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:230395536415ceb87ae23a292a1943838479f6abf12b467aa04e02f762f09bb6",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP79.html",
                       "type": "lesson"
                     },
@@ -2335,6 +2575,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-18",
                       "title": "Week 80: Work involving electric forces, electric potential, equipotential lines, and electrical energy",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:faec6cb816072e19f88720a1a6cd13a83665f25e42c723ce856ff11475a7ab7b",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP80.html",
                       "type": "lesson"
                     },
@@ -2344,6 +2585,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-18",
                       "title": "Week 81: Uniform electric fields and electric potential difference",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:5145567737f37b08b2a50b7b580f2d588ad8cf69c450f3a897d540eb957941fe",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP81.html",
                       "type": "lesson"
                     },
@@ -2353,6 +2595,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-18",
                       "title": "Week 82: Surface charge density and capacitors",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:cf1d03916dff4a8db476581331ed3b3c9231d3b0a06ac623adf89e854b2e52af",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP82.html",
                       "type": "lesson"
                     },
@@ -2362,6 +2605,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-18",
                       "title": "Week 83: Dielectrics, polarization, and a comparison between electric force and gravitational force",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:4a4e3cbb2d448bca87a81a1be96fc96532a89c30ba0d2debf6e521f8513f1ee1",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP83.html",
                       "type": "lesson"
                     }
@@ -2377,6 +2621,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-19",
                       "title": "Week 84: Movement of electric charges in wires and definition of electric currents",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:5ed056d93161e7cf76fe14ff082ebc5cf2fe612e75fd76089988a0c81d444b3f",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP84.html",
                       "type": "lesson"
                     },
@@ -2386,6 +2631,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-19",
                       "title": "Week 85: Electrical resistance, holding field, potential and potential drop",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:7109392feda47f692dd70c72498deb280914169182ece9495cd2590947d11094",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP85.html",
                       "type": "lesson"
                     },
@@ -2395,6 +2641,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-19",
                       "title": "Week 86: Electrical resistors, Ohm's first and second laws",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:1ae48d30ed23a7d8abd89622e8cd66928f12d816dac7ac3ad03bc8008a5fa307",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP86.html",
                       "type": "lesson"
                     },
@@ -2404,6 +2651,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-19",
                       "title": "Week 87: Electric generators, electric circuits, Kirchhoff's laws and the Joule effect",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:e21cd7851a75e7706c0b564c91dd2c35e985cf9d50316e74b66034b53945fa9a",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP87.html",
                       "type": "lesson"
                     },
@@ -2413,6 +2661,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-19",
                       "title": "Week 88: Electrical circuits with resistor combinations",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:bcc119b3497ab4a9522fdd1c719b6543c46b15476daf85de43cc2a9d410a3595",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP88.html",
                       "type": "lesson"
                     },
@@ -2422,6 +2671,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-19",
                       "title": "Week 89: Electrical circuits with generator connections",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:64e002ca1af247f68d1203d229efd272e436bc71b08673335601288af41c05ba",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP89.html",
                       "type": "lesson"
                     }
@@ -2437,6 +2687,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-20",
                       "title": "Week 90: Charge density and its relationship with electric current",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:3e6c514baaf1f7922d77f62e5047ea93a306b0ba1c582727338685521f14cb59",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP90.html",
                       "type": "lesson"
                     },
@@ -2446,6 +2697,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-20",
                       "title": "Week 91: Magnets, magnetic poles, magnetic field and magnetic field lines",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:a4d5f2df4205bbf18c5ad7e172c18b7977aa7c7e3f9a707b08abc4b4ddedd439",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP91.html",
                       "type": "lesson"
                     },
@@ -2455,6 +2707,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-20",
                       "title": "Week 92: Vector product, right-hand rule, and Biot-Savart law",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:8ccf56d1e943104f1ad6f47349791bd9964b1a161fed56964025980c45557613",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP92.html",
                       "type": "lesson"
                     },
@@ -2464,6 +2717,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-20",
                       "title": "Week 93: Lorentz Force",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:06801fb350a565c471f5ab7442c95f924ac57a7fe7ed3a012a31b37265b926a1",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP93.html",
                       "type": "lesson"
                     },
@@ -2473,6 +2727,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-20",
                       "title": "Week 94: Electrical induction (Faraday's law) and power plants",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:b75736f01971d946398f8a4694a6c2965ca809cabbdcd8f4401a42a5e0b8f845",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP94.html",
                       "type": "lesson"
                     },
@@ -2482,6 +2737,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-20",
                       "title": "Week 95: Coils and electric motors",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:16539c9ef8b0520ac8be58dfdb7c5228e947e4a6ba42142427a794cf73c88187",
                       "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP95.html",
                       "type": "lesson"
                     }
@@ -2492,7 +2748,9 @@
             {
               "id": "builtin_track_high-school-physics-broad-modules-hsp-group-6",
               "title": "Modern, atomic, and nuclear physics",
+              "taxonomySlug": "modern-atomic-and-nuclear-physics",
               "description": "Quantum theory, atomic and nuclear models, radioactivity, and particle physics.",
+              "academicPathway": null,
               "isImplicit": false,
               "modules": [
                 {
@@ -2505,6 +2763,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-21",
                       "title": "Week 96: Blackbody radiation and spectrum",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:9523441e3eb1eb4bc2ed06907c6234880277d3650d988c174f49ea69a26fb8e3",
                       "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP96.html",
                       "type": "lesson"
                     },
@@ -2514,6 +2773,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-21",
                       "title": "Week 97: Wien's law and Stefan-Boltzmann law",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:8837a56192cfa5d43a24b7a03befa1d71043f29810b77a35b2799e4bdd9afeb9",
                       "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP97.html",
                       "type": "lesson"
                     },
@@ -2523,6 +2783,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-21",
                       "title": "Week 98: Ultraviolet catastrophe, Max Planck's postulate, and energy quantization",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:eeb6bbfd4094b934c244dd20f93bffd395fcaf6c8fed5d8265984f8d4e5acb14",
                       "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP98.html",
                       "type": "lesson"
                     },
@@ -2532,6 +2793,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-21",
                       "title": "Week 99: Hertz experiment, photoelectric effect, and Einstein's postulates",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:ed5b871bc2cd022b34c317e7d8ca496fb105ed6bb5b55eb7a77b7d7ecc096777",
                       "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP99.html",
                       "type": "lesson"
                     },
@@ -2541,6 +2803,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-21",
                       "title": "Week 100: Dual nature of light",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:c54c332d7cac90103bae6a4e49b726e2789ccc4b35272ef65697c8ac270cc0d6",
                       "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP100.html",
                       "type": "lesson"
                     },
@@ -2550,6 +2813,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-21",
                       "title": "Week 101: Compton scattering",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:75d77965c4eb293aa5db2219aeced1e85611cfee8297ee323ff6f553b1e31a01",
                       "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP101.html",
                       "type": "lesson"
                     }
@@ -2565,6 +2829,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-22",
                       "title": "Week 102: Laws of definite proportions, Dalton's model, Crookes tube, and Thomson's model",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:5100d5b9d804108f4ec733d4142bcabc186103472e6107a2225dbdcacd43864a",
                       "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP102.html",
                       "type": "lesson"
                     },
@@ -2574,6 +2839,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-22",
                       "title": "Week 103: Rutherford model, atomic spectra, and the Rutherford-Bohr model",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:279cd48a7862e6398a2caa8bed09a5d917543e4336224d8836a6eb2bde8c770c",
                       "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP103.html",
                       "type": "lesson"
                     },
@@ -2583,6 +2849,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-22",
                       "title": "Week 104: Sommerfeld model, principal quantum number and secondary quantum number",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:b0bed08985ae5794ddedbb090b61c56940728dbd87fc83484b135c67cae573eb",
                       "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP104.html",
                       "type": "lesson"
                     },
@@ -2592,6 +2859,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-22",
                       "title": "Week 105: DeBroglie hypothesis and Davisson-Germer experiment",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:203671fd97d742ba13a1167e01e1b8a391b36c3f7222f2c51833c70e375dc9bd",
                       "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP105.html",
                       "type": "lesson"
                     },
@@ -2601,6 +2869,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-22",
                       "title": "Week 106: Quantum model of the atom, complementarity principle, and uncertainty principle",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:1707edd41224b69d05bc67585add1d69bfd81877fdccc6c3dd4195ad6238bef3",
                       "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP106.html",
                       "type": "lesson"
                     }
@@ -2616,6 +2885,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-23",
                       "title": "Week 107: Fundamental forces, force transmission, and types of particles",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:a27f3b1dbfbdb216d006719d77331d21a92d705437abc0a3b4c5ad418e0031db",
                       "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP107.html",
                       "type": "lesson"
                     },
@@ -2625,6 +2895,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-23",
                       "title": "Week 108: Strong and weak nuclear forces, quarks, and gluons",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:57665fc4c79b4924d8a72fba9de88148bf2cf90162a5a32cc075d2c99e4a31b1",
                       "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP108.html",
                       "type": "lesson"
                     },
@@ -2634,6 +2905,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-23",
                       "title": "Week 109: Standard model, matter and antimatter",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:6ec3f8b533cc5b0e0dd8bbab5463eed2e026d21323cab5df0c4f221cb2a84e54",
                       "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP109.html",
                       "type": "lesson"
                     },
@@ -2643,6 +2915,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-23",
                       "title": "Week 110: Element and atom",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:3704531ca0dd30dca3929048125fb7b069c2914289b5517e945b38f7e1be9f24",
                       "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP110.html",
                       "type": "lesson"
                     },
@@ -2652,6 +2925,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-23",
                       "title": "Week 111: Nuclear stability, radioactivity, half-life, and carbon-14 dating",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:727d84af2af46d79a966b03dd81508fb1379c5f06aa6ca04a38e9910778f6d39",
                       "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP111.html",
                       "type": "lesson"
                     },
@@ -2661,6 +2935,7 @@
                       "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-23",
                       "title": "Week 112: Nuclear fusion, nuclear fission, and nuclear weapons",
                       "difficulty": "medium",
+                      "sourceContentVersionKey": "sha256:ee3dcaacbe0b5b8eb48c5f62fe87362d1dd8c611c7e6519286e699699ba14632",
                       "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP112.html",
                       "type": "lesson"
                     }
@@ -2688,6 +2963,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-1",
               "title": "Week 1: Sign rules, properties of multiplication, and order of operations (PEMDAS)",
               "difficulty": "low",
+              "sourceContentVersionKey": "sha256:d2655bafc8145c5545f073691dd35dbcafaac4c083e863ac0c6f367d5b55358c",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM1.html",
               "type": "lesson"
             },
@@ -2697,6 +2973,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-1",
               "title": "Week 2: Arithmetic operations involving fractions",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:9d000378c380e789d9fc9aef1326d431655226f9052cf6cafd3531214a0e3438",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM2.html",
               "type": "lesson"
             },
@@ -2706,6 +2983,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-1",
               "title": "Week 3: Proper fractions, improper fractions, mixed numbers, and decimals",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:a732f7d50b43ee514927bd19620d25a30b9ee61e718a10e09e478c57d6f8d43b",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM3.html",
               "type": "lesson"
             },
@@ -2715,6 +2993,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-1",
               "title": "Week 4: Number sets, intervals, and number lines",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:2b5391e5a1b059a7b861571a294d91b990e26c82de4a6a098197bf931f77751f",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM4.html",
               "type": "lesson"
             },
@@ -2724,6 +3003,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-1",
               "title": "Week 5: Repeating decimals, divisibility, factors, and numerical factorization (GCF and LCM)",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:cc92dfd568fbdcc59770d6dec22a87089c1ba2101e50bd32b89374c419ec0f27",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM5.html",
               "type": "lesson"
             },
@@ -2733,6 +3013,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-1",
               "title": "Week 6: Special products and simplification by factors",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:a68b0f0850330b453d1951115add30d5dd9d254d2de629088dc138aeebf968bd",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM6.html",
               "type": "lesson"
             },
@@ -2742,6 +3023,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-1",
               "title": "Week 7: Algebraic expressions: variables, operations with monomials, and factoring",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:8575a3f3de19b62b3b8a538435e3430339811d10b57e28d3d784f79916c70a74",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM7.html",
               "type": "lesson"
             }
@@ -2757,6 +3039,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-2",
               "title": "Week 8: Coordinate systems, mapping data on graphs, diagrams, and introduction to functions",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:55905b8ce913e605acaaef0e05a076ae88c235fb8e46c7dba04ff58442bbd651",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM8.html",
               "type": "lesson"
             },
@@ -2766,6 +3049,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-2",
               "title": "Week 9: Functions: definition, notation, vertical line test, and linearity",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:f4c12ce35cc6c83f367802d74b28615fbf4f0e1c6df391d24d46197258d30330",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM9.html",
               "type": "lesson"
             },
@@ -2775,6 +3059,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-2",
               "title": "Week 10: Domain, range, codomain, notable points, and the concept of inverse function",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:b4089bc9b9393a1d2d889569a7857808a9e8f155337983170e513f1401ce9a94",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM10.html",
               "type": "lesson"
             }
@@ -2790,6 +3075,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-3",
               "title": "Week 11: Equalities and equations: modeling, solution methods, and solution testing",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:f08522d52bfe62d952cb309b8f527205096d9234e196b0848cac953238b34946",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM11.html",
               "type": "lesson"
             },
@@ -2799,6 +3085,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-3",
               "title": "Week 12: Inequalities: modeling, solution methods, and solution testing",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:45935278a8234f721ad00ba2841d537554c3e29d1741e4d44fbf56e730f2f20f",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM12.html",
               "type": "lesson"
             },
@@ -2808,6 +3095,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-3",
               "title": "Week 13: Absolute value equations and inequalities",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:c457f123fc8ae2a2a9bff4b3f830f4f5a2b18e5f41c9b6ea154b748abc076191",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM13.html",
               "type": "lesson"
             },
@@ -2817,6 +3105,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-3",
               "title": "Week 14: Multiple variables: solution analysis and solving for a particular variable",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:93450cd040f86d0645ba6910e893da8019703fa55cf2ed0f392e10081852e31c",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM14.html",
               "type": "lesson"
             }
@@ -2832,6 +3121,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-4",
               "title": "Week 15: Linear functions: classifications and coefficients",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:071aab32d7025ea495bb0cb7baa338e8cc2d0e252fccc2ca064ae04a64c69952",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM15.html",
               "type": "lesson"
             },
@@ -2841,6 +3131,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-4",
               "title": "Week 16: Systems of equations: classification and solution analysis",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:736cedb226366539785cd06d9f97eb1fccc85412bb5bc2e75521e6cac003ebf8",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM16.html",
               "type": "lesson"
             },
@@ -2850,6 +3141,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-4",
               "title": "Week 17: 2 x 2 linear systems: graphical analysis and solving",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:1fa125fb4a4e0f06035db59f1fad65d7a9f90999379a20bbdd07675651009647",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM17.html",
               "type": "lesson"
             },
@@ -2859,6 +3151,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-4",
               "title": "Week 18: 2 x 2 systems of linear inequalities: graphical analysis and solving",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:3bbf5352c4027a7b384e17d45a6bcb77360e11d819f44fe7f0549f2948ea9555",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM18.html",
               "type": "lesson"
             },
@@ -2868,6 +3161,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-4",
               "title": "Week 19: Quadratic functions: definition, graph, and solving quadratic equations with the quadratic formula",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:1e86fd249b5cb3b99c9f94cf423330092bb9176dbefda7a2f18711de89de8e40",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM19.html",
               "type": "lesson"
             },
@@ -2877,6 +3171,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-4",
               "title": "Week 20: Quadratic equations: other solution methods (factoring and bisection)",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:f245a736e3c7df833e905476ffe4b2314bf0772290ef30d458aa3b7c01213006",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM20.html",
               "type": "lesson"
             },
@@ -2886,6 +3181,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-4",
               "title": "Week 21: Absolute value functions and piecewise-defined functions",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:ddd600d53b28708609864742ba5cac0451be847f25b9434c59de7fbac107af03",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM21.html",
               "type": "lesson"
             }
@@ -2901,6 +3197,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-5",
               "title": "Week 22: Powers with integer exponents: properties and simplifications",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:c853ffc84807d724b57a50c0973ff2c407ff502e4550da1eb79fdb4895e02989",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM22.html",
               "type": "lesson"
             },
@@ -2910,6 +3207,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-5",
               "title": "Week 23: Roots: properties and simplifications",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:5b2a8f9072ef65903e3afa2b45efe8593d18b62e450cad145c19f2d12618d1ca",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM23.html",
               "type": "lesson"
             },
@@ -2919,6 +3217,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-5",
               "title": "Week 24: Scientific notation, decimals, and operations with powers of 10",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:e5c1da6f0a55d8aa94516ffb1e0d7cf8d8be0f3f980af81b7646257a3f4e622b",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM24.html",
               "type": "lesson"
             },
@@ -2928,6 +3227,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-5",
               "title": "Week 25: Power, exponential, and polynomial functions: definitions and differences through graphical analysis",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:aa3f506cb22cfe1c6c2c62f039313613779b0f103fe0dc35757ad6e59aeb94f2",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM25.html",
               "type": "lesson"
             },
@@ -2937,6 +3237,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-5",
               "title": "Week 26: Rational functions: simplifying by factors, domain analysis, and solving equations",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:14c06cf65d906be8e9486c37901c23c45c89abe7e5139601ea14019d7d995319",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM26.html",
               "type": "lesson"
             },
@@ -2946,6 +3247,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-5",
               "title": "Week 27: Exponential equations and inequalities involving rational functions",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:3e35063b581d95f887770c5f5e4f097a9893a574dd0c0407f4dfbfb54d6ee6f5",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM27.html",
               "type": "lesson"
             }
@@ -2961,6 +3263,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-6",
               "title": "Week 28: Logarithms: definition, graphs, and relationship with powers",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:cf5228a0ecafe26bfb0dba124686d5c9190a4af18cac4ac7a18b22142694a1ad",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM28.html",
               "type": "lesson"
             },
@@ -2970,6 +3273,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-6",
               "title": "Week 29: Logarithms: algebraic properties (addition and subtraction)",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:583e8355cc17d36b577f1cbd447800625846b729e758e7ee4c37fa4199cca3a4",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM29.html",
               "type": "lesson"
             },
@@ -2979,6 +3283,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-6",
               "title": "Week 30: Logarithms: properties (change of base and logarithms with powers)",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:8711237565ab57d36fd9c2cdc872c7a7d6aaa6797e542c45922b804b2ce99ab4",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM30.html",
               "type": "lesson"
             },
@@ -2988,6 +3293,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-1-modules-1-6-hsm-module-6",
               "title": "Week 31: Equations involving logarithms",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:bd9b6a0d14d73f074ea66edb302bb980b3e20e9ed069520e4b5569808856a264",
               "planningHref": "../schedules/High School/math/Algebra 1/Modules 1-6/Instructions/HSM31.html",
               "type": "lesson"
             }
@@ -3005,6 +3311,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-1",
               "title": "Week 1: Review of number sets and introduction to complex numbers",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:adc7a92739a7d4d4241b2b47700671699a30b700759a3337f5902a7b078edfaf",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA21.html",
               "type": "lesson"
             },
@@ -3014,6 +3321,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-1",
               "title": "Week 2: Functions and equations: vertical line test, solution testing, solving, tables, and graphs",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:74f2f8f598e55685fd6607fc131107a1334bfd7113c9443b09440a7faa0a2ab7",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA22.html",
               "type": "lesson"
             },
@@ -3023,6 +3331,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-1",
               "title": "Week 3: Domain, range, codomain, injection, surjection, bijection, and the horizontal line test",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:e6657069fda1178a3d2b1e2b25d5d061c80491dacd292e606e279da0bcb47c72",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA23.html",
               "type": "lesson"
             },
@@ -3032,6 +3341,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-1",
               "title": "Week 4: Inverse functions: existence analysis, algebraic method, and graphical method",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:4ea66f6c1e38b2ae45ffc53399a3aacebf6fd25731a0b623bf5f11b0f5d04c52",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA24.html",
               "type": "lesson"
             },
@@ -3041,6 +3351,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-1",
               "title": "Week 5: Inequalities: solving and graphical analysis",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:7a49a2e070b81a54c39cc8ea71687b2783e917d5ecd3234d889d9311aacea610",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA25.html",
               "type": "lesson"
             },
@@ -3050,6 +3361,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-1",
               "title": "Week 6: Equations and inequalities involving absolute value",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:9f4a5350a91c59958309421a43d93a39515fb61362ad6cac3e675645839f838f",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA26.html",
               "type": "lesson"
             },
@@ -3059,6 +3371,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-1",
               "title": "Week 7: Absolute value functions: graph and properties",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:881cc09fb35444672c64c448b0253c51d845856a7f3234f2b7fc2e6acbd3e9cb",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA27.html",
               "type": "lesson"
             }
@@ -3074,6 +3387,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-2",
               "title": "Week 8: Operations with functions: algebraic operations and composition",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:cecd78f2037c69ed181a4b8c80e1f23798665a6c337085b4f50824bb595f63ae",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA28.html",
               "type": "lesson"
             },
@@ -3083,6 +3397,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-2",
               "title": "Week 9: Transformations: reflection, translation, dilation, and rotation",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:e5c6f8e7c642ab8c233aa3e56ee3f47b78a8c8e41b5d37201f89f56c453a2ab0",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA29.html",
               "type": "lesson"
             },
@@ -3092,6 +3407,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-2",
               "title": "Week 10: Parity of functions, domain analysis, and range analysis",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:04bafbbacb0f403acf6c4b9c386429531e48e877f8f48e5fc12feefc2a1fff01",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA210.html",
               "type": "lesson"
             }
@@ -3107,6 +3423,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-3",
               "title": "Week 11: Polynomials: definition, graphs, and operations",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:36b7a43c4d48689e980df9374b5b248095722f6b053875a2661afd8b6aeaf022",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA211.html",
               "type": "lesson"
             },
@@ -3116,6 +3433,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-3",
               "title": "Week 12: Special products, the binomial theorem, and Pascal's triangle",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:bf6e0f1f26431842b45f053f00fc1745d4bdef48dc5d7b5acc0a48c61d04b88a",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA212.html",
               "type": "lesson"
             },
@@ -3125,6 +3443,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-3",
               "title": "Week 13: Degree, factorization, and polynomial long division",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:687a87a0e59b00f27b2e91f8527c8eda281c6d1da40143e6db92ef3b4504af40",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA213.html",
               "type": "lesson"
             },
@@ -3134,6 +3453,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-3",
               "title": "Week 14: Polynomial division: the remainder theorem and synthetic division",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:c4c04acc3ec558d766d3370e450331b866d6dd4aa5ac7a841e08105d4c1857db",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA214.html",
               "type": "lesson"
             },
@@ -3143,6 +3463,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-3",
               "title": "Week 15: Multiplicity of roots in the quadratic case: discriminant and quadratic formula",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:9eaa72883a98d7aadafa6d58bf2367f6cbf654554454d9e71bf52efead589c23",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA215.html",
               "type": "lesson"
             },
@@ -3152,6 +3473,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-3",
               "title": "Week 16: Quadratic functions: properties, graphs, equations, and applications",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:b388c43499e4233f07eac95e2cf8aa0e4fe59c45f78aab03e3d0fdf463878f84",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA216.html",
               "type": "lesson"
             },
@@ -3161,6 +3483,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-3",
               "title": "Week 17: Quadratic functions: modeling from points",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:d300359c0ee94c859b0b7448d5685df0a5f721aaca179a9c68bc4db47cd19c20",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA217.html",
               "type": "lesson"
             },
@@ -3170,6 +3493,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-3",
               "title": "Week 18: Theorems about polynomial roots: rational roots and conjugate roots",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:6fc8e94e6149dca42e4bc678b1226b70def1f3ba4326176724c4ad337b9689ab",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA218.html",
               "type": "lesson"
             },
@@ -3179,6 +3503,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-3",
               "title": "Week 19: Descartes' rule of signs and the fundamental theorem of algebra",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:69d419c9cdaaedf92653c26aca1e5010b4b5c63c7d4df7cb8df66238494dd3f0",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA219.html",
               "type": "lesson"
             }
@@ -3194,6 +3519,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-4",
               "title": "Week 20: Review of radicals: properties and operations with roots",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:bac6e6ecf659b93547eac35ecfc724b419e6e233d7385755442f55986a80c906",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA220.html",
               "type": "lesson"
             },
@@ -3203,6 +3529,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-4",
               "title": "Week 21: Radical functions: graph, domain analysis, and range analysis",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:2b810ed08a03c3ac8df24a817c085331ac409041c5d6ec85067fe9772e6dd7a9",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA221.html",
               "type": "lesson"
             },
@@ -3212,6 +3539,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-4",
               "title": "Week 22: Powers with decimal exponents: relationship with roots, operations, and graphs",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:545ba37f91443ec56715163120e06465524950426b238e2b3086105912b41836",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA222.html",
               "type": "lesson"
             },
@@ -3221,6 +3549,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-4",
               "title": "Week 23: Rational functions, equations, and expressions",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:6bc2003aa1ab7528df61d81a6d35fe7e725997007f20b0a7f1c4ed5d1f08c788",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA223.html",
               "type": "lesson"
             },
@@ -3230,6 +3559,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-4",
               "title": "Week 24: Direct and inverse proportionality: graphical analysis and algebraic modeling",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:490b58ae724b586dadced0606370a557205a9fae16b0dd82eab7760001cc8fd7",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA224.html",
               "type": "lesson"
             },
@@ -3239,6 +3569,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-4",
               "title": "Week 25: Exponential functions and equations: graphs and algebraic analysis",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:aa8fe3f9f2289ad0d145c470dcecf4526ade96ed62d9b68a4fb7489e519aa335",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA225.html",
               "type": "lesson"
             },
@@ -3248,6 +3579,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-4",
               "title": "Week 26: Logarithms 1",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:2f0f8941b181b81bd2ae1086dc4b099b68fd9a5e15034aece925c9acf90cb8b5",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA226.html",
               "type": "lesson"
             },
@@ -3257,6 +3589,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-4",
               "title": "Week 27: Logarithms 2",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:dc0fdde810624a17cc439ad596b8298a1b970095acd6e0faa63982a5306e9267",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA227.html",
               "type": "lesson"
             }
@@ -3272,6 +3605,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-5",
               "title": "Week 28: Classification of linear systems, solution analysis, and graphical analysis",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:b2386be3becc179a0202149a1136d94192f35f3330f938a5ce79059190a75ef7",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA228.html",
               "type": "lesson"
             },
@@ -3281,6 +3615,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-5",
               "title": "Week 29: Elementary operations, equivalent systems, and solving",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:9aba9a4d17d642f1731635205cefcafb73b4e835c2647d7f836d5419f3d931a9",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA229.html",
               "type": "lesson"
             },
@@ -3290,6 +3625,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-5",
               "title": "Week 30: Systems of linear inequalities: solving, solution testing, and graphical analysis",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:916011407be1e1c39a2f362e72900f6d9f3be5c5785749ea0165bda833612af5",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA230.html",
               "type": "lesson"
             },
@@ -3299,6 +3635,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-5",
               "title": "Week 31: Systems of equations",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:4f6fd1d36094f6ac6e5207f596b3c86336ca4a128c37cbde55dcf0985f87067c",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA231.html",
               "type": "lesson"
             }
@@ -3314,6 +3651,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-6",
               "title": "Week 32: Matrices: definition, classifications, relationship with systems of equations, and operations",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:a2efbbed0632c05f0a6d23656d80a8a0af30ef01ca80e1b67d3393c120b3d842",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA232.html",
               "type": "lesson"
             },
@@ -3323,6 +3661,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-6",
               "title": "Week 33: Matrix multiplication: definition and properties",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:b9bd026d03fb88e405fdbada0b01359101c1e5046a7d3035559fd31f27edb151",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA233.html",
               "type": "lesson"
             },
@@ -3332,6 +3671,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-6",
               "title": "Week 34: Determinant: definition and calculation by permutation",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:c8f2dba9a0517cb90c917e0513fbdec327c0e1b0c90e2d625bdaeffe5ccf319f",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA234.html",
               "type": "lesson"
             },
@@ -3341,6 +3681,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-6",
               "title": "Week 35: Elementary row operations on a matrix: analysis of the solution and determinant",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:89a646640397be8ea4766481d346017f2a6105b17944364756e7d8382f5975d2",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA235.html",
               "type": "lesson"
             },
@@ -3350,6 +3691,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-6",
               "title": "Week 36: Minor, cofactor, and Laplace's expansion theorem",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:e1792245df0182a7070fd29d464ba1ae00c02ee3005d67c2ac5d61cfa6c6a23c",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA236.html",
               "type": "lesson"
             },
@@ -3359,6 +3701,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-6",
               "title": "Week 37: Inverse matrix: matrix definition, determinant definition, alternative method, and use",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:a88307b83211e02bcfef7e6a0ccce1b688b87c1daf2910b00974b1a533e87b30",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA237.html",
               "type": "lesson"
             },
@@ -3368,6 +3711,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-6",
               "title": "Week 38: Chió's rule and the Rouché-Capelli theorem",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:eeca0a12c5da946a7adb57024ff423f9dd2580deb0c5463e886df01939f2980c",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA238.html",
               "type": "lesson"
             },
@@ -3377,6 +3721,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-6",
               "title": "Week 39: Cramer's rule and review",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:aca87637659cb5ce3b8955ac7b8d8e5d7131ed29e6751bfa34067be7286061fe",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA239.html",
               "type": "lesson"
             }
@@ -3392,6 +3737,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-7",
               "title": "Week 40: Sequences: classifications, terms, and general formula",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:655b553339a12c1cf309533074d78b800a2ca5acdc9a4c9384903f6066f875ea",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA240.html",
               "type": "lesson"
             },
@@ -3401,6 +3747,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-7",
               "title": "Week 41: Arithmetic progressions: properties and problem solving",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:1c498272628d9d48e4242279bfc50c09a90cfc4ea2907336fc984fc7c4e27e12",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA241.html",
               "type": "lesson"
             },
@@ -3410,6 +3757,7 @@
               "moduleId": "builtin_module_high-school-math-algebra-2-modules-1-7-hsa2-module-7",
               "title": "Week 42: Series: classifications, sigma notation, and sums",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:8ca9f3a597d2426ebc0291fec301f59e2c3ae05e28cbfea46250f89aa3a541a8",
               "planningHref": "../schedules/High School/math/Algebra 2/Modules 1-7/Instructions/HSA242.html",
               "type": "lesson"
             }
@@ -3427,6 +3775,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-1",
               "title": "Week 1: Proposition, truth value, logical operators, logical sentence, argument, and notation",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:e27455a06a55c9fc63f86762077c6508cc57215e98f57e418df682e3596448f0",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG1.html",
               "type": "lesson"
             },
@@ -3436,6 +3785,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-1",
               "title": "Week 2: Conjunction, disjunction, conditionals, truth tables, and equivalences",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:78498dadd8bfca85be391905ac71054c9bc34be70a46f3603ebef677996cbbbf",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG2.html",
               "type": "lesson"
             },
@@ -3445,6 +3795,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-1",
               "title": "Week 3: Logical quantifiers, negation, counterexamples, and tautologies",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:f01febca8c9f897749c538e7516fe6a5095bf8253a84994fbf1a6534bae27fb9",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG3.html",
               "type": "lesson"
             },
@@ -3454,6 +3805,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-1",
               "title": "Week 4: Open sentences, implication relationships, proof methods, and mathematical epistemology",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:8f3c55141b292e40278a60b52f9814701491655fa3facb24d94e98f7f95f1fee",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG4.html",
               "type": "lesson"
             }
@@ -3469,6 +3821,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-2",
               "title": "Week 5: Point, line segment, ray, line, number line, and coordinate system",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:ac2b58a93760458678f7f53e039a9675185f17c2a621a35f8251846029c18922",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG5.html",
               "type": "lesson"
             },
@@ -3478,6 +3831,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-2",
               "title": "Week 6: Definition and classification of angles, angle bisectors, and angles between lines",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:a159dad6b6133b74848c3312b4852a76f46d2bbf023b3e3e29166818b4be6e9f",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG6.html",
               "type": "lesson"
             },
@@ -3487,6 +3841,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-2",
               "title": "Week 7: Midpoint, Pythagorean theorem, and segment length",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:c6eb59ccfcb0ee7693a81947f824d7752ca01b528d2d1df24fb7d5131e2d85a9",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG7.html",
               "type": "lesson"
             },
@@ -3496,6 +3851,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-2",
               "title": "Week 8: Midpoint, weighted average of positions, proportional segments, and Thales theorem",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:ba92cefb9a9b8677c84642549bb22e627e5d2649f84fcfe524f5253ff1567f4f",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG8.html",
               "type": "lesson"
             },
@@ -3505,6 +3861,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-2",
               "title": "Week 9: Parallelism and perpendicularity in the plane: definition and identification",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:223faa779f7dc9a1bad4bb547b10f5fc01ae45263360e1af4b7bb7931c52ebe1",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG9.html",
               "type": "lesson"
             }
@@ -3520,6 +3877,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-3",
               "title": "Week 10: Triangles: notation, triangle inequality, general properties, and classifications",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:730b4bd6bafc0c9035d72c9d5e54abe8ce1f2851cc7a515e4cf301da7521397f",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG10.html",
               "type": "lesson"
             },
@@ -3529,6 +3887,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-3",
               "title": "Week 11: Midsegment, angle bisector theorem, and triangle similarity",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:f067ec3291638e78b9928ad72a5151753c48ea75c9ed353c0fbc9f404a28ceed",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG11.html",
               "type": "lesson"
             },
@@ -3538,6 +3897,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-3",
               "title": "Week 12: Triangle congruence",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:080b61737df9e0c2297de9f3ba947b0f741f92bdde7ad2a5eab5aa15e22e565a",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG12.html",
               "type": "lesson"
             },
@@ -3547,6 +3907,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-3",
               "title": "Week 13: Trigonometric ratios in right triangles: sine, cosine, and tangent",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:f40b77c92778e8b9653ac3c0a739b2f34b21d6d63cdf2770873ca22abe11be5d",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG13.html",
               "type": "lesson"
             },
@@ -3556,6 +3917,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-3",
               "title": "Week 14: Projection and altitude in arbitrary triangles",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:ee1a00c72efbf6c64d8456d83c0b6cbbb2c59ab9dbe4c6147e515db309e285a1",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG14.html",
               "type": "lesson"
             },
@@ -3565,6 +3927,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-3",
               "title": "Week 15: Notable points in triangles: centroid and orthocenter",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:de4f1026e6ac5af50108124edec9f6d59684f783009bca516fa5e6854bb81ef4",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG15.html",
               "type": "lesson"
             },
@@ -3574,6 +3937,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-3",
               "title": "Week 16: Notable points in triangles: incenter and circumcenter",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:2c3f5ab66c271ad5763a851f9baa516d702e8926bea47c50a2c44fed46d73f62",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG16.html",
               "type": "lesson"
             },
@@ -3583,6 +3947,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-3",
               "title": "Week 17: Metric relationships in right triangles",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:ac161ed7a6335d95d59646ea207e6fc1558ceb9a8bda038339b455c1756251e8",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG17.html",
               "type": "lesson"
             },
@@ -3592,6 +3957,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-3",
               "title": "Week 18: Arbitrary triangles: metric relationships and applications of the Pythagorean theorem",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:2b7d5e80038bb2f87160619c1d82e8ff53701b6c96e047b7d5fa1953abf4b1be",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG18.html",
               "type": "lesson"
             },
@@ -3601,6 +3967,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-3",
               "title": "Week 19: Law of cosines",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:fa922d9cea00160cc1d387ce4f4e2ba2e71bbe5c3f3060fd743957e8ace9e21f",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG19.html",
               "type": "lesson"
             }
@@ -3616,6 +3983,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-4",
               "title": "Week 20: Similarity and congruence between geometric figures",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:b0dac816474ab0f50d08b15042ef8849375ffb803a24d98945539ab4457894b9",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG20.html",
               "type": "lesson"
             },
@@ -3625,6 +3993,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-4",
               "title": "Week 21: Congruence transformations: translation, reflection, and rotation",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:b70ff235a54bcfef2c29e79bf6a57b3a6cdc14b59b4479edd87585265a439989",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG21.html",
               "type": "lesson"
             },
@@ -3634,6 +4003,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-4",
               "title": "Week 22: Symmetry: definition and analysis",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:d201af83220d5b2e6e4c3ec57c4c0d6e40002fa71727e32d770caaf48be64059",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG22.html",
               "type": "lesson"
             },
@@ -3643,6 +4013,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-4",
               "title": "Week 23: Scale and homothety: definition and analysis of dilation",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:493bd412f4e047a6fc9608dd45ddba9227b9f0d2df92571dbac84f39b01c75b4",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG23.html",
               "type": "lesson"
             }
@@ -3658,6 +4029,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-5",
               "title": "Week 24: Quadrilaterals: definition, properties, and classifications by sides and angles",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:0d781bb12bbb7e0774256309f45db016d1642864c276cf2ccc8dd60123557388",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG24.html",
               "type": "lesson"
             },
@@ -3667,6 +4039,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-5",
               "title": "Week 25: Quadrilaterals: parallelograms",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:e2992a3f277388f7e15b88e094b49fc7eb77566de301a36875ea3d64d43a092b",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG25.html",
               "type": "lesson"
             },
@@ -3676,6 +4049,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-5",
               "title": "Week 26: Quadrilaterals: kites and trapezoids",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:1c65038ccc623fb20bdd54537565a5084e1c8f9d4dab78c28b1a6c87c02155ce",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG26.html",
               "type": "lesson"
             },
@@ -3685,6 +4059,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-5",
               "title": "Week 27: Polygons: definition, classifications, angle analysis, and number of diagonals",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:b7f00a47ecb42be425216957ef00d5cd4e012c65ec11bcba3c95952747e727a5",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG27.html",
               "type": "lesson"
             }
@@ -3700,6 +4075,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-6",
               "title": "Week 28: Circle and circumference: elements and relative positions",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:7465674847eed4cd0a1cac8f3bc42aae8e31a2c4eb9959d8b1fe9eeb36671c87",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG28.html",
               "type": "lesson"
             },
@@ -3709,6 +4085,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-6",
               "title": "Week 29: Circle and circumference: angle operations",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:3575ab7d5ae0784971aac8dada76c432787d6d3c9a6506dda03f8727ae40e534",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG29.html",
               "type": "lesson"
             },
@@ -3718,6 +4095,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-6",
               "title": "Week 30: Circle and circumference: metric relationships",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:a0a9fa808da50491a09f63e1f15380a91cc3199b0e290578ae77325e6dc08725",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG30.html",
               "type": "lesson"
             }
@@ -3733,6 +4111,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-7",
               "title": "Week 31: Unit conversion and dimensional analysis",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:a895b185950ca7f254144b5bc831cad0f77979c7e3bf374aa936a980640ffb95",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG31.html",
               "type": "lesson"
             },
@@ -3742,6 +4121,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-7",
               "title": "Week 32: Perimeter and area of polygons and simple figures",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:342f209f3f6bfd6eebe39bb34d6588845bd80543f0466a9cb7b75e912e729c8f",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG32.html",
               "type": "lesson"
             },
@@ -3751,6 +4131,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-7",
               "title": "Week 33: Perimeter and area of composite figures or figures in a coordinate system",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:126d4fcaf8b9dd125d3b88fbe65df4b6dc40e929a63766902f5b9695f5c592bb",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG33.html",
               "type": "lesson"
             },
@@ -3760,6 +4141,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-7",
               "title": "Week 34: Surface area and volume",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:e3e570a63eb34e457adb73efe3770d60a7ccb5c451794ac0e7c01fa91e586b43",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG34.html",
               "type": "lesson"
             }
@@ -3775,6 +4157,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-8",
               "title": "Week 35: Law of sines and law of cosines",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:f5a5313c157de4ad443283cc3426fe8d4af3a5d47b112022010296cd3cbc346b",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG35.html",
               "type": "lesson"
             },
@@ -3784,6 +4167,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-8",
               "title": "Week 36: Vectors and vector equivalence",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:c22269a8d9849c59f4deed8b03f4113d2ae73d0ecd0920c3938384b1740b412f",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG36.html",
               "type": "lesson"
             },
@@ -3793,6 +4177,7 @@
               "moduleId": "builtin_module_high-school-math-geometry-modules-1-8-hsg-module-8",
               "title": "Week 37: Dot product and cross product",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:c8bd1e15160664b069299629265d5dbc3f9a427c44e37d747829650fc7245682",
               "planningHref": "../schedules/High School/math/Geometry/Modules 1-8/Instructions/HSG37.html",
               "type": "lesson"
             }
@@ -3810,6 +4195,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-1",
               "title": "Week 1: Angles, degree measure, radian measure, and angle conversion",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:b547cca05871585af1b0e7e3a7a977d9e076d54e57ce1011bf04db4c59c4554e",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST1.html",
               "type": "lesson"
             },
@@ -3819,6 +4205,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-1",
               "title": "Week 2: Arc length, sector area, and angular speed",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:71d0cd43695820c08e2c03132fafeab67d59d30b5ad1fe9b4318fc4a67cb7526",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST2.html",
               "type": "lesson"
             },
@@ -3828,6 +4215,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-1",
               "title": "Week 3: Coterminal angles, reference angles, and quadrant analysis",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:4092fc0c63efd9095322a1761ecbb7e8eeb9dc34b4face075a674c9f2b7b9308",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST3.html",
               "type": "lesson"
             },
@@ -3837,6 +4225,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-1",
               "title": "Week 4: Special angles and exact trigonometric values",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:d4e61e71e4ecd43e76f29d2874ac8f2af069a9a8e785f857492af2b1f140fd51",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST4.html",
               "type": "lesson"
             }
@@ -3852,6 +4241,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-2",
               "title": "Week 5: Sine, cosine, and tangent in right triangles",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:e2ca4e8957b856a79bb0df2025e537a420c8f65f378607938fdb9dd6c1f752ae",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST5.html",
               "type": "lesson"
             },
@@ -3861,6 +4251,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-2",
               "title": "Week 6: Reciprocal ratios: cosecant, secant, and cotangent",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:92c03854d0f3ce507d728c10976606dbcd7a35b5a727917d5cc873edaa5aec9b",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST6.html",
               "type": "lesson"
             },
@@ -3870,6 +4261,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-2",
               "title": "Week 7: Solving right triangles",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:16ac5fa81ad2bbcd6cde675df5b2364503d16432cf4d8f6fb0d92e1a4f3e671a",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST7.html",
               "type": "lesson"
             },
@@ -3879,6 +4271,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-2",
               "title": "Week 8: Applications: height, distance, inclination, and elevation",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:9191a89468433201479ba72470cfcb729d7af24be374b34c24499588587b1915",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST8.html",
               "type": "lesson"
             }
@@ -3894,6 +4287,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-3",
               "title": "Week 9: The unit circle and coordinates",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:395274bfb027ef13dbb5302b536518076dedf34ab7b7e3f6ba9033752c9c070d",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST9.html",
               "type": "lesson"
             },
@@ -3903,6 +4297,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-3",
               "title": "Week 10: Sine and cosine as circular functions",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:bc48849aed80364912741b9bea3b18e1b3a41d1811ab63dcacad7856093938ca",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST10.html",
               "type": "lesson"
             },
@@ -3912,6 +4307,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-3",
               "title": "Week 11: Tangent and reciprocal functions on the unit circle",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:db3ce98b6fd23eb934e3f33ca347f96c4ea8033c4a5d9ca02bd4fd3c1516d7c3",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST11.html",
               "type": "lesson"
             },
@@ -3921,6 +4317,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-3",
               "title": "Week 12: Periodicity, symmetry, and signs by quadrant",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:1fb6e54798586b505eb6cfcc7f783e14c90a93748516ba3f8357e1a40b23b880",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST12.html",
               "type": "lesson"
             },
@@ -3930,6 +4327,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-3",
               "title": "Week 13: Graphs of sine and cosine",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:228ac218a56ae3dcdeb2e669d89907c82b7b0f542f5b5860405f6dcc2a0d0a70",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST13.html",
               "type": "lesson"
             },
@@ -3939,6 +4337,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-3",
               "title": "Week 14: Graphs of tangent and reciprocal functions",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:751f8d00b9def68c5656f676b2c0c1b191447e41f10126c13dba8b8f120e3481",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST14.html",
               "type": "lesson"
             }
@@ -3954,6 +4353,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-4",
               "title": "Week 15: Amplitude, period, phase shift, and vertical shift",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:0d79599d99509008a4ea0d022cca04aac607523e7473e465e2cd7b9c781a50e2",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST15.html",
               "type": "lesson"
             },
@@ -3963,6 +4363,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-4",
               "title": "Week 16: Modeling periodic behavior with sine and cosine",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:f4378b9ae8c824e174dcea8274d67c6a144102463026f54f5c147ff32d77ea02",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST16.html",
               "type": "lesson"
             },
@@ -3972,6 +4373,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-4",
               "title": "Week 17: Comparing sinusoidal models",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:f76359bcdb84cf8b4b126f1a88e5433ea93282556910ac92d879a7047fdd9f27",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST17.html",
               "type": "lesson"
             },
@@ -3981,6 +4383,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-4",
               "title": "Week 18: Inverse trigonometric functions",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:23251669a257bf3a2d32cbba8d37c9d022fec76d0639b79f9167b927e4c92879",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST18.html",
               "type": "lesson"
             },
@@ -3990,6 +4393,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-4",
               "title": "Week 19: Solving basic trigonometric equations",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:f36bf0ea05ce7b7a1bfa134fdbede907354e60b583da7291d886d7ac800e626b",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST19.html",
               "type": "lesson"
             }
@@ -4005,6 +4409,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-5",
               "title": "Week 20: Pythagorean identities",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:958fa1ee56971cb6df5fa00d691b75c9bc22c380881646aa04922a022e15e0a2",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST20.html",
               "type": "lesson"
             },
@@ -4014,6 +4419,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-5",
               "title": "Week 21: Reciprocal and quotient identities",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:7e90db506e0ba1d95824c48f1cdfeb5dbc9835387a9252ec8eb12c103bc8cbda",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST21.html",
               "type": "lesson"
             },
@@ -4023,6 +4429,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-5",
               "title": "Week 22: Sum and difference identities",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:7f29c8335eb17e702a7388c3629ad7b2ba875af888f8e550ca838ecf72ac6b2d",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST22.html",
               "type": "lesson"
             },
@@ -4032,6 +4439,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-5",
               "title": "Week 23: Double-angle and half-angle identities",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:f8806e5d3d5e9b92b362fe17013d649b7be72fd02001ebee386193c77c383b7e",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST23.html",
               "type": "lesson"
             },
@@ -4041,6 +4449,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-5",
               "title": "Week 24: Proving trigonometric identities",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:82cece6ebfac01dc01aea6c2808b9a28256f939a4951e1ba25f99122ef5ef340",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST24.html",
               "type": "lesson"
             }
@@ -4056,6 +4465,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-6",
               "title": "Week 25: Law of sines",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:2d2aad7637c93a92d10706017ec423d4420e393ab64638666c85b2ea4ced978c",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST25.html",
               "type": "lesson"
             },
@@ -4065,6 +4475,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-6",
               "title": "Week 26: Law of cosines",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:fef9b9781cb9105556676a5a56278a639f48c53ac46f3c337fca5b998af38176",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST26.html",
               "type": "lesson"
             },
@@ -4074,6 +4485,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-6",
               "title": "Week 27: Area of triangles using trigonometry",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:810a6a446aa773b354bcdcce4924c22f303996b72063117630225781dd291b81",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST27.html",
               "type": "lesson"
             },
@@ -4083,6 +4495,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-6",
               "title": "Week 28: Vectors and trigonometric components",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:dd471d6796a28a469e8f8083a5d923c3dc7fb555e3d811c24e22329d09176474",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST28.html",
               "type": "lesson"
             },
@@ -4092,6 +4505,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-6",
               "title": "Week 29: Polar coordinates",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:a5fb9a560465dfbd9832e81f7229746be2fd9ed18febc5204651498ec5a7f450",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST29.html",
               "type": "lesson"
             },
@@ -4101,6 +4515,7 @@
               "moduleId": "builtin_module_high-school-math-trigonometry-modules-1-6-hst-module-6",
               "title": "Week 30: Complex numbers in trigonometric form",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:3fdf17a051b0b39361ee3a785e4e8532a491b14d2b2356421255356e9732651a",
               "planningHref": "../schedules/High School/math/Trigonometry/Modules 1-6/Instructions/HST30.html",
               "type": "lesson"
             }
@@ -4120,6 +4535,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-1",
               "title": "Week 1: Physics's boundaries, primitive concepts, definitions, hypothesis, theories, laws, models, and the scientific method",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:1e81ced41df81e80cfea00a438cea55d2707f88387b82900b894575797b883b8",
               "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP1.html",
               "type": "lesson"
             },
@@ -4129,6 +4545,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-1",
               "title": "Week 2: Physical quantities, system of units, conversion, and scientific notation",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:56a6027a89a19e0b16620e651e0653949ac1f4a12a6581a5d42d43991d9055c5",
               "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP2.html",
               "type": "lesson"
             },
@@ -4138,6 +4555,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-1",
               "title": "Week 3: Significant figures, uncertainty, precision, and multiplicative prefixes",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:fcc67b4f335d07122fa4ad29a1fa5359d33b6f940c5fe5fe8ad5ec38de9f7752",
               "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP3.html",
               "type": "lesson"
             }
@@ -4153,6 +4571,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-2",
               "title": "Week 4: Coordinate system, position, displacement, speed, and velocity",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:bc5f28fa7a4426228ce00fef9721a68f708bf3aeb8c245904b5037ee8e7dd335",
               "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP4.html",
               "type": "lesson"
             },
@@ -4162,6 +4581,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-2",
               "title": "Week 5: Instantaneous physical quantities, acceleration, gravity, classification of movements, and functions of movements",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:9f6eb2452dec1641a30cd067ad42e29c468cf36e78c577275f2ee280568e6f55",
               "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP5.html",
               "type": "lesson"
             },
@@ -4171,6 +4591,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-2",
               "title": "Week 6: Graphs in Uniform Rectilinear Motion (URM): position vs. time, speed vs. time",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:bc3d8f3337d9d8ccaf3f76b14d817d5c4a80fcca2d26936108c42c862337f51e",
               "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP6.html",
               "type": "lesson"
             },
@@ -4180,6 +4601,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-2",
               "title": "Week 7: Graphs in Uniformly Accelerated Motion (UAM): position vs. time, speed vs. time, acceleration vs. time",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:503f15ed7adc483d42c70e82d338cd361b4b6deea7eba18dfe6713f99fb71239",
               "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP7.html",
               "type": "lesson"
             }
@@ -4195,6 +4617,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-3",
               "title": "Week 8: 1D vectors, definition of systems, and introduction to forces",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:b642205e3538117da93a1b33bed78c0557fd20338b8a26a013863fd1263b810a",
               "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP8.html",
               "type": "lesson"
             },
@@ -4204,6 +4627,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-3",
               "title": "Week 9: Newton's first and second laws, center of mass, free-body diagram, and inertial systems of reference",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:cd812d2a172e07c11dad9b3bcbb34cd193e2f75ef43db59e1c63e8099f2b851a",
               "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP9.html",
               "type": "lesson"
             },
@@ -4213,6 +4637,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-3",
               "title": "Week 10: Newton's third law (action and reaction) and motion analysis (static and dynamic friction)",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:a424c07c6260d0e1f7e280cf86172c6a7cb0502994b3e531e6924cdd1bed50e7",
               "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP10.html",
               "type": "lesson"
             },
@@ -4222,6 +4647,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-3",
               "title": "Week 11: Problem-solving week: free fall, skating on ice, string and block system, spring and block system",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:c3f3a390e5f90e7f919e0cc15b14102358293bc98021749c8ad6ca3f49a5aea8",
               "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP11.html",
               "type": "lesson"
             },
@@ -4231,6 +4657,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-3",
               "title": "Week 12: Problem-solving week: elevators and block systems",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:5b32592996f10feb7f9c3f9e39d583190eae8c756184cb7fa1339b9d13a49cda",
               "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP12.html",
               "type": "lesson"
             }
@@ -4246,6 +4673,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-4",
               "title": "Week 13: Handling 2D vectors: graphical and analytical methods",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:dfee7d8f33ff283d090d38a55549e4893242b0ea13fcd763148c8bdc2513fbd3",
               "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP13.html",
               "type": "lesson"
             },
@@ -4255,6 +4683,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-4",
               "title": "Week 14: Vertical launching, free fall, and inclined planes",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:528282411c59471b6dcb7196352cb25db0172142ac02e04e6fe37664f7f24278",
               "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP14.html",
               "type": "lesson"
             },
@@ -4264,6 +4693,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-4",
               "title": "Week 15: Horizontal and oblique launching",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:2afd9b20108ac908eecfb81549d39f2db835dafd11ee7a7f2f3e7af9eea28e0e",
               "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP15.html",
               "type": "lesson"
             },
@@ -4273,6 +4703,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-4",
               "title": "Week 16: Simple harmonic oscillators",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:125afaa57a6215e2f861493d7ba3868dc3bb6092563ae09b4c09fd4c4c9e0b88",
               "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP16.html",
               "type": "lesson"
             }
@@ -4288,6 +4719,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-5",
               "title": "Week 17: Work, power, efficiency, work-energy theorem, and kinetic energy",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:c2d680669de5be4d92695497a03fa661f3342465a6b93544e77ec95436c6ab55",
               "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP17.html",
               "type": "lesson"
             },
@@ -4297,6 +4729,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-5",
               "title": "Week 18: Conservative forces, weight, gravitational potential, gravitational energy, and mechanical energy",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:cfeb2e2c0b0909d0c245537e31749439fed7654a23e18a1fe529234ffe89674d",
               "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP18.html",
               "type": "lesson"
             },
@@ -4306,6 +4739,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-5",
               "title": "Week 19: Energy balance and energy transformations in conservative and non-conservative systems",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:0050e86b89de1d0702c9ed7c03630a24448ded6dae9db05897c6e18a69eb92ea",
               "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP19.html",
               "type": "lesson"
             },
@@ -4315,6 +4749,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-5",
               "title": "Week 20: Pendulums, pulleys, block systems and elevators",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:3eebfad9cd4ff84b06a6878712a7b33788c500bbb88d5bc5d119b8c8658d158f",
               "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP20.html",
               "type": "lesson"
             },
@@ -4324,6 +4759,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-5",
               "title": "Week 21: Linear momentum, impulse theorem, pressure, shock absorption, and ballistics",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:990f8853587d61f204bdd69660af64e3e77dc50b8c2bff3f1de10f6b6afaf794",
               "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP21.html",
               "type": "lesson"
             },
@@ -4333,6 +4769,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-1-5-hsp-module-5",
               "title": "Week 22: Conservation of energy in elastic and inelastic collisions",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:95f1fe6c7247b1760e9edf06d3f19cd9cac776ab9499f32dceae610a0d232596",
               "planningHref": "../schedules/High School/physics/Modules 1-5/Instructions/HSP22.html",
               "type": "lesson"
             }
@@ -4348,6 +4785,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-6",
               "title": "Week 23: Polar coordinate system, relationship with the rectangular system, frequency and period",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:5017c435554075afaca2d37d9ea109cadebfd644a42675de3346bc29c558cbef",
               "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP23.html",
               "type": "lesson"
             },
@@ -4357,6 +4795,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-6",
               "title": "Week 24: Tangential acceleration, centripetal acceleration, uniform circular motion (UCM), and graphs",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:30704ed78e266c5169fe6b2616bb0f41a6eb8274b4d7f9f1930f376e8493ff4c",
               "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP24.html",
               "type": "lesson"
             },
@@ -4366,6 +4805,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-6",
               "title": "Week 25: Harmonic oscillator, planetary motion, bumps and loops",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:f4a91fc17543a342d3a2c9a78a3b3b3a4c30b16f1a11949eae9ccc338dd4c927",
               "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP25.html",
               "type": "lesson"
             }
@@ -4381,6 +4821,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-7",
               "title": "Week 26: Newton's second law in Cartesian coordinates, in polar coordinates, and for rotations",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:edcd4ee6ab7e6da14e3db35914df4e6ea5a9243ed9ccb686c2be38cbcfbd4ba9",
               "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP26.html",
               "type": "lesson"
             },
@@ -4390,6 +4831,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-7",
               "title": "Week 27: Moment of inertia and parallel axis theorem (Steiner)",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:bd07e20bb9e2258cce595e737f6397cff719fd2fcb386dc25996ffdf1bc9d33d",
               "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP27.html",
               "type": "lesson"
             },
@@ -4399,6 +4841,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-7",
               "title": "Week 28: Torque, angular momentum, and rotational energy",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:9e54dec686a58be2f32d34eb00521a98eb784650a714ee49368de18f901db975",
               "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP28.html",
               "type": "lesson"
             },
@@ -4408,6 +4851,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-7",
               "title": "Week 29: Equilibrium of extended bodies and partitioning of energy",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:0cf46313754e56833fcca9507b09bba2049e6433a0afd2e4ca9fc1e418cdc5eb",
               "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP29.html",
               "type": "lesson"
             }
@@ -4423,6 +4867,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-8",
               "title": "Week 30: Circles, ellipses, Kepler's laws, planets, satellites, and comets",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:84844bf9ecaa006b016a3ca3c2082cc3641951bf3a6c354c84b1f35ce229edbb",
               "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP30.html",
               "type": "lesson"
             },
@@ -4432,6 +4877,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-8",
               "title": "Week 31: Law of Universal Gravitation, gravity, orbit analysis, and escape velocity",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:5872e81276df356026ba1ca59ed383849f9ac6b98e6688466a847fe580fb3a7f",
               "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HS31.html",
               "type": "lesson"
             },
@@ -4441,6 +4887,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-8",
               "title": "Week 32: Center of gravity, geometric center, and center of mass",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:55637de5369e9eb54261fb47ae2b005851ac5c757358fccd5e8f615407d03996",
               "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP32.html",
               "type": "lesson"
             },
@@ -4450,6 +4897,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-8",
               "title": "Week 33: Concepts of General Relativity theory and postulates of Special Relativity",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:1847291ded1695bd7b61b96cbabdd4f25f287a5808f7f38b0e2c1b5d2466c207",
               "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP33.html",
               "type": "lesson"
             },
@@ -4459,6 +4907,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-8",
               "title": "Week 34: Consequences of special relativity, the twin paradox, and the laser experiment",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:9246442dc5cb272f3b96a4c62a63454696032af05a118f47b79f191c7c4eafdf",
               "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP34.html",
               "type": "lesson"
             }
@@ -4476,6 +4925,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-9",
               "title": "Week 35: States of matter, fluids, types of flow, mass, volume, density, and mention of temperature",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:876ff3426207cca5dca5b6964823ad55b86b3d876b24f8c9159c457de54945d4",
               "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP35.html",
               "type": "lesson"
             },
@@ -4485,6 +4935,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-9",
               "title": "Week 36: Stevin's theorem, communicating vessels, types of pressure, and case analysis",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:b0d596de166eb5c38d21e3ac3f62ab4c78ad7502445732e2e8ad4dc36feb4a5a",
               "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP36.html",
               "type": "lesson"
             },
@@ -4494,6 +4945,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-9",
               "title": "Week 37: Pascal's principle and hydraulic elevators",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:547f9a5308c86a6b778666aad674854cd476fe84347862f4d573fdb8efabe673",
               "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP37.html",
               "type": "lesson"
             },
@@ -4503,6 +4955,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-9",
               "title": "Week 38: Archimedes' principle, buoyancy, relationship with Stevin's theorem and buoyancy",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:76ef45d881832bf0692d2aaf784f54ecb51b0805ee14aa85274c90b94175501f",
               "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP38.html",
               "type": "lesson"
             },
@@ -4512,6 +4965,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-9",
               "title": "Week 39: Continuity equation, Bernoulli's theorem, flow rate, hole in a water tank, and waterfall analysis",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:974c43f03fd46a403454e630dcb59041471b911695e99e667dfe53ead56f038c",
               "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP39.html",
               "type": "lesson"
             }
@@ -4527,6 +4981,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-10",
               "title": "Week 40: Microscopic view of temperature and temperature scales",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:5bf50ef0ff371570e4b73b8af1ae6a501bcbfb0169c2220ad20d0a0058210134",
               "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP40.html",
               "type": "lesson"
             },
@@ -4536,6 +4991,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-10",
               "title": "Week 41: Thermal energy, Joule's law, heat transfer, thermal equilibrium, and the zeroth law of thermodynamics",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:1b48ce35541c931027db4a1e820ec7423acd2dbcacab11a156820f8b7b0088dc",
               "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP41.html",
               "type": "lesson"
             },
@@ -4545,6 +5001,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-10",
               "title": "Week 42: Thermal expansion, thermostats, and thermodynamic equilibrium",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:40acd00d0f1a78379d27205ac0e095d24574ab1beaaeba1f7572ac3c0c4dcb0d",
               "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP42.html",
               "type": "lesson"
             },
@@ -4554,6 +5011,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-6-10-hsp-module-10",
               "title": "Week 43: Specific heat, heat capacity, latent heat, and phase changes",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:d9ae4c2ef06800da705250ee0f4ac80d8c244500b3e01abcb643855aca6a172a",
               "planningHref": "../schedules/High School/physics/Modules 6-10/Instructions/HSP43.html",
               "type": "lesson"
             }
@@ -4569,6 +5027,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-11",
               "title": "Week 44: State, state properties, state functions, real gases and ideal gases",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:f350cb4a86f6df61663234354f2f672b0246e97eefe8351842ce76c1f620cd9d",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP44.html",
               "type": "lesson"
             },
@@ -4578,6 +5037,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-11",
               "title": "Week 45: State variables, phase diagrams, thermodynamic processes, and the first law of thermodynamics",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:7c68dce5595c789c0edd4e1a79e17ac89fa73f53f37284394e35364d7cb6725f",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP45.html",
               "type": "lesson"
             },
@@ -4587,6 +5047,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-11",
               "title": "Week 46: Second law of thermodynamics, Clausius statement, entropy and timeline",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:e2dbdcdf25a2d42d621151da582f2103ff11fe608a17cff246059a6d9553958f",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP46.html",
               "type": "lesson"
             },
@@ -4596,6 +5057,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-11",
               "title": "Week 47: Heat engines, Otto cycle and Carnot cycle",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:dce24df0b451b8e07aac66c47b50bdf9a87a248da71b9194a14f6020a169d26e",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP47.html",
               "type": "lesson"
             },
@@ -4605,6 +5067,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-11",
               "title": "Week 48: Refrigerators",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:ff01582515353ed5556ac7b133521e44ddcd3bb6aa23863f4cf9a0cd8c94ab04",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP48.html",
               "type": "lesson"
             }
@@ -4622,6 +5085,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-12",
               "title": "Week 49: Types of waves, notable regions, frequency, wavelength, and propagation speed",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:95adaee510e58478d7d775a953440b80a52ad2f4bc138e3fbb4398875abd25cc",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP49.html",
               "type": "lesson"
             },
@@ -4631,6 +5095,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-12",
               "title": "Week 50: Qualitative analysis of wave phenomena: reflection, refraction, diffraction, and interference",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:aa68c01e024c4c17280804ab6f66ee491df45a04668aa57106f5322dd9122817",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP50.html",
               "type": "lesson"
             },
@@ -4640,6 +5105,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-12",
               "title": "Week 51: Constructive interference and destructive interference",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:2c8e1eb1462d9f7c40a14e5d566366a7f2e3a5cc75457428f2a1e035167780c4",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP51.html",
               "type": "lesson"
             },
@@ -4649,6 +5115,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-12",
               "title": "Week 52: Standing waves and resonance",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:2a59873261209b6f94e58445248862bb4093ab4c94f4ee52e84a890834651806",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP52.html",
               "type": "lesson"
             },
@@ -4658,6 +5125,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-12",
               "title": "Week 53: Normal modes with 1 or 2 fixed ends",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:8161fced8b7c1c44cee2d520ef90e205ec15606e93b3940fefad991137e6ceb8",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP53.html",
               "type": "lesson"
             }
@@ -4673,6 +5141,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-13",
               "title": "Week 54: Sound wave, sound generation and speed, frequency, timbre, vocal cords and musical instruments",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:763f6c86ebd79a64aae0114f1bc10c329dda15c5e281911c547cfb20546dae46",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP54.html",
               "type": "lesson"
             },
@@ -4682,6 +5151,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-13",
               "title": "Week 55: Sound power, sound level, and the inverse square law",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:0455944bba9c2c287a2bc7d628047fe8f12e312de4fb251924f9863a06b8d045",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP55.html",
               "type": "lesson"
             },
@@ -4691,6 +5161,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-13",
               "title": "Week 56: Hearing aid and Doppler effect",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:1fc02260781a7a9fac627e9b6ab0f81c06f0662d5e5d2627f7521d6b4abd5446",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP56.html",
               "type": "lesson"
             },
@@ -4700,6 +5171,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-13",
               "title": "Week 57: Destructive interference, beat, and constructive interference",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:bb1d5009cbbb2ca26ed2fa59d2a7cc1a8359af0bdf2a96a7de28039b3c97883f",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP57.html",
               "type": "lesson"
             },
@@ -4709,6 +5181,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-13",
               "title": "Week 58: Natural frequency, tuning fork, resonance and Dakoma bridge",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:436eb1ba0d5da91101b04672622abcdd12322a7151f576694dc1ff35c55b3cab",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP58.html",
               "type": "lesson"
             },
@@ -4718,6 +5191,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-13",
               "title": "Week 59: Normal modes in pipes and wind instruments",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:bdf4ece2aba0dc1feb004e028518012b4b5fbd20443993a154de09efa704d28b",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP59.html",
               "type": "lesson"
             }
@@ -4735,6 +5209,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-14",
               "title": "Week 60: Light sources, generation and speed of light, frequency, color, and electromagnetic spectrum",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:a01a23f3f73ee5dcc8d78040744d49bda9bca3cf92bcfd808c20e2b1b34f375b",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP60.html",
               "type": "lesson"
             },
@@ -4744,6 +5219,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-14",
               "title": "Week 61: Polarization, luminous power, and the inverse square law",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:e661751352fbc2b85c223313683d56a1fe8acf29775f0a5ae4cba3467e7fefdf",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP61.html",
               "type": "lesson"
             }
@@ -4759,6 +5235,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-15",
               "title": "Week 62: Light sources, postulates of geometric optics, object and image",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:72d17840a8b6e272953f727dbc6ccdb10cb8f5a030ccc31b787374c7e09e4593",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP62.html",
               "type": "lesson"
             },
@@ -4768,6 +5245,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-15",
               "title": "Week 63: Laws of reflection, types of reflection, and visualization of objects",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:091b99bd23a5b3a29f189ddd6d8beec97c148a35292ae941657feacfdf2dc080",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP63.html",
               "type": "lesson"
             },
@@ -4777,6 +5255,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-15",
               "title": "Week 64: Refractive index, law of refraction, total internal reflection, mirages, and optical fibers",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:bcc5398022ed281ed3c0fb246685d9ce42b810324fc36f529404d939fd2ab8a8",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP64.html",
               "type": "lesson"
             },
@@ -4786,6 +5265,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-15",
               "title": "Week 65: Plane mirrors: representation, image classification, and mirror association",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:a45e9862ee5d40afd4f77cd57cabc6c108630a20c3a8739524415f8357235eaa",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP65.html",
               "type": "lesson"
             },
@@ -4795,6 +5275,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-15",
               "title": "Week 66: Concave mirrors: Gauss's law, magnification factor, notable rays, and image classification",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:398bd9b521996b1b703ce5bcdeba8b3855b1b2cbbfbcf15fe3638987b5040e38",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP66.html",
               "type": "lesson"
             },
@@ -4804,6 +5285,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-11-15-hsp-module-15",
               "title": "Week 67: Convex mirrors: Gauss's law, magnification factor, notable rays, and image classification",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:858ca600bb69e0a6746611341b9852c9329e7c07ec20affcdc7055b989d43f89",
               "planningHref": "../schedules/High School/physics/Modules 11-15/Instructions/HSP67.html",
               "type": "lesson"
             }
@@ -4819,6 +5301,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-16",
               "title": "Week 68: How lenses work, types of lenses, simplified representations, and objects of study",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:c83e1dfae0abf104678b578a659470b7cab6dd58ba359a1e99c34e96a3f51951",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP68.html",
               "type": "lesson"
             },
@@ -4828,6 +5311,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-16",
               "title": "Week 69: Gauss's law, magnification factor, microscopes and telescopes",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:c8dde309a052bf8046407265d25059376cb60d1fabebdac0cc21d81befc07219",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP69.html",
               "type": "lesson"
             },
@@ -4837,6 +5321,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-16",
               "title": "Week 70: Notable rays and image classification",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:5f0e82ffaeaa4498544ecd087896efb8749b69b8e662e03e2543dc0a09daa2cf",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP70.html",
               "type": "lesson"
             },
@@ -4846,6 +5331,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-16",
               "title": "Week 71: Aberrations, eye anatomy, and eye problems",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:f31127464be21cada03e90206b2fc9c4c0f332b927701d31bc517473838bd903",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP71.html",
               "type": "lesson"
             }
@@ -4861,6 +5347,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-17",
               "title": "Week 72: Light source, light wave, light generation, wavefront, and monochromatic light",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:36015f9b93d25cf56ff096353d932037acb02496d64008e48c1ad7acb5158e79",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP72.html",
               "type": "lesson"
             },
@@ -4870,6 +5357,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-17",
               "title": "Week 73: Refraction, dispersion, sky color, and rainbows",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:f1e28bc69d867b8deac81bb47ce6e4361822e6ff0dbfda04f8b67c1d59f3c548",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP73.html",
               "type": "lesson"
             },
@@ -4879,6 +5367,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-17",
               "title": "Week 74: Huygens's principle and diffraction of light waves by single slits",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:5aaf5f4a79033617a98b9b64e444bd4cb388a6a80803379a1e00f5ef3de27e67",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP74.html",
               "type": "lesson"
             },
@@ -4888,6 +5377,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-17",
               "title": "Week 75: Wave diffraction by double slits, Young's experiment and interference pattern",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:969142b74faabfd0adb161cb18034ce135b93eeadbe1a61b13319356fb5ac617",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP75.html",
               "type": "lesson"
             },
@@ -4897,6 +5387,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-17",
               "title": "Week 76: Resolution and Rayleigh's criterion",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:63128e7b787291c83f6edd8e25d6f1278a257014dc0e5be36f6903b870fc514b",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP76.html",
               "type": "lesson"
             }
@@ -4914,6 +5405,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-18",
               "title": "Week 77: Electric charge, electrification processes, conductors, insulators, and electrostatic experiments",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:1461b44cf17968abec17ef3e6425361487f9643e81e576ab5fe1001d23cbfb49",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP77.html",
               "type": "lesson"
             },
@@ -4923,6 +5415,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-18",
               "title": "Week 78: Atoms, quantization of electric charge, and microscopic view of matter",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:c74d794c5a30100c83e468d6c85a246a647b6b59864e8732a647094c159c0390",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP78.html",
               "type": "lesson"
             },
@@ -4932,6 +5425,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-18",
               "title": "Week 79: Coulomb's law, electric field and field lines",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:230395536415ceb87ae23a292a1943838479f6abf12b467aa04e02f762f09bb6",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP79.html",
               "type": "lesson"
             },
@@ -4941,6 +5435,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-18",
               "title": "Week 80: Work involving electric forces, electric potential, equipotential lines, and electrical energy",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:faec6cb816072e19f88720a1a6cd13a83665f25e42c723ce856ff11475a7ab7b",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP80.html",
               "type": "lesson"
             },
@@ -4950,6 +5445,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-18",
               "title": "Week 81: Uniform electric fields and electric potential difference",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:5145567737f37b08b2a50b7b580f2d588ad8cf69c450f3a897d540eb957941fe",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP81.html",
               "type": "lesson"
             },
@@ -4959,6 +5455,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-18",
               "title": "Week 82: Surface charge density and capacitors",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:cf1d03916dff4a8db476581331ed3b3c9231d3b0a06ac623adf89e854b2e52af",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP82.html",
               "type": "lesson"
             },
@@ -4968,6 +5465,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-18",
               "title": "Week 83: Dielectrics, polarization, and a comparison between electric force and gravitational force",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:4a4e3cbb2d448bca87a81a1be96fc96532a89c30ba0d2debf6e521f8513f1ee1",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP83.html",
               "type": "lesson"
             }
@@ -4983,6 +5481,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-19",
               "title": "Week 84: Movement of electric charges in wires and definition of electric currents",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:5ed056d93161e7cf76fe14ff082ebc5cf2fe612e75fd76089988a0c81d444b3f",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP84.html",
               "type": "lesson"
             },
@@ -4992,6 +5491,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-19",
               "title": "Week 85: Electrical resistance, holding field, potential and potential drop",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:7109392feda47f692dd70c72498deb280914169182ece9495cd2590947d11094",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP85.html",
               "type": "lesson"
             },
@@ -5001,6 +5501,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-19",
               "title": "Week 86: Electrical resistors, Ohm's first and second laws",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:1ae48d30ed23a7d8abd89622e8cd66928f12d816dac7ac3ad03bc8008a5fa307",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP86.html",
               "type": "lesson"
             },
@@ -5010,6 +5511,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-19",
               "title": "Week 87: Electric generators, electric circuits, Kirchhoff's laws and the Joule effect",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:e21cd7851a75e7706c0b564c91dd2c35e985cf9d50316e74b66034b53945fa9a",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP87.html",
               "type": "lesson"
             },
@@ -5019,6 +5521,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-19",
               "title": "Week 88: Electrical circuits with resistor combinations",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:bcc119b3497ab4a9522fdd1c719b6543c46b15476daf85de43cc2a9d410a3595",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP88.html",
               "type": "lesson"
             },
@@ -5028,6 +5531,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-19",
               "title": "Week 89: Electrical circuits with generator connections",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:64e002ca1af247f68d1203d229efd272e436bc71b08673335601288af41c05ba",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP89.html",
               "type": "lesson"
             }
@@ -5043,6 +5547,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-20",
               "title": "Week 90: Charge density and its relationship with electric current",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:3e6c514baaf1f7922d77f62e5047ea93a306b0ba1c582727338685521f14cb59",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP90.html",
               "type": "lesson"
             },
@@ -5052,6 +5557,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-20",
               "title": "Week 91: Magnets, magnetic poles, magnetic field and magnetic field lines",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:a4d5f2df4205bbf18c5ad7e172c18b7977aa7c7e3f9a707b08abc4b4ddedd439",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP91.html",
               "type": "lesson"
             },
@@ -5061,6 +5567,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-20",
               "title": "Week 92: Vector product, right-hand rule, and Biot-Savart law",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:8ccf56d1e943104f1ad6f47349791bd9964b1a161fed56964025980c45557613",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP92.html",
               "type": "lesson"
             },
@@ -5070,6 +5577,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-20",
               "title": "Week 93: Lorentz Force",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:06801fb350a565c471f5ab7442c95f924ac57a7fe7ed3a012a31b37265b926a1",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP93.html",
               "type": "lesson"
             },
@@ -5079,6 +5587,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-20",
               "title": "Week 94: Electrical induction (Faraday's law) and power plants",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:b75736f01971d946398f8a4694a6c2965ca809cabbdcd8f4401a42a5e0b8f845",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP94.html",
               "type": "lesson"
             },
@@ -5088,6 +5597,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-16-20-hsp-module-20",
               "title": "Week 95: Coils and electric motors",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:16539c9ef8b0520ac8be58dfdb7c5228e947e4a6ba42142427a794cf73c88187",
               "planningHref": "../schedules/High School/physics/Modules 16-20/Instructions/HSP95.html",
               "type": "lesson"
             }
@@ -5105,6 +5615,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-21",
               "title": "Week 96: Blackbody radiation and spectrum",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:9523441e3eb1eb4bc2ed06907c6234880277d3650d988c174f49ea69a26fb8e3",
               "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP96.html",
               "type": "lesson"
             },
@@ -5114,6 +5625,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-21",
               "title": "Week 97: Wien's law and Stefan-Boltzmann law",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:8837a56192cfa5d43a24b7a03befa1d71043f29810b77a35b2799e4bdd9afeb9",
               "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP97.html",
               "type": "lesson"
             },
@@ -5123,6 +5635,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-21",
               "title": "Week 98: Ultraviolet catastrophe, Max Planck's postulate, and energy quantization",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:eeb6bbfd4094b934c244dd20f93bffd395fcaf6c8fed5d8265984f8d4e5acb14",
               "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP98.html",
               "type": "lesson"
             },
@@ -5132,6 +5645,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-21",
               "title": "Week 99: Hertz experiment, photoelectric effect, and Einstein's postulates",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:ed5b871bc2cd022b34c317e7d8ca496fb105ed6bb5b55eb7a77b7d7ecc096777",
               "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP99.html",
               "type": "lesson"
             },
@@ -5141,6 +5655,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-21",
               "title": "Week 100: Dual nature of light",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:c54c332d7cac90103bae6a4e49b726e2789ccc4b35272ef65697c8ac270cc0d6",
               "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP100.html",
               "type": "lesson"
             },
@@ -5150,6 +5665,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-21",
               "title": "Week 101: Compton scattering",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:75d77965c4eb293aa5db2219aeced1e85611cfee8297ee323ff6f553b1e31a01",
               "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP101.html",
               "type": "lesson"
             }
@@ -5165,6 +5681,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-22",
               "title": "Week 102: Laws of definite proportions, Dalton's model, Crookes tube, and Thomson's model",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:5100d5b9d804108f4ec733d4142bcabc186103472e6107a2225dbdcacd43864a",
               "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP102.html",
               "type": "lesson"
             },
@@ -5174,6 +5691,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-22",
               "title": "Week 103: Rutherford model, atomic spectra, and the Rutherford-Bohr model",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:279cd48a7862e6398a2caa8bed09a5d917543e4336224d8836a6eb2bde8c770c",
               "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP103.html",
               "type": "lesson"
             },
@@ -5183,6 +5701,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-22",
               "title": "Week 104: Sommerfeld model, principal quantum number and secondary quantum number",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:b0bed08985ae5794ddedbb090b61c56940728dbd87fc83484b135c67cae573eb",
               "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP104.html",
               "type": "lesson"
             },
@@ -5192,6 +5711,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-22",
               "title": "Week 105: DeBroglie hypothesis and Davisson-Germer experiment",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:203671fd97d742ba13a1167e01e1b8a391b36c3f7222f2c51833c70e375dc9bd",
               "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP105.html",
               "type": "lesson"
             },
@@ -5201,6 +5721,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-22",
               "title": "Week 106: Quantum model of the atom, complementarity principle, and uncertainty principle",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:1707edd41224b69d05bc67585add1d69bfd81877fdccc6c3dd4195ad6238bef3",
               "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP106.html",
               "type": "lesson"
             }
@@ -5216,6 +5737,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-23",
               "title": "Week 107: Fundamental forces, force transmission, and types of particles",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:a27f3b1dbfbdb216d006719d77331d21a92d705437abc0a3b4c5ad418e0031db",
               "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP107.html",
               "type": "lesson"
             },
@@ -5225,6 +5747,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-23",
               "title": "Week 108: Strong and weak nuclear forces, quarks, and gluons",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:57665fc4c79b4924d8a72fba9de88148bf2cf90162a5a32cc075d2c99e4a31b1",
               "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP108.html",
               "type": "lesson"
             },
@@ -5234,6 +5757,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-23",
               "title": "Week 109: Standard model, matter and antimatter",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:6ec3f8b533cc5b0e0dd8bbab5463eed2e026d21323cab5df0c4f221cb2a84e54",
               "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP109.html",
               "type": "lesson"
             },
@@ -5243,6 +5767,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-23",
               "title": "Week 110: Element and atom",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:3704531ca0dd30dca3929048125fb7b069c2914289b5517e945b38f7e1be9f24",
               "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP110.html",
               "type": "lesson"
             },
@@ -5252,6 +5777,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-23",
               "title": "Week 111: Nuclear stability, radioactivity, half-life, and carbon-14 dating",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:727d84af2af46d79a966b03dd81508fb1379c5f06aa6ca04a38e9910778f6d39",
               "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP111.html",
               "type": "lesson"
             },
@@ -5261,6 +5787,7 @@
               "moduleId": "builtin_module_high-school-physics-modules-21-23-hsp-module-23",
               "title": "Week 112: Nuclear fusion, nuclear fission, and nuclear weapons",
               "difficulty": "medium",
+              "sourceContentVersionKey": "sha256:ee3dcaacbe0b5b8eb48c5f62fe87362d1dd8c611c7e6519286e699699ba14632",
               "planningHref": "../schedules/High School/physics/Modules 21-23/Instructions/HSP112.html",
               "type": "lesson"
             }

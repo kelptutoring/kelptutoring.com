@@ -208,6 +208,11 @@
   text-decoration: none;
 }
 
+.student-classrooms-card-link:hover,
+.student-classrooms-card-link:focus-visible {
+  text-decoration: none;
+}
+
 .student-classrooms-card-link h3 {
   margin-top: 5px;
   color: var(--kelp-theme-accent-strong);
@@ -235,9 +240,28 @@
   border-top: 1px solid rgba(255, 255, 255, 0.58);
 }
 
+.student-classrooms-card-links {
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 14px;
+}
+
 .student-classrooms-open-link {
   justify-content: flex-start;
   font-size: 0.84rem;
+  text-decoration: none;
+}
+
+.student-classrooms-schedule-link {
+  color: var(--color-text-muted);
+}
+
+.student-classrooms-open-link:hover,
+.student-classrooms-open-link:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .student-classrooms-card-footer button {
@@ -335,6 +359,10 @@
 @media (max-width: 420px) {
   .student-classrooms-card-footer {
     align-items: stretch;
+    display: grid;
+  }
+
+  .student-classrooms-card-links {
     display: grid;
   }
 

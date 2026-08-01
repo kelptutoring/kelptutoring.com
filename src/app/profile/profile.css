@@ -34,8 +34,7 @@
 .profile-topbar-actions,
 .profile-hero-actions,
 .profile-form-actions,
-.preferences-save-actions,
-.preferences-theme-actions {
+.preferences-save-actions {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -45,6 +44,8 @@
 .profile-shell {
   width: min(1180px, calc(100% - 32px));
   margin: 22px auto 72px;
+  padding-bottom: 30px;
+  position: relative;
 }
 
 .profile-hero {
@@ -452,11 +453,15 @@
 }
 
 .profile-feedback {
-  min-height: 28px;
-  margin-top: 18px;
-  padding-inline: 6px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  bottom: 0;
+  left: 6px;
   color: rgba(24, 51, 58, 0.68);
   font-weight: 650;
+  pointer-events: none;
 }
 
 .profile-feedback[data-tone="success"] { color: #2f7145; }
@@ -602,15 +607,13 @@
 
   .profile-hero-actions,
   .profile-form-actions,
-  .preferences-save-actions,
-  .preferences-theme-actions {
+  .preferences-save-actions {
     width: 100%;
   }
 
   .profile-hero-actions .btn-primary,
   .profile-form-actions button,
-  .preferences-save-actions button,
-  .preferences-theme-actions button {
+  .preferences-save-actions button {
     flex: 1;
   }
 

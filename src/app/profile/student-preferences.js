@@ -4,14 +4,15 @@ import { normalizeThemeKey } from './profile-contract.js'
 import {
   getMyProfileConfiguration,
   listProfileConfigurationOptions,
-  resetMyPreferences,
   saveMyPreferences
 } from './profile-data.js'
 
 const state = {
   configuration: null,
   options: null,
-  saving: false
+  saving: false,
+  pendingThemeKey: '',
+  messageTimer: 0
 }
 
 const elements = {}
@@ -40,15 +41,13 @@ async function init() {
 
 function cacheElements() {
   const ids = [
-    'preferences-loading', 'preferences-form', 'theme-grid', 'reset-theme',
-    'save-preferences', 'preferences-message'
+    'preferences-loading', 'preferences-form', 'theme-grid', 'preferences-message'
   ]
   for (const id of ids) elements[toCamelCase(id)] = document.getElementById(id)
 }
 
 function bindEvents() {
-  elements.preferencesForm.addEventListener('submit', savePreferences)
-  elements.resetTheme.addEventListener('click', resetTheme)
+  elements.preferencesForm.addEventListener('submit', (event) => event.preventDefault())
 }
 
 function renderThemes() {
@@ -65,7 +64,7 @@ function renderThemes() {
     input.value = theme.key
     input.checked = theme.key === selectedTheme
     input.addEventListener('change', () => {
-      if (input.checked) applyThemePreference(theme.key, { cache: false })
+      if (input.checked) selectTheme(theme.key)
     })
 
     const preview = document.createElement('span')
@@ -83,54 +82,49 @@ function renderThemes() {
   }
 }
 
-async function savePreferences(event) {
-  event.preventDefault()
-  if (state.saving) return
-  const themeKey = elements.themeGrid.querySelector('input[name="themeKey"]:checked')?.value
-  await runPreferenceMutation(
-    () => saveMyPreferences({ themeKey }),
-    'Your theme was saved and synchronized.'
-  )
-}
-
-async function resetTheme() {
-  if (state.saving) return
-  await runPreferenceMutation(
-    () => resetMyPreferences('theme'),
-    'The Ocean theme was restored.'
-  )
-}
-
-async function runPreferenceMutation(mutation, successMessage) {
-  state.saving = true
-  setButtonsDisabled(true)
+function selectTheme(themeKey) {
+  state.pendingThemeKey = normalizeThemeKey(themeKey)
+  applyThemePreference(state.pendingThemeKey)
   showMessage('Synchronizing your theme...')
+  void persistPendingTheme()
+}
+
+async function persistPendingTheme() {
+  if (state.saving) return
+  state.saving = true
   try {
-    state.configuration = await mutation()
-    applyThemePreference(state.configuration.preferences.themeKey)
-    renderThemes()
-    showMessage(successMessage, 'success')
-  } catch (error) {
-    console.error('Preference update failed:', error)
-    applyThemePreference(state.configuration.preferences.themeKey)
-    showMessage(error?.message || 'Your theme could not be updated.', 'error')
+    while (state.pendingThemeKey) {
+      const themeKey = state.pendingThemeKey
+      state.pendingThemeKey = ''
+      try {
+        state.configuration = await saveMyPreferences({ themeKey })
+        if (!state.pendingThemeKey) {
+          applyThemePreference(state.configuration.preferences.themeKey)
+          renderThemes()
+          showMessage('Theme updated.', 'success', { transient: true })
+        }
+      } catch (error) {
+        console.error('Preference update failed:', error)
+        if (!state.pendingThemeKey) {
+          applyThemePreference(state.configuration.preferences.themeKey)
+          renderThemes()
+          showMessage(error?.message || 'Your theme could not be updated.', 'error')
+        }
+      }
+    }
   } finally {
     state.saving = false
-    setButtonsDisabled(false)
   }
 }
 
-function setButtonsDisabled(disabled) {
-  elements.savePreferences.disabled = disabled
-  elements.resetTheme.disabled = disabled
-  elements.savePreferences.textContent = disabled ? 'Saving...' : 'Save theme'
-}
-
-function showMessage(message, tone = '') {
+function showMessage(message, tone = '', { transient = false } = {}) {
+  window.clearTimeout(state.messageTimer)
   elements.preferencesMessage.textContent = message
   elements.preferencesMessage.dataset.tone = tone
+  if (transient && message) {
+    state.messageTimer = window.setTimeout(() => showMessage(''), 2000)
+  }
 }
-
 function showFatal(message) {
   document.getElementById('preferences-loading')?.classList.add('is-hidden')
   const feedback = document.getElementById('preferences-message')

@@ -16,7 +16,6 @@
       </a>
 
       <nav class="tracks-nav" aria-label="Schedule generator navigation">
-        <button type="button" class="tracks-nav-button hidden" id="backStepBtn">Back</button>
         <a href="../dashboard/tutor-dashboard.html">Home</a>
       </nav>
     </div>
@@ -27,11 +26,62 @@
       <div class="tracks-intro">
         <p class="tracks-kicker">Schedule generator</p>
         <h1 id="schedule-generator-title">Build a custom schedule</h1>
-        <p>Choose reusable session plans, set the cadence in the student's timezone, and review every date before saving.</p>
+        <p class="course-schedule-context hidden" id="courseScheduleContext" role="status"></p>
+        <p id="schedule-generator-description">Choose reusable session plans, set the cadence in the student's timezone, and review every date before saving.</p>
       </div>
 
+      <aside class="builder-selection-tray hidden" id="selectionTray" aria-labelledby="selectionTrayTitle">
+        <div class="builder-selection-tray-header">
+          <div>
+            <p class="tracks-kicker">One combined Schedule</p>
+            <h2 id="selectionTrayTitle">Selected content</h2>
+            <p id="selectionTraySummary">Choose Sessions from at least one Track.</p>
+          </div>
+          <div class="builder-selection-tray-header-actions">
+            <button type="button" class="btn-secondary compact-button hidden" id="restoreCurrentPlanBtn">Restore current plan</button>
+            <button type="button" class="btn-secondary compact-button" id="addContentBranchBtn">Add another Track</button>
+          </div>
+        </div>
+        <div class="builder-selection-tray-list" id="selectionTrayList"></div>
+      </aside>
+
+      <section class="course-builder-recovery is-collapsed hidden" id="courseBuilderRecovery">
+        <div class="course-builder-recovery-header">
+          <div>
+            <p class="tracks-kicker">Staff Schedule context</p>
+            <h2 id="courseBuilderRecoveryTitle">Retained and updated work</h2>
+            <p id="courseBuilderRecoverySummary"></p>
+          </div>
+          <button
+            type="button"
+            class="course-builder-recovery-toggle"
+            id="courseBuilderRecoveryToggle"
+            aria-controls="courseBuilderRecoveryCollapse"
+            aria-expanded="false"
+          >Maximize</button>
+        </div>
+        <div
+          class="course-builder-recovery-collapse"
+          id="courseBuilderRecoveryCollapse"
+          aria-hidden="true"
+          inert
+        >
+          <div class="course-builder-recovery-content">
+            <div class="course-builder-recovery-list" id="courseBuilderRecoveryList"></div>
+            <details class="course-builder-stale-draft hidden" id="courseBuilderStaleDraft">
+              <summary>Review the stale local draft</summary>
+              <div id="courseBuilderStaleDraftDetails"></div>
+              <button type="button" class="btn-secondary compact-button" id="discardCourseBuilderRecovery">
+                Discard recovery copy
+              </button>
+            </details>
+          </div>
+        </div>
+      </section>
+
       <section class="generator-step" id="levelStep">
-        <h2>1. Choose a level</h2>
+        <h2>1. Choose an education level</h2>
+        <p>Select one branch at a time. Previous selections remain in the tray while you add content from other levels and Subjects.</p>
         <div class="button-grid" id="levelButtons"></div>
       </section>
 
@@ -42,7 +92,8 @@
 
       <section class="generator-step hidden" id="trackStep">
         <h2>3. Choose one or more tracks</h2>
-        <p>Combine tracks in one schedule—for example, Algebra 1 with Algebra 2, or Mechanics with Optics.</p>
+        <p>Tracks remain organized by Subject. Pathway labels such as AP or IB appear as filters and group headings when the catalogue provides them.</p>
+        <div class="pathway-filter-list" id="pathwayFilters" aria-label="Filter Tracks by academic pathway"></div>
         <div class="button-grid track-selection-grid" id="trackButtons"></div>
         <div class="generator-actions">
           <button type="button" class="btn-primary" id="continueToTrackSessionsBtn">Continue to session selection</button>
@@ -58,8 +109,8 @@
         <section class="custom-session-builder" aria-labelledby="custom-session-title">
           <div>
             <p class="tracks-kicker">Optional</p>
-            <h3 id="custom-session-title">Add a custom session</h3>
-            <p>Add a class, assessment, review, or any other item, then position it in the final preview.</p>
+            <h3 id="custom-session-title">Add a supplemental item</h3>
+            <p>Add a Review, Practice, Exam, or optional Wrap-up for this Track, then position it in the final preview. Curriculum topics must come from governed Track Sessions.</p>
           </div>
 
           <div class="custom-session-fields">
@@ -71,9 +122,10 @@
             <div class="input-group">
               <label for="customSessionType">Type</label>
               <select id="customSessionType">
-                <option value="custom">Custom class</option>
                 <option value="review">Review</option>
-                <option value="assessment">Assessment</option>
+                <option value="practice">Practice</option>
+                <option value="exam">Exam</option>
+                <option value="wrap_up">Wrap-up</option>
               </select>
             </div>
 
@@ -83,7 +135,7 @@
             </div>
           </div>
 
-          <button type="button" class="btn-secondary" id="addCustomSessionBtn">Add custom session</button>
+          <button type="button" class="btn-secondary" id="addCustomSessionBtn">Add supplemental item</button>
           <div class="custom-session-list" id="customSessionList"></div>
         </section>
 
@@ -91,6 +143,12 @@
           <button type="button" class="btn-primary" id="continueToSettingsBtn">Continue to schedule settings</button>
         </div>
       </section>
+
+      <div class="builder-selection-finish-actions hidden" id="selectionFinishActions">
+        <button type="button" class="btn-primary" id="selectScheduleDatesBtn">
+          Select dates and cadence
+        </button>
+      </div>
 
       <section class="generator-step hidden" id="settingsStep">
         <h2>5. Set the schedule cadence</h2>
@@ -103,26 +161,61 @@
 
           <div class="input-group">
             <label for="startDate">Starting date</label>
-            <input type="date" id="startDate" />
+            <input type="date" id="startDate" aria-describedby="startDateHelp" />
+            <small id="startDateHelp">Choose the first date in this Schedule.</small>
           </div>
 
           <div class="input-group">
             <label for="studentTimeZone">Student timezone</label>
             <input type="text" id="studentTimeZone" list="timeZoneOptions" placeholder="Example: America/Sao_Paulo" autocomplete="off" aria-describedby="studentTimeZoneHelp" />
             <datalist id="timeZoneOptions"></datalist>
-            <small id="studentTimeZoneHelp">Type any valid IANA timezone. The student's saved timezone will prefill this field after backend wiring.</small>
+            <small id="studentTimeZoneHelp">Choose the IANA timezone used for this Schedule.</small>
+          </div>
+
+          <div class="input-group hidden" id="courseChangeReasonGroup">
+            <label for="courseChangeReason">Reason for this Schedule update</label>
+            <textarea
+              id="courseChangeReason"
+              rows="3"
+              minlength="10"
+              maxlength="500"
+              placeholder="Explain why this change supports the Student's current learning plan."
+            ></textarea>
+            <small>The Student can read this explanation in the Schedule history.</small>
           </div>
 
           <fieldset class="cadence-fieldset">
             <legend>Cadence</legend>
-            <label class="cadence-choice">
-              <input type="radio" name="cadenceType" value="day_interval" checked />
-              <span><strong>Fixed period</strong><small>Each session covers the same number of calendar days.</small></span>
-            </label>
-            <label class="cadence-choice">
-              <input type="radio" name="cadenceType" value="weekly_frequency" />
-              <span><strong>Meetings per week</strong><small>Choose up to seven meeting weekdays.</small></span>
-            </label>
+            <div class="cadence-choice-grid">
+              <label class="cadence-choice">
+                <input type="radio" name="cadenceType" value="day_interval" checked />
+                <span><strong>Fixed period</strong><small>Each session covers the same number of calendar days.</small></span>
+              </label>
+              <label class="cadence-choice">
+                <input type="radio" name="cadenceType" value="weekly_frequency" />
+                <span><strong>Meetings per week</strong><small>Choose up to seven meeting weekdays.</small></span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="pacing-fieldset">
+            <legend>Schedule pacing</legend>
+            <div class="cadence-choice-grid">
+              <label class="cadence-choice">
+                <input type="radio" name="pacingMode" value="adaptive" checked />
+                <span>
+                  <strong>Adaptive</strong>
+                  <small>Completed topics move the next unfinished work forward, except during a lesson's six-hour hold.</small>
+                </span>
+              </label>
+              <label class="cadence-choice">
+                <input type="radio" name="pacingMode" value="static" />
+                <span>
+                  <strong>Static</strong>
+                  <small>Progress is recorded, but the effective future dates stay fixed.</small>
+                </span>
+              </label>
+            </div>
           </fieldset>
         </div>
 
@@ -136,13 +229,13 @@
         <fieldset class="cadence-options hidden" id="weeklyCadenceOptions">
           <legend>Meeting weekdays <span class="field-optional">(choose 1–7)</span></legend>
           <div class="weekday-grid" id="weekdayGrid">
+            <label><input type="checkbox" value="0" /> Sunday</label>
             <label><input type="checkbox" value="1" /> Monday</label>
             <label><input type="checkbox" value="2" /> Tuesday</label>
             <label><input type="checkbox" value="3" /> Wednesday</label>
             <label><input type="checkbox" value="4" /> Thursday</label>
             <label><input type="checkbox" value="5" /> Friday</label>
             <label><input type="checkbox" value="6" /> Saturday</label>
-            <label><input type="checkbox" value="0" /> Sunday</label>
           </div>
         </fieldset>
 
@@ -163,18 +256,37 @@
           <button type="button" class="btn-secondary" id="redoPreviewOutlineBtn" disabled>Redo</button>
         </div>
 
+        <p class="message hidden" id="coursePublishBoundaryNotice" role="status"></p>
         <div class="generator-actions">
           <button type="button" class="btn-primary" id="saveScheduleBtn">Save and open interactive schedule</button>
         </div>
       </section>
 
       <p class="message" id="generatorMessage" aria-live="polite"></p>
+      <div class="builder-navigation-actions hidden" id="builderNavigationActions">
+        <button type="button" class="btn-secondary" id="backStepBtn">Back</button>
+      </div>
     </section>
   </main>
+
+  <dialog class="schedule-action-dialog" id="scheduleActionDialog" aria-labelledby="scheduleActionTitle">
+    <form method="dialog">
+      <p class="tracks-kicker" id="scheduleActionKicker">Schedule builder</p>
+      <h2 id="scheduleActionTitle">Confirm this change</h2>
+      <p id="scheduleActionMessage"></p>
+      <p class="schedule-action-detail" id="scheduleActionDetail"></p>
+      <div class="schedule-action-dialog-actions">
+        <button type="submit" value="cancel">Cancel</button>
+        <button type="submit" value="confirm" class="is-primary" id="scheduleActionConfirm">
+          Continue
+        </button>
+      </div>
+    </form>
+  </dialog>
 
   <script src="../../data/tracks-data.js"></script>
   <script src="./schedule-domain.js"></script>
   <script src="./schedule-outline.js"></script>
-  <script src="./schedule-generator.js"></script>
+  <script type="module" src="./schedule-generator.js"></script>
 </body>
 </html>
