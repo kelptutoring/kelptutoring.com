@@ -1,121 +1,870 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kelp</title>
-  <link rel="stylesheet" href="src\styles\style.css" />
-</head>
-<body class="plain-body">
-  <header class="site-header">
-    <div class="container header-top">
-      <div class="logo-area">
-        <img src="public/assets/logos/Kelp-logo-gpt.png" alt="Kelp logo" class="logo" />
-      </div>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-      <!-- <div class="search-area">
-        <input type="text" placeholder="Search for resources, tutors, schools..." />
-      </div> -->
+  <title>Kelp Tutoring</title>
+  <meta
+    name="description"
+    content="Personalized tutoring and learning support designed to help students move forward."
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: #173b35;
+      background: #ffffff;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: min(1120px, 90%);
+      margin: 0 auto;
+    }
+
+    /* NAVIGATION */
+
+    header {
+      padding: 22px 0;
+      border-bottom: 1px solid #e8eeee;
+      background: white;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 800;
+      color: #176b5b;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 22px;
+      border-radius: 10px;
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: #176b5b;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      opacity: 0.9;
+    }
+
+    .btn-outline {
+      border: 2px solid #176b5b;
+      color: #176b5b;
+      background: white;
+    }
+
+    .btn-outline:hover {
+      background: #f0f8f6;
+    }
+
+    /* HERO */
+
+    .hero {
+      padding: 90px 0;
+      background: linear-gradient(135deg, #f1faf7, #ffffff);
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .hero-label {
+      color: #176b5b;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 6vw, 70px);
+      line-height: 1.05;
+      margin-bottom: 24px;
+      color: #123f36;
+    }
+
+    .hero-text > p:not(.hero-label) {
+      font-size: 20px;
+      color: #58706b;
+      max-width: 650px;
+      margin-bottom: 30px;
+    }
+
+    .hero-card {
+      background: white;
+      padding: 35px;
+      border-radius: 22px;
+      box-shadow: 0 20px 50px rgba(23, 107, 91, 0.12);
+      border: 1px solid #e4efec;
+    }
+
+    .hero-card h2 {
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+
+    .hero-card p {
+      color: #60746f;
+      margin-bottom: 20px;
+    }
+
+    .hero-card ul {
+      list-style: none;
+    }
+
+    .hero-card li {
+      padding: 10px 0;
+      border-bottom: 1px solid #edf2f0;
+    }
+
+    .hero-card li:last-child {
+      border-bottom: none;
+    }
+
+    /* SECTION */
+
+    section {
+      padding: 85px 0;
+    }
+
+    .section-heading {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 50px;
+    }
+
+    .section-heading h2 {
+      font-size: 42px;
+      margin-bottom: 12px;
+      color: #123f36;
+    }
+
+    .section-heading p {
+      color: #637772;
+      font-size: 18px;
+    }
+
+    /* WHY KELP */
+
+    .benefits {
+      background: #ffffff;
+    }
+
+    .benefit-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .benefit-card {
+      padding: 28px;
+      border: 1px solid #e3ece9;
+      border-radius: 18px;
+      background: white;
+      transition: 0.2s ease;
+    }
+
+    .benefit-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(23, 107, 91, 0.08);
+    }
+
+    .benefit-icon {
+      font-size: 32px;
+      margin-bottom: 15px;
+    }
+
+    .benefit-card h3 {
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .benefit-card p {
+      color: #687b76;
+    }
+
+    /* WHO IT'S FOR */
+
+    .audience {
+      background: #f4faf8;
+    }
+
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+    }
+
+    .audience-card {
+      background: white;
+      padding: 35px;
+      border-radius: 20px;
+      border: 1px solid #e0ece8;
+    }
+
+    .audience-card h3 {
+      font-size: 25px;
+      margin-bottom: 12px;
+    }
+
+    .audience-card p {
+      color: #687b76;
+      margin-bottom: 20px;
+    }
+
+    .text-link {
+      color: #176b5b;
+      font-weight: 800;
+    }
+
+    /* HOW IT WORKS */
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .step {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .step-number {
+      width: 55px;
+      height: 55px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #176b5b;
+      color: white;
+      font-weight: 800;
+      font-size: 20px;
+    }
+
+    .step h3 {
+      margin-bottom: 10px;
+    }
+
+    .step p {
+      color: #687b76;
+    }
+
+    /* CTA */
+
+    .cta {
+      padding: 85px 0;
+      background: #176b5b;
+      color: white;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 44px;
+      margin-bottom: 15px;
+    }
+
+    .cta p {
+      max-width: 650px;
+      margin: 0 auto 28px;
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    .cta .btn {
+      background: white;
+      color: #176b5b;
+    }
+
+    /* FOOTER */
+
+    footer {
+      background: #103f36;
+      color: white;
+      padding: 55px 0 25px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 50px;
+      padding-bottom: 40px;
+    }
+
+    .footer-brand h2 {
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+
+    .footer-brand p {
+      max-width: 400px;
+      color: #c5d8d3;
+    }
+
+    .footer-column h3 {
+      margin-bottom: 15px;
+    }
+
+    .footer-column a {
+      display: block;
+      color: #c5d8d3;
+      margin: 8px 0;
+    }
+
+    .footer-column a:hover {
+      color: white;
+    }
+
+    .social-row {
+      border-top: 1px solid rgba(255,255,255,0.15);
+      padding-top: 22px;
+      display: flex;
+      gap: 25px;
+      color: #c5d8d3;
+    }
+
+    .social-row a:hover {
+      color: white;
+    }
+
+    .copyright {
+      margin-top: 25px;
+      color: #9dbab3;
+      font-size: 14px;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 850px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .benefit-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .audience-grid,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 550px) {
+      .header-actions {
+        gap: 6px;
+      }
+
+      .btn {
+        padding: 10px 14px;
+        font-size: 14px;
+      }
+
+      .hero {
+        padding: 60px 0;
+      }
+
+      .hero h1 {
+        font-size: 42px;
+      }
+
+      .benefit-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-heading h2,
+      .cta h2 {
+        font-size: 34px;
+      }
+
+      .social-row {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+
+  <header>
+    <div class="container nav">
+
+      <a href="/" class="logo">Kelp</a>
 
       <div class="header-actions">
-        <a href="src/app/signUp/login.html" class="btn-outline header-btn">Login</a>
-        <a href="src/app/signUp/signUp.html" class="btn-primary header-btn">Sign Up</a>
-      </div>
-    </div>
+        <a
+          href="src/app/signUp/login.html"
+          class="btn btn-outline"
+        >
+          Login
+        </a>
 
-    <!-- <nav class="services-bar">
-      <div class="container services-nav">
-        <a href="#">Service 1</a>
-        <a href="#">Service 2</a>
-        <a href="#">Service 3</a>
-        <a href="#">Service 4</a>
-        <a href="#">Service 5</a>
+        <a
+          href="src/app/signUp/signUp.html"
+          class="btn btn-primary"
+        >
+          Sign Up
+        </a>
       </div>
-    </nav> -->
+
+    </div>
   </header>
 
-  <main>
-    <section class="hero-section">
-      <div class="container hero-content">
-        <div class="hero-text">
-          <h1>Education with clarity, trust and connection.</h1>
-          <p>
-            Kelp connects families, teachers, schools and learners through a
-            modern platform built to make educational support more accessible,
-            organized and effective.
-          </p>
 
-          <div class="hero-buttons">
-            <a href="src/app/signUp/signUp.html" class="btn-primary hero-btn">Get Started</a>
-            <!-- <a href="#" class="btn-secondary hero-btn">Learn More</a> -->
-          </div>
+  <!-- HERO -->
+
+  <section class="hero">
+    <div class="container hero-content">
+
+      <div class="hero-text">
+
+        <p class="hero-label">
+          PERSONALIZED LEARNING • REAL SUPPORT
+        </p>
+
+        <h1>
+          Personalized tutoring that helps students move forward.
+        </h1>
+
+        <p>
+          Kelp connects students and families with the learning
+          support they need to build confidence, understand difficult
+          subjects, and keep making progress.
+        </p>
+
+        <a
+          href="src/app/signUp/signUp.html"
+          class="btn btn-primary"
+        >
+          Get Started
+        </a>
+
+      </div>
+
+
+      <div class="hero-card">
+
+        <h2>Why Kelp?</h2>
+
+        <p>
+          Learning isn't one-size-fits-all. Kelp helps students get
+          support that fits their needs and goals.
+        </p>
+
+        <ul>
+          <li>🎯 Personalized learning support</li>
+          <li>📚 Focused help with important skills</li>
+          <li>🤝 Connection between students and educators</li>
+          <li>🌱 Support that grows with the student</li>
+        </ul>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- WHY KELP -->
+
+  <section class="benefits">
+
+    <div class="container">
+
+      <div class="section-heading">
+        <h2>Learning built around the student.</h2>
+
+        <p>
+          Kelp is designed to make educational support easier to
+          understand, easier to access, and more useful.
+        </p>
+      </div>
+
+
+      <div class="benefit-grid">
+
+        <div class="benefit-card">
+          <div class="benefit-icon">🎯</div>
+
+          <h3>Personalized Support</h3>
+
+          <p>
+            Learning support can be tailored to the student's
+            needs, goals, and current skills.
+          </p>
         </div>
 
-        <div class="hero-card">
-          <h2>Why Kelp?</h2>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">📚</div>
+
+          <h3>Focused Learning</h3>
+
           <p>
-            We help different education profiles find the right path, tools and
-            support in one place.
+            Spend time working on the subjects and skills that
+            matter most.
+          </p>
+        </div>
+
+
+        <div class="benefit-card">
+          <div class="benefit-icon">🤝</div>
+
+          <h3>Real Connection</h3>
+
+          <p>
+            Bring students, families, and educators together
+            around learning.
+          </p>
+        </div>
+
+
+        <div class="benefit-card">
+          <div class="benefit-icon">🌱</div>
+
+          <h3>Built to Grow</h3>
+
+          <p>
+            Give students support that can continue to evolve
+            as they learn.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- WHO KELP IS FOR -->
+
+  <section class="audience">
+
+    <div class="container">
+
+      <div class="section-heading">
+
+        <h2>Who is Kelp for?</h2>
+
+        <p>
+          Different learners need different kinds of support.
+        </p>
+
+      </div>
+
+
+      <div class="audience-grid">
+
+        <div class="audience-card">
+
+          <h3>🎓 Students</h3>
+
+          <p>
+            Get learning support, work through difficult subjects,
+            and keep building your skills.
           </p>
 
-          <ul>
-            <li>Clear educational pathways</li>
-            <li>Reliable and organized platform</li>
-            <li>Support for multiple user profiles</li>
-            <li>Designed for growth and accessibility</li>
-          </ul>
+          <a
+            href="src/app/signUp/signUp.html"
+            class="text-link"
+          >
+            Get started →
+          </a>
+
         </div>
-      </div>
-    </section>
-  </main>
 
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div class="footer-column">
-        <h3>About</h3>
-        <p>Structured tracks for personalized learning in STEM disciplines</p>
-      </div>
-      <div class="footer-column">
-        <h3>Contact</h3>
-        <p> Email: hello@kelptutoring.com </p>
-      </div>
-      <div>
-        
-      </div>
-      <!-- <div class="footer-column"> SERVICES WE OFFER
-        <h3>What we offer</h3>
-        <a href="#">For families</a>
-        <a href="#">For independent teachers</a>
-        <a href="#">For schools & districts</a>
-        <a href="#">For independent learners</a>
-        <a href="#">For high schools</a>
-        <a href="#">For college</a>
+
+        <div class="audience-card">
+
+          <h3>👨‍👩‍👧 Families</h3>
+
+          <p>
+            Find educational support that helps your student
+            continue moving forward.
+          </p>
+
+          <a
+            href="src/app/signUp/signUp.html"
+            class="text-link"
+          >
+            Get started →
+          </a>
+
+        </div>
+
+
+        <div class="audience-card">
+
+          <h3>🧑‍🏫 Educators</h3>
+
+          <p>
+            Connect with learners and help make a difference
+            in their education.
+          </p>
+
+          <a
+            href="src/app/signUp/signUp.html"
+            class="text-link"
+          >
+            Get started →
+          </a>
+
+        </div>
+
       </div>
 
-      <div class="footer-column">
-        <h3>Resources</h3>
-        <a href="#">Help center</a>
-        <a href="#">User guides</a>
-        <a href="#">Tell us what you think</a>
-        <a href="#">Testimonials</a>
-        <a href="#">Help</a>
-        <a href="#">Contact us</a>
-      </div>
-
-      <div class="footer-column">
-        <h3>About</h3>
-        <a href="#">Company</a>
-        <a href="#">Careers</a>
-        <a href="#">Terms of service</a>
-        <a href="#">Privacy policy</a>
-      </div>
-    </div> -->
     </div>
-    <div class="container social-row">
-      <a href="https://www.instagram.com/kelp.tutoring/" aria-label="Instagram">Instagram</a>
-      <a href="https://www.youtube.com/@KelpTutoring" aria-label="YouTube">YouTube</a>
-      <a href="https://www.linkedin.com/company/kelp-tutoring/about/?viewAsMember=true" aria-label="LinkedIn">LinkedIn</a>
+
+  </section>
+
+
+  <!-- HOW IT WORKS -->
+
+  <section>
+
+    <div class="container">
+
+      <div class="section-heading">
+
+        <h2>Getting started is simple.</h2>
+
+        <p>
+          Take the first step toward finding the right learning
+          support.
+        </p>
+
+      </div>
+
+
+      <div class="steps">
+
+        <div class="step">
+
+          <div class="step-number">1</div>
+
+          <h3>Create an account</h3>
+
+          <p>
+            Sign up and tell Kelp a little about what you're
+            looking for.
+          </p>
+
+        </div>
+
+
+        <div class="step">
+
+          <div class="step-number">2</div>
+
+          <h3>Find your support</h3>
+
+          <p>
+            Explore the learning resources and support available
+            through Kelp.
+          </p>
+
+        </div>
+
+
+        <div class="step">
+
+          <div class="step-number">3</div>
+
+          <h3>Start learning</h3>
+
+          <p>
+            Take the next step and keep building your skills.
+          </p>
+
+        </div>
+
+      </div>
+
     </div>
+
+  </section>
+
+
+  <!-- FINAL CTA -->
+
+  <section class="cta">
+
+    <div class="container">
+
+      <h2>Ready to get started?</h2>
+
+      <p>
+        Take the first step toward a more personalized learning
+        experience.
+      </p>
+
+      <a
+        href="src/app/signUp/signUp.html"
+        class="btn"
+      >
+        Get Started
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <div class="footer-brand">
+
+          <h2>Kelp</h2>
+
+          <p>
+            Personalized learning and educational support
+            designed to help students move forward.
+          </p>
+
+        </div>
+
+
+        <div class="footer-column">
+
+          <h3>Explore</h3>
+
+          <a href="/">Home</a>
+
+          <a href="src/app/signUp/signUp.html">
+            Get Started
+          </a>
+
+          <a href="src/app/signUp/login.html">
+            Login
+          </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+          <h3>Connect</h3>
+
+          <a
+            href="https://www.instagram.com/kelp.tutoring/"
+            target="_blank"
+            rel="noopener"
+          >
+            Instagram
+          </a>
+
+          <a
+            href="https://www.youtube.com/@KelpTutoring"
+            target="_blank"
+            rel="noopener"
+          >
+            YouTube
+          </a>
+
+          <a
+            href="https://www.linkedin.com/company/kelp-tutoring/about/?viewAsMember=true"
+            target="_blank"
+            rel="noopener"
+          >
+            LinkedIn
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <div class="social-row">
+
+        <a
+          href="https://www.instagram.com/kelp.tutoring/"
+          target="_blank"
+          rel="noopener"
+        >
+          Instagram
+        </a>
+
+        <a
+          href="https://www.youtube.com/@KelpTutoring"
+          target="_blank"
+          rel="noopener"
+        >
+          YouTube
+        </a>
+
+        <a
+          href="https://www.linkedin.com/company/kelp-tutoring/about/?viewAsMember=true"
+          target="_blank"
+          rel="noopener"
+        >
+          LinkedIn
+        </a>
+
+      </div>
+
+
+      <p class="copyright">
+        © 2026 Kelp Tutoring. All rights reserved.
+      </p>
+
+    </div>
+
   </footer>
 
 </body>
